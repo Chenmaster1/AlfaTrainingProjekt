@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import Database.Database;
 
@@ -16,10 +18,14 @@ import Database.Database;
  * @author Kevin
  *
  */
+@SuppressWarnings("serial")
 public class MyFrame extends JFrame{
 
+	private JButton btnNew;
+	private JButton btnLoad;
+	private JButton btnSettings;
 	private JButton btnClose;
-	private JPanel pnl;
+	private JPanel panel;
 	
 	/**
 	 * Hier werden alle Componenten initialisiert. Zudem werden <code>initializeFrame()</code>
@@ -28,9 +34,14 @@ public class MyFrame extends JFrame{
 	 * @author Kevin
 	 */
 	public MyFrame () {
+		ImageIcon image = new ImageIcon("AlfaTrainingProjekt/src/Images/BackGround_FullScreen.png");
+		panel = new MainFramePanel(image.getImage());
+		
+		btnNew = new JButton("Neues Spiel");
+		btnLoad = new JButton("Laden");
+		btnSettings = new JButton("Einstellungen");
 		btnClose = new JButton("Beenden");
-		pnl = new JPanel();
-		initializeFrame();
+		setUndecorated(true);
 		pack();
 	}
 	
@@ -41,16 +52,15 @@ public class MyFrame extends JFrame{
 	 * @author Kevin
 	 */
 	public void start() {
+		initializeFrame();
 		//Panel adden
-		this.add(pnl);
+		getContentPane().add(panel);
 		
 		//Buttons
 		initializeButtons();
-		
 		//Datenbankverbindung
 		connectDatabase();
-		
-		this.setVisible(true);		
+			
 	}
 	
 	/**
@@ -69,6 +79,43 @@ public class MyFrame extends JFrame{
 	 * @author Kevin
 	 */
 	private void initializeButtons() {
+		
+		btnNew.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				//TODO
+				
+			}
+		});
+		btnNew.setBounds((getWidth() /2 ) - 100, (getHeight()/2) - 90, 200, 50);
+		panel.add(btnNew);
+		
+		btnLoad.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				//TODO
+				
+			}
+		});
+		btnLoad.setBounds((getWidth() /2 ) - 100, (getHeight()/2) - 30, 200, 50);
+		panel.add(btnLoad);
+		
+		btnSettings.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				//TODO
+				
+			}
+		});
+		btnSettings.setBounds((getWidth() /2 ) - 100, (getHeight()/2) + 30, 200, 50);
+		panel.add(btnSettings);
+		
 		btnClose.addActionListener(new ActionListener() {
 			
 			@Override
@@ -78,7 +125,8 @@ public class MyFrame extends JFrame{
 				
 			}
 		});
-		pnl.add(btnClose, BorderLayout.PAGE_END);
+		btnClose.setBounds((getWidth() /2 ) - 100, (getHeight()/2) + 90, 200, 50);
+		panel.add(btnClose);
 	}
 	
 	/**
@@ -102,7 +150,9 @@ public class MyFrame extends JFrame{
 	 * @author Kevin
 	 */
 	private void initializeFrame(){
-		this.setUndecorated(true);
+		this.setVisible(true);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setDefaultCloseOperation(3);
+		//this.setVisible(true);	
 	}
 }
