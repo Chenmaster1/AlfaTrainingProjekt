@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
+/**
+ * Die Verbidnung zur Datenbank. Über Datenbank.<> aufrufen.
+ */
 public class Database {
 	
 	public static final String DATABASENAME = "AlfaTrainingProjekt";
@@ -34,7 +36,9 @@ public class Database {
      */
     private Statement st;
 
-    // --------------------------------------------------------------
+    /**
+     * Setzt die nötigen Strings zum Aufbau der Datenbank
+     */
     private Database()
     {
         driver = "com.mysql.cj.jdbc.Driver";
@@ -65,7 +69,10 @@ public class Database {
         }
     }
 
-    // --------------------------------------------------------------
+    /**
+     * Gibt die aktuelle Datenbank zurück, um auf alle Funktionen auszuführen.
+     * @return Die Datenbank
+     */
     public static Database getInstance()
     {
         if (instance == null)
@@ -76,7 +83,12 @@ public class Database {
         return instance;
     }
 
-    // --------------------------------------------------------------
+    /**
+     * Übergibt eine Query und führt diese aus.
+     * Nur benutzen, wenn keine Daten erwartet werden.
+     * @param sql Die Query
+     * @return Die erfolgreiche Ausführung der Query
+     */
     public boolean execute(String sql)
     {
         boolean back = false;
@@ -115,6 +127,9 @@ public class Database {
         return back;
     }
     
+    /**
+     * Erstellt die Datenbank (falls nicht vorhanden) und setzt die Verbindung zu eben jener.
+     */
     public void createDatabase()
     {
         String sql = "CREATE DATABASE IF NOT EXISTS "
@@ -126,6 +141,9 @@ public class Database {
         getInstance().execute("USE " + DATABASENAME + ";");
     }
     
+    /**
+     * Erstellt die Tabellen, falls diese noch nicht existieren
+     */
     public void createTables() {
     	//TODO Tabellen erstellen
     	/*
