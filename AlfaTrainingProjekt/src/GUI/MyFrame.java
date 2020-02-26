@@ -25,10 +25,13 @@ import Database.Database;
 @SuppressWarnings("serial")
 public class MyFrame extends JFrame{
 
+	//-------------------------Buttons-------------------------//
 	private JButton btnNew;
 	private JButton btnLoad;
 	private JButton btnSettings;
 	private JButton btnClose;
+	
+	//-------------------------Panels-------------------------//
 	private MainFramePanel panel;
 
 	/**
@@ -49,6 +52,7 @@ public class MyFrame extends JFrame{
 		pack();
 	}
 	
+	//-------------------------public methods-------------------------//
 	/**
 	 * Dient zum Starten des Programms. Hier werden entsprechend Attribute 
 	 * und Der Frame auf Visible gesetzt.
@@ -64,6 +68,7 @@ public class MyFrame extends JFrame{
 		connectDatabase();
 	}
 	
+	//-------------------------private methods-------------------------//
 	/**
 	 * Baut die Verbindung zur Datenbank auf. Falls nicht möglich, 
 	 * wird der Fehler in der Konsole ausgegeben.
@@ -72,8 +77,7 @@ public class MyFrame extends JFrame{
 	 */
 	private void connectDatabase() {
 		try {
-			Database.getInstance().createDatabase();
-			Database.getInstance().createTables();
+			Database.getInstance().connect();
 		}catch(Exception ex) {
 			System.out.println("Keine Datenbank verbindung");
 		}
@@ -182,7 +186,10 @@ public class MyFrame extends JFrame{
 	 * @author Kevin
 	 */
 	private void onSettingsClicked() {
-		//TODO
+		//TODO so kann man das machen ohne ein neues Fenster öffnen zu müssen
+		//remove(panel);	//altes Panel entfernen
+		//add(panel);		//neues Panel hinzufuegen
+		//repaint();		//neu darstellen
 	}
 	
 	/**

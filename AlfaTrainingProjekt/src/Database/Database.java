@@ -84,6 +84,14 @@ public class Database {
     }
 
     /**
+     * Falls nicht vorhanden, werden hier die Datenbank und die Tabellen erstellt
+     */
+    public void connect() {
+    	createDatabase();
+    	createTables();
+    }
+    
+    /**
      * Übergibt eine Query und führt diese aus.
      * Nur benutzen, wenn keine Daten erwartet werden.
      * @param sql Die Query
@@ -130,7 +138,7 @@ public class Database {
     /**
      * Erstellt die Datenbank (falls nicht vorhanden) und setzt die Verbindung zu eben jener.
      */
-    public void createDatabase()
+    private void createDatabase()
     {
         String sql = "CREATE DATABASE IF NOT EXISTS "
                 + DATABASENAME
@@ -144,7 +152,7 @@ public class Database {
     /**
      * Erstellt die Tabellen, falls diese noch nicht existieren
      */
-    public void createTables() {
+    private void createTables() {
     	//TODO Tabellen erstellen
     	/*
     	String sql = "CREATE TABLE IF NOT EXISTS Tiere ("
