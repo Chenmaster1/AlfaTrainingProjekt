@@ -48,10 +48,10 @@ public class MyFrame extends JFrame{
 		panel = new MainFramePanel(new ImageIcon(getClass().getClassLoader().getResource("Images/BackGround_FullScreen.png")).getImage());
 		//System.out.println(bundle.getString("btnNew")); //Beispiel für Mehrsprachigkeit
 
-		btnNew = new JButton("Neues Spiel", new ImageIcon("Images/Button.png"));
-		btnLoad = new JButton("Laden", new ImageIcon("Images/Button.png"));
-		btnSettings = new JButton("Einstellungen", new ImageIcon("Images/Button.png"));
-		btnClose = new JButton("Beenden", new ImageIcon("Images/Button.png"));
+		btnNew = new MyButton("Neues Spiel", new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		btnLoad = new MyButton("Laden", new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		btnSettings = new MyButton("Einstellungen", new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		btnClose = new MyButton("Beenden", new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
 		
 		setUndecorated(true);
 		pack();

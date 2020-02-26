@@ -21,6 +21,7 @@ public class MyButton extends JButton implements MouseListener{
     public MyButton(String text, Icon icon){
         super(text, icon);
         opacity = (float) 0.5;
+        addMouseListener(this);
     }
     
     @Override
@@ -55,13 +56,15 @@ public class MyButton extends JButton implements MouseListener{
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		repaint();
+            
+            repaint();
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		repaint();
+            opacity = (float) 0.5;
+            getParent().repaint();
 		
 	}
 }
