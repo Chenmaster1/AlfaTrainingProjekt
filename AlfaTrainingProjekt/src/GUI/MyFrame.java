@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,6 +26,9 @@ import Database.Database;
 @SuppressWarnings("serial")
 public class MyFrame extends JFrame{
 
+	//Für eventuelle Spracheisntellungen
+	ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages/Bundle_D");
+	
 	//-------------------------Buttons-------------------------//
 	private JButton btnNew;
 	private JButton btnLoad;
@@ -43,7 +47,7 @@ public class MyFrame extends JFrame{
 	public MyFrame () {
 		panel = new MainFramePanel(new ImageIcon("AlfaTrainingProjekt/src/Images/BackGround_FullScreen.png").getImage());
 
-		btnNew = new JButton("Neues Spiel", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
+		btnNew = new JButton(bundle.getString("newBtn"), new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
 		btnLoad = new JButton("Laden", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
 		btnSettings = new JButton("Einstellungen", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
 		btnClose = new JButton("Beenden", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
@@ -202,4 +206,8 @@ public class MyFrame extends JFrame{
 		dispose();
 	}
 
+}
+
+enum Language{
+	EN, DE
 }
