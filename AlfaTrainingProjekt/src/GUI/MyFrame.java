@@ -26,7 +26,7 @@ import Database.Database;
 @SuppressWarnings("serial")
 public class MyFrame extends JFrame{
 
-	//Für eventuelle Spracheisntellungen
+	//Fuer eventuelle Spracheisntellungen
 	//ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages/Bundle_DE"); //Bundle, bzw path aus der Datenbank holen
 	
 	//-------------------------Buttons-------------------------//
@@ -76,7 +76,7 @@ public class MyFrame extends JFrame{
 	
 	//-------------------------private methods-------------------------//
 	/**
-	 * Baut die Verbindung zur Datenbank auf. Falls nicht möglich, 
+	 * Baut die Verbindung zur Datenbank auf. Falls nicht moeglich, 
 	 * wird der Fehler in der Konsole ausgegeben.
 	 * 
 	 * @author Kevin
@@ -176,7 +176,7 @@ public class MyFrame extends JFrame{
 	}
 	
 	/**
-	 * Wird aufgerufen, sobald der Button "Laden" gedrückt wurde.
+	 * Wird aufgerufen, sobald der Button "Laden" gedrueckt wurde.
 	 * Das Programm wird beendet.
 	 * 
 	 * @author Kevin
@@ -186,7 +186,7 @@ public class MyFrame extends JFrame{
 	}
 	
 	/**
-	 * Wird aufgerufen, sobald der Button "Einstellungen" gedrückt wurde.
+	 * Wird aufgerufen, sobald der Button "Einstellungen" gedrueckt wurde.
 	 * Das Programm wird beendet.
 	 * 
 	 * @author Kevin
