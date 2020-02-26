@@ -12,7 +12,6 @@ public class MainFramePanel extends JPanel{
     
     public MainFramePanel(Image img){
         backgroundImage = img;
-        setLayout(null);
     }
     
     @Override

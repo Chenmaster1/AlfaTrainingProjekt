@@ -1,6 +1,8 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,7 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+
 
 import Database.Database;
 
@@ -25,8 +29,8 @@ public class MyFrame extends JFrame{
 	private JButton btnLoad;
 	private JButton btnSettings;
 	private JButton btnClose;
-	private JPanel panel;
-	
+	private MainFramePanel panel;
+
 	/**
 	 * Hier werden alle Componenten initialisiert. Zudem werden <code>initializeFrame()</code>
 	 * und <code>pack()</code> ausgeführt
@@ -34,13 +38,13 @@ public class MyFrame extends JFrame{
 	 * @author Kevin
 	 */
 	public MyFrame () {
-		ImageIcon image = new ImageIcon("AlfaTrainingProjekt/src/Images/BackGround_FullScreen.png");
-		panel = new MainFramePanel(image.getImage());
+		panel = new MainFramePanel(new ImageIcon("AlfaTrainingProjekt/src/Images/BackGround_FullScreen.png").getImage());
+
+		btnNew = new JButton("Neues Spiel", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
+		btnLoad = new JButton("Laden", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
+		btnSettings = new JButton("Einstellungen", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
+		btnClose = new JButton("Beenden", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
 		
-		btnNew = new JButton("Neues Spiel");
-		btnLoad = new JButton("Laden");
-		btnSettings = new JButton("Einstellungen");
-		btnClose = new JButton("Beenden");
 		setUndecorated(true);
 		pack();
 	}
@@ -53,80 +57,11 @@ public class MyFrame extends JFrame{
 	 */
 	public void start() {
 		initializeFrame();
-		//Panel adden
-		getContentPane().add(panel);
-		
-		//Buttons
+		initializePanel();
 		initializeButtons();
+
 		//Datenbankverbindung
 		connectDatabase();
-			
-	}
-	
-	/**
-	 * Wird aufgerufen, sobald der Button Beenden gedrückt wurde.
-	 * Das Programm wird beendet.
-	 * 
-	 * @author Kevin
-	 */
-	private void onCloseClicked() {
-		this.dispose();
-	}
-	
-	/**
-	 * Hier werden alle Buttons fertig initialisiert.
-	 * 
-	 * @author Kevin
-	 */
-	private void initializeButtons() {
-		
-		btnNew.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				//TODO
-				
-			}
-		});
-		btnNew.setBounds((getWidth() /2 ) - 100, (getHeight()/2) - 90, 200, 50);
-		panel.add(btnNew);
-		
-		btnLoad.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				//TODO
-				
-			}
-		});
-		btnLoad.setBounds((getWidth() /2 ) - 100, (getHeight()/2) - 30, 200, 50);
-		panel.add(btnLoad);
-		
-		btnSettings.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				//TODO
-				
-			}
-		});
-		btnSettings.setBounds((getWidth() /2 ) - 100, (getHeight()/2) + 30, 200, 50);
-		panel.add(btnSettings);
-		
-		btnClose.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				onCloseClicked();
-				
-			}
-		});
-		btnClose.setBounds((getWidth() /2 ) - 100, (getHeight()/2) + 90, 200, 50);
-		panel.add(btnClose);
 	}
 	
 	/**
@@ -145,14 +80,119 @@ public class MyFrame extends JFrame{
 	}
 	
 	/**
-	 * Initialisiert den Frame zuende
+	 * Das Frame wird fertig aufgebaut
 	 * 
 	 * @author Kevin
 	 */
 	private void initializeFrame(){
-		this.setVisible(true);
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(3);
-		//this.setVisible(true);	
+		setVisible(true);	
 	}
+	
+	/**
+	 * Hier wird das Panel hinzugefuegt
+	 */
+	private void initializePanel() {
+		panel.setLayout(null);
+		getContentPane().add(panel);
+	}
+	
+	/**
+	 * Hier werden alle Buttons hinzugefuegt
+	 * 
+	 * @author Kevin
+	 */
+	private void initializeButtons() {
+		addButton(btnNew, getWidth()/2 - 100, getHeight()/2 - 90);
+		addButton(btnLoad, getWidth()/2 - 100, getHeight()/2 - 30);
+		addButton(btnSettings, getWidth()/2 - 100, getHeight()/2 + 30);
+		addButton(btnClose, getWidth()/2 - 100, getHeight()/2 + 90);
+		
+		btnNew.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onNewClicked();
+			}
+		});
+		
+		btnLoad.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onLoadClicked();
+			}
+		});
+		
+		btnSettings.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onSettingsClicked();
+			}
+		});
+		
+		btnClose.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onCloseClicked();			
+			}
+		});	
+	}
+	
+	/**
+	 * Fuegt einen Button hinzu
+	 * 
+	 * @param button der Button
+	 * @param posX	Die Position x
+	 * @param posY Die Position y
+	 */
+	private void addButton(JButton button,int posX,int posY) {
+		button.setHorizontalTextPosition(SwingConstants.CENTER);
+		button.setBounds(posX, posY, 200, 50);
+		panel.add(button);
+	}
+	
+	/**
+	 * Wird aufgerufen, sobald der Button "Neues Spiel" gedrückt wurde.
+	 * Das Programm wird beendet.
+	 * 
+	 * @author Kevin
+	 */
+	private void onNewClicked() {
+		//TODO
+	}
+	
+	/**
+	 * Wird aufgerufen, sobald der Button "Laden" gedrückt wurde.
+	 * Das Programm wird beendet.
+	 * 
+	 * @author Kevin
+	 */
+	private void onLoadClicked() {
+		//TODO
+	}
+	
+	/**
+	 * Wird aufgerufen, sobald der Button "Einstellungen" gedrückt wurde.
+	 * Das Programm wird beendet.
+	 * 
+	 * @author Kevin
+	 */
+	private void onSettingsClicked() {
+		//TODO
+	}
+	
+	/**
+	 * Wird aufgerufen, sobald der Button "Beenden" gedrückt wurde.
+	 * Das Programm wird beendet.
+	 * 
+	 * @author Kevin
+	 */
+	private void onCloseClicked() {
+		dispose();
+	}
+
 }
