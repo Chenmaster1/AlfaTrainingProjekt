@@ -27,7 +27,7 @@ import Database.Database;
 public class MyFrame extends JFrame{
 
 	//Fuer eventuelle Spracheisntellungen
-	//ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages/Bundle_DE"); //Bundle, bzw path aus der Datenbank holen
+	ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages/Bundle_DE"); //Bundle, bzw path aus der Datenbank holen
 	
 	//-------------------------Buttons-------------------------//
 	private JButton btnNew;
@@ -48,10 +48,10 @@ public class MyFrame extends JFrame{
 		panel = new MainFramePanel(new ImageIcon(getClass().getClassLoader().getResource("Images/BackGround_FullScreen.png")).getImage());
 		//System.out.println(bundle.getString("btnNew")); //Beispiel für Mehrsprachigkeit
 
-		btnNew = new MyButton("Neues Spiel", new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
-		btnLoad = new MyButton("Laden", new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
-		btnSettings = new MyButton("Einstellungen", new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
-		btnClose = new MyButton("Beenden", new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		btnNew = new MyButton(bundle.getString("btnNew"), new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		btnLoad = new MyButton(bundle.getString("btnLoad"), new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		btnSettings = new MyButton(bundle.getString("btnSettings"), new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		btnClose = new MyButton(bundle.getString("btnClose"), new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
 		
 		setUndecorated(true);
 		pack();
