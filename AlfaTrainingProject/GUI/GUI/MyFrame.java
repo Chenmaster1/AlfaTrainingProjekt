@@ -45,14 +45,14 @@ public class MyFrame extends JFrame{
 	 * @author Kevin
 	 */
 	public MyFrame () {
-		panel = new MainFramePanel(new ImageIcon("AlfaTrainingProjekt/src/Images/BackGround_FullScreen.png").getImage());
+		panel = new MainFramePanel(new ImageIcon("AlfaTrainingProjekt/GUI/Images/BackGround_FullScreen.png").getImage());
 		
 		//System.out.println(bundle.getString("btnNew")); //Beispiel für Mehrsprachigkeit
 
-		btnNew = new JButton("Neues Spiel", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
-		btnLoad = new JButton("Laden", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
-		btnSettings = new JButton("Einstellungen", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
-		btnClose = new JButton("Beenden", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
+		btnNew = new JButton("Neues Spiel", new ImageIcon("AlfaTrainingProjekt/GUI/Images/Button.png"));
+		btnLoad = new JButton("Laden", new ImageIcon("AlfaTrainingProjekt/GUI/Images/Button.png"));
+		btnSettings = new JButton("Einstellungen", new ImageIcon("AlfaTrainingProjekt/GUI/Images/Button.png"));
+		btnClose = new JButton("Beenden", new ImageIcon("AlfaTrainingProjekt/GUI/Images/Button.png"));
 		
 		setUndecorated(true);
 		pack();
