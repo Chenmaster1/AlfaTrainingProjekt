@@ -27,7 +27,7 @@ import Database.Database;
 public class MyFrame extends JFrame{
 
 	//Für eventuelle Spracheisntellungen
-	ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages/Bundle_D");
+	//ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages/Bundle_DE"); //Bundle, bzw path aus der Datenbank holen
 	
 	//-------------------------Buttons-------------------------//
 	private JButton btnNew;
@@ -46,8 +46,10 @@ public class MyFrame extends JFrame{
 	 */
 	public MyFrame () {
 		panel = new MainFramePanel(new ImageIcon("AlfaTrainingProjekt/src/Images/BackGround_FullScreen.png").getImage());
+		
+		//System.out.println(bundle.getString("btnNew")); //Beispiel für Mehrsprachigkeit
 
-		btnNew = new JButton(bundle.getString("newBtn"), new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
+		btnNew = new JButton("Neues Spiel", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
 		btnLoad = new JButton("Laden", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
 		btnSettings = new JButton("Einstellungen", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
 		btnClose = new JButton("Beenden", new ImageIcon("AlfaTrainingProjekt/src/Images/Button.png"));
