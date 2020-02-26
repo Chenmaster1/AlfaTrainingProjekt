@@ -1,0 +1,9 @@
+In diesem Projekt entsteht das Spiel Heroes of the Arena in einer Gruppenarbeit von fünf Leuten.
+
+Hierbei tritt ein Spieler gegen bis zu drei KI Gegner in einem Hide and Seek Spiel an. Am Ende
+lebt nur noch ein Held.
+
+Um die Entwicklung in der Gruppen gut voranführen zu können, 
+wurde zunächst eine grobe Übersicht der benötigten Klassen (inklusive abstrakter Klassen und Interfaces) erstellt.
+Danach wurde ein UML Diagramm erstellt. Anschließend wurde die einzelnen nötigen Teile der GUI und der Logik fair
+auf alle Mitglieder aufgeteilt und entwickelt. Das ganze hat über ein Repository stattgefunden.
