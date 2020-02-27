@@ -56,7 +56,6 @@ public class Database {
              * virtuellen Maschine ab
              */
             Class.forName(driver);
-
             // bereite mit dem Treiber eine DB-Verbindung vor (URL, Username, Passwort)
             cn = DriverManager.getConnection(dbURL, "heroesofthearena", "AlfaTraining");
             
