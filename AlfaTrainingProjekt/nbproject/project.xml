@@ -5,8 +5,8 @@
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
             <name>AlfaTrainingProjekt</name>
             <source-roots>
-                <root id="src.Images.dir" name="Images"/>
                 <root id="src.GUI.dir" name="GUI"/>
+                <root id="src.Images.dir" name="Images"/>
                 <root id="src.Logic.dir" name="Logic"/>
             </source-roots>
             <test-roots>
