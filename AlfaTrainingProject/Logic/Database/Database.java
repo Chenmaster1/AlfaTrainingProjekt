@@ -11,7 +11,7 @@ import java.sql.Statement;
  */
 public class Database {
 	
-	public static final String DATABASENAME = "AlfaTrainingProjekt";
+	public static final String DATABASENAME = "heroesofthearena";
     private static Database instance = null;
 
     /**
@@ -43,7 +43,7 @@ public class Database {
     {
         driver = "com.mysql.cj.jdbc.Driver";
 
-        dbURL = "jdbc:mysql://localhost:3306"
+        dbURL = "jdbc:mysql://db4free.net:3306/heroesofthearena"
                 + "?useUnicode=true"
                 + "&useJDBCCompliantTimezoneShift=true"
                 + "&useLegacyDatetimeCode=false"
@@ -58,14 +58,15 @@ public class Database {
             Class.forName(driver);
 
             // bereite mit dem Treiber eine DB-Verbindung vor (URL, Username, Passwort)
-            cn = DriverManager.getConnection(dbURL, "root", "");
-
+            cn = DriverManager.getConnection(dbURL, "heroesofthearena", "AlfaTraining");
+            
             // Endgueltige Verbindung zur Datenbank erzeugen
             st = cn.createStatement();
         } catch (ClassNotFoundException | SQLException ex)
         {
             //ex.printStackTrace();
             System.out.println("FEHLER: Laeuft der Server?");
+            System.out.println(ex.toString());
         }
     }
 
