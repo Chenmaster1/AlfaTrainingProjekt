@@ -1,5 +1,5 @@
 package Dice;
 
-public class AttackDice {
+public class AttackDice extends Dice{
 
 }
