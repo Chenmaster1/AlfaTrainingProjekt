@@ -63,7 +63,6 @@ public class MyButton extends JButton implements MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-            opacity = (float) 0.5;
             getParent().repaint();
 		
 	}
