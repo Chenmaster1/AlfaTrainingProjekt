@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
+import Actions.Action;
 import Abilities.Ability;
 import Database.Database;
 import Database.Queries;
@@ -12,7 +13,8 @@ import GameLogic.KiLogic;
 
 public abstract class Hero {
 	private ArrayList<Ability> abilities;
-	
+	private ArrayList<Action> actions;
+        
 	private ImageIcon avatar;
 	
 	private KiLogic ki;
@@ -35,6 +37,7 @@ public abstract class Hero {
 	public Hero(String name) {
 		//TODO ueber name werte aus Datenbank holen und attribute fuellen
 		ResultSet rs = Database.getInstance().executeQuery(Queries.getHeroValues + name);
+                //TODO Actions fuellen
 	}
 	
 	public void setCurrentHealth(int currentHealth) {
@@ -47,6 +50,7 @@ public abstract class Hero {
 	
 	public void setDelayTokens(int delayTokens) {
 		this.delayTokens = delayTokens;
+                //TODO Actions entsprechend auf enabled oder disabled setzen
 	}
 	
 	

@@ -1,5 +1,5 @@
 package GameLogic;
 
-public class KiLogic {
+public abstract class KiLogic {
 
 }
