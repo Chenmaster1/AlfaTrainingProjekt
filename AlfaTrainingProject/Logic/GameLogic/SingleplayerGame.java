@@ -10,6 +10,7 @@ import Heroes.Hero;
 import Maps.Map;
 
 public class SingleplayerGame {
+
 	private Map map;
 	private int timer;
 	private AttackDice attackDice;

@@ -9,4 +9,8 @@ public class Queries {
 	//Beispiel:
 	public static String getAll = "SELECT * FROM <Databasetable>";
 	
+	//querie für hero
+	
+	public static String getHeroValues = "SELECT * FROM HEROES WHERE NAME = ";
+	
 }

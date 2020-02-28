@@ -3,7 +3,9 @@ package Hideouts;
 public abstract class Hideout {
 
 	private int fieldNumber;
+	
 	boolean isActive;
+	
 	HideoutType hideoutType;
 	
 	public Hideout(int fieldNumber, HideoutType hideoutType) {

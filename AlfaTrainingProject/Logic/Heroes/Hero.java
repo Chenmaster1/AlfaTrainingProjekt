@@ -1,29 +1,40 @@
 package Heroes;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
 import Abilities.Ability;
+import Database.Database;
+import Database.Queries;
 import GameLogic.KiLogic;
 
 public abstract class Hero {
-	
 	private ArrayList<Ability> abilities;
-	private boolean isVisible;
+	
+	private ImageIcon avatar;
+	
+	private KiLogic ki;
+	
+	private String name;
+	private String description;
+	private String artwork;
+	
 	private int maxHealth;
 	private int currentHealth;
-	private String name;
 	private int actionPoints;
 	private int delayTokens;
-	private ImageIcon avatar;
-	private String description;
+	
+	private boolean isVisible;
+	
 	private double power;
-	private String artwork;
-	private KiLogic ki;
+	
+	
 	
 	public Hero(String name) {
 		//TODO ueber name werte aus Datenbank holen und attribute fuellen
+		ResultSet rs = Database.getInstance().executeQuery(Queries.getHeroValues + name);
 	}
 	
 	public void setCurrentHealth(int currentHealth) {
