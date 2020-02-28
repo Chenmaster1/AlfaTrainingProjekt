@@ -8,6 +8,7 @@ public class AttackDice extends Dice{
     
     @Override
     public int rollDice() {
+    	//TODO implementieren
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

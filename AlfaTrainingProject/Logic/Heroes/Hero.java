@@ -40,20 +40,8 @@ public abstract class Hero {
                 //TODO Actions fuellen
 	}
 	
-	public void setCurrentHealth(int currentHealth) {
-		this.currentHealth = currentHealth;
-	}
 	
-	public void setVisible(boolean isVisible) {
-		this.isVisible = isVisible;
-	}
-	
-	public void setDelayTokens(int delayTokens) {
-		this.delayTokens = delayTokens;
-                //TODO Actions entsprechend auf enabled oder disabled setzen
-	}
-	
-	
+	//-------------------------GETTER-------------------------//
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
@@ -89,4 +77,25 @@ public abstract class Hero {
 	public String getArtwork() {
 		return artwork;
 	}
+	
+	public boolean isPlayer() {
+		if(ki == null)
+			return true;
+		return false;
+	}
+	//-------------------------SETTER-------------------------//
+	
+	public void setCurrentHealth(int currentHealth) {
+		this.currentHealth = currentHealth;
+	}
+	
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
+	}
+	
+	public void setDelayTokens(int delayTokens) {
+		this.delayTokens = delayTokens;
+                //TODO Actions entsprechend auf enabled oder disabled setzen
+	}
+
 }

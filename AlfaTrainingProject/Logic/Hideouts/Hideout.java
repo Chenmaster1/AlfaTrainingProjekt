@@ -13,9 +13,7 @@ public abstract class Hideout {
 		this.hideoutType = hideoutType;
 	}
 	
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
+	//-------------------------GETTER-------------------------//
 	
 	public int getFieldNumber() {
 		return fieldNumber;
@@ -28,5 +26,13 @@ public abstract class Hideout {
 	public boolean isActive() {
 		return isActive;
 	}
+	
+	//-------------------------SETTER-------------------------//
+	
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	
+
 }
 

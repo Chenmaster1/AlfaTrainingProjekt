@@ -20,9 +20,12 @@ public class SingleplayerGame {
 	private int currentActionPoints;
 	private GamePanel panel;
 	
-	
 	public SingleplayerGame(GamePanel gamePanel, Map map) {
 		this.panel = gamePanel;
 		this.map = map;	
+	}
+	
+	public void startGame() {
+		//TODO als pairprogramming
 	}
 }
