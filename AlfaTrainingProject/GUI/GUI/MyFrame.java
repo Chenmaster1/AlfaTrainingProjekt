@@ -74,7 +74,9 @@ public class MyFrame extends JFrame{
 		initializeButtons();
 		
 		//Datenbankverbindung
-		connectDatabase();
+		//Muss nicht ausgefuehrt werden, da die Datenbank bereits besteht
+		//TODO ueber Browser oder kleinem programm befuellen. Datenbank besteht im internet, also muss nur abgefragt werden
+		//connectDatabase();
 	}
 	
 	//-------------------------private methods-------------------------//
