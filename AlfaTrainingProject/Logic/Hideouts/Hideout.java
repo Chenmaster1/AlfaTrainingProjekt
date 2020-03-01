@@ -1,5 +1,10 @@
 package Hideouts;
 
+/**
+ * Das Grundgeruest fuer jedes Hideout
+ * @author Kevin
+ *
+ */
 public abstract class Hideout {
 
 	private int fieldNumber;
@@ -8,6 +13,12 @@ public abstract class Hideout {
 	
 	HideoutType hideoutType;
 	
+	/**
+	 * Dies ist der Konstruktor fuer das Hideout
+	 * @param fieldNumber Die interne Nummer des Hideouts
+	 * @param hideoutType Die Art des Hideouts
+	 * @author Kevin
+	 */
 	public Hideout(int fieldNumber, HideoutType hideoutType) {
 		this.fieldNumber = fieldNumber;
 		this.hideoutType = hideoutType;

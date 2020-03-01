@@ -5,7 +5,6 @@ import GameLogic.SingleplayerGame;
 /**
  * 
  * @author Kevin
- *
  */
 public class AbilityTolpanLongbeardHide extends Ability{
 

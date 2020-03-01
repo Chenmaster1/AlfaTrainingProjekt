@@ -9,8 +9,12 @@ import Actions.Action;
 import Abilities.Ability;
 import Database.Database;
 import Database.Queries;
-import GameLogic.KiLogic;
+import KiLogics.KiLogic;
 
+/**
+ * Dies ist das Grundgeruest fuer jeden Helden
+ * @author Kevin
+ */
 public abstract class Hero {
 	protected ArrayList<Ability> abilities;
         
@@ -32,11 +36,15 @@ public abstract class Hero {
 	private double power;
 	
 	
-	
+	/**
+	 * Dies ist der Konstruktor fuer jeden Helden
+	 * @param name der Name des Helden. Wird benoetigt um alle noetigen Werte aus der Datenbank zu holen
+	 * @author Kevin
+	 */
 	public Hero(String name) {
 		//TODO ueber name werte aus Datenbank holen und attribute fuellen
 		ResultSet rs = Database.getInstance().executeQuery(Queries.getHeroValues + name);
-                //TODO Actions fuellen
+		//TODO Actions fuellen
 	}
 	
 	
