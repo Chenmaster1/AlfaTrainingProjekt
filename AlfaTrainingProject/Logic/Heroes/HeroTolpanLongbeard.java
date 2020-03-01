@@ -13,6 +13,7 @@ import GameLogic.SingleplayerGame;;
 public class HeroTolpanLongbeard extends Hero {
 
 	public HeroTolpanLongbeard(String name) {
+		//der rest wird über die Datenbank im konstruktor von Hero gefuellt.
 		super(name);
 		abilities = new ArrayList<Ability>();
 		abilities.add(new AbilityTolpanLongbeardHide(1));	

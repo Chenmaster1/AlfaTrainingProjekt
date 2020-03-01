@@ -20,14 +20,18 @@ public class ActionWorkOffDelay extends Action {
 		
 		switch(diceResult) {
 			case 0: // green
-				//TODO was passiert bei grün
+				//Verzoegerungsmarken und Aktionspunkte um 1 verringern
+				singleplayerGame.reduceCurrentActionPoints();
+				singleplayerGame.reduceDelayTokens();	
 				break;
 			case 1: // red
-				//TODO was passiert bei rot
+				// was passiert bei rot
+				singleplayerGame.reduceDelayTokens();
+				singleplayerGame.setCurrentActionPointsToZero();
 				break;
-			case 3: // nothing
-				//was passiert bei niete
-				break;
+			case 2: // nothing
+				//nichts passiert
+				return;
 		}
 	}
 

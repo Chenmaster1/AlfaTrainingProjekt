@@ -42,5 +42,28 @@ public class SingleplayerGame {
 		return attackDice;
 	}
 	
+	public Hero getCurrentHero() {
+		return currentHero;
+	}
+	
+	public int getCurrentActionPoints() {
+		return currentActionPoints;
+	}
 	//-------------------------SETTER-------------------------//
+	
+	public void reduceCurrentActionPoints() {
+		if(currentActionPoints >= 1)
+			currentActionPoints -= 1;
+	}
+	
+	public void setCurrentActionPointsToZero() {
+		if(currentActionPoints >= 1) 
+			currentActionPoints = 0;				
+	}
+	
+	public void reduceDelayTokens() {
+		if(currentHero.getDelayTokens() >= 1) 
+			currentHero.setDelayTokens(currentHero.getDelayTokens() - 1);			
+	}
+
 }
