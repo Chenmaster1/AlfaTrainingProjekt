@@ -27,7 +27,8 @@ public class KiLogicTolpanLongbeard extends KiLogic {
 				}
 			}else {
 				/*
-				 * TODO Angriff. Falls ein Held sichtbar ist, diesen angreifen
+				 * TODO Angriff. Falls ein Held sichtbar ist, diesen angreifen. Ansonsten primaer Felder angreifen, 
+				 * bei denen man selber nicht getroffen wernden kann 
 				 */
 			}
 			
