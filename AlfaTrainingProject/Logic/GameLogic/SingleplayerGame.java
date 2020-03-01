@@ -38,5 +38,9 @@ public class SingleplayerGame {
 		return hideDice;
 	}
 	
+	public AttackDice getAttackDice() {
+		return attackDice;
+	}
+	
 	//-------------------------SETTER-------------------------//
 }
