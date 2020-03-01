@@ -27,5 +27,16 @@ public class SingleplayerGame {
 	
 	public void startGame() {
 		//TODO als pairprogramming
+		
+		//abilites einen flag geben. wird ein held betroffen, wird der flag der ability überprüft. 
+		//führt entprechend abilies dann aus, wann die flag es zulässt
+		
 	}
+	
+	//-------------------------GETTER-------------------------//
+	public HideDice getHideDice() {
+		return hideDice;
+	}
+	
+	//-------------------------SETTER-------------------------//
 }

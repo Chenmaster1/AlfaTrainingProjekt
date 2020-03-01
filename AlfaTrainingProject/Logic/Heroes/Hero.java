@@ -12,8 +12,7 @@ import Database.Queries;
 import GameLogic.KiLogic;
 
 public abstract class Hero {
-	private ArrayList<Ability> abilities;
-	private ArrayList<Action> actions;
+	protected ArrayList<Ability> abilities;
         
 	private ImageIcon avatar;
 	
