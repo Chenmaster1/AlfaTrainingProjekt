@@ -17,7 +17,7 @@ public class HeroTolpanLongbeard extends Hero {
 		super(name);
 		abilities = new ArrayList<Ability>();
 		abilities.add(new AbilityTolpanLongbeardHide(1));
-		setKi(new KiLogicTolpanLongbeard());
+		ki = new KiLogicTolpanLongbeard();
 	}
 
 }

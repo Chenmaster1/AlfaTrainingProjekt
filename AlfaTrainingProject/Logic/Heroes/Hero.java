@@ -22,7 +22,7 @@ public abstract class Hero {
 
     private ImageIcon avatar;
 
-    private KiLogic ki;
+    protected KiLogic ki;
 
     private String name;
     private String description;
@@ -130,8 +130,4 @@ public abstract class Hero {
         //TODO Actions entsprechend auf enabled oder disabled setzen
     }
     
-    public void setKi(KiLogic ki) {
-    	this.ki = ki;
-    }
-
 }
