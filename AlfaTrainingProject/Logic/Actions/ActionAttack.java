@@ -3,9 +3,12 @@ package Actions;
 import GameLogic.SingleplayerGame;
 
 /**
- *
+ * @Holger 
+ * benoetigt einen Boolean fuer einen Doppelwurf
  */
 public class ActionAttack extends Action {
+    
+public boolean doubleThrow = false;
 
     public ActionAttack(int actionPointRequired) {
         super(actionPointRequired);
