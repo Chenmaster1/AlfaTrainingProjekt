@@ -23,18 +23,18 @@ public class KiLogicTolpanLongbeard extends KiLogic {
 		//Tolpan hat keine Faehigkeit die während seines Zuges eingesetzt wird
 		//seine Prioritaet liegt beim verstecken, dann verzoegerung abbauen und dann angreifen
 		while(singleplayerGame.getCurrentActionPoints() > 0) {
-			if(hero.isVisible()) {
-				for(Action action : actions) {
-				  	//if(action instanceof ActionHide)
-					resultAction = action;
-				}
-				 
-			}else if(hero.getDelayTokens() > 0) {
+			if(hero.getDelayTokens() > 0) {
 				for(Action action : actions) {
 					if(action instanceof ActionWorkOffDelay) {
 						resultAction = action;
 					}
+				}	 
+			}else if(hero.isVisible()) {
+				for(Action action : actions) {
+				  	//if(action instanceof ActionHide)
+					resultAction = action;
 				}
+			//Hier eventuell ability einfuegen (zur einfachheit nur einmal ausgeführt, also mit bool arbeiten?)
 			}else {
 				/*
 				 * TODO Angriff. Falls ein Held sichtbar ist, diesen angreifen. Ansonsten primaer Felder angreifen, 
