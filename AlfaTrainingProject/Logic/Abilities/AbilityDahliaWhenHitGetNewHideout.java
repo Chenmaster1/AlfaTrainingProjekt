@@ -20,6 +20,7 @@ public class AbilityDahliaWhenHitGetNewHideout extends Ability
         //if Dahlia is visible and hit, she seeks a new hideout
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
     //-----------------------------------
 
 }

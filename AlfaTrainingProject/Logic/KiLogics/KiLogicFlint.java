@@ -51,7 +51,7 @@ public class KiLogicFlint extends KiLogic {
 		for(Action action : actions) {
 					if(action instanceof ActionAttack) {
 						resultAction = action;
-                                                doubleThrow = true;
+                                                 //doubleThrow = true;
 					}
 				}
 		}
