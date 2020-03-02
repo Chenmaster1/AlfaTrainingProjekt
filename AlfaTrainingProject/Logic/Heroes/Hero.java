@@ -1,11 +1,11 @@
 package Heroes;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
-import Actions.Action;
 import Abilities.Ability;
 import Database.Database;
 import Database.Queries;
@@ -26,9 +26,7 @@ public abstract class Hero {
 	private String description;
 	private String artwork;
 	
-	private int maxHealth;
 	private int currentHealth;
-	private int actionPoints;
 	private int delayTokens;
 	
 	private boolean isVisible;
@@ -44,7 +42,13 @@ public abstract class Hero {
 	public Hero(String name) {
 		//TODO ueber name werte aus Datenbank holen und attribute fuellen
 		ResultSet rs = Database.getInstance().executeQuery(Queries.getHeroValues + name);
-		//TODO Actions fuellen
+		try {
+			while(rs.next()) {
+				
+				
+			}
+		} catch (SQLException e) {
+		}
 	}
 	
 	

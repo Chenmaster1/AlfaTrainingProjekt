@@ -3,7 +3,6 @@ package GameLogic;
 import java.util.ArrayList;
 
 import Actions.Action;
-import Actions.ActionWorkOffDelay;
 import Dice.AttackDice;
 import Dice.HideDice;
 import GUI.GamePanel;
@@ -54,6 +53,10 @@ public class SingleplayerGame {
 	public Map getMap(){
 		return map;
 	}
+	
+	public ArrayList<Action> getActions(){
+		return actions;
+	}
 	//-------------------------SETTER-------------------------//
 	
 	/**
@@ -80,4 +83,5 @@ public class SingleplayerGame {
 			currentHero.setDelayTokens(currentHero.getDelayTokens() - 1);			
 	}
 
+	
 }

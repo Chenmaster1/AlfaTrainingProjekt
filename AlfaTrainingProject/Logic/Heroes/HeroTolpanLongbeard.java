@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import Abilities.Ability;
 import Abilities.AbilityTolpanLongbeardHide;
-import GameLogic.SingleplayerGame;;
 /**
  * 
  * @author Kevin
