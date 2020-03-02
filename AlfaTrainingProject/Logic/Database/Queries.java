@@ -2,7 +2,7 @@ package Database;
 
 /**
  * Hier die Queries entsprechend dem Beispiel String aufbauen.
- * über Queries.<String> aufrufen
+ * über Queries.String aufrufen
  */
 public class Queries {
 
