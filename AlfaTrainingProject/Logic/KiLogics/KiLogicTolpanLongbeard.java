@@ -8,14 +8,18 @@ import GameLogic.SingleplayerGame;
 import Heroes.Hero;
 import Hideouts.Hideout;
 
+/**
+ * Dies ist die KiLogic fuer den Helden TolpanLongbeard
+ * @author Kevin
+ */
 public class KiLogicTolpanLongbeard extends KiLogic {
-
-	public KiLogicTolpanLongbeard() {
-	}
 
 	@Override
 	public void chooseAction(ArrayList<Action> actions, Hero hero, SingleplayerGame singleplayerGame) {
 		
+		//es wird solange eine Action ausgefuehrt, wie Aktionspunkte uebrig sind
+		//Tolpan hat keine Faehigkeit die während seines Zuges eingesetzt wird
+		//seine Prioritaet liegt beim verstecken, dann verzoegerung abbauen und dann angreifen
 		while(singleplayerGame.getCurrentActionPoints() > 0) {
 			if(hero.isVisible()) {
 				/*for(Action action : actions) {
@@ -45,41 +49,37 @@ public class KiLogicTolpanLongbeard extends KiLogic {
 					}
 				}
 				
+				//es wird solange ein Hideout gewaehlt, bis ein passendes getroffen wird.
+				//solange mehr als 6 felder aktiv sind, wird er selber nicht getroffen bei der auswahl 
+				//und ein entsprechendes Feld wird gewaehlt
+				//sind weniger aktiv wird nur geschaut ob das Feld aktiv ist
 				while(true) {
 					Random random = new Random();
 					int attackField = random.nextInt(21);
 					int activeFields = 0;
-					
-					for(Hideout hideout : singleplayerGame.getMap().getHideouts()) {
-						if(hideout.isActive())
-							activeFields++;
-					}
-					
-					if(activeFields <= 7) {
-						if(attackField < ownPosition + 2 || attackField > ownPosition - 2) {
-							if(singleplayerGame.getMap().getHideouts().get(attackField).isActive()) {
+
+					if(singleplayerGame.getMap().getHideouts().get(attackField).isActive()) {
+						
+						for(Hideout hideout : singleplayerGame.getMap().getHideouts()) {
+							if(hideout.isActive())
+								activeFields++;
+						}
+						
+						if(activeFields <= 7) {
+							if(attackField < ownPosition + 2 || attackField > ownPosition - 2) {
 								attack(attackField);
 								break;
 							}
-							
-						}
-						continue;
-					}else {
-						if(singleplayerGame.getMap().getHideouts().get(attackField).isActive()) {
+						}else {
 							attack(attackField);
 							break;
 						}
-					}
-					
-				}
-				
-				
+					}															
+				}	
 			}
-			
-			singleplayerGame.reduceCurrentActionPoints();
+			//reduce sollte bereits in der action, bzw ability aufgerufen werde, sofern die ability einen Zug ersetzt
+			//singleplayerGame.reduceCurrentActionPoints();
 		}
-		
-		
 	}
 
 	private void attack(int attackField) {

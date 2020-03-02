@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="AlfaTrainingProject/GUI"/>
 	<classpathentry kind="src" path="Images"/>
 	<classpathentry kind="src" path="AlfaTrainingProject/Logic"/>
+	<classpathentry kind="src" path="Sounds"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
