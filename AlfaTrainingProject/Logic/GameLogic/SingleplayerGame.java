@@ -29,7 +29,7 @@ public class SingleplayerGame {
 	public void startGame() {
 		//TODO als pairprogramming
 		
-		//abilites einen flag geben. wird ein held betroffen, wird der flag der ability überprüft. 
+		//abilites einen flag geben. wird ein held betroffen, wird der flag seiner ability überprüft. 
 		//führt entprechend abilies dann aus, wann die flag es zulässt
 		
 	}
@@ -56,16 +56,25 @@ public class SingleplayerGame {
 	}
 	//-------------------------SETTER-------------------------//
 	
+	/**
+	 * Reduziert die aktuellen Aktionspunkte um 1, auf maximal 0
+	 */
 	public void reduceCurrentActionPoints() {
 		if(currentActionPoints >= 1)
 			currentActionPoints -= 1;
 	}
 	
+	/**
+	 * Reduziert die aktuelle Aktionspunkte sofort auf 0, egal welcher wert vorher gegeben war
+	 */
 	public void setCurrentActionPointsToZero() {
 		if(currentActionPoints >= 1) 
 			currentActionPoints = 0;				
 	}
 	
+	/**
+	 * Reduziert die Verzoegerungs Tokens um 1 auf maximal 0
+	 */
 	public void reduceDelayTokens() {
 		if(currentHero.getDelayTokens() >= 1) 
 			currentHero.setDelayTokens(currentHero.getDelayTokens() - 1);			
