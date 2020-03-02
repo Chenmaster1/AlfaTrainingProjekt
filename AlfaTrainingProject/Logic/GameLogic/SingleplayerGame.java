@@ -50,6 +50,10 @@ public class SingleplayerGame {
 	public int getCurrentActionPoints() {
 		return currentActionPoints;
 	}
+	
+	public Map getMap(){
+		return map;
+	}
 	//-------------------------SETTER-------------------------//
 	
 	public void reduceCurrentActionPoints() {
