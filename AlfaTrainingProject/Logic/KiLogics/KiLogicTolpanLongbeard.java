@@ -8,10 +8,11 @@ import GameLogic.SingleplayerGame;
 import Heroes.Hero;
 import Hideouts.Hideout;
 
+/**
+ * Dies ist die KiLogic fuer den Helden TolpanLongbeard
+ * @author Kevin
+ */
 public class KiLogicTolpanLongbeard extends KiLogic {
-
-	public KiLogicTolpanLongbeard() {
-	}
 
 	@Override
 	public void chooseAction(ArrayList<Action> actions, Hero hero, SingleplayerGame singleplayerGame) {
