@@ -5,7 +5,7 @@ package Hideouts;
  * @author Kevin
  *
  */
-public abstract class Hideout {
+public class Hideout {
 
 	private int fieldNumber;
 	
