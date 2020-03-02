@@ -19,7 +19,7 @@ public abstract class KiLogic {
 	 * Diese Methode wird von jeder KI implementiert und darueber aufgerufen
 	 * 
 	 * Falls nur ein Actionpoint übrig:
-	 * 		-> Verzögerungsmarke abbauen
+	 * 		- Verzögerungsmarke abbauen
 	 * Falls mehr, erst verstecken dann angreifen oder Fähigkeit benutzen
 	 * 
 	 * @param actions alle ausfuehrbaren Aktionen ohne Faehigkeiten
