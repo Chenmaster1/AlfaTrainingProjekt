@@ -36,6 +36,8 @@ public class SingleplayerGame {
     	
     	//Fuer die Auswahl eines Feldes, wird beim bewegen der Maus der winkel zum Mittelpunkt berechnet und der Tower entsprechend mitbewegt
     	//beim klick wird eingerastet und angegriffen (eventuell verzoegerung mit einarbeiten)
+    	
+    	//vllt doch erstmal ohne db? nur helden und safegame? wären inbegriffen. hardcoden?
     }
 
     //-------------------------GETTER-------------------------//
