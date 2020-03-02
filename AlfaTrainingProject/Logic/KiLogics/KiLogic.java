@@ -20,6 +20,7 @@ public abstract class KiLogic {
 	 * @param actions alle ausfuehrbaren Aktionen ohne Faehigkeiten
 	 * @param hero der aktuelle Held
 	 * @param singleplayerGame das aktuelle Spiel
+         * @return die Aktion
 	 */
 	public abstract Action chooseAction(ArrayList<Action> actions, Hero hero, SingleplayerGame singleplayerGame);
 	
