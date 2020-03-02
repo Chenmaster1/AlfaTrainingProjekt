@@ -33,6 +33,9 @@ public class SingleplayerGame {
 
         //abilites einen flag geben. wird ein held betroffen, wird der flag seiner ability überprüft. 
         //führt entprechend abilies dann aus, wann die flag es zulässt
+    	
+    	//Fuer die Auswahl eines Feldes, wird beim bewegen der Maus der winkel zum Mittelpunkt berechnet und der Tower entsprechend mitbewegt
+    	//beim klick wird eingerastet und angegriffen (eventuell verzoegerung mit einarbeiten)
     }
 
     //-------------------------GETTER-------------------------//

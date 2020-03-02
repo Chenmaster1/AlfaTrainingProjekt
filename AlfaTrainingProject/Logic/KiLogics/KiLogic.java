@@ -17,6 +17,11 @@ public abstract class KiLogic {
 
 	/**
 	 * Diese Methode wird von jeder KI implementiert und darueber aufgerufen
+	 * 
+	 * Falls nur ein Actionpoint übrig:
+	 * 		-> Verzögerungsmarke abbauen
+	 * Falls mehr, erst verstecken dann angreifen oder Fähigkeit benutzen
+	 * 
 	 * @param actions alle ausfuehrbaren Aktionen ohne Faehigkeiten
 	 * @param hero der aktuelle Held
 	 * @param singleplayerGame das aktuelle Spiel
