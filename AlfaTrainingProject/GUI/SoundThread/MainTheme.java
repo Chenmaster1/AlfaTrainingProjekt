@@ -23,7 +23,12 @@ public class MainTheme implements Runnable{
 			DataLine.Info info = new DataLine.Info(Clip.class, format);
 			Clip clip = (Clip) AudioSystem.getLine(info);
 			clip.open(stream);
-			clip.start();
+			while(true) {
+				
+				clip.start();
+			}
+			
+			
 		}catch(Exception ex) {
 			System.out.println("sound klappt nicht: " + ex.getMessage()  );
 		}
