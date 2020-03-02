@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 
 
 import Database.Database;
+import SoundThread.MainTheme;
 
 /**
  * Diese Klasse dient zum Starten des Programms und Aufbau des Grundfensters
@@ -72,6 +73,9 @@ public class MyFrame extends JFrame{
 		//Muss nicht ausgefuehrt werden, da die Datenbank bereits besteht
 		//TODO ueber Browser oder kleinem programm befuellen. Datenbank besteht im internet, also muss nur abgefragt werden
 		//connectDatabase();
+		
+		Thread soundThread = new Thread(new MainTheme());
+		soundThread.start();
 	}
 	
 	//-------------------------private methods-------------------------//
