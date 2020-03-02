@@ -38,5 +38,4 @@ public class ActionWorkOffDelay extends Action {
 				return;
 		}
 	}
-
 }
