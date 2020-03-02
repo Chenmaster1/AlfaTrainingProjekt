@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Abilities.Ability;
 import Abilities.AbilityTolpanLongbeardHide;
+import KiLogics.KiLogicTolpanLongbeard;
 /**
  * 
  * @author Kevin
@@ -15,7 +16,8 @@ public class HeroTolpanLongbeard extends Hero {
 		//der rest wird über die Datenbank im konstruktor von Hero gefuellt.
 		super(name);
 		abilities = new ArrayList<Ability>();
-		abilities.add(new AbilityTolpanLongbeardHide(1));	
+		abilities.add(new AbilityTolpanLongbeardHide(1));
+		setKi(new KiLogicTolpanLongbeard());
 	}
 
 }

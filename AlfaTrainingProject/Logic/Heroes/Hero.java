@@ -129,5 +129,9 @@ public abstract class Hero {
         this.delayTokens = delayTokens;
         //TODO Actions entsprechend auf enabled oder disabled setzen
     }
+    
+    public void setKi(KiLogic ki) {
+    	this.ki = ki;
+    }
 
 }
