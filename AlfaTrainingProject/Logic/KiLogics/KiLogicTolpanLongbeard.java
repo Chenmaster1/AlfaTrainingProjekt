@@ -79,8 +79,6 @@ public class KiLogicTolpanLongbeard extends KiLogic {
 			//reduce sollte bereits in der action, bzw ability aufgerufen werde, sofern die ability einen Zug ersetzt
 			//singleplayerGame.reduceCurrentActionPoints();
 		}
-		
-		
 	}
 
 	private void attack(int attackField) {
