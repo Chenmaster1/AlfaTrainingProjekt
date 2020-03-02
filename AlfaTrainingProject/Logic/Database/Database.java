@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Die Verbidnung zur Datenbank. Über Datenbank.<> aufrufen.
+ * Die Verbidnung zur Datenbank. Über Datenbank. aufrufen.
  */
 public class Database {
 	
