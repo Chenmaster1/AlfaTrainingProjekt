@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 public class MapPanel extends JPanel {
 
     public final static int MAPSTATE_REGULAR = 0, MAPSTATE_AIMING = 1;
-    private final static int PANELSIZE = 600;
+    private final static int PANELSIZE = 1080;
 
     private Image backgroundImage;
     private Image aimOverlay;
@@ -36,6 +36,8 @@ public class MapPanel extends JPanel {
 
     public MapPanel(ArrayList<Hideout> hideouts) {
         super();
+
+        setLayout(null);
 
         //TODO: korrekte Bilder referenzieren
         backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Gameboard_Empty.png")).getImage();
@@ -64,7 +66,7 @@ public class MapPanel extends JPanel {
 
     public void setMapState(int mapState) {
         this.mapState = mapState;
-        
+
     }
 
     public int getCurrentAimedAtField() {
@@ -81,7 +83,6 @@ public class MapPanel extends JPanel {
 
         //Overlays für zerstörte Verstecke
 //        drawDisabledFields(g2d);
-
         //ggf Overlay für den Zielmechanismus
         if (mapState == MAPSTATE_AIMING) {
             drawAimOverlay(g2d);
@@ -89,12 +90,11 @@ public class MapPanel extends JPanel {
 
         //zuletzt Overlays für Helden
 //        drawVisibleHeros(g2d);
-
     }
 
     /**
-     * Zeichnet für alle zerstörten Verstecke das entsprechende Overlay.   
-    */
+     * Zeichnet für alle zerstörten Verstecke das entsprechende Overlay.
+     */
     private void drawDisabledFields(Graphics2D g2d) {
         for (int i = 0; i < hideouts.size(); i++) {
             if (!hideouts.get(i).isActive()) {
@@ -105,14 +105,15 @@ public class MapPanel extends JPanel {
 
     /**
      * Zeichnet die Zielmaske, abhängig vom aktuell anvisierten Feld.
-     * @param g2d 
+     *
+     * @param g2d
      */
     private void drawAimOverlay(Graphics2D g2d) {
         AffineTransform oldTransform = g2d.getTransform();
 
-        g2d.rotate(Math.toRadians(currentAimedAtField * (360 / hideouts.size())), PANELSIZE / 2, PANELSIZE / 2);
+        g2d.rotate(Math.toRadians((currentAimedAtField) * (360 / hideouts.size()) + 180), PANELSIZE / 2, PANELSIZE / 2);
 
-        g2d.drawImage(aimOverlay, PANELSIZE / 2 - aimOverlay.getWidth(this) / 2, PANELSIZE/2, this);
+        g2d.drawImage(aimOverlay, PANELSIZE / 2 - aimOverlay.getWidth(this) / 2, PANELSIZE / 2 - aimOverlay.getHeight(this) / 2, this);
 
         g2d.setTransform(oldTransform);
     }
@@ -121,30 +122,28 @@ public class MapPanel extends JPanel {
      * Zeichnet alle sichtbaren Helden-Icons auf die entsprechenden Felder. Der
      * eigene Held (currentHero) ist immer sichtbar und wird halb transparent
      * dargestellt, wenn er versteckt ist.
+     *
      * @param g2d
      */
     private void drawVisibleHeros(Graphics2D g2d) {
-        for (Hideout h : hideoutHeroes.keySet())
-        {
+        for (Hideout h : hideoutHeroes.keySet()) {
             Hero occupyingHero = hideoutHeroes.get(h);
-            if (occupyingHero.isVisible())
-            {
+            if (occupyingHero.isVisible()) {
                 //TODO: Hero-Icon zeichnen 
             }
-            if((occupyingHero == currentHero) && !occupyingHero.isVisible())
-            {
+            if ((occupyingHero == currentHero) && !occupyingHero.isVisible()) {
                 //TODO: Hero-Icon halbtransparent zeichnen
             }
-            
+
         };
-        
+
     }
 
     /**
      * Fügt die konstanten MouseListener hinzu, damit das anvisierte Feld
      * bestimmt werden kann.
-     * 
-     * TODO Optimierung: Listener als interne Klasse definieren und nur 
+     *
+     * TODO Optimierung: Listener als interne Klasse definieren und nur
      * anschalten, solange mapState == MAPSTATE_AIMING ist (in setMapState(int))
      */
     private void addAimMouseListener() {
@@ -152,21 +151,24 @@ public class MapPanel extends JPanel {
 
             @Override
             public void mouseMoved(MouseEvent me) {
-                currentAimedAtField = calculateField(me.getPoint());
+                int newField = calculateField(me.getPoint());
+
+                if (!(newField == currentAimedAtField)) {
+                    currentAimedAtField = newField;
+                    repaint();
+                }
             }
 
         });
     }
-    
-    
 
     /**
      * Errechnet für einen beliebigen Punkt des Panels, welchem Hideout er
      * entspricht (für den Zielmechanismus).
-     * 
+     *
      * @param aimedAtPoint Position auf dem Panel
-     * @return Die ID des hideouts, dass am ehesten der angegebenen 
-     * Position entspricht
+     * @return Die ID des hideouts, dass am ehesten der angegebenen Position
+     * entspricht
      */
     private int calculateField(Point aimedAtPoint) {
         int numFields = hideouts.size();
@@ -177,12 +179,14 @@ public class MapPanel extends JPanel {
         int x_diff = aimedAtPoint.x - center.x;
         int y_diff = aimedAtPoint.y - center.y;
 
-        double aimedAtDegree = Math.toDegrees(Math.atan2(x_diff, y_diff));
+        double atan = Math.toDegrees(Math.atan2(x_diff, y_diff));
 
-        aimedAtDegree = aimedAtDegree + 180;
+        double aimedAtDegree = (atan - 180.0) * -1;
+        System.out.println(aimedAtDegree);
 
-        int aimedAtField = (int) aimedAtDegree / degreesPerField;
+        int aimedAtField = ((((int) aimedAtDegree + (360 / hideouts.size() / 2)) % 360) / degreesPerField);
 
+        System.out.println(aimedAtField);
         return aimedAtField;
     }
 }
