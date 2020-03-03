@@ -30,6 +30,7 @@ public abstract class KiLogic {
 	public abstract Action chooseAction(ArrayList<Action> actions, Hero hero, SingleplayerGame singleplayerGame);
 	
 	public int chooseAttackField(SingleplayerGame singleplayerGame){
+		//TODO falls ein feindlicher Held aufgedeckt ist, wird dieser Priorisiert angegriffen und nicht zufällig ein feld ausgewählt
 		
 		int ownPosition = -1;
 		for(Hideout hideout : singleplayerGame.getMap().getHideouts()) {
@@ -59,8 +60,8 @@ public abstract class KiLogic {
 						activeFields++;
 				}
 				
-				if(activeFields <= 7) {
-					if(attackField < ownPosition + 2 || attackField > ownPosition - 2) {
+				if(activeFields >= 7) {
+					if(attackField < (ownPosition + 2) % 20 || attackField > (ownPosition - 2 + 20) % 20) {
 						return attackField;
 					}
 				}else {

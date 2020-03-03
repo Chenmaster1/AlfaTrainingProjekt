@@ -7,11 +7,14 @@ package Hideouts;
  */
 public class Hideout {
 
-	private int fieldNumber;
+	/**
+	 * liegt zwischen 0 und 19
+	 */
+	private final int fieldNumber;
 	
-	boolean isActive;
+	private boolean isActive;
 	
-	HideoutType hideoutType;
+	private HideoutType hideoutType;
 	
 	/**
 	 * Dies ist der Konstruktor fuer das Hideout
