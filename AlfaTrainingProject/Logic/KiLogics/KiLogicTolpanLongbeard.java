@@ -53,14 +53,4 @@ public class KiLogicTolpanLongbeard extends KiLogic {
 		}
 		return resultAction;
 	}
-
-	private void attack(int attackField) {
-		//TODO attackaction ausfueheren
-		/*
-		 * for(Action action : singleplayerGame.getActions()){
-		 * 	if(action instanceof ActionAttack)
-		 * 		action.useAction(singleplayerGame);
-		 * }
-		 */
-	}
 }
