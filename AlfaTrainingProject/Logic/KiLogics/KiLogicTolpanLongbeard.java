@@ -26,12 +26,13 @@ public class KiLogicTolpanLongbeard extends KiLogic {
 			if(hero.getDelayTokens() > 0 && singleplayerGame.getCurrentActionPoints() == 1) {
 				for(Action action : actions) {
 					if(action instanceof ActionWorkOffDelay) {
-						resultAction = action;
+						resultAction = (ActionWorkOffDelay) action;
 					}
 				}	 
 			}else if(hero.isVisible() && hero.getDelayTokens() == 0) {
 				for(Action action : actions) {
 				  	//if(action instanceof ActionHide)
+					//cast hinzufügen
 					resultAction = action;
 				}
 			//Hier eventuell ability einfuegen
@@ -43,7 +44,7 @@ public class KiLogicTolpanLongbeard extends KiLogic {
 				
 				for(Action action : actions) {
 					if(action instanceof ActionAttack) {
-						resultAction = action;
+						resultAction = (ActionAttack) action;
 					}
 				}
 				
