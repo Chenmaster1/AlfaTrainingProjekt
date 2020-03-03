@@ -55,7 +55,11 @@ public abstract class Hero {
         } catch (SQLException e) {
         }
     }
-
+    
+    public boolean equals(Hero hero) {
+    	return hero.getName().equals(name);
+    }
+    
     //-------------------------GETTER-------------------------//
     public int getMaxHealth() {
         return maxHealth;

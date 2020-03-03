@@ -1,7 +1,9 @@
 package KiLogics;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
+import java.util.Set;
 
 import Actions.Action;
 import GameLogic.SingleplayerGame;
@@ -30,7 +32,6 @@ public abstract class KiLogic {
 	public abstract Action chooseAction(ArrayList<Action> actions, Hero hero, SingleplayerGame singleplayerGame);
 	
 	public int chooseAttackField(SingleplayerGame singleplayerGame){
-		//TODO falls ein feindlicher Held aufgedeckt ist, wird dieser Priorisiert angegriffen und nicht zufällig ein feld ausgewählt
 		
 		int ownPosition = -1;
 		for(Hideout hideout : singleplayerGame.getMap().getHideouts()) {
@@ -39,6 +40,18 @@ public abstract class KiLogic {
 				
 				if(singleplayerGame.getMap().getHideoutHero().get(hideout).equals(singleplayerGame.getCurrentHero())) {
 					ownPosition = hideout.getFieldNumber();
+				}
+			}
+		}
+		
+		//falls Ein held sichtbar ist, der nicht er selber ist
+		for(Hero hero : singleplayerGame.getMap().getHeroes()) {
+			if(hero.isVisible() && !(hero.equals(singleplayerGame.getCurrentHero()))) {
+				HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getMap().getHideoutHero();
+				for(Hideout key : hideoutHeroMap.keySet()) {
+					if(hideoutHeroMap.get(key).equals(hero)) {
+						return key.getFieldNumber();
+					}
 				}
 			}
 		}

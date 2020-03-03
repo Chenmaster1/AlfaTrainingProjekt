@@ -64,6 +64,7 @@ public class SingleplayerGame {
     public ArrayList<Action> getActions() {
         return actions;
     }
+    
     //-------------------------SETTER-------------------------//
 
     /**
