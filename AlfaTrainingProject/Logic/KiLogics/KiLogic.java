@@ -61,7 +61,8 @@ public abstract class KiLogic {
 				}
 				
 				if(activeFields >= 7) {
-					if(attackField < (ownPosition + 2) % 20 || attackField > (ownPosition - 2 + 20) % 20) {
+					int hideoutCount = singleplayerGame.getMap().getHideouts().size();
+					if(attackField < (ownPosition + 2) % hideoutCount || attackField > (ownPosition - 2 + hideoutCount) % hideoutCount) {
 						return attackField;
 					}
 				}else {
