@@ -13,6 +13,8 @@ import Hideouts.Hideout;
 /**
  * Diese Klasse dient als Grundgeruest fuer jede implementierte KI.
  * Jeder Held besitzt aufgrund seiner einzigartigkeit einee eigene
+ * 
+ * 
  * @author Kevin
  */
 public abstract class KiLogic {

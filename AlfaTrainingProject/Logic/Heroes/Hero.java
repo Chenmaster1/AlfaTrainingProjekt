@@ -18,120 +18,129 @@ import KiLogics.KiLogic;
  */
 public abstract class Hero {
 
-    protected ArrayList<Ability> abilities;
+	protected ArrayList<Ability> abilities;
 
-    private ImageIcon avatar;
+	private ImageIcon avatar;
 
-    protected KiLogic ki;
+	protected KiLogic ki;
 
-    private String name;
-    private String description;
-    private String artwork;
+	private String name;
+	private String description;
+	private String artwork;
 
-    private int maxHealth;
+	private int maxHealth;
 
-    private int currentHealth;
-    private int maxActionPoints;
-    private int delayTokens;
+	private int currentHealth;
+	private int maxActionPoints;
+	private int delayTokens;
 
-    private boolean isVisible;
+	private boolean isVisible;
+	private boolean isPlayerControlled;
 
-    private double power;
+	private double power;
 
-    /**
-     * Dies ist der Konstruktor fuer jeden Helden
-     *
-     * @param name der Name des Helden. Wird benoetigt um alle noetigen Werte
-     * aus der Datenbank zu holen
-     * @author Kevin
-     */
-    public Hero(String name) {
-        //TODO ueber name werte aus Datenbank holen und attribute fuellen
-        ResultSet rs = Database.getInstance().executeQuery(Queries.getHeroValues + name);
-        try {
-            while (rs.next()) {
+	/**
+	 * Dies ist der Konstruktor fuer jeden Helden
+	 *
+	 * @param name der Name des Helden. Wird benoetigt um alle noetigen Werte aus
+	 *             der Datenbank zu holen
+	 * @author Kevin
+	 */
+	public Hero(String name) {
+		// TODO ueber name werte aus Datenbank holen und attribute fuellen
+		ResultSet rs = Database.getInstance().executeQuery(Queries.getHeroValues + name);
+		try {
+			while (rs.next()) {
 
-            }
-        } catch (SQLException e) {
-        }
-    }
-    
-    public boolean equals(Hero hero) {
-    	return hero.getName().equals(name);
-    }
-    
-    //-------------------------GETTER-------------------------//
-    public int getMaxHealth() {
-        return maxHealth;
-    }
+			}
+		} catch (SQLException e) {
+		}
+		
+		//Standardwerte: KI-kontrolliert, nicht sichtbar, kein Delay, volle Lebenspunkte
+		setPlayerControlled(false);
+		setVisible(false);
+		setDelayTokens(0);
+		setCurrentHealth(getMaxHealth());
+		
+	}
 
-    public int getMaxActionPoints() {
-        return maxActionPoints;
-    }
+	public boolean equals(Hero hero) {
+		return hero.getName().equals(name);
+	}
 
-    public int getCurrentHealth() {
-        return currentHealth;
-    }
+	// -------------------------GETTER-------------------------//
+	public int getMaxHealth() {
+		return maxHealth;
+	}
 
-    public ArrayList<Ability> getAbilities() {
-        return abilities;
-    }
+	public int getMaxActionPoints() {
+		return maxActionPoints;
+	}
 
-    public boolean isVisible() {
-        return isVisible;
-    }
+	public int getCurrentHealth() {
+		return currentHealth;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public ArrayList<Ability> getAbilities() {
+		return abilities;
+	}
 
-    public int getDelayTokens() {
-        return delayTokens;
-    }
+	public boolean isVisible() {
+		return isVisible;
+	}
 
-    public ImageIcon getAvatar() {
-        return avatar;
-    }
+	public boolean isPlayerControlled() {
+		return isPlayerControlled;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public double getPower() {
-        return power;
-    }
+	public int getDelayTokens() {
+		return delayTokens;
+	}
 
-    public String getArtwork() {
-        return artwork;
-    }
+	public ImageIcon getAvatar() {
+		return avatar;
+	}
 
-    public boolean isPlayer() {
-        if (ki == null) {
-            return true;
-        }
-        return false;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    //-------------------------SETTER-------------------------//
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
+	public double getPower() {
+		return power;
+	}
 
-    public void setMaxActionPoints(int maxActionPoints) {
-        this.maxActionPoints = maxActionPoints;
-    }
+	public String getArtwork() {
+		return artwork;
+	}
 
-    public void setCurrentHealth(int currentHealth) {
-        this.currentHealth = currentHealth;
-    }
+	// -------------------------SETTER-------------------------//
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
+	}
 
-    public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
-    }
+	public void setMaxActionPoints(int maxActionPoints) {
+		this.maxActionPoints = maxActionPoints;
+	}
 
-    public void setDelayTokens(int delayTokens) {
-        this.delayTokens = delayTokens;
-        //TODO Actions entsprechend auf enabled oder disabled setzen
-    }
-    
+	public void setCurrentHealth(int currentHealth) {
+		this.currentHealth = currentHealth;
+	}
+
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
+	}
+	
+	public void setPlayerControlled(boolean isPlayerControlled) {
+		this.isPlayerControlled = isPlayerControlled;
+	}
+
+	public void setDelayTokens(int delayTokens) {
+		this.delayTokens = delayTokens;
+		// TODO Actions entsprechend auf enabled oder disabled setzen
+	}
+
 }
