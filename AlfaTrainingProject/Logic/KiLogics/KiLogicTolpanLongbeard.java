@@ -31,9 +31,8 @@ public class KiLogicTolpanLongbeard extends KiLogic {
 				}	 
 			}else if(hero.isVisible() && hero.getDelayTokens() == 0) {
 				for(Action action : actions) {
-				  	//if(action instanceof ActionHide)
-					//cast hinzufügen
-					resultAction = action;
+				  	if(action instanceof ActionHide)
+				  		resultAction = (ActionHide) action;
 				}
 			//Hier eventuell ability einfuegen
 			}else{
