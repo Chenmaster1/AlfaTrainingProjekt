@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 /**
- *
+ * Eine Testklasse für die Arena
  */
 public class MapPanelTest extends JFrame{
     
