@@ -49,7 +49,7 @@ public class MapPanelTest extends JFrame{
             }
         });
         
-        getContentPane().setPreferredSize(new Dimension(1080, 1080));
+//        getContentPane().setPreferredSize(new Dimension(1080, 1080));
          setLocation(-1080, 0);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);

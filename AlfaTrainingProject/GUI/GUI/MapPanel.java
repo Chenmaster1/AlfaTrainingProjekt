@@ -2,6 +2,7 @@ package GUI;
 
 import Heroes.Hero;
 import Hideouts.Hideout;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -38,6 +39,7 @@ public class MapPanel extends JPanel {
         super();
 
         setLayout(null);
+        setPreferredSize(new Dimension(PANELSIZE,PANELSIZE));
 
         //TODO: korrekte Bilder referenzieren
         backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Gameboard_Empty.png")).getImage();
