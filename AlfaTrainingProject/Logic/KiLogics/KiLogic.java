@@ -46,7 +46,7 @@ public abstract class KiLogic {
 			}
 		}
 		
-		//falls Ein held sichtbar ist, der nicht er selber ist
+		//falls Ein held sichtbar ist, der nicht er selber ist, wird dieser vorrangig angegriffen
 		for(Hero hero : singleplayerGame.getMap().getHeroes()) {
 			if(hero.isVisible() && !(hero.equals(singleplayerGame.getCurrentHero()))) {
 				HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getMap().getHideoutHero();
