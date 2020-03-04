@@ -43,9 +43,9 @@ public class MapPanel extends JPanel {
         backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Gameboard_Empty.png")).getImage();
         aimOverlay = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Tower_Aim.png")).getImage();
         inactiveFieldOverlays = new ArrayList<>();
-//        for (int i = 0; i < hideouts.size(); i++) {
-//            inactiveFieldOverlays.add(new ImageIcon(getClass().getClassLoader().getResource("Images/" + i + "_TODOTODOTODO.png")).getImage());
-//        }
+        for (int i = 0; i < hideouts.size(); i++) {
+            inactiveFieldOverlays.add(new ImageIcon(getClass().getClassLoader().getResource("Gameboard/" + i + "-Deactivated.png")).getImage());
+        }
 
         hideoutHeroes = null;
         currentHero = null;
@@ -82,7 +82,7 @@ public class MapPanel extends JPanel {
         g2d.drawImage(backgroundImage, 0, 0, PANELSIZE, PANELSIZE, this);
 
         //Overlays für zerstörte Verstecke
-//        drawDisabledFields(g2d);
+        drawDisabledFields(g2d);
         //ggf Overlay für den Zielmechanismus
         if (mapState == MAPSTATE_AIMING) {
             drawAimOverlay(g2d);
@@ -98,7 +98,8 @@ public class MapPanel extends JPanel {
     private void drawDisabledFields(Graphics2D g2d) {
         for (int i = 0; i < hideouts.size(); i++) {
             if (!hideouts.get(i).isActive()) {
-                g2d.drawImage(inactiveFieldOverlays.get(i), 0, 0, PANELSIZE, PANELSIZE, this);
+                System.out.println("inactive field " + i);
+                g2d.drawImage(inactiveFieldOverlays.get(i), 0, 0,  this);
             }
         }
     }
@@ -182,11 +183,11 @@ public class MapPanel extends JPanel {
         double atan = Math.toDegrees(Math.atan2(x_diff, y_diff));
 
         double aimedAtDegree = (atan - 180.0) * -1;
-        System.out.println(aimedAtDegree);
+//        System.out.println(aimedAtDegree);
 
         int aimedAtField = ((((int) aimedAtDegree + (360 / hideouts.size() / 2)) % 360) / degreesPerField);
 
-        System.out.println(aimedAtField);
+//        System.out.println(aimedAtField);
         return aimedAtField;
     }
 }

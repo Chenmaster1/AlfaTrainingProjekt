@@ -21,7 +21,10 @@ public class MapPanelTest extends JFrame{
         ArrayList<Hideout> hideoutArray = new ArrayList<>();
         for (int i = 0;i<20;i++)
         {
-            hideoutArray.add(new Hideout(0,HideoutType.FOREST));
+            Hideout h = new Hideout(0,HideoutType.FOREST);
+            h.setActive(true);
+            hideoutArray.add(h);
+            
         }
         MapPanel mp = new MapPanel(hideoutArray);
         setContentPane(mp);
@@ -30,17 +33,19 @@ public class MapPanelTest extends JFrame{
         mp.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                if (state)
-                {
-                    mp.setMapState(MapPanel.MAPSTATE_REGULAR);
-                    mp.repaint();
-                }
-                else
-                {
-                    mp.setMapState(MapPanel.MAPSTATE_AIMING);
-                    mp.repaint();
-                }
-                state = !state;
+//                if (state)
+//                {
+//                    mp.setMapState(MapPanel.MAPSTATE_REGULAR);
+//                    mp.repaint();
+//                }
+//                else
+//                {
+//                    mp.setMapState(MapPanel.MAPSTATE_AIMING);
+//                    mp.repaint();
+//                }
+//                state = !state;
+                hideoutArray.get(mp.getCurrentAimedAtField()).setActive(!hideoutArray.get(mp.getCurrentAimedAtField()).isActive());
+                repaint();
             }
         });
         
