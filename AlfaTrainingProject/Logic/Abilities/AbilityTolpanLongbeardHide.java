@@ -16,7 +16,6 @@ public class AbilityTolpanLongbeardHide extends Ability{
 
 	@Override
 	public void useAction(SingleplayerGame singleplayerGame) {
-		// TODO action von tolpan (eventuell nur action hide oder den hide dice aufrufen?)
 		for(Action action : singleplayerGame.getActions()) {
 			if(action instanceof ActionHide)
 				action.useAction(singleplayerGame);
