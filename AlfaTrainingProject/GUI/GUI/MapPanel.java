@@ -18,7 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- *
+ * Das Panel mit dem eigentlichen Spielfeld bzw der Arena.
  */
 public class MapPanel extends JPanel {
 
