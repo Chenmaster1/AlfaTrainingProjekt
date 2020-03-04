@@ -11,7 +11,7 @@ public class AbilityDahliaWhenHitGetNewHideout extends Ability
 
     public AbilityDahliaWhenHitGetNewHideout(int getNewHideout)
     {
-        super(getNewHideout);
+        super(getNewHideout, AbilityType.REACTION);
     }
 
     @Override

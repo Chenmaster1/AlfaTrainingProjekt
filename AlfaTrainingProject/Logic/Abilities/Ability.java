@@ -11,13 +11,15 @@ public abstract class Ability extends Action{
 	private String name;
 	private String description;
 	
+	private AbilityType abilityTpye;
 	/**
 	 * Dies ist der Konstruktor fuer jede Faehigkeit
 	 * @param actionPointRequired die benoetigte Anzahl an Aktionspunkten fuer die Faehigkeit
 	 * @author Kevin
 	 */
-	public Ability(int actionPointRequired) {
+	public Ability(int actionPointRequired, AbilityType abilityType) {
 		super(actionPointRequired);
+		this.abilityTpye = abilityType;
 	}
 	
 	
@@ -30,4 +32,8 @@ public abstract class Ability extends Action{
 		return description;
 	}
 	
+}
+
+enum AbilityType{
+	TURN, REACTION
 }
