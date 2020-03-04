@@ -48,7 +48,7 @@ public abstract class Hero {
 	 */
 	public Hero(String name) {
 		// TODO ueber name werte aus Datenbank holen und attribute fuellen
-		ResultSet rs = Database.getInstance().executeQuery(Queries.getHeroValues + name);
+		ResultSet rs = Database.getInstance().executeQuery(Queries.getHeroValues(name));
 		try {
 			while (rs.next()) {
 

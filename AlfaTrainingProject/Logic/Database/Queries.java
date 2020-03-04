@@ -5,12 +5,22 @@ package Database;
  * über Queries.String aufrufen
  */
 public class Queries {
-
-	//Beispiel:
-	public static String getAll = "SELECT * FROM <Databasetable>";
+	//querie für hero	
+	public static String getHeroValues(String heroName) {
+		return "SELECT * FROM HEROES WHERE NAME = '" + heroName + "'";
+	}
 	
-	//querie für hero
 	
-	public static String getHeroValues = "SELECT * FROM HEROES WHERE NAME = ";
+	
+	//login
+	
+	public static String loginUser(String userName) {
+		return "SELECT Password FROM UserLogin WHERE UserName = '" + userName + "'";
+	}
+	
+	//register
+	public static String registerUser(String userName, String password) {
+		return "INSERT INTO  UserLogin VALUES('" + userName + "', '" + password + "')";
+	};
 	
 }
