@@ -51,7 +51,7 @@ public class MyFrame extends JFrame{
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		//panel = new MainFramePanel(this);
 		panel = new LoginPanel(this);
-		setDefaultCloseOperation(3);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 
 	}	
