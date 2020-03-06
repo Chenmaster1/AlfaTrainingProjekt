@@ -88,7 +88,4 @@ public abstract class KiLogic {
 		//reduce sollte bereits in der action, bzw ability aufgerufen werde, sofern die ability einen Zug ersetzt
 		//singleplayerGame.reduceCurrentActionPoints();
 	}
-	
-	
-	
 }

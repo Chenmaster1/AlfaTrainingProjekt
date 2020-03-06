@@ -16,8 +16,7 @@ public class GamePanel extends JPanel{
     
     public GamePanel(MapPanel mp, GameSidePanel gsp)
     {
-        super();
-        
+    	super();
         mapPanel = mp;
         gameSidePanel = gsp;
         
@@ -25,7 +24,6 @@ public class GamePanel extends JPanel{
         
         add(mapPanel, BorderLayout.LINE_START);
         add(gameSidePanel, BorderLayout.LINE_END);
-        
-        
     }
+
 }

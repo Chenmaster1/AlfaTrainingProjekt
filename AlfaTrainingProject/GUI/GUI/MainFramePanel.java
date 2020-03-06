@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
@@ -13,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import Database.Database;
+import Hideouts.Hideout;
+import Hideouts.HideoutType;
 import SoundThread.MainTheme;
 
 @SuppressWarnings("serial")
@@ -48,16 +51,6 @@ public class MainFramePanel extends JPanel{
 		btnClose = new MyButton(MyFrame.bundle.getString("btnClose"), 
 				new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
 		initializeButtons();
-		
-		
-
-		
-		//Datenbankverbindung
-		//Muss nicht ausgefuehrt werden, da die Datenbank bereits besteht
-		//TODO ueber Browser oder kleinem programm befuellen. Datenbank besteht im internet, also muss nur abgefragt werden
-		//connectDatabase();
-		
-
     }
     
     @Override
@@ -68,118 +61,104 @@ public class MainFramePanel extends JPanel{
 
 	
 	//-------------------------private methods-------------------------//
-    
-		/**
-		 * Baut die Verbindung zur Datenbank auf. Falls nicht moeglich, 
-		 * wird der Fehler in der Konsole ausgegeben.
-		 * 
-		 * @author Kevin
-		 */
-		private void connectDatabase() {
-			try {
-				Database.getInstance().connect();
-			}catch(Exception ex) {
-				System.out.println("Keine Datenbank verbindung");
-			}
-		}
 		
 		/**
 		 * Hier werden alle Buttons hinzugefuegt
 		 * 
 		 * @author Kevin
 		 */
-		private void initializeButtons() {
-			addButton(btnNew, getWidth()/2 - 100, getHeight()/2 - 90);
-			addButton(btnLoad, getWidth()/2 - 100, getHeight()/2 - 30);
-			addButton(btnSettings, getWidth()/2 - 100, getHeight()/2 + 30);
-			addButton(btnClose, getWidth()/2 - 100, getHeight()/2 + 90);
+	private void initializeButtons() {
+		addButton(btnNew, getWidth()/2 - 100, getHeight()/2 - 90);
+		addButton(btnLoad, getWidth()/2 - 100, getHeight()/2 - 30);
+		addButton(btnSettings, getWidth()/2 - 100, getHeight()/2 + 30);
+		addButton(btnClose, getWidth()/2 - 100, getHeight()/2 + 90);
 			
-			btnNew.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					onNewClicked();
-				}
-			});
+		btnNew.addActionListener(new ActionListener() {
 			
-			btnLoad.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					onLoadClicked();
-				}
-			});
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onNewClicked();
+			}
+		});
+		
+		btnLoad.addActionListener(new ActionListener() {
 			
-			btnSettings.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					onSettingsClicked();
-				}
-			});
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onLoadClicked();
+			}
+		});
+		
+		btnSettings.addActionListener(new ActionListener() {
 			
-			btnClose.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					onCloseClicked();			
-				}
-			});	
-		}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onSettingsClicked();
+			}
+		});
 		
-		/**
-		 * Fuegt einen Button hinzu
-		 * 
-		 * @param button der Button
-		 * @param posX	Die Position x
-		 * @param posY Die Position y
-		 */
-		private void addButton(JButton button,int posX,int posY) {
-			button.setHorizontalTextPosition(SwingConstants.CENTER);
-			button.setBounds(posX, posY, 200, 50);
-			add(button);
-		}
+		btnClose.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onCloseClicked();			
+			}
+		});	
+	}
 		
-		/**
-		 * Wird aufgerufen, sobald der Button "Neues Spiel" gedrückt wurde.
-		 * Das Programm wird beendet.
-		 * 
-		 * @author Kevin
-		 */
-		private void onNewClicked() {
-			//TODO
-		}
-		
-		/**
-		 * Wird aufgerufen, sobald der Button "Laden" gedrueckt wurde.
-		 * Das Programm wird beendet.
-		 * 
-		 * @author Kevin
-		 */
-		private void onLoadClicked() {
-			//TODO
-		}
-		
-		/**
-		 * Wird aufgerufen, sobald der Button "Einstellungen" gedrueckt wurde.
-		 * Das Programm wird beendet.
-		 * 
-		 * @author Kevin
-		 */
-		private void onSettingsClicked() {
-			//TODO so kann man das machen ohne ein neues Fenster öffnen zu müssen
-			frame.remove(this);	//altes Panel entfernen
-			frame.add(new SettingsPanel(this, frame));		//neues Panel hinzufuegen
-			repaint();		//neu darstellen
-		}
-		
-		/**
-		 * Wird aufgerufen, sobald der Button "Beenden" gedrückt wurde.
-		 * Das Programm wird beendet.
-		 * 
-		 * @author Kevin
-		 */
-		private void onCloseClicked() {
-			frame.dispose();
-		}
+	/**
+	 * Fuegt einen Button hinzu
+	 * 
+	 * @param button der Button
+	 * @param posX	Die Position x
+	 * @param posY Die Position y
+	 */
+	private void addButton(JButton button,int posX,int posY) {
+		button.setHorizontalTextPosition(SwingConstants.CENTER);
+		button.setBounds(posX, posY, 200, 50);
+		add(button);
+	}
+	
+	/**
+	 * Wird aufgerufen, sobald der Button "Neues Spiel" gedrückt wurde.
+	 * Das Programm wird beendet.
+	 * 
+	 * @author Kevin
+	 */
+	private void onNewClicked() {
+		//TODO
+	}
+	
+	/**
+	 * Wird aufgerufen, sobald der Button "Laden" gedrueckt wurde.
+	 * Das Programm wird beendet.
+	 * 
+	 * @author Kevin
+	 */
+	private void onLoadClicked() {
+		//TODO
+	}
+	
+	/**
+	 * Wird aufgerufen, sobald der Button "Einstellungen" gedrueckt wurde.
+	 * Das Programm wird beendet.
+	 * 
+	 * @author Kevin
+	 */
+	private void onSettingsClicked() {
+		//TODO so kann man das machen ohne ein neues Fenster öffnen zu müssen
+		frame.remove(this);	//altes Panel entfernen
+		new SettingsPanel(this, frame);		//neues Panel hinzufuegen
+		repaint();		//neu darstellen
+	}
+	
+	/**
+	 * Wird aufgerufen, sobald der Button "Beenden" gedrückt wurde.
+	 * Das Programm wird beendet.
+	 * 
+	 * @author Kevin
+	 */
+	private void onCloseClicked() {
+		frame.dispose();
+	}
 }

@@ -194,7 +194,7 @@ public class LoginPanel extends JPanel{
 		else{
 			//instant bei login klick im main menu
 			frame.remove(this);
-			frame.add(new MainFramePanel(frame));
+			new MainFramePanel(frame);
 			frame.repaint();
 		}
 

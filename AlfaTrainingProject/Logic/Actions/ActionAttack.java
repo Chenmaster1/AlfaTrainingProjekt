@@ -29,8 +29,7 @@ public boolean doubleThrow = false;
          */
         
         singleplayerGame.setGameState(SingleplayerGame.GAMESTATE_AIMING);
-        
-        
+
     }
 
 }

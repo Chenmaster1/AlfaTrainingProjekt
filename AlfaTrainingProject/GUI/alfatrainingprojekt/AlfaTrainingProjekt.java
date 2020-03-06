@@ -1,5 +1,7 @@
 package alfatrainingprojekt;
 
+import java.util.Arrays;
+
 import GUI.MyFrame;
 import SoundThread.MainTheme;
 
@@ -10,8 +12,7 @@ public class AlfaTrainingProjekt {
     public static void main(String[] args) {
     	MyFrame frame = new MyFrame();
     	frame.start();
-    	
-    	musicThread.start();
+    	musicThread.start();	
     }
 
 }

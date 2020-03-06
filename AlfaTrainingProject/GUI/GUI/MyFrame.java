@@ -23,9 +23,7 @@ import SoundThread.MainTheme;
 @SuppressWarnings("serial")
 public class MyFrame extends JFrame{
 	public static ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages/Bundle_DE"); //Bundle, bzw path aus der Datenbank holen
-	
-	
-	
+
 	//-------------------------Panels-------------------------//
 	private JPanel panel;
 

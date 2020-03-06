@@ -15,7 +15,7 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 public class GamePanelTest extends JFrame {
 
     public GamePanelTest() {
-        {
+        
 
             ArrayList<Hideout> hideoutArray = new ArrayList<>();
             for (int i = 0; i < 20; i++) {
@@ -56,7 +56,7 @@ public class GamePanelTest extends JFrame {
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
             pack();
-        }
+        
     }
 
     public static final void main(String args[]) {

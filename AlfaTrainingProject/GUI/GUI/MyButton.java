@@ -52,15 +52,12 @@ public class MyButton extends JButton implements MouseListener{
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-            
-            repaint();
-		
+	public void mouseEntered(MouseEvent e) {            
+		repaint();
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-            getParent().repaint();
-		
+		getParent().repaint();
 	}
 }
