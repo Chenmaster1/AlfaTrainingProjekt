@@ -28,9 +28,10 @@ public abstract class Hero {
 	private String description;
 	private String artwork;
 
+	private int currentHealth;
 	private int maxHealth;
 
-	private int currentHealth;
+	private int currentActionPoints;
 	private int maxActionPoints;
 	private int delayTokens;
 
@@ -55,13 +56,14 @@ public abstract class Hero {
 			}
 		} catch (SQLException e) {
 		}
-		
-		//Standardwerte: KI-kontrolliert, nicht sichtbar, kein Delay, volle Lebenspunkte
+
+		// Standardwerte: KI-kontrolliert, nicht sichtbar, kein Delay, volle
+		// Lebenspunkte
 		setPlayerControlled(false);
 		setVisible(false);
 		setDelayTokens(0);
 		setCurrentHealth(getMaxHealth());
-		
+
 	}
 
 	public boolean equals(Hero hero) {
@@ -99,6 +101,11 @@ public abstract class Hero {
 
 	public int getDelayTokens() {
 		return delayTokens;
+
+	}
+
+	private int getCurrentActionPoints() {
+		return currentActionPoints;
 	}
 
 	public ImageIcon getAvatar() {
@@ -133,7 +140,7 @@ public abstract class Hero {
 	public void setVisible(boolean isVisible) {
 		this.isVisible = isVisible;
 	}
-	
+
 	public void setPlayerControlled(boolean isPlayerControlled) {
 		this.isPlayerControlled = isPlayerControlled;
 	}
@@ -141,6 +148,10 @@ public abstract class Hero {
 	public void setDelayTokens(int delayTokens) {
 		this.delayTokens = delayTokens;
 		// TODO Actions entsprechend auf enabled oder disabled setzen
+	}
+
+	private void setCurrentActionPoints(int currentActionPoints) {
+		this.currentActionPoints = currentActionPoints;
 	}
 
 }
