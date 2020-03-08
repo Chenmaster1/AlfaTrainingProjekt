@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import Actions.Action;
 import Dice.AttackDice;
 import Dice.HideDice;
-import GUI.GamePanel;
 import Heroes.Hero;
+import InGameGUI.GamePanel;
 import Maps.Map;
 
 public class SingleplayerGame {

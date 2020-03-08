@@ -1,4 +1,4 @@
-package GUI;
+package InGameGUI;
 
 import Hideouts.Hideout;
 import Hideouts.HideoutType;

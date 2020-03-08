@@ -1,4 +1,4 @@
-package GUI;
+package MenuGUI;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics;

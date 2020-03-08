@@ -1,4 +1,4 @@
-package GUI;
+package InGameGUI;
 
 import java.awt.Dimension;
 import javax.swing.JPanel;

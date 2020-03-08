@@ -1,4 +1,4 @@
-package GUI;
+package MenuGUI;
 
 import java.awt.Color;
 import java.awt.Graphics;

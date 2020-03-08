@@ -1,4 +1,4 @@
-package GUI;
+package MenuGUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -1,4 +1,4 @@
-package GUI;
+package InGameGUI;
 
 import Heroes.Hero;
 import Hideouts.Hideout;

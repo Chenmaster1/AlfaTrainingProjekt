@@ -2,7 +2,7 @@ package alfatrainingprojekt;
 
 import java.util.Arrays;
 
-import GUI.MyFrame;
+import MenuGUI.MyFrame;
 import SoundThread.MainTheme;
 
 public class AlfaTrainingProjekt {
