@@ -25,7 +25,7 @@ public class SettingsPanel extends JPanel{
 		backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Images/BackGround_FullScreenBlurred.png")).getImage();	
 		this.parentPanel = parentPanel;
 		this.frame = frame;
-		frame.add(this);
+		frame.setContentPane(this);
 		setLayout(null);
 		cancelBtn = new JButton(MyFrame.bundle.getString("btnCancel"));
 		saveBtn = new JButton(MyFrame.bundle.getString("btnClose"));
@@ -67,15 +67,15 @@ public class SettingsPanel extends JPanel{
 	
 	private void cancelClicked() {
 		
-		frame.remove(this);
-		frame.add(parentPanel);
+//		frame.remove(this);
+		frame.setContentPane(parentPanel);
 		frame.repaint();
 	}
 	
 	private void saveClicked() {
 		
-		frame.remove(this);
-		frame.add(parentPanel);
+//		frame.remove(this);
+		frame.setContentPane(parentPanel);
 		frame.repaint();
 	}
 }

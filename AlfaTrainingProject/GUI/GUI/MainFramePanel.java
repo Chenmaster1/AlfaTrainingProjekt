@@ -38,7 +38,7 @@ public class MainFramePanel extends JPanel{
     public MainFramePanel(MyFrame frame){
     	this.frame = frame;
 		setLayout(null);
-		frame.add(this);
+		frame.setContentPane(this);
     	setSize(frame.getSize());
         backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Images/BackGround_FullScreen.png")).getImage();
         
