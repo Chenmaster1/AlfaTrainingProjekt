@@ -4,8 +4,13 @@ import java.util.Random;
 
 
 /**
- *
- * @author Bastian
+ * When a hero seeks a new hideout
+ * Hero needs to roll a 6 sided HideDice
+ * 
+ * resultHideDice = 1 >> RESULT_SUCCESS (rolled HideDice = 0 or 1)
+ * resultHideDice = 2 >> RESULT_FAILURE (rolled HideDice = 2)
+ * resultHideDice = 3 >> RESULT_NOTHING (rolled HideDice = 3, 4 or 5)
+ * @author Yovo
  */
 public class HideDice extends Dice
 {
@@ -20,18 +25,10 @@ public class HideDice extends Dice
     @Override
     public int rollDice()
     {
-        //to get here, Hero must be visible and has no Tokens (checked in action class)
-
-        //rolling 6 sided dice (0-5)
         Random randomDice = new Random();
         int rolledHideDice = randomDice.nextInt(countSides);
 
         int resultHideDice = 0;
-        // resultHideDice = 0 >> no HideDice was rolled
-        // resultHideDice = 1 >> HideDice successful       (rolled HideDice = 0 or 1)
-        // resultHideDice = 2 >> HideDice failure           (rolled HideDice = 2)       
-        // resultHideDice = 3 >> HideDice nothing happens   (rolled HideDice = 3, 4 or 5)
-
         switch (rolledHideDice)
         {
             case 0:
@@ -55,7 +52,6 @@ public class HideDice extends Dice
 
         }
 
-        //System.out.println("resultHideDice, 1=success, 2=failure, 3=nothing  : " + resultHideDice);
         return resultHideDice;
     }
 

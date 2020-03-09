@@ -13,7 +13,7 @@ public class AbilityTolpanLongbeardHide extends Ability{
 	public AbilityTolpanLongbeardHide(int actionPointRequired) {
 		super(actionPointRequired, AbilityType.REACTION);
 	}
-
+  
 	@Override
 	public void useAction(SingleplayerGame singleplayerGame) {
 		for(Action action : singleplayerGame.getActions()) {

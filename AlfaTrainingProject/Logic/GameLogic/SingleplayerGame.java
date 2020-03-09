@@ -38,6 +38,8 @@ public class SingleplayerGame {
     	//beim klick wird eingerastet und angegriffen (eventuell verzoegerung mit einarbeiten)
     	
     	//vllt doch erstmal ohne db? nur helden und safegame? wären inbegriffen. hardcoden?
+    	
+    	//eventuell threadhandler schreiben
     }
 
     //-------------------------GETTER-------------------------//

@@ -149,6 +149,7 @@ public class LoginPanel extends JPanel {
 
 	private void onLoginClicked() throws SQLException {
 		if (!TESTVERSION) {
+			
 			boolean validInput = true;
 
 			if (txtUser.getText().length() == 0) {
