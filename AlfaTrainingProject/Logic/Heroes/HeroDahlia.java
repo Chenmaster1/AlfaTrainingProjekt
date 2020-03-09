@@ -8,8 +8,10 @@ import java.util.ArrayList;
 
 
 /**
+ * Dahlia belongs to the people of Dryaden.
+ * This Hero is a forest creature
  * 
- * @author Bastian
+ * @author Yovo
  *
  */
 public class HeroDahlia extends Hero
