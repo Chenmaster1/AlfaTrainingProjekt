@@ -18,7 +18,7 @@ public class MapPanelTest extends JFrame{
     public MapPanelTest()
     {
         
-        ArrayList<Hideout> hideoutArray = new ArrayList<>();
+        final ArrayList<Hideout> hideoutArray = new ArrayList<>();
         for (int i = 0;i<20;i++)
         {
             Hideout h = new Hideout(0,HideoutType.FOREST);
@@ -26,7 +26,7 @@ public class MapPanelTest extends JFrame{
             hideoutArray.add(h);
             
         }
-        MapPanel mp = new MapPanel(hideoutArray);
+        final MapPanel mp = new MapPanel(hideoutArray);
         setContentPane(mp);
         mp.setMapState(MapPanel.MAPSTATE_AIMING);
         
