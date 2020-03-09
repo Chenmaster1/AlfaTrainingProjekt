@@ -1,5 +1,6 @@
 package InGameGUI;
 
+import Heroes.*;
 import Hideouts.Hideout;
 import Hideouts.HideoutType;
 import java.awt.event.MouseAdapter;
@@ -16,7 +17,7 @@ public class GamePanelTest extends JFrame {
 
     public GamePanelTest() {
         
-
+            //testArray hideouts
             ArrayList<Hideout> hideoutArray = new ArrayList<>();
             for (int i = 0; i < 20; i++) {
                 Hideout h = new Hideout(0, HideoutType.FOREST);
@@ -24,8 +25,18 @@ public class GamePanelTest extends JFrame {
                 hideoutArray.add(h);
 
             }
+            
+            //testArray Gegnerhelden
+            ArrayList<Hero> otherHeroes = new ArrayList<>();
+            otherHeroes.add(new HeroWorok());
+            otherHeroes.add(new HeroDahlia());
+            otherHeroes.add(new HeroTolpanLongbeard());
+            otherHeroes.add(new HeroWorok());
+            
+            
+            
             MapPanel mp = new MapPanel(hideoutArray);
-            GameSidePanel gsp = new GameSidePanel();
+            GameSidePanel gsp = new GameSidePanel(otherHeroes, new HeroWorok());
             GamePanel gp = new GamePanel(mp, gsp);
 
             setContentPane(gp);
