@@ -7,47 +7,165 @@ import java.awt.Image;
 import javax.swing.JPanel;
 
 import Heroes.Hero;
+import javax.swing.ImageIcon;
 
+/**
+ * Panel für die Darstellung eines Helden mit aktueller Anzahl an Lebens- und
+ * Aktionspunkten sowie Verzögerungsmarken. Zur verkleinerten Darstellung
+ * anderer Spieler.
+ *
+ * @author Peter
+ */
 public class HeroPanelSmall extends JPanel {
-	private Hero displayedHero;
 
-	public HeroPanelSmall(Hero hero) {
-		displayedHero = hero;
+    private Hero displayedHero;
+    private Image hitPointImage;
+    private Image hitPointUsedImage;
+    private Image actionPointImage;
+    private Image actionPointUsedImage;
+    private Image delayTokenImage;
 
-		setLayout(null);
+    //TODO: Passende Werte finden, evtl. weitere definieren 
+    //(z.b. für einen Abstand vom oberen Rand etc)
+    private static final double POINTICON_SIDEMARGIN_RELATIVE_X = 0.1;
+    private static final double POINTICON_SIZE_RELATIVE_X = 0.1;
+    private static final double POINTICON_SIZE_RELATIVE_Y = 0.1;
 
-	}
+    private static final double DELAYTOKEN_SIZE_RELATIVE_X = 0.1;
+    private static final double DELAYTOKEN_SIZE_RELATIVE_Y = 0.1;
 
-	@Override
-	public void paintComponent(Graphics g) {
+    public HeroPanelSmall(Hero hero) {
 
-		Graphics2D g2d = (Graphics2D) g;
+        displayedHero = hero;
 
-		// Avatar als Hintergrund
-		g2d.drawImage(displayedHero.getAvatar().getImage(), 0, 0, getWidth(), getHeight(), this);
+        //TODO: Auf gemeinsame Image-Objekte zugreifen, damit nicht jedes Panel seine eigenen instanziiert.
+        hitPointImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Heart_Activated.png"))
+                .getImage();
+        hitPointUsedImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Heart_Deactivated.png"))
+                .getImage();
+        actionPointImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Action_Activated.png"))
+                .getImage();
+        actionPointUsedImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Action_Deactivated.png"))
+                .getImage();
+        delayTokenImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Delay.png"))
+                .getImage();
 
-		// Overlays für Hitpoints
-		drawHitPointIcons(g2d);
+        setLayout(null);
 
-		// Overlays für Actionpoints
-		drawActionPointIcons(g2d);
+    }
 
-		// Overlays für Delaytokens
-		drawDelayTokenIcons(g2d);
-	}
+    @Override
+    public void paintComponent(Graphics g) {
 
-	private void drawDelayTokenIcons(Graphics2D g2d) {
-		// TODO DelayTokens zeichnen
-		
-	}
+        Graphics2D g2d = (Graphics2D) g;
 
-	private void drawActionPointIcons(Graphics2D g2d) {
-		// TODO Hitpoints zeichnen
-		
-	}
+        // Avatar als Hintergrund
+        g2d.drawImage(displayedHero.getAvatar().getImage(), 0, 0, getWidth(), getHeight(), this);
 
-	private void drawHitPointIcons(Graphics2D g2d) {
-		// TODO Actionpoints zeichnen
-		
-	}
+        //reale Abmessungen der Aktions- und Lebenspunkte basierend auf der aktuellen Panelgröße
+        int iconSize_X = (int) (POINTICON_SIZE_RELATIVE_X * getWidth());
+        int iconSize_Y = (int) (POINTICON_SIZE_RELATIVE_Y * getHeight());
+        int sideMargin = (int) (getWidth() * POINTICON_SIDEMARGIN_RELATIVE_X);
+
+        // Overlays für Actionpoints (links)
+        drawActionPointIcons(g2d, iconSize_X, iconSize_Y, sideMargin);
+
+        // Overlays für Hitpoints (rechts)
+        drawHitPointIcons(g2d, iconSize_X, iconSize_Y, sideMargin);
+
+        //reale Abmessungen der DelayTokens basierend auf der aktuellen Panelgröße
+        int delayTokenSize_X = (int) (DELAYTOKEN_SIZE_RELATIVE_X * getWidth());
+        int delayTokenSize_Y = (int) (DELAYTOKEN_SIZE_RELATIVE_Y * getHeight());
+
+        // Overlays für Delaytokens (unten)
+        drawDelayTokenIcons(g2d, delayTokenSize_X, delayTokenSize_Y);
+    }
+
+    /**
+     * Zeichnet die DelayTokens zentriert an den unteren Rand des Panels. Nimmt
+     * reale Größen (in Pixel) für die Abmessungen eines einzelnen Tokens
+     * entgegen.
+     *
+     * @param g2d
+     * @param delayTokenSize_X
+     * @param delayTokenSize_Y
+     */
+    private void drawDelayTokenIcons(Graphics2D g2d, int delayTokenSize_X, int delayTokenSize_Y) {
+        int numDelayTokens = displayedHero.getDelayTokens();
+        int totalSize_X = numDelayTokens * delayTokenSize_X;
+
+        for (int i = 0; i < numDelayTokens; i++) {
+            int position_x = ((getWidth() - totalSize_X) / 2) + (i * delayTokenSize_X);
+
+            g2d.drawImage(delayTokenImage,
+                    position_x, getHeight() - delayTokenSize_Y,
+                    delayTokenSize_X, delayTokenSize_Y,
+                    this);
+        }
+
+    }
+
+    /**
+     * Zeichnet die Icons der Action Points an den linken Rand des Panels,
+     * angefangen in der oberen linken Ecke. Nimmt reale Größen (in Pixel) für
+     * die Abmessungen eines einzelnen Icons sowie einen Seitenabstand entgegen.
+     * entgegen.
+     *
+     * @param g2d
+     * @param iconSize_X
+     * @param iconSize_Y
+     * @param sideMargin
+     */
+    private void drawActionPointIcons(Graphics2D g2d, int iconSize_X, int iconSize_Y, int sideMargin) {
+        int maxPoints = displayedHero.getMaxActionPoints();
+        int currentPoints = displayedHero.getCurrentActionPoints();
+
+        for (int i = 0; i < maxPoints; i++) {
+            if (currentPoints > 0) {
+                g2d.drawImage(actionPointImage,
+                        sideMargin, i * (iconSize_Y),
+                        iconSize_X, iconSize_Y,
+                        this);
+                currentPoints--;
+            } else {
+                g2d.drawImage(actionPointUsedImage,
+                        sideMargin, i * (iconSize_Y),
+                        iconSize_X, iconSize_Y,
+                        this);
+            }
+
+        }
+
+    }
+
+    /**
+     * Zeichnet die Icons der Hit Points an den rechten Rand des Panels,
+     * angefangen in der oberen rechten Ecke. Nimmt reale Größen (in Pixel) für
+     * die Abmessungen eines einzelnen Icons sowie einen Seitenabstand entgegen.
+     *
+     * @param g2d
+     * @param iconSize_X
+     * @param iconSize_Y
+     * @param sideMargin
+     */
+    private void drawHitPointIcons(Graphics2D g2d, int iconSize_X, int iconSize_Y, int sideMargin) {
+        int maxPoints = displayedHero.getMaxHitPoints();
+        int currentPoints = displayedHero.getCurrentHitPoints();
+
+        for (int i = 0; i < maxPoints; i++) {
+            if (currentPoints > 0) {
+                g2d.drawImage(hitPointImage,
+                        getWidth() - sideMargin - iconSize_X, i * (iconSize_Y),
+                        iconSize_X, iconSize_Y,
+                        this);
+                currentPoints--;
+            } else {
+                g2d.drawImage(hitPointUsedImage,
+                        getWidth() - sideMargin - iconSize_X, i * (iconSize_Y),
+                        iconSize_X, iconSize_Y,
+                        this);
+            }
+        }
+
+    }
 }
