@@ -4,11 +4,11 @@
  * Running a W10 Dice
  * 
  * Possibilities
- * 1-4 >> Result_Center_Hit (40%)
- * 5-6 >> Result_Left_Center_Hit (20%)
- * 7-8 >> Result_Right_Center_Hit (20%)
- * 9 >> Outer_Left_Hit (10%)
- * 10 >> Outer_Right_Hit (10%)
+ * 1-4 >> RESULT_CENTER_HIT (40%)
+ * 5-6 >> RESULT_LEFT_CENTER_HIT (20%)
+ * 7-8 >> RESULT_RIGHT_CENTER_HIT (20%)
+ * 9 >> RESULT_OUTER_LEFT_HIT (10%)
+ * 10 >> RESULT_OUTER_RIGHT_HIT (10%)
  * @author Holger
  */
 
@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class AttackDice extends Dice{
     
-    public static final int Result_Center_Hit = 1, Result_Left_Center_Hit = 2, Result_Right_Center_Hit = 3, Outer_Left_Hit = 4, Outer_Right_Hit = 5;
+    public static final int RESULT_CENTER_HIT = 1, RESULT_LEFT_CENTER_HIT = 2, RESULT_RIGHT_CENTER_HIT = 3, RESULT_OUTER_LEFT_HIT = 4, RESULT_OUTER_RIGHT_HIT = 5;
 
     public AttackDice(int countSides){
         super(countSides);
@@ -34,34 +34,34 @@ public class AttackDice extends Dice{
         switch (rolledAttackDice)
         {
             case 0:
-                resultAttackDice = Result_Center_Hit;
+                resultAttackDice = RESULT_CENTER_HIT;
                 break;
             case 1:
-                resultAttackDice = Result_Center_Hit;
+                resultAttackDice = RESULT_CENTER_HIT;
                 break;
             case 2:
-                resultAttackDice = Result_Center_Hit;
+                resultAttackDice = RESULT_CENTER_HIT;
                 break;
             case 3:
-                resultAttackDice = Result_Center_Hit;
+                resultAttackDice = RESULT_CENTER_HIT;
                 break;
             case 4:
-                resultAttackDice = Result_Left_Center_Hit;
+                resultAttackDice = RESULT_LEFT_CENTER_HIT;
                 break;
             case 5:
-                resultAttackDice = Result_Left_Center_Hit;
+                resultAttackDice = RESULT_LEFT_CENTER_HIT;
                 break;
             case 6:
-                resultAttackDice = Result_Right_Center_Hit;
+                resultAttackDice = RESULT_RIGHT_CENTER_HIT;
                 break;
             case 7:
-                resultAttackDice = Result_Right_Center_Hit;
+                resultAttackDice = RESULT_RIGHT_CENTER_HIT;
                 break;
             case 8:
-                resultAttackDice = Outer_Left_Hit;
+                resultAttackDice = RESULT_OUTER_LEFT_HIT;
                 break;
             case 9:
-                resultAttackDice = Outer_Right_Hit;
+                resultAttackDice = RESULT_OUTER_RIGHT_HIT;
                 break;
         }
 

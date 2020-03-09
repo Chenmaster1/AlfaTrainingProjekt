@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -173,7 +174,8 @@ public class LoginPanel extends JPanel {
 			btnRegister.setEnabled(false);
 		}
 		else {
-			if(Files.exists(Path.of(path + "\\hota.txt"))) {
+                   
+			if(Files.exists(Paths.get(path + "\\hota.txt"))) {
 				try {
 					
 					BufferedReader br = new BufferedReader(new FileReader(path + "\\hota.txt"));
@@ -224,11 +226,11 @@ public class LoginPanel extends JPanel {
 							if (rs.getString(1).equals(userPassword)) {
 								switchToMainFramePanel();
 								
-								if(!Files.isDirectory(Path.of(path))) {
-					    	    	Files.createDirectory(Path.of(path));
-					    	    	Files.createFile(Path.of(path + "\\hota.txt"));
-					    	    }else if(!Files.isDirectory(Path.of(path + "\\hota.txt"))) {
-					    	    	Files.createFile(Path.of(path + "\\hota.txt"));
+								if(!Files.isDirectory(Paths.get(path + "\\"))) {
+					    	    	Files.createDirectory(Paths.get(path + "\\"));
+					    	    	Files.createFile(Paths.get(path + "\\hota.txt"));
+					    	    }else if(!Files.isDirectory(Paths.get(path + "\\hota.txt"))) {
+					    	    	Files.createFile(Paths.get(path + "\\hota.txt"));
 					    	    }
 								
 								FileWriter fw = new FileWriter(path + "\\hota.txt");
