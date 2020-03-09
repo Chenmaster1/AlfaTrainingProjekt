@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Dahlia belongs to the people of Dryaden.
- * Forest creature
+ * This Hero is a forest creature
  * 
  * @author Yovo
  *
