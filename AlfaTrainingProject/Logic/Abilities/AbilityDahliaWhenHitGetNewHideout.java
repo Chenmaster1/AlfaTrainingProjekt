@@ -1,6 +1,5 @@
 package Abilities;
 
-import Actions.Action;
 import Actions.ActionHide;
 import GameLogic.SingleplayerGame;
 

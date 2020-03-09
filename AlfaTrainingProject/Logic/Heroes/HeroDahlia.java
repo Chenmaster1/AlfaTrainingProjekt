@@ -1,11 +1,8 @@
 package Heroes;
 
-import Abilities.Ability;
 import Abilities.AbilityDahliaWhenHitGetNewHideout;
 import KiLogics.KiLogicDahlia;
 
-import java.util.ArrayList;
-import javax.swing.ImageIcon;
 
 /**
  * Dahlia belongs to the people of Dryaden. This Hero is a forest creature
