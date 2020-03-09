@@ -28,15 +28,17 @@ public class HeroPanelSmall extends JPanel {
 
     //TODO: Passende Werte finden, evtl. weitere definieren 
     //(z.b. für einen Abstand vom oberen Rand etc)
-    private static final double POINTICON_SIDEMARGIN_RELATIVE_X = 0.1;
-    private static final double POINTICON_SIZE_RELATIVE_X = 0.1;
-    private static final double POINTICON_SIZE_RELATIVE_Y = 0.1;
+    
+    private static final double POINTICON_TOPMARGIN_RELATIVE_Y = 0.08;
+    private static final double POINTICON_SIDEMARGIN_RELATIVE_X = 0.05;
+    private static final double POINTICON_SIZE_RELATIVE_X = 0.15;
+    private static final double POINTICON_SIZE_RELATIVE_Y = 0.15;
 
     private static final double DELAYTOKEN_SIZE_RELATIVE_X = 0.1;
-    private static final double DELAYTOKEN_SIZE_RELATIVE_Y = 0.1;
+    private static final double DELAYTOKEN_SIZE_RELATIVE_Y = 0.18;
     
-    private static final int PANELSIZE_X = 200;
-    private static final int PANELSIZE_Y = 300;
+    private static final int PANELSIZE_X = 180;
+    private static final int PANELSIZE_Y = 187;
 
     public HeroPanelSmall(Hero hero) {
 
@@ -71,12 +73,13 @@ public class HeroPanelSmall extends JPanel {
         int iconSize_X = (int) (POINTICON_SIZE_RELATIVE_X * getWidth());
         int iconSize_Y = (int) (POINTICON_SIZE_RELATIVE_Y * getHeight());
         int sideMargin = (int) (getWidth() * POINTICON_SIDEMARGIN_RELATIVE_X);
+        int topMargin = (int) (getHeight()* POINTICON_TOPMARGIN_RELATIVE_Y);
 
         // Overlays für Actionpoints (links)
-        drawActionPointIcons(g2d, iconSize_X, iconSize_Y, sideMargin);
+        drawActionPointIcons(g2d, iconSize_X, iconSize_Y, sideMargin, topMargin);
 
         // Overlays für Hitpoints (rechts)
-        drawHitPointIcons(g2d, iconSize_X, iconSize_Y, sideMargin);
+        drawHitPointIcons(g2d, iconSize_X, iconSize_Y, sideMargin,topMargin);
 
         //reale Abmessungen der DelayTokens basierend auf der aktuellen Panelgröße
         int delayTokenSize_X = (int) (DELAYTOKEN_SIZE_RELATIVE_X * getWidth());
@@ -121,20 +124,20 @@ public class HeroPanelSmall extends JPanel {
      * @param iconSize_Y
      * @param sideMargin
      */
-    private void drawActionPointIcons(Graphics2D g2d, int iconSize_X, int iconSize_Y, int sideMargin) {
+    private void drawActionPointIcons(Graphics2D g2d, int iconSize_X, int iconSize_Y, int sideMargin, int topMargin) {
         int maxPoints = displayedHero.getMaxActionPoints();
         int currentPoints = displayedHero.getCurrentActionPoints();
 
         for (int i = 0; i < maxPoints; i++) {
             if (currentPoints > 0) {
                 g2d.drawImage(actionPointImage,
-                        sideMargin, i * (iconSize_Y),
+                        sideMargin, i * (iconSize_Y) + topMargin,
                         iconSize_X, iconSize_Y,
                         this);
                 currentPoints--;
             } else {
                 g2d.drawImage(actionPointUsedImage,
-                        sideMargin, i * (iconSize_Y),
+                        sideMargin, i * (iconSize_Y) + topMargin,
                         iconSize_X, iconSize_Y,
                         this);
             }
@@ -153,20 +156,20 @@ public class HeroPanelSmall extends JPanel {
      * @param iconSize_Y
      * @param sideMargin
      */
-    private void drawHitPointIcons(Graphics2D g2d, int iconSize_X, int iconSize_Y, int sideMargin) {
+    private void drawHitPointIcons(Graphics2D g2d, int iconSize_X, int iconSize_Y, int sideMargin, int topMargin) {
         int maxPoints = displayedHero.getMaxHitPoints();
         int currentPoints = displayedHero.getCurrentHitPoints();
 
         for (int i = 0; i < maxPoints; i++) {
             if (currentPoints > 0) {
                 g2d.drawImage(hitPointImage,
-                        getWidth() - sideMargin - iconSize_X, i * (iconSize_Y),
+                        getWidth() - sideMargin - iconSize_X, i * (iconSize_Y) + topMargin,
                         iconSize_X, iconSize_Y,
                         this);
                 currentPoints--;
             } else {
                 g2d.drawImage(hitPointUsedImage,
-                        getWidth() - sideMargin - iconSize_X, i * (iconSize_Y),
+                        getWidth() - sideMargin - iconSize_X, i * (iconSize_Y) + topMargin,
                         iconSize_X, iconSize_Y,
                         this);
             }
