@@ -38,14 +38,12 @@ class GameSidePanel extends JPanel {
                 .getImage();
 
         //TODO: Layout (evtl. weitere Unterteilungen), Elemente hinzufügen
-        setLayout(new BorderLayout());
+        setLayout(null);
 
-        panelOtherHeroes = new JPanel(new FlowLayout());
-        for (Hero h : this.otherHeroes) {
-            panelOtherHeroes.add(new HeroPanelSmall(h));
-        }
-
-        add(panelOtherHeroes, BorderLayout.PAGE_START);
+        panelOtherHeroes = new OtherHeroesPanel(otherHeroes, backgroundImage);
+        panelOtherHeroes.setBounds(20, 60, 780, 200);
+        
+        add(panelOtherHeroes);
 
     }
 

@@ -6,6 +6,7 @@ import Hideouts.HideoutType;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
@@ -32,6 +33,12 @@ public class GamePanelTest extends JFrame {
             otherHeroes.add(new HeroDahlia());
             otherHeroes.add(new HeroTolpanLongbeard());
             otherHeroes.add(new HeroWorok());
+            for(Hero h : otherHeroes)
+            {
+                h.setDelayTokens(new Random().nextInt(4));
+                h.setCurrentActionPoints(new Random().nextInt(h.getMaxActionPoints()));
+                h.setCurrentHitPoints(new Random().nextInt(h.getMaxHitPoints()));
+            }
             
             
             
