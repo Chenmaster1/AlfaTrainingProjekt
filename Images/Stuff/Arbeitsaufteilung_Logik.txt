@@ -1,0 +1,28 @@
+Aufteilung Aufgaben:
+Wenn alle fertig:
+Pairprogramming startGame() in Singleplayergame
+
+Für Helden:
+	-Ki für Helden entwickeln
+	-Fähigkeit entwickeln 
+
+
+Bastian:
+	Held: Dahlia, Hüterin des Waldes
+	HideDice
+
+Fahd:
+	Held: Balthur
+	Action: Verstecken
+
+Holger:
+	Held: Flint, Schrecken der Meere
+	AttackDice	
+
+Peter:
+	Held: Worok
+	Action: Angriffswurf
+
+Kevin:
+	Held: Tolpan Langbart
+	Action Verzögerung abarbeiten
