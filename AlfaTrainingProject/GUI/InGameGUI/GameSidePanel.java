@@ -45,7 +45,7 @@ class GameSidePanel extends JPanel {
         panelOtherHeroes.setBounds(20, 60, 780, 200);
         
         panelPlayerHero = new HeroPanelLarge(playerHero);
-        panelPlayerHero.setBounds(20, 260, 620, 437);
+        panelPlayerHero.setBounds(30, 340, 558, 393);
         
         add(panelOtherHeroes);
         add(panelPlayerHero);
