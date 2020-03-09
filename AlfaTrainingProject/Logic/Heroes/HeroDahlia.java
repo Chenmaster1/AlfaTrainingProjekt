@@ -16,16 +16,22 @@ import java.util.ArrayList;
  */
 public class HeroDahlia extends Hero
 {
+    //setter hitpoints when hit 
+      // action hide im abiletie ausführen
     //-----------------------------------
 
     public HeroDahlia(String name)
     {
         super(name);
+        super.setMaxHitPoints(4);
+        
         
         ki = new KiLogicDahlia();
         
         abilities = new ArrayList<Ability>();
-        abilities.add(new AbilityDahliaWhenHitGetNewHideout(1));
+        // 0 action points required since it is a passive ability
+        abilities.add(new AbilityDahliaWhenHitGetNewHideout(0));  
+        
     }
     //-----------------------------------
 
