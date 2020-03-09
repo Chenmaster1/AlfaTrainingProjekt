@@ -11,6 +11,7 @@ public class AbilityDahliaWhenHitGetNewHideout extends Ability
 
     public AbilityDahliaWhenHitGetNewHideout(int getNewHideout)
     {
+        //actionPointRequired = 0 //add blablalistener
         super(getNewHideout, AbilityType.REACTION);
     }
 
