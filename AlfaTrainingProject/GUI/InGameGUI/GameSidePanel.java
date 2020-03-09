@@ -26,7 +26,8 @@ class GameSidePanel extends JPanel {
 
     private Hero playerHero;
 
-    private JPanel panelOtherHeroes;
+    private OtherHeroesPanel panelOtherHeroes;
+    private HeroPanelLarge panelPlayerHero;
 
     public GameSidePanel(ArrayList<Hero> otherHeroes, Hero playerHero) {
         super();
@@ -40,10 +41,14 @@ class GameSidePanel extends JPanel {
         //TODO: Layout (evtl. weitere Unterteilungen), Elemente hinzufügen
         setLayout(null);
 
-        panelOtherHeroes = new OtherHeroesPanel(otherHeroes, backgroundImage);
+        panelOtherHeroes = new OtherHeroesPanel(otherHeroes);
         panelOtherHeroes.setBounds(20, 60, 780, 200);
         
+        panelPlayerHero = new HeroPanelLarge(playerHero);
+        panelPlayerHero.setBounds(20, 260, 620, 437);
+        
         add(panelOtherHeroes);
+        add(panelPlayerHero);
 
     }
 

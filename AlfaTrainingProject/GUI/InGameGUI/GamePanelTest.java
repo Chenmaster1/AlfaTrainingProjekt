@@ -43,7 +43,7 @@ public class GamePanelTest extends JFrame {
             
             
             MapPanel mp = new MapPanel(hideoutArray);
-            GameSidePanel gsp = new GameSidePanel(otherHeroes, new HeroWorok());
+            GameSidePanel gsp = new GameSidePanel(otherHeroes, new HeroDahlia());
             GamePanel gp = new GamePanel(mp, gsp);
 
             setContentPane(gp);

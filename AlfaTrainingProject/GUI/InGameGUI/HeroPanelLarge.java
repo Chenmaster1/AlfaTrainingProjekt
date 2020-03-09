@@ -14,15 +14,18 @@ public class HeroPanelLarge extends JPanel {
 	private Image backgroundImage;
 
         //TODO: Passende Werte finden bzw. koordinieren
-	private static final double AVATARPOSITION_RELATIVE_X = 0.7;
-	private static final double AVATARPOSITION_RELATIVE_Y = 0.1;
-	private static final double AVATARSIZE_RELATIVE_X = 0.4;
-	private static final double AVATARSIZE_RELATIVE_Y = 0.7;
+	private static final double AVATARPOSITION_RELATIVE_X = 0.633;
+	private static final double AVATARPOSITION_RELATIVE_Y = 0.06;
+	private static final double AVATARSIZE_RELATIVE_X = 0.325;
+	private static final double AVATARSIZE_RELATIVE_Y = 0.5;
 
 	public HeroPanelLarge(Hero hero) {
 		displayedHero = hero;
-		backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Hero_Front_Empty.png"))
+		backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Hero_Front_Empty_tall.jpg"))
 				.getImage();
+                
+//                setOpaque(false);
+
 
 	}
 
