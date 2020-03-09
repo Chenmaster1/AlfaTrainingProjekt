@@ -173,7 +173,8 @@ public class LoginPanel extends JPanel {
 			btnRegister.setEnabled(false);
 		}
 		else {
-			if(Files.exists(Path.of(path + "\\hota.txt"))) {
+                   
+			if(Files.exists((path + "\\hota.txt"))) {
 				try {
 					
 					BufferedReader br = new BufferedReader(new FileReader(path + "\\hota.txt"));
@@ -224,11 +225,11 @@ public class LoginPanel extends JPanel {
 							if (rs.getString(1).equals(userPassword)) {
 								switchToMainFramePanel();
 								
-								if(!Files.isDirectory(Path.of(path))) {
-					    	    	Files.createDirectory(Path.of(path));
-					    	    	Files.createFile(Path.of(path + "\\hota.txt"));
-					    	    }else if(!Files.isDirectory(Path.of(path + "\\hota.txt"))) {
-					    	    	Files.createFile(Path.of(path + "\\hota.txt"));
+								if(!Files.isDirectory((path + "\\"))) {
+					    	    	Files.createDirectory((path + "\\"));
+					    	    	Files.createFile((path + "\\hota.txt"));
+					    	    }else if(!Files.isDirectory((path + "\\hota.txt"))) {
+					    	    	Files.createFile((path + "\\hota.txt"));
 					    	    }
 								
 								FileWriter fw = new FileWriter(path + "\\hota.txt");
