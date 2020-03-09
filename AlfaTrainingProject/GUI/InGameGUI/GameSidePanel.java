@@ -28,6 +28,7 @@ class GameSidePanel extends JPanel {
 
     private OtherHeroesPanel panelOtherHeroes;
     private HeroPanelLarge panelPlayerHero;
+    private AttackDicePanel panelAttackDice;
 
     public GameSidePanel(ArrayList<Hero> otherHeroes, Hero playerHero) {
         super();
@@ -47,8 +48,12 @@ class GameSidePanel extends JPanel {
         panelPlayerHero = new HeroPanelLarge(playerHero);
         panelPlayerHero.setBounds(30, 340, 558, 393);
         
+        panelAttackDice = new AttackDicePanel();
+        panelAttackDice.setBounds(20, 750, 300, 220);
+        
         add(panelOtherHeroes);
         add(panelPlayerHero);
+        add(panelAttackDice);
 
     }
 
