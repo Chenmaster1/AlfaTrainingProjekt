@@ -2,6 +2,7 @@ package SoundThread;
 
 import jaco.mp3.player.MP3Player;
 
+
 import java.io.File;
 import java.net.URL;
 
@@ -23,6 +24,8 @@ public class mp3test implements Runnable{
 		    player.setRepeat(true);   
 		    player.addToPlayList(getClass().getClassLoader().getResource("MainSound.mp4"));	
 		    player.play();
+                    player.setVolume(50);
+                   
 		}catch (Exception ex){
 			
 		}
@@ -33,7 +36,8 @@ public class mp3test implements Runnable{
         if (volume == 1)
         {
             //player.volume oder so
-            player.pause();
+            
+            player.setVolume(volume);
            
         }
 

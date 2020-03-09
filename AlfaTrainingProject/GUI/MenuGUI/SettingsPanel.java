@@ -27,8 +27,6 @@ import SoundThread.mp3test;
  * volume
  * language
  * 
- * fullwidth?
- * gameFrame size
  * 
  * 
  * @author
