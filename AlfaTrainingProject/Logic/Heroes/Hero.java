@@ -28,8 +28,8 @@ public abstract class Hero {
 	private String description;
 	private String artwork;
 
-	private int currentHealth;
-	private int maxHealth;
+	private int currentHitPoints;
+	private int maxHitPoints;
 
 	private int currentActionPoints;
 	private int maxActionPoints;
@@ -62,7 +62,7 @@ public abstract class Hero {
 		setPlayerControlled(false);
 		setVisible(false);
 		setDelayTokens(0);
-		setCurrentHealth(getMaxHealth());
+		setCurrentHitPoints(getMaxHitPoints());
 
 	}
 
@@ -71,16 +71,16 @@ public abstract class Hero {
 	}
 
 	// -------------------------GETTER-------------------------//
-	public int getMaxHealth() {
-		return maxHealth;
+	public int getMaxHitPoints() {
+		return maxHitPoints;
 	}
 
 	public int getMaxActionPoints() {
 		return maxActionPoints;
 	}
 
-	public int getCurrentHealth() {
-		return currentHealth;
+	public int getCurrentHitPoints() {
+		return currentHitPoints;
 	}
 
 	public ArrayList<Ability> getAbilities() {
@@ -104,7 +104,7 @@ public abstract class Hero {
 
 	}
 
-	private int getCurrentActionPoints() {
+	public int getCurrentActionPoints() {
 		return currentActionPoints;
 	}
 
@@ -125,16 +125,16 @@ public abstract class Hero {
 	}
 
 	// -------------------------SETTER-------------------------//
-	public void setMaxHealth(int maxHealth) {
-		this.maxHealth = maxHealth;
+	public void setMaxHitPoints(int maxHitPoints) {
+		this.maxHitPoints = maxHitPoints;
 	}
 
 	public void setMaxActionPoints(int maxActionPoints) {
 		this.maxActionPoints = maxActionPoints;
 	}
 
-	public void setCurrentHealth(int currentHealth) {
-		this.currentHealth = currentHealth;
+	public void setCurrentHitPoints(int currentHitPoints) {
+		this.currentHitPoints = currentHitPoints;
 	}
 
 	public void setVisible(boolean isVisible) {
@@ -150,7 +150,7 @@ public abstract class Hero {
 		// TODO Actions entsprechend auf enabled oder disabled setzen
 	}
 
-	private void setCurrentActionPoints(int currentActionPoints) {
+	public void setCurrentActionPoints(int currentActionPoints) {
 		this.currentActionPoints = currentActionPoints;
 	}
 
