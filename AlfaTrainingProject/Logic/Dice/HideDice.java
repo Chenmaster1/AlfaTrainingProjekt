@@ -10,7 +10,7 @@ import java.util.Random;
  * resultHideDice = 1 >> RESULT_SUCCESS (rolled HideDice = 0 or 1)
  * resultHideDice = 2 >> RESULT_FAILURE (rolled HideDice = 2)
  * resultHideDice = 3 >> RESULT_NOTHING (rolled HideDice = 3, 4 or 5)
- * @author Bastian
+ * @author Yovo
  */
 public class HideDice extends Dice
 {
