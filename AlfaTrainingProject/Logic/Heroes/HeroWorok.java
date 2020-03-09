@@ -11,21 +11,17 @@ import java.util.ArrayList;
  */
 public class HeroWorok extends Hero {
 
-	public HeroWorok(String name) {
+	public HeroWorok() {
 
-		super(name);
-
-		// passende KI, falls vom PC gespielt
-		ki = new KiLogicWorok();
+		super("Worok", "WorokDescription", "WorokArtwork", 3, 3, 0.3, new KiLogicWorok(), "Hero_Card/Avatar_Worok.jpg");
 
 		// Keine aktiven Abilities
-		abilities = new ArrayList<>();
 
 	}
 
 	@Override
 	public int getMaxActionPoints() {
-		// Returns 1 additional Action Point if Hero is visible when their turn begins
+		// 1 zusätzlicher Action Point, solange Worok sichtbar ist
 		int maxActionPoints = super.getMaxActionPoints();
 		if (isVisible()) {
 			maxActionPoints++;

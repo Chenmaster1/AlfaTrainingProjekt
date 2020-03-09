@@ -57,6 +57,7 @@ public abstract class Hero {
         this.power = power;
         this.ki = ki;
         this.avatar = new ImageIcon(getClass().getClassLoader().getResource(avatarPath));
+        this.abilities = new ArrayList<Ability>();
         
         // Standardwerte: KI-kontrolliert, nicht sichtbar, kein Delay, volle
         // Lebenspunkte

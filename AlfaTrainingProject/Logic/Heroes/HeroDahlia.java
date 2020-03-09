@@ -17,9 +17,10 @@ public class HeroDahlia extends Hero {
     //-----------------------------------
 
     public HeroDahlia() {
-        super("Dahlia", "DahliaDescription", "DahliaArtwork", 0, 0, 0, new KiLogicDahlia(), "Hero_Card/Avatar_Dahlia.jpg");
+        super("Dahlia", "DahliaDescription", "DahliaArtwork",
+                4, 3, 0.3,
+                new KiLogicDahlia(), "Hero_Card/Avatar_Dahlia.jpg");
 
-        abilities = new ArrayList<Ability>();
         abilities.add(new AbilityDahliaWhenHitGetNewHideout(1));
     }
     //-----------------------------------
