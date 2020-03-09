@@ -7,6 +7,7 @@ import java.awt.Image;
 import javax.swing.JPanel;
 
 import Heroes.Hero;
+import java.awt.Dimension;
 import javax.swing.ImageIcon;
 
 /**
@@ -33,6 +34,9 @@ public class HeroPanelSmall extends JPanel {
 
     private static final double DELAYTOKEN_SIZE_RELATIVE_X = 0.1;
     private static final double DELAYTOKEN_SIZE_RELATIVE_Y = 0.1;
+    
+    private static final int PANELSIZE_X = 200;
+    private static final int PANELSIZE_Y = 300;
 
     public HeroPanelSmall(Hero hero) {
 
@@ -51,6 +55,7 @@ public class HeroPanelSmall extends JPanel {
                 .getImage();
 
         setLayout(null);
+        setPreferredSize(new Dimension(PANELSIZE_X, PANELSIZE_Y));
 
     }
 

@@ -1,27 +1,31 @@
 package Abilities;
 
+import Actions.ActionHide;
 import GameLogic.SingleplayerGame;
 
+
 /**
- * 
- * @author Bastian
+ * When Dahlia is hit, she seeks a new hideout (if available) since this is a
+ * passive ability, no actionPoints are used or needed
+ *
+ * @author Yovo
  */
 public class AbilityDahliaWhenHitGetNewHideout extends Ability
 {
 
-    public AbilityDahliaWhenHitGetNewHideout(int getNewHideout)
+    public AbilityDahliaWhenHitGetNewHideout(int actionPointRequired)
     {
-        //actionPointRequired = 0 //add blablalistener
-        super(getNewHideout, AbilityType.REACTION);
+        // comes from heroes.HeroDahlia - abilities.add(new AbilityDahliaWhenHitGetNewHideout(0));
+        super(actionPointRequired, AbilityType.REACTION);
     }
+
 
     @Override
     public void useAction(SingleplayerGame singleplayerGame)
     {
-        //if Dahlia is visible and hit, she seeks a new hideout
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // once Dahlia is hit - freeHide
+        ActionHide freeHide = new ActionHide(0);
+        freeHide.useAction(singleplayerGame);
     }
     
-    //-----------------------------------
-
 }
