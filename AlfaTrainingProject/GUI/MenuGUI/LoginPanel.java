@@ -5,6 +5,15 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -45,14 +54,32 @@ public class LoginPanel extends JPanel {
 	JButton btnRegister;
 	JButton btnLogin;
 	JButton btnExit;
-
+	
+	private File file;
+	private String path;
 	public LoginPanel(MyFrame frame) {
 		this.frame = frame;
 		setLayout(null);
 		frame.setContentPane(this);
 		backgroundImage = new ImageIcon(
 				getClass().getClassLoader().getResource("Images/BackGround_FullScreenBlurred.png")).getImage();
+		
+    	boolean exists = false;
+    	try {
+    	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
+    	    p.waitFor();
 
+    	    InputStream in = p.getInputStream();
+    	    byte[] b = new byte[in.available()];
+    	    in.read(b);
+    	    in.close();
+
+    	    path = new String(b);
+    	    path = path.split("\\s\\s+")[4];
+    	    path += "\\HeroesOfTheArena";
+    	} catch(Throwable t) {
+    	    t.printStackTrace();
+    	}
 	}
 
 	@Override
@@ -145,44 +172,77 @@ public class LoginPanel extends JPanel {
 			txtPassword.setEditable(false);
 			btnRegister.setEnabled(false);
 		}
+		else {
+			if(Files.exists(Path.of(path + "\\hota.txt"))) {
+				try {
+					
+					BufferedReader br = new BufferedReader(new FileReader(path + "\\hota.txt"));
+					String name = br.readLine();
+					String password = br.readLine();
+					ResultSet rs = Database.getInstance().executeQuery(Queries.loginUser(name));
+					rs.next();
+					if (rs.getString(1).equals(password)) {
+						switchToMainFramePanel();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	private void onLoginClicked() throws SQLException {
 		if (!TESTVERSION) {
 			
-			boolean validInput = true;
-
-			if (txtUser.getText().length() == 0) {
-				txtUser.setBorder(BorderFactory.createLineBorder(Color.RED));
-				validInput = false;
-			} else {
-				txtUser.setBorder(BorderFactory.createLineBorder(null));
-			}
-
-			if (txtPassword.getPassword().length == 0) {
-				txtPassword.setBorder(BorderFactory.createLineBorder(Color.RED));
-				validInput = false;
-			} else {
-				txtPassword.setBorder(BorderFactory.createLineBorder(null));
-			}
-
-			if (validInput) {
-				ResultSet rs = Database.getInstance().executeQuery(Queries.loginUser(txtUser.getText()));
-
-				if (rs.next()) {
-					StringBuilder sb = new StringBuilder(txtPassword.getPassword().length);
-					sb.append(txtPassword.getPassword());
-					String userPassword = sb.toString();
-					try {
-						if (rs.getString(1).equals(userPassword)) {
-//							switchToMainFramePanel();
+			
+		
+			
+				boolean validInput = true;
+	
+				if (txtUser.getText().length() == 0) {
+					txtUser.setBorder(BorderFactory.createLineBorder(Color.RED));
+					validInput = false;
+				} else {
+					txtUser.setBorder(BorderFactory.createLineBorder(null));
+				}
+	
+				if (txtPassword.getPassword().length == 0) {
+					txtPassword.setBorder(BorderFactory.createLineBorder(Color.RED));
+					validInput = false;
+				} else {
+					txtPassword.setBorder(BorderFactory.createLineBorder(null));
+				}
+	
+				if (validInput) {
+					ResultSet rs = Database.getInstance().executeQuery(Queries.loginUser(txtUser.getText()));
+	
+					if (rs.next()) {
+						StringBuilder sb = new StringBuilder(txtPassword.getPassword().length);
+						sb.append(txtPassword.getPassword());
+						String userPassword = sb.toString();
+						try {
+							if (rs.getString(1).equals(userPassword)) {
+								switchToMainFramePanel();
+								
+								if(!Files.isDirectory(Path.of(path))) {
+					    	    	Files.createDirectory(Path.of(path));
+					    	    	Files.createFile(Path.of(path + "\\hota.txt"));
+					    	    }else if(!Files.isDirectory(Path.of(path + "\\hota.txt"))) {
+					    	    	Files.createFile(Path.of(path + "\\hota.txt"));
+					    	    }
+								
+								FileWriter fw = new FileWriter(path + "\\hota.txt");
+								fw.write(txtUser.getText() + "\n" + userPassword);
+								fw.close();
+								
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 				}
-			}
+			
 		} else {
 			// instant bei login klick im main menu
 			switchToMainFramePanel();
