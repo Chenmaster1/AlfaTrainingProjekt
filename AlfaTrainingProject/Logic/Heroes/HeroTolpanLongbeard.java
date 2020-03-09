@@ -4,20 +4,22 @@ import java.util.ArrayList;
 
 import Abilities.Ability;
 import Abilities.AbilityTolpanLongbeardHide;
+import KiLogics.KiLogicDahlia;
 import KiLogics.KiLogicTolpanLongbeard;
+
 /**
- * 
+ *
  * @author Kevin
  *
  */
 public class HeroTolpanLongbeard extends Hero {
 
-	public HeroTolpanLongbeard(String name) {
-		//der rest wird über die Datenbank im konstruktor von Hero gefuellt.
-		super(name);
-		abilities = new ArrayList<Ability>();
-		abilities.add(new AbilityTolpanLongbeardHide(1));
-		ki = new KiLogicTolpanLongbeard();
-	}
+    public HeroTolpanLongbeard() {
+        super("Tolpan Longbeard", "TolpanLongbeardDescription", "TolpanLongbeardArtwork", 
+                3, 3, 0.3, 
+                new KiLogicTolpanLongbeard(), "Hero_Card/Avatar_Talpan.jpg");
+
+        abilities.add(new AbilityTolpanLongbeardHide(1));
+    }
 
 }
