@@ -44,6 +44,7 @@ public class mp3test implements Runnable
         {
             //player.volume oder so
             player.pause();
+           
         }
 
     }
