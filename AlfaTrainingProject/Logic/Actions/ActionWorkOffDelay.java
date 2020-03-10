@@ -1,6 +1,7 @@
 package Actions;
 
 import GameLogic.SingleplayerGame;
+import MenuGUI.MyFrame;
 
 /**
  * Dies ist die Klasse fuer den Spielzug Verzoegerung verringern 
@@ -14,7 +15,7 @@ public class ActionWorkOffDelay extends Action {
 	 * @author Kevin
 	 */
 	public ActionWorkOffDelay(int actionPointRequired) {
-		super(actionPointRequired);
+		super(actionPointRequired,MyFrame.bundle.getString("delayRoll"));
 	}
 
 	@Override

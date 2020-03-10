@@ -1,6 +1,7 @@
 package Actions;
 
 import GameLogic.SingleplayerGame;
+import MenuGUI.MyFrame;
 
 /**
  * @Holger 
@@ -11,7 +12,7 @@ public class ActionAttack extends Action {
 public boolean doubleThrow = false;
 
     public ActionAttack(int actionPointRequired) {
-        super(actionPointRequired);
+        super(actionPointRequired, MyFrame.bundle.getString("attackRoll"));
     }
 
     @Override
