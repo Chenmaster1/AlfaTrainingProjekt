@@ -56,6 +56,13 @@ public class GamePanelTest extends JFrame {
 				gsp.getPanelAttackDice().setRollResult((new Random().nextInt(5)) + 1);
 			}
 		});
+                
+                gsp.getPanelHideDice().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent me) {
+				gsp.getPanelHideDice().setRollResult((new Random().nextInt(3)) + 1);
+			}
+		});
 
 		mp.addMouseListener(new MouseAdapter() {
 			@Override
@@ -78,7 +85,7 @@ public class GamePanelTest extends JFrame {
 		});
 
 //        getContentPane().setPreferredSize(new Dimension(1080, 1080));
-		setLocation(-1080, 0);
+		setLocation(-1920, 0);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		pack();
