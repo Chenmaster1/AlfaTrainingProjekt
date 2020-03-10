@@ -23,61 +23,68 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
  */
 public class GamePanelTest extends JFrame {
 
-	public GamePanelTest() {
+    public GamePanelTest() {
 
-		// testArray hideouts
-		final ArrayList<Hideout> hideoutArray = new ArrayList<>();
-		for (int i = 0; i < 20; i++) {
-			Hideout h = new Hideout(0, HideoutType.FOREST);
-			h.setActive(true);
-			hideoutArray.add(h);
+        // testArray hideouts
+        final ArrayList<Hideout> hideoutArray = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            Hideout h = new Hideout(0, HideoutType.FOREST);
+            h.setActive(true);
+            hideoutArray.add(h);
 
-		}
+        }
 
-		// testArray Gegnerhelden
-		ArrayList<Hero> otherHeroes = new ArrayList<>();
-		otherHeroes.add(new HeroWorok());
-		otherHeroes.add(new HeroDahlia());
-		otherHeroes.add(new HeroTolpanLongbeard());
-		otherHeroes.add(new HeroWorok());
-		for (Hero h : otherHeroes) {
-			h.setDelayTokens(new Random().nextInt(4));
-			h.setCurrentActionPoints(new Random().nextInt(h.getMaxActionPoints()));
-			h.setCurrentHitPoints(new Random().nextInt(h.getMaxHitPoints()));
-		}
+        final MapPanel mp = new MapPanel(hideoutArray);
 
-		final MapPanel mp = new MapPanel(hideoutArray);
-		final GameSidePanel gsp = new GameSidePanel(otherHeroes, new HeroDahlia());
-		GamePanel gp = new GamePanel(mp, gsp);
+        // testArray Gegnerhelden
+        ArrayList<Hero> otherHeroes = new ArrayList<>();
+        otherHeroes.add(new HeroWorok());
+        otherHeroes.add(new HeroDahlia());
+        otherHeroes.add(new HeroTolpanLongbeard());
+        otherHeroes.add(new HeroWorok());
+        for (Hero h : otherHeroes) {
+            h.setDelayTokens(new Random().nextInt(4));
+            h.setCurrentActionPoints(new Random().nextInt(h.getMaxActionPoints()));
+            h.setCurrentHitPoints(new Random().nextInt(h.getMaxHitPoints()));
+        }
 
-		setContentPane(gp);
+        Hero mainHero = new HeroDahlia();
+        mainHero.setDelayTokens(4);
+        final GameSidePanel gsp = new GameSidePanel(otherHeroes, mainHero);
 
-		mp.setMapState(MapPanel.MAPSTATE_AIMING);
+        GamePanel gp = new GamePanel(mp, gsp);
 
-                ArrayList<Action> testActionArrayList = new ArrayList<>();
-                testActionArrayList.add(new ActionAttack(1));
-                testActionArrayList.add(new ActionHide(1));
-                testActionArrayList.add(new ActionWorkOffDelay(1));
-                
-                gsp.getPanelPlayerHero().setActionArrayList(testActionArrayList);
-                
-		gsp.getPanelAttackDice().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent me) {
-				gsp.getPanelAttackDice().setRollResult((new Random().nextInt(5)) + 1);
-			}
-		});
-                
-                gsp.getPanelHideDice().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent me) {
-				gsp.getPanelHideDice().setRollResult((new Random().nextInt(3)) + 1);
-			}
-		});
+        setContentPane(gp);
 
-		mp.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent me) {
+        mp.setMapState(MapPanel.MAPSTATE_AIMING);
+
+        ArrayList<Action> testActionArrayList = new ArrayList<>();
+        testActionArrayList.add(new ActionAttack(1));
+        testActionArrayList.add(new ActionHide(1));
+        testActionArrayList.add(new ActionWorkOffDelay(1));
+//        testActionArrayList.add(new ActionWorkOffDelay(1));
+//        testActionArrayList.add(new ActionWorkOffDelay(1));
+//      Liste sollte sich am unteren Panelrand liegen, egal wie viele Aktionen angezeigt werden
+
+        gsp.getPanelPlayerHero().setActionArrayList(testActionArrayList);
+
+        gsp.getPanelAttackDice().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                gsp.getPanelAttackDice().setRollResult((new Random().nextInt(5)) + 1);
+            }
+        });
+
+        gsp.getPanelHideDice().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                gsp.getPanelHideDice().setRollResult((new Random().nextInt(3)) + 1);
+            }
+        });
+
+        mp.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
 //                if (state)
 //                {
 //                    mp.setMapState(MapPanel.MAPSTATE_REGULAR);
@@ -89,22 +96,22 @@ public class GamePanelTest extends JFrame {
 //                    mp.repaint();
 //                }
 //                state = !state;
-				hideoutArray.get(mp.getCurrentAimedAtField())
-						.setActive(!hideoutArray.get(mp.getCurrentAimedAtField()).isActive());
-				repaint();
-			}
-		});
+                hideoutArray.get(mp.getCurrentAimedAtField())
+                        .setActive(!hideoutArray.get(mp.getCurrentAimedAtField()).isActive());
+                repaint();
+            }
+        });
 
 //        getContentPane().setPreferredSize(new Dimension(1080, 1080));
-		setLocation(-1920, 0);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
-		pack();
+        setLocation(-1920, 0);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+        pack();
 
-	}
+    }
 
-	public static final void main(String args[]) {
-		GamePanelTest gpt = new GamePanelTest();
+    public static final void main(String args[]) {
+        GamePanelTest gpt = new GamePanelTest();
 
-	}
+    }
 }

@@ -9,8 +9,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import Heroes.Hero;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.GridLayout;
 import java.util.ArrayList;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -29,7 +32,7 @@ public class HeroPanelLarge extends JPanel {
 
     private ArrayList<Action> actionArrayList;
 
-    private JList<JButton> actionJList;
+    private JPanel actionListPanel;
 
     //TODO: Passende Werte finden bzw. koordinieren
     private static final double AVATARPOSITION_RELATIVE_X = 0.633;
@@ -43,14 +46,21 @@ public class HeroPanelLarge extends JPanel {
     private static final double HITPOINTICON_POSITION_RELATIVE_X = 0.55;
     private static final double HITPOINTICON_POSITION_RELATIVE_Y = 0.16;
 
+    //POINTICON Variablen gelten sowohl für Action- als auch für Hitpoints
     private static final double POINTICON_SIZE_RELATIVE_X = 0.07;
     private static final double POINTICON_SIZE_RELATIVE_Y = 0.1;
     private static final double POINTICON_DISTANCE_RELATIVE_Y = 0.03;
 
-    private static final double ACTIONLISTPOSITION_RELATIVE_X = 0.1;
-    private static final double ACTIONLISTPOSITION_RELATIVE_Y = 0.5;
+    private static final double DELAYTOKEN_POSITION_RELATIVE_X = 0.3;
+    private static final double DELAYTOKEN_POSITION_RELATIVE_Y = 0.88;
+    private static final double DELAYTOKEN_SIZE_RELATIVE_X = 0.04;
+    private static final double DELAYTOKEN_SIZE_RELATIVE_Y = 0.1;
+
+    private static final double ACTIONLISTPOSITION_RELATIVE_X = 0.09;
+    private static final double ACTIONLISTPOSITION_RELATIVE_Y = 0.35;
     private static final double ACTIONLISTSIZE_RELATIVE_X = 0.45;
-    private static final double ACTIONLISTSIZE_RELATIVE_Y = 0.4;
+    private static final double ACTIONLISTSIZE_RELATIVE_Y = 0.5;
+    private static final int ACTIONLIST_CELLS = 5;
 
     public HeroPanelLarge(Hero hero) {
 
@@ -70,18 +80,13 @@ public class HeroPanelLarge extends JPanel {
         delayTokenImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Delay.png"))
                 .getImage();
 
-//        setLayout(null);
-        actionJList = new JList<>();
+        setLayout(null);
         actionArrayList = new ArrayList<>();
-        actionJList.setBounds((int) (ACTIONLISTPOSITION_RELATIVE_X * getWidth()),
-                (int) (ACTIONLISTPOSITION_RELATIVE_Y * getHeight()),
-                (int) (ACTIONLISTSIZE_RELATIVE_X * getWidth()),
-                (int) (ACTIONLISTSIZE_RELATIVE_Y * getHeight()));
-        actionJList.setCellRenderer(new ActionListCellRenderer());
-        actionJList.setModel(new ActionListModel());
 
-        add(actionJList);
+        initializeActionListPanel();
 
+//        updateActionListPanelContent();
+//    updateActionListPanelSize();
     }
 
     @Override
@@ -112,10 +117,28 @@ public class HeroPanelLarge extends JPanel {
         // Overlays für Delaytokens
         drawDelayTokenIcons(g2d);
 
+        //ActionPanel Größe anpassen
+        updateActionListPanelSize();
     }
 
     private void drawDelayTokenIcons(Graphics2D g2d) {
-        // TODO DelayTokens zeichnen
+        int delayTokenSize_X = (int) (DELAYTOKEN_SIZE_RELATIVE_X * getWidth());
+        int delayTokenSize_Y = (int) (DELAYTOKEN_SIZE_RELATIVE_Y * getHeight());
+
+        int numDelayTokens = displayedHero.getDelayTokens();
+        int totalSize_X = numDelayTokens * delayTokenSize_X;
+
+        for (int i = 0; i < numDelayTokens; i++) {
+            int position_x = ((int) (DELAYTOKEN_POSITION_RELATIVE_X * getWidth()) - totalSize_X / 2) + (i * delayTokenSize_X);
+            int position_y = (int) (DELAYTOKEN_POSITION_RELATIVE_Y * getHeight());
+
+            g2d.drawImage(delayTokenImage,
+                    position_x,
+                    position_y,
+                    delayTokenSize_X,
+                    delayTokenSize_Y,
+                    this);
+        }
 
     }
 
@@ -167,45 +190,36 @@ public class HeroPanelLarge extends JPanel {
 
     public void setActionArrayList(ArrayList<Action> actionArrayList) {
         this.actionArrayList = actionArrayList;
-        actionJList.setModel(new ActionListModel());
+        updateActionListPanelContent();
     }
 
-    private class ActionListCellRenderer implements ListCellRenderer<JButton> {
+    private void initializeActionListPanel() {
+        actionListPanel = new JPanel();
+        actionListPanel.setLayout(new GridLayout(ACTIONLIST_CELLS, 1));
+        actionListPanel.setOpaque(false);
+        add(actionListPanel);
+    }
 
-        public ActionListCellRenderer() {
-        }
-
-        @Override
-        public Component getListCellRendererComponent(JList<? extends JButton> jlist, JButton e, int i, boolean bln, boolean bln1) {
-
-            return jlist.getModel().getElementAt(i);
+    private void updateActionListPanelContent() {
+        actionListPanel.removeAll();
+        JButton actionButton;
+        for (Action a : actionArrayList) {
+            actionButton = new JButton(a.getName());
+            actionListPanel.add(actionButton);
         }
     }
 
-    private class ActionListModel implements ListModel<JButton> {
+    private void updateActionListPanelSize() {
 
-        public ActionListModel() {
-        }
+        int size_Y = (int) (ACTIONLISTSIZE_RELATIVE_Y * getHeight());
+        int buttonsize_Y = size_Y / ACTIONLIST_CELLS;
+        int numButtons = actionArrayList.size();
+        int position_Y = ((int) (ACTIONLISTPOSITION_RELATIVE_Y * getHeight())) + (ACTIONLIST_CELLS - numButtons) * buttonsize_Y;
 
-        @Override
-        public int getSize() {
-            return actionArrayList.size();
-        }
-
-        @Override
-        public JButton getElementAt(int i) {
-            JButton resultButton = new JButton(actionArrayList.get(i).getName());
-            return resultButton;
-        }
-
-        @Override
-        public void addListDataListener(ListDataListener ll) {
-//            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public void removeListDataListener(ListDataListener ll) {
-//            throw new UnsupportedOperationException("Not supported yet.");
-        }
+        actionListPanel.setBounds((int) (ACTIONLISTPOSITION_RELATIVE_X * getWidth()),
+                position_Y,
+                (int) (ACTIONLISTSIZE_RELATIVE_X * getWidth()),
+                size_Y);
     }
+
 }
