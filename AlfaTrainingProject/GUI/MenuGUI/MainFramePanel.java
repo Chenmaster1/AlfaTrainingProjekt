@@ -17,6 +17,8 @@ import Database.Database;
 import Hideouts.Hideout;
 import Hideouts.HideoutType;
 import SoundThread.MainTheme;
+import SoundThread.mp3test;
+import alfatrainingprojekt.AlfaTrainingProjekt;
 
 @SuppressWarnings("serial")
 public class MainFramePanel extends JPanel{
@@ -55,6 +57,7 @@ public class MainFramePanel extends JPanel{
     
     @Override
     public void paintComponent(Graphics g){
+    	
         g.drawImage(backgroundImage, 0, 0, this);
     }
     
@@ -159,6 +162,7 @@ public class MainFramePanel extends JPanel{
 	 * @author Kevin
 	 */
 	private void onCloseClicked() {
+		mp3test.stopPlayer();
 		frame.dispose();
 	}
 }
