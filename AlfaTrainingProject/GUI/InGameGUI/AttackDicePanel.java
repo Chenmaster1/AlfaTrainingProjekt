@@ -170,7 +170,7 @@ public class AttackDicePanel extends JPanel implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+            
         }
 
     }

@@ -43,6 +43,8 @@ public class mp3test implements Runnable
         player.setVolume(volume);
     }
 
-
+    public static void stopPlayer() {
+    	player.stop();
+    }
 }
 
