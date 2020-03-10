@@ -125,21 +125,21 @@ public class AttackDicePanel extends JPanel implements Runnable {
                 }
                 break;
             case AttackDice.RESULT_LEFT_CENTER_HIT:
-                if (currentAnimationFrame < 210 && currentAnimationFrame >= 90) {
+                if (currentAnimationFrame < 210 && currentAnimationFrame >= 101) {
                     targetAnimationFrame = 100;
                 }
                 if (currentAnimationFrame < 10 || currentAnimationFrame >= 210) {
                     targetAnimationFrame = 120;
                 }
-                if (currentAnimationFrame < 90 && currentAnimationFrame >= 10) {
+                if (currentAnimationFrame < 101 && currentAnimationFrame >= 10) {
                     targetAnimationFrame = 200;
                 }
                 break;
             case AttackDice.RESULT_RIGHT_CENTER_HIT:
-                if (currentAnimationFrame < 170 || currentAnimationFrame >= 270) {
+                if (currentAnimationFrame < 170 && currentAnimationFrame >= 61) {
                     targetAnimationFrame = 60;
                 }
-                if (currentAnimationFrame < 270 && currentAnimationFrame >= 170) {
+                if (currentAnimationFrame < 61 || currentAnimationFrame >= 170) {
                     targetAnimationFrame = 160;
                 }
                 break;
