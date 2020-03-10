@@ -22,7 +22,16 @@ import SoundThread.MainTheme;
  */
 @SuppressWarnings("serial")
 public class MyFrame extends JFrame{
-	public static ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages/Bundle_DE"); //Bundle, bzw path aus der Datenbank holen
+        private static String chooseBundle = "/Bundle_DE";
+        
+        public static void setLanguage(String Bundle)
+        {
+            chooseBundle = Bundle;
+            System.out.println("myframe choose : " +chooseBundle);
+            
+        }
+                
+	public static ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages"+chooseBundle); //Bundle, bzw path aus der Datenbank holen
 
 	//-------------------------Panels-------------------------//
 	private JPanel panel;
