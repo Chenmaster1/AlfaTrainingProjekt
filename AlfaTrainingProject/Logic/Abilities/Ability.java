@@ -1,6 +1,7 @@
 package Abilities;
 
 import Actions.Action;
+import enums.AbilityType;
 
 /**
  * Dies ist das Grundgeruest fuer alle Faehigkeiten. Jede Faehigkeit ist
@@ -39,6 +40,3 @@ public abstract class Ability extends Action {
 
 }
 
-enum AbilityType {
-    TURN, REACTION
-}

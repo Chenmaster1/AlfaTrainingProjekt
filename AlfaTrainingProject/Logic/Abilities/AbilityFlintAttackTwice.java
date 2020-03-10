@@ -1,7 +1,10 @@
 package Abilities;
 
+
 import GameLogic.SingleplayerGame;
 import MenuGUI.MyFrame;
+import enums.AbilityType;
+import enums.AttackMode;
 
 public class AbilityFlintAttackTwice  extends Ability{
 
@@ -14,6 +17,10 @@ public class AbilityFlintAttackTwice  extends Ability{
 	@Override
 	public void useAction(SingleplayerGame singleplayerGame) {
 		// TODO Magie hier. wird anstatt eines zuges ausgefuehrt, also zweimal angreifen
+		//Wirklich nötig das hier zu machen? dann müsste auch actionattack umgeschrieben werden
+		//Falls anders geklöst wie?
+		//enum setzten und in singleplayergame abarbeiten. zb so:	
+		singleplayerGame.setAttackMode(AttackMode.ATTACK_TWICE);
 		
 	}
 

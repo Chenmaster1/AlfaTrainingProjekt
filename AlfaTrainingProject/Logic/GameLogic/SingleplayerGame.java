@@ -8,10 +8,12 @@ import Dice.HideDice;
 import Heroes.Hero;
 import InGameGUI.GamePanel;
 import Maps.Map;
+import enums.AttackMode;
 
 public class SingleplayerGame {
 
     public final static int GAMESTATE_AIMING = 1, GAMESTATE_CHOOSING = 0;
+    private AttackMode attackMode = AttackMode.NO_ATTACK;
     private int gameState;
     private Map map;
     private int timer;
@@ -114,6 +116,10 @@ public class SingleplayerGame {
                 this.gameState = gameState;
                 break;
         }
+    }
+    
+    public void setAttackMode(AttackMode attackMode) {
+    	this.attackMode = attackMode;
     }
 
     /**

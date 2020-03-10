@@ -3,6 +3,7 @@ package Abilities;
 import Actions.ActionHide;
 import GameLogic.SingleplayerGame;
 import MenuGUI.MyFrame;
+import enums.AbilityType;
 
 
 /**
