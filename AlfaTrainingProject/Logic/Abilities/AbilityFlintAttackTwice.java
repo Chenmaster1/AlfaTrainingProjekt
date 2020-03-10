@@ -5,6 +5,7 @@ import GameLogic.SingleplayerGame;
 import MenuGUI.MyFrame;
 import enums.AbilityType;
 import enums.AttackMode;
+import enums.GameState;
 
 public class AbilityFlintAttackTwice  extends Ability{
 
@@ -20,6 +21,7 @@ public class AbilityFlintAttackTwice  extends Ability{
 		//Wirklich nötig das hier zu machen? dann müsste auch actionattack umgeschrieben werden
 		//Falls anders geklöst wie?
 		//enum setzten und in singleplayergame abarbeiten. zb so:	
+		singleplayerGame.setGameState(GameState.AIMING);
 		singleplayerGame.setAttackMode(AttackMode.ATTACK_TWICE);
 		
 	}

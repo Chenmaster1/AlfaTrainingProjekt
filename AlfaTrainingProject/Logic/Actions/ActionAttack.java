@@ -3,6 +3,7 @@ package Actions;
 import GameLogic.SingleplayerGame;
 import MenuGUI.MyFrame;
 import enums.AttackMode;
+import enums.GameState;
 
 /**
  * @Holger 
@@ -30,7 +31,7 @@ public boolean doubleThrow = false;
         fireAt(int fieldPosition) Methode.
          */
         
-        singleplayerGame.setGameState(SingleplayerGame.GAMESTATE_AIMING);
+        singleplayerGame.setGameState(GameState.AIMING);
         singleplayerGame.setAttackMode(AttackMode.NORMAL_ATTACK);
     }
 

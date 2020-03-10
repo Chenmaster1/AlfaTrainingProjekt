@@ -9,12 +9,12 @@ import Heroes.Hero;
 import InGameGUI.GamePanel;
 import Maps.Map;
 import enums.AttackMode;
+import enums.GameState;
 
 public class SingleplayerGame {
 
-    public final static int GAMESTATE_AIMING = 1, GAMESTATE_CHOOSING = 0;
     private AttackMode attackMode = AttackMode.NO_ATTACK;
-    private int gameState;
+    private GameState gameState;
     private Map map;
     private int timer;
     private AttackDice attackDice;
@@ -99,10 +99,10 @@ public class SingleplayerGame {
         }
     }
 
-    public void setGameState(int gameState) {
+    public void setGameState(GameState gameState) {
         switch(gameState)
         {
-            case GAMESTATE_AIMING:
+            case AIMING:
                 //TODO: Aktionen deaktivieren (oder besser generell bei der
                 //Generation 
                 //der Aktionsliste den gameState abfragen und sie hier neu 
@@ -112,7 +112,7 @@ public class SingleplayerGame {
                 this.gameState = gameState;
                 break;
                 
-            case GAMESTATE_CHOOSING:
+            case CHOOSING:
                 this.gameState = gameState;
                 break;
         }
