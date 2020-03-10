@@ -64,7 +64,7 @@ public class GamePanelTest extends JFrame {
 
         gsp.getPanelAttackDice().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent me) {
+            public void mousePressed(MouseEvent me) {
                 
                 gsp.getPanelAttackDice().setRollResult((new Random().nextInt(5)) + 1);
                 //gsp.getPanelAttackDice().setRunning(true);
@@ -74,14 +74,14 @@ public class GamePanelTest extends JFrame {
 
         gsp.getPanelHideDice().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent me) {
+            public void mousePressed(MouseEvent me) {
                 gsp.getPanelHideDice().setRollResult((new Random().nextInt(3)) + 1);
             }
         });
 
         mp.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent me) {
+            public void mousePressed(MouseEvent me) {
 //                if (state)
 //                {
 //                    mp.setMapState(MapPanel.MAPSTATE_REGULAR);
