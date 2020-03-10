@@ -29,6 +29,7 @@ class GameSidePanel extends JPanel {
     private OtherHeroesPanel panelOtherHeroes;
     private HeroPanelLarge panelPlayerHero;
     private AttackDicePanel panelAttackDice;
+    private HideDicePanel panelHideDice;
 
     public GameSidePanel(ArrayList<Hero> otherHeroes, Hero playerHero) {
         super();
@@ -43,17 +44,25 @@ class GameSidePanel extends JPanel {
         setLayout(null);
 
         panelOtherHeroes = new OtherHeroesPanel(otherHeroes);
-        panelOtherHeroes.setBounds(20, 60, 780, 200);
+        panelOtherHeroes.setBounds(14, 85, 780, 200);
         
         panelPlayerHero = new HeroPanelLarge(playerHero);
         panelPlayerHero.setBounds(30, 340, 558, 393);
         
         panelAttackDice = new AttackDicePanel();
-        panelAttackDice.setBounds(20, 750, 300, 220);
+        panelAttackDice.setBounds(20, 750, 350, 250);
+        Thread threadAttackDicePanel = new Thread(panelAttackDice);
+        threadAttackDicePanel.start();
+        
+        panelHideDice= new HideDicePanel();
+        panelHideDice.setBounds(370, 742, 437, 295);
+        Thread threadHideDicePanel = new Thread(panelHideDice);
+        threadHideDicePanel.start();
         
         add(panelOtherHeroes);
         add(panelPlayerHero);
         add(panelAttackDice);
+        add(panelHideDice);
 
     }
 
@@ -72,4 +81,20 @@ class GameSidePanel extends JPanel {
     public void setOtherHeroes(ArrayList<Hero> otherHeroes) {
         this.otherHeroes = otherHeroes;
     }
+
+	public OtherHeroesPanel getPanelOtherHeroes() {
+		return panelOtherHeroes;
+	}
+
+	public HeroPanelLarge getPanelPlayerHero() {
+		return panelPlayerHero;
+	}
+
+	public AttackDicePanel getPanelAttackDice() {
+		return panelAttackDice;
+	}
+        
+        public HideDicePanel getPanelHideDice() {
+		return panelHideDice;
+	}
 }

@@ -2,6 +2,7 @@ package Abilities;
 
 import Actions.ActionHide;
 import GameLogic.SingleplayerGame;
+import MenuGUI.MyFrame;
 
 
 /**
@@ -16,7 +17,9 @@ public class AbilityDahliaWhenHitGetNewHideout extends Ability
     public AbilityDahliaWhenHitGetNewHideout(int actionPointRequired)
     {
         // comes from heroes.HeroDahlia - abilities.add(new AbilityDahliaWhenHitGetNewHideout(0));
-        super(actionPointRequired, AbilityType.REACTION);
+        super(actionPointRequired, AbilityType.REACTION, 
+                MyFrame.bundle.getString("abilityDahliaWhenHitGetNewHideout_name"), 
+                MyFrame.bundle.getString("abilityDahliaWhenHitGetNewHideout_description"));
     }
 
 

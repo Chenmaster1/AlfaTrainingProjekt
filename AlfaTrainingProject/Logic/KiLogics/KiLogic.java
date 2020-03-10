@@ -6,6 +6,9 @@ import java.util.Random;
 import java.util.Set;
 
 import Actions.Action;
+import Actions.ActionAttack;
+import Actions.ActionHide;
+import Actions.ActionWorkOffDelay;
 import GameLogic.SingleplayerGame;
 import Heroes.Hero;
 import Hideouts.Hideout;
@@ -35,7 +38,43 @@ public abstract class KiLogic {
 	 * @param singleplayerGame das aktuelle Spiel
 	 * @return die gewählte Aktion
 	 */
-	public abstract Action chooseAction(ArrayList<Action> actions, Hero hero, SingleplayerGame singleplayerGame);
+	public Action chooseAction(ArrayList<Action> actions, Hero hero, SingleplayerGame singleplayerGame) {
+		Action resultAction = null;
+		
+		//es wird solange eine Action ausgefuehrt, wie Aktionspunkte uebrig sind
+		//Tolpan hat keine Faehigkeit die während seines Zuges eingesetzt wird
+		//seine Prioritaet liegt beim verzoegerung abbauen, dann verstecken, (einmal die Faehigkeit anwenden) und dann angreifen
+		while(singleplayerGame.getCurrentActionPoints() > 0) {
+			if(hero.getDelayTokens() > 0 && singleplayerGame.getCurrentActionPoints() == 1) {
+				for(Action action : actions) {
+					if(action instanceof ActionWorkOffDelay) {
+						resultAction = (ActionWorkOffDelay) action;
+					}
+				}	 
+			}else if(hero.isVisible() && hero.getDelayTokens() == 0) {
+				for(Action action : actions) {
+				  	if(action instanceof ActionHide)
+				  		resultAction = (ActionHide) action;
+				}
+			//Hier eventuell ability einfuegen
+			}else{
+				/*
+				 * TODO Angriff. Falls ein Held sichtbar ist, diesen angreifen. Ansonsten primaer Felder angreifen, 
+				 * bei denen man selber nicht getroffen wernden kann 
+				 */
+				
+				for(Action action : actions) {
+					if(action instanceof ActionAttack) {
+						resultAction = (ActionAttack) action;
+					}
+				}
+				
+			}
+			
+			
+		}
+		return resultAction;
+	}
 
 	/**
 	 * Gibt zurück, welches Feld die KI beim aktuellen Zustand des SinglePlayerGame

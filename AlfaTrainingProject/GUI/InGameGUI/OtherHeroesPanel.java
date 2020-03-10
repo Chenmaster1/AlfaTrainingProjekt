@@ -22,6 +22,6 @@ public class OtherHeroesPanel extends JPanel{
             add(new HeroPanelSmall(h));
         }
         
-//        setOpaque(false);
+        setOpaque(false);
     }
 }

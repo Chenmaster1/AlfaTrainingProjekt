@@ -68,6 +68,11 @@ public abstract class Hero {
 
     }
 
+    /**
+     * vergleicht zwei helden miteinander
+     * @param hero
+     * @return
+     */
     public boolean equals(Hero hero) {
         return hero.getName().equals(name);
     }
