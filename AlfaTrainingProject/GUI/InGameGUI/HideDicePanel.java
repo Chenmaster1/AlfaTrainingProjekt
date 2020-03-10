@@ -112,13 +112,13 @@ public class HideDicePanel extends JPanel implements Runnable {
     public void setRollResult(int result) {
         switch (result) {
             case HideDice.RESULT_NOTHING:
-                if (currentAnimationFrame < 60 && currentAnimationFrame >= 0) {
+                if (currentAnimationFrame < 60 && currentAnimationFrame >= 1) {
                     targetAnimationFrame = 0;
                 }
                 if (currentAnimationFrame < 100 && currentAnimationFrame >= 60) {
                     targetAnimationFrame = 40;
                 }
-                if (currentAnimationFrame < 0 || currentAnimationFrame >= 100) {
+                if (currentAnimationFrame < 1 || currentAnimationFrame >= 100) {
                     targetAnimationFrame = 60;
                 }
                 break;
@@ -128,10 +128,10 @@ public class HideDicePanel extends JPanel implements Runnable {
 
                 break;
             case HideDice.RESULT_SUCCESS:
-                if (currentAnimationFrame < 20 || currentAnimationFrame >= 40) {
+                if (currentAnimationFrame < 20 || currentAnimationFrame >= 81) {
                     targetAnimationFrame = 80;
                 }
-                if (currentAnimationFrame < 40 && currentAnimationFrame >= 20) {
+                if (currentAnimationFrame < 81 && currentAnimationFrame >= 20) {
                     targetAnimationFrame = 100;
                 }
                 break;

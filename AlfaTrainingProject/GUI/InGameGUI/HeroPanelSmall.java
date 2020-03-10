@@ -28,15 +28,15 @@ public class HeroPanelSmall extends JPanel {
 
     //TODO: Passende Werte finden, evtl. weitere definieren 
     //(z.b. für einen Abstand vom oberen Rand etc)
-    
-    private static final double POINTICON_TOPMARGIN_RELATIVE_Y = 0.08;
+    private static final double POINTICON_TOPMARGIN_RELATIVE_Y = 0.05;
     private static final double POINTICON_SIDEMARGIN_RELATIVE_X = 0.05;
-    private static final double POINTICON_SIZE_RELATIVE_X = 0.15;
-    private static final double POINTICON_SIZE_RELATIVE_Y = 0.15;
+    private static final double POINTICON_SIZE_RELATIVE_X = 0.125;
+    private static final double POINTICON_SIZE_RELATIVE_Y = 0.125;
 
     private static final double DELAYTOKEN_SIZE_RELATIVE_X = 0.1;
     private static final double DELAYTOKEN_SIZE_RELATIVE_Y = 0.18;
-    
+    private static final double DELAYTOKEN_BOTTOMMARGIN_RELATIVE_Y = 0.05;
+
     private static final int PANELSIZE_X = 180;
     private static final int PANELSIZE_Y = 187;
 
@@ -73,13 +73,13 @@ public class HeroPanelSmall extends JPanel {
         int iconSize_X = (int) (POINTICON_SIZE_RELATIVE_X * getWidth());
         int iconSize_Y = (int) (POINTICON_SIZE_RELATIVE_Y * getHeight());
         int sideMargin = (int) (getWidth() * POINTICON_SIDEMARGIN_RELATIVE_X);
-        int topMargin = (int) (getHeight()* POINTICON_TOPMARGIN_RELATIVE_Y);
+        int topMargin = (int) (getHeight() * POINTICON_TOPMARGIN_RELATIVE_Y);
 
         // Overlays für Actionpoints (links)
         drawActionPointIcons(g2d, iconSize_X, iconSize_Y, sideMargin, topMargin);
 
         // Overlays für Hitpoints (rechts)
-        drawHitPointIcons(g2d, iconSize_X, iconSize_Y, sideMargin,topMargin);
+        drawHitPointIcons(g2d, iconSize_X, iconSize_Y, sideMargin, topMargin);
 
         //reale Abmessungen der DelayTokens basierend auf der aktuellen Panelgröße
         int delayTokenSize_X = (int) (DELAYTOKEN_SIZE_RELATIVE_X * getWidth());
@@ -104,10 +104,13 @@ public class HeroPanelSmall extends JPanel {
 
         for (int i = 0; i < numDelayTokens; i++) {
             int position_x = ((getWidth() - totalSize_X) / 2) + (i * delayTokenSize_X);
-
+            int position_y = getHeight() - delayTokenSize_Y - (int) (DELAYTOKEN_BOTTOMMARGIN_RELATIVE_Y * getHeight());
+            
             g2d.drawImage(delayTokenImage,
-                    position_x, getHeight() - delayTokenSize_Y,
-                    delayTokenSize_X, delayTokenSize_Y,
+                    position_x,
+                    position_y,
+                    delayTokenSize_X,
+                    delayTokenSize_Y,
                     this);
         }
 

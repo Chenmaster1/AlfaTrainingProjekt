@@ -1,5 +1,9 @@
 package InGameGUI;
 
+import Actions.Action;
+import Actions.ActionAttack;
+import Actions.ActionHide;
+import Actions.ActionWorkOffDelay;
 import Heroes.*;
 import Hideouts.Hideout;
 import Hideouts.HideoutType;
@@ -50,6 +54,13 @@ public class GamePanelTest extends JFrame {
 
 		mp.setMapState(MapPanel.MAPSTATE_AIMING);
 
+                ArrayList<Action> testActionArrayList = new ArrayList<>();
+                testActionArrayList.add(new ActionAttack(1));
+                testActionArrayList.add(new ActionHide(1));
+                testActionArrayList.add(new ActionWorkOffDelay(1));
+                
+                gsp.getPanelPlayerHero().setActionArrayList(testActionArrayList);
+                
 		gsp.getPanelAttackDice().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent me) {
