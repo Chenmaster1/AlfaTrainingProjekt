@@ -2,6 +2,7 @@ package Actions;
 
 import GameLogic.SingleplayerGame;
 import MenuGUI.MyFrame;
+import enums.AttackMode;
 
 /**
  * @Holger 
@@ -30,7 +31,7 @@ public boolean doubleThrow = false;
          */
         
         singleplayerGame.setGameState(SingleplayerGame.GAMESTATE_AIMING);
-
+        singleplayerGame.setAttackMode(AttackMode.NORMAL_ATTACK);
     }
 
 }

@@ -44,6 +44,8 @@ public class AttackDicePanel extends JPanel implements Runnable {
     private int currentAnimationFrame;
     private int targetAnimationFrame;
 
+    private boolean running = true;
+    
     public AttackDicePanel() {
 
         // Animationsbilder laden
@@ -172,5 +174,12 @@ public class AttackDicePanel extends JPanel implements Runnable {
         }
 
     }
+    
+    public void increaseCurrentAnimationFrame() {
+    	currentAnimationFrame++;
+    }
 
+    public void setRunning(boolean running) {
+    	this.running = running;
+    }
 }

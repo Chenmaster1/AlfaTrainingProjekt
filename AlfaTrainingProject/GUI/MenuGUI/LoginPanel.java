@@ -58,6 +58,7 @@ public class LoginPanel extends JPanel {
 	
 	private File file;
 	private String path;
+	
 	public LoginPanel(MyFrame frame) {
 		this.frame = frame;
 		setLayout(null);
@@ -66,6 +67,7 @@ public class LoginPanel extends JPanel {
 				getClass().getClassLoader().getResource("Images/BackGround_FullScreenBlurred.png")).getImage();
 		
     	boolean exists = false;
+    	
     	try {
     	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
     	    p.waitFor();
@@ -234,6 +236,7 @@ public class LoginPanel extends JPanel {
 					    	    }
 								
 								FileWriter fw = new FileWriter(path + "\\hota.txt");
+								
 								fw.write(txtUser.getText() + "\n" + userPassword);
 								fw.close();
 								

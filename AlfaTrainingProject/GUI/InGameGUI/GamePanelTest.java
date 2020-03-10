@@ -35,6 +35,7 @@ public class GamePanelTest extends JFrame {
         }
 
         final MapPanel mp = new MapPanel(hideoutArray);
+        mp.setMapState(MapPanel.MAPSTATE_AIMING);
 
         // testArray Gegnerhelden
         ArrayList<Hero> otherHeroes = new ArrayList<>();
@@ -54,24 +55,20 @@ public class GamePanelTest extends JFrame {
 
         GamePanel gp = new GamePanel(mp, gsp);
 
-        setContentPane(gp);
-
-        mp.setMapState(MapPanel.MAPSTATE_AIMING);
-
         ArrayList<Action> testActionArrayList = new ArrayList<>();
         testActionArrayList.add(new ActionAttack(1));
         testActionArrayList.add(new ActionHide(1));
         testActionArrayList.add(new ActionWorkOffDelay(1));
-//        testActionArrayList.add(new ActionWorkOffDelay(1));
-//        testActionArrayList.add(new ActionWorkOffDelay(1));
-//      Liste sollte sich am unteren Panelrand liegen, egal wie viele Aktionen angezeigt werden
 
         gsp.getPanelPlayerHero().setActionArrayList(testActionArrayList);
 
         gsp.getPanelAttackDice().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
+                gsp.getPanelAttackDice().increaseCurrentAnimationFrame();
                 gsp.getPanelAttackDice().setRollResult((new Random().nextInt(5)) + 1);
+                //gsp.getPanelAttackDice().setRunning(true);
+                //gsp.getThreadAttackDicePanel().start();
             }
         });
 
@@ -101,6 +98,8 @@ public class GamePanelTest extends JFrame {
                 repaint();
             }
         });
+
+        setContentPane(gp);
 
 //        getContentPane().setPreferredSize(new Dimension(1080, 1080));
         setLocation(-1920, 0);
