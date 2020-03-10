@@ -24,7 +24,7 @@ public class mp3test implements Runnable{
 		    player.setRepeat(true);   
 		    player.addToPlayList(getClass().getClassLoader().getResource("MainSound.mp4"));	
 		    player.play();
-                    player.setVolume(50);
+            player.setVolume(50);
                    
 		}catch (Exception ex){
 			
