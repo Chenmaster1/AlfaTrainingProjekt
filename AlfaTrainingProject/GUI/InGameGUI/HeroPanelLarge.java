@@ -57,7 +57,7 @@ public class HeroPanelLarge extends JPanel {
     private static final double DELAYTOKEN_SIZE_RELATIVE_Y = 0.1;
 
     private static final double ACTIONLISTPOSITION_RELATIVE_X = 0.09;
-    private static final double ACTIONLISTPOSITION_RELATIVE_Y = 0.35;
+    private static final double ACTIONLISTPOSITION_RELATIVE_Y = 0.36;
     private static final double ACTIONLISTSIZE_RELATIVE_X = 0.45;
     private static final double ACTIONLISTSIZE_RELATIVE_Y = 0.5;
     private static final int ACTIONLIST_CELLS = 5;
@@ -205,6 +205,7 @@ public class HeroPanelLarge extends JPanel {
         JButton actionButton;
         for (Action a : actionArrayList) {
             actionButton = new JButton(a.getName());
+            actionButton.setEnabled(a.isEnabled());
             actionListPanel.add(actionButton);
         }
     }

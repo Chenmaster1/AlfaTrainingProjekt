@@ -65,7 +65,7 @@ public class GamePanelTest extends JFrame {
         gsp.getPanelAttackDice().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                gsp.getPanelAttackDice().increaseCurrentAnimationFrame();
+                
                 gsp.getPanelAttackDice().setRollResult((new Random().nextInt(5)) + 1);
                 //gsp.getPanelAttackDice().setRunning(true);
                 //gsp.getThreadAttackDicePanel().start();
