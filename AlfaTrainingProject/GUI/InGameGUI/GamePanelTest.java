@@ -69,15 +69,17 @@ public class GamePanelTest extends JFrame {
 
         gsp.getPanelPlayerHero().setActionArrayList(testActionArrayList);
 
-        ArenaCardPanel acp = new ArenaCardPanel(new Arenacards(5));
+        //Das folgende Panel befindet sich standardm‰ﬂig NICHT im gamesidepanel, 
+        //ist hier nur als visueller Test der einzelkomponente
+        ArenaCardPanel acp = new ArenaCardPanel(new Arenacards(9));
         acp.setBounds(600, 400, 186, 260);
         gsp.add(acp);
-        
+
         
         gsp.getPanelAttackDice().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {
-                
+
                 gsp.getPanelAttackDice().setRollResult((new Random().nextInt(5)) + 1);
                 //gsp.getPanelAttackDice().setRunning(true);
                 //gsp.getThreadAttackDicePanel().start();

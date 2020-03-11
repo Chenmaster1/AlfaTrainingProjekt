@@ -11,7 +11,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- * 
+ * Panel zur Darstellung des HideDice. Größe ist dynamisch änderbar (Inhalte
+ * werden entsprechend gestreckt).
  */
 public class HideDicePanel extends JPanel implements Runnable {
 
@@ -74,6 +75,13 @@ public class HideDicePanel extends JPanel implements Runnable {
 		setOpaque(false);
     }
 
+    /**
+     * Zeichnet das Panel. Zuerst werden die statischen Elemente gezeichnet,
+     * zuletzt das zum aktuellen currentAnimationFrame passende Bild des
+     * Würfels.
+     *
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -109,6 +117,13 @@ public class HideDicePanel extends JPanel implements Runnable {
                 (int) (getHeight() * DIE_SIZE_RELATIVE_Y), this);
     }
 
+    /**
+     * Lässt das Panel eine Animation anzeigen, bei der der Würfel schließlich
+     * das übergebene Ergebnis anzeigt.
+     *
+     * @param result Das gewünschte Würfelergebnis. Sollte durch HideDice
+     * erzeugt werden.
+     */
     public void setRollResult(int result) {
         currentAnimationFrame++;
         
@@ -141,6 +156,13 @@ public class HideDicePanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * Die Animation wird von einem eigenen Thread behandelt, in dem in kurzen
+     * Abständen getestet wird, ob das gezeigte Frame geändert werden muss.
+     *
+     * TODO: Nur starten, wenn tatsächlich gewürfelt wird und anschließend bis
+     * zum nächsten Wurf pausieren. wait bzw. notify
+     */
     @Override
     public void run() {
         while (true) {

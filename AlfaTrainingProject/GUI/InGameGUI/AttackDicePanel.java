@@ -11,7 +11,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- *
+ * Panel zur Darstellung des AttackDice. Größe ist dynamisch änderbar (Inhalte
+ * werden entsprechend gestreckt).
  */
 public class AttackDicePanel extends JPanel implements Runnable {
 
@@ -44,14 +45,13 @@ public class AttackDicePanel extends JPanel implements Runnable {
     private int currentAnimationFrame;
     private int targetAnimationFrame;
 
-    private boolean running = true;
-    
     public AttackDicePanel() {
 
         // Animationsbilder laden
         Image frame;
         animationImages = new ArrayList<>();
         for (int i = 0; i < 220; i++) {
+            //Pfad-String zusammenbasteln. image 0 -> 0000, 15 -> 0015 etc
             StringBuilder sb = new StringBuilder();
             sb.append("dice_w10/testsequence");
             int additionalZeros = 4 - ("" + i).length();
@@ -76,6 +76,13 @@ public class AttackDicePanel extends JPanel implements Runnable {
         setOpaque(false);
     }
 
+    /**
+     * Zeichnet das Panel. Zuerst werden die statischen Elemente gezeichnet,
+     * zuletzt das zum aktuellen currentAnimationFrame passende Bild des
+     * Würfels.
+     *
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -110,9 +117,16 @@ public class AttackDicePanel extends JPanel implements Runnable {
                 (int) (getHeight() * DIE_SIZE_RELATIVE_Y), this);
     }
 
+    /**
+     * Lässt das Panel eine Animation anzeigen, bei der der Würfel schließlich
+     * das übergebene Ergebnis anzeigt.
+     *
+     * @param result Das gewünschte Würfelergebnis. Sollte durch AttackDice
+     * erzeugt werden.
+     */
     public void setRollResult(int result) {
         currentAnimationFrame++;
-        
+
         switch (result) {
             case AttackDice.RESULT_CENTER_HIT:
                 if (currentAnimationFrame < 130 && currentAnimationFrame >= 70) {
@@ -157,7 +171,13 @@ public class AttackDicePanel extends JPanel implements Runnable {
         }
     }
 
-    //TODO: Nur starten, wenn tatsächlich gewürfelt wird und anschließend bis zum nächsten Wurf pausieren
+    /**
+     * Die Animation wird von einem eigenen Thread behandelt, in dem in kurzen
+     * Abständen getestet wird, ob das gezeigte Frame geändert werden muss.
+     *
+     * TODO: Nur starten, wenn tatsächlich gewürfelt wird und anschließend bis
+     * zum nächsten Wurf pausieren. wait bzw. notify
+     */
     @Override
     public void run() {
         while (true) {
@@ -172,13 +192,8 @@ public class AttackDicePanel extends JPanel implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            
+
         }
 
-    }
-    
-
-    public void setRunning(boolean running) {
-    	this.running = running;
     }
 }
