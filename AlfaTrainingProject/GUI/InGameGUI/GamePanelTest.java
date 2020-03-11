@@ -4,6 +4,7 @@ import Actions.Action;
 import Actions.ActionAttack;
 import Actions.ActionHide;
 import Actions.ActionWorkOffDelay;
+import Arenacards.Arenacards;
 import Heroes.*;
 import Hideouts.Hideout;
 import Hideouts.HideoutType;
@@ -68,6 +69,9 @@ public class GamePanelTest extends JFrame {
 
         gsp.getPanelPlayerHero().setActionArrayList(testActionArrayList);
 
+        ArenaCardPanel acp = new ArenaCardPanel(new Arenacards(5));
+        
+        
         gsp.getPanelAttackDice().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {

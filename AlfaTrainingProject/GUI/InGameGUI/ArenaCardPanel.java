@@ -46,8 +46,7 @@ public class ArenaCardPanel extends JPanel {
 
         artworkImage = displayedCard.getImage();
         
-        backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Arena_Cards/Arenacard_empty.jpg"))
-                .getImage();
+        backgroundImage = displayedCard.getImage();
 
         setLayout(null);
 

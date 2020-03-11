@@ -250,14 +250,16 @@ public class HeroPanelLarge extends JPanel {
             if (currentPoints > 0) {
                 g2d.drawImage(actionPointImage,
                         (int) (getWidth() * ACTIONPOINTICON_POSITION_RELATIVE_X),
-                        (int) (getHeight() * ACTIONPOINTICON_POSITION_RELATIVE_Y) + (iconSize_Y + (int) (POINTICON_DISTANCE_RELATIVE_Y * getHeight())) * i,
+                        (int) (getHeight() * ACTIONPOINTICON_POSITION_RELATIVE_Y) 
+                                + (iconSize_Y + (int) (POINTICON_DISTANCE_RELATIVE_Y * getHeight())) * i,
                         iconSize_X, iconSize_Y,
                         this);
                 currentPoints--;
             } else {
                 g2d.drawImage(actionPointUsedImage,
                         (int) (getWidth() * ACTIONPOINTICON_POSITION_RELATIVE_X),
-                        (int) (getHeight() * ACTIONPOINTICON_POSITION_RELATIVE_Y) + (iconSize_Y + (int) (POINTICON_DISTANCE_RELATIVE_Y * getHeight())) * i,
+                        (int) (getHeight() * ACTIONPOINTICON_POSITION_RELATIVE_Y)
+                                + (iconSize_Y + (int) (POINTICON_DISTANCE_RELATIVE_Y * getHeight())) * i,
                         iconSize_X, iconSize_Y,
                         this);
             }
