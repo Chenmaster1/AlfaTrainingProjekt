@@ -38,7 +38,8 @@ public class MyFrame extends JFrame
      * Yovo
      */
     public static String path;
-    public static String language = "/Bundle_DE", volume = "50";
+    public static String language = "/Bundle_DE", volume;
+    public static Boolean volumFromFile = true;
 
     // get filepath
     static
@@ -68,7 +69,9 @@ public class MyFrame extends JFrame
             try
             {
                 BufferedReader br = new BufferedReader(new FileReader(path + "\\hota_setting.txt"));
+                if (volumFromFile)
                 volume = br.readLine();
+                
                 language = br.readLine();
                 if (language.equalsIgnoreCase("german"))
                 {
@@ -83,7 +86,7 @@ public class MyFrame extends JFrame
             {
                 e.printStackTrace();
                 language = "/Bundle_DE";
-                volume = "50";
+                //volume = "50";
             }
         }
     }
