@@ -272,7 +272,6 @@ public class LoginPanel extends JPanel {
 		} else {
 			txtPassword.setBorder(BorderFactory.createLineBorder(null));
 		}
-
 		if (validInput) {
 			StringBuilder sb = new StringBuilder(txtPassword.getPassword().length);
 			sb.append(txtPassword.getPassword());
