@@ -94,7 +94,8 @@ public class SettingsPanel extends JPanel
      */
     private void getSettings()
     {
-        volumeSlider.setValue(Integer.parseInt(MyFrame.volume));
+        if(MyFrame.volumFromFile)
+        {volumeSlider.setValue(Integer.parseInt(MyFrame.volume));}
 
         //check if file exists, if not set flag createFile = false
         if (Files.exists(Paths.get(MyFrame.path + "\\hota_setting.txt")))
@@ -138,7 +139,7 @@ public class SettingsPanel extends JPanel
         // Volume controll over changelistener ->SoundThread.mp3test.setVolume(volumeSlider.getValue());
         volumeSlider.setMinimum(0);
         volumeSlider.setMaximum(100);
-
+        volumeSlider.setValue(Integer.parseInt(MyFrame.volume));
         volumeSlider.setMinorTickSpacing(10);
         volumeSlider.setMajorTickSpacing(25);
         volumeSlider.setPaintTicks(true);
@@ -153,6 +154,10 @@ public class SettingsPanel extends JPanel
                 if (ce.getSource() == volumeSlider)
                 {
                     SoundThread.mp3test.setVolume(volumeSlider.getValue());
+                    MyFrame.volume= Integer.toString(volumeSlider.getValue());
+                     MyFrame.volumFromFile = false;
+
+        
                 }
             }
 
