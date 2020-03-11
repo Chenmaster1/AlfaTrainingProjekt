@@ -117,7 +117,7 @@ public class SingleplayerGame {
     }
     
     public void increaseCrurrentActionPointsBy(int increasment) {
-    	currentActionPoints += increasment;
+    	currentHero.setCurrentActionPoints(currentHero.getCurrentActionPoints() + increasment);
     }
 
     public void setMysteriousIdol1(boolean active) {
