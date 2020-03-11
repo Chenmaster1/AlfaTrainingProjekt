@@ -61,6 +61,12 @@ public class HeroPanelSmall extends JPanel {
 
     }
 
+    /**
+     * Zeichnet das Panel. Die Elemente werden dynamisch auf die aktuelle Größe
+     * angepasst and angeordnet.
+     *
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
 
@@ -105,7 +111,7 @@ public class HeroPanelSmall extends JPanel {
         for (int i = 0; i < numDelayTokens; i++) {
             int position_x = ((getWidth() - totalSize_X) / 2) + (i * delayTokenSize_X);
             int position_y = getHeight() - delayTokenSize_Y - (int) (DELAYTOKEN_BOTTOMMARGIN_RELATIVE_Y * getHeight());
-            
+
             g2d.drawImage(delayTokenImage,
                     position_x,
                     position_y,

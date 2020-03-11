@@ -22,18 +22,25 @@ class GameSidePanel extends JPanel {
     private final static int PANELSIZE_Y = 1080;
 
     private Image backgroundImage;
+
+    //Array der Gegnerhelden, angezeigt im OtherHeroesPanel oben
     private ArrayList<Hero> otherHeroes;
 
+    //der Held des Hauptspielers, angezeigt im zentralen HeroPanelLarge
     private Hero playerHero;
 
+    //Die Hero-Panels
     private OtherHeroesPanel panelOtherHeroes;
     private HeroPanelLarge panelPlayerHero;
+
+    //Die Dice-Panels
     private AttackDicePanel panelAttackDice;
     private HideDicePanel panelHideDice;
 
+    //Die Threads für die Würfelanimationen, werden im Konstruktor gestartet
     private Thread threadAttackDicePanel;
     private Thread threadHideDicePanel;
-    
+
     public GameSidePanel(ArrayList<Hero> otherHeroes, Hero playerHero) {
         super();
         this.otherHeroes = otherHeroes;
@@ -48,21 +55,20 @@ class GameSidePanel extends JPanel {
 
         panelOtherHeroes = new OtherHeroesPanel(otherHeroes);
         panelOtherHeroes.setBounds(14, 85, 780, 200);
-        
+
         panelPlayerHero = new HeroPanelLarge(playerHero);
         panelPlayerHero.setBounds(30, 340, 558, 393);
-        
+
         panelAttackDice = new AttackDicePanel();
         panelAttackDice.setBounds(20, 750, 350, 250);
         threadAttackDicePanel = new Thread(panelAttackDice);
         threadAttackDicePanel.start();
-        
-        panelHideDice= new HideDicePanel();
+
+        panelHideDice = new HideDicePanel();
         panelHideDice.setBounds(370, 742, 437, 295);
-        
         threadHideDicePanel = new Thread(panelHideDice);
         threadHideDicePanel.start();
-        
+
         add(panelOtherHeroes);
         add(panelPlayerHero);
         add(panelAttackDice);
@@ -70,6 +76,13 @@ class GameSidePanel extends JPanel {
 
     }
 
+    /**
+     * Zeichnet das Panel. Die meisten Elemente werden als eigene Components
+     * hinzugefügt und zeichnen sich daher selbst, nur das Hintergrundbild wird
+     * hier extra gezeichnet.
+     *
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
 
@@ -78,35 +91,33 @@ class GameSidePanel extends JPanel {
         // Hintergrund ganz unten
         g2d.drawImage(backgroundImage, 0, 0, PANELSIZE_X, PANELSIZE_Y, this);
 
-        // restliche Elemente
-//        paintComponents(g);
     }
 
     public void setOtherHeroes(ArrayList<Hero> otherHeroes) {
         this.otherHeroes = otherHeroes;
     }
 
-	public OtherHeroesPanel getPanelOtherHeroes() {
-		return panelOtherHeroes;
-	}
-
-	public HeroPanelLarge getPanelPlayerHero() {
-		return panelPlayerHero;
-	}
-
-	public AttackDicePanel getPanelAttackDice() {
-		return panelAttackDice;
-	}
-        
-        public HideDicePanel getPanelHideDice() {
-		return panelHideDice;
-	}
-        
-    public Thread getThreadAttackDicePanel() {
-    	return threadAttackDicePanel;
+    public OtherHeroesPanel getPanelOtherHeroes() {
+        return panelOtherHeroes;
     }
-    
+
+    public HeroPanelLarge getPanelPlayerHero() {
+        return panelPlayerHero;
+    }
+
+    public AttackDicePanel getPanelAttackDice() {
+        return panelAttackDice;
+    }
+
+    public HideDicePanel getPanelHideDice() {
+        return panelHideDice;
+    }
+
+    public Thread getThreadAttackDicePanel() {
+        return threadAttackDicePanel;
+    }
+
     public Thread getThreadHideDicePanel() {
-    	return threadHideDicePanel;
+        return threadHideDicePanel;
     }
 }

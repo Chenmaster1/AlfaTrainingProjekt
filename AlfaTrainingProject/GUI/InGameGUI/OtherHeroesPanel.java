@@ -9,19 +9,21 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 /**
+ * Ein Panel, dass mehrere HeroPanelSmall in einem horizontalen FlowLayout
+ * gruppiert.
  *
+ * TODO: Evtl. ein GridLayout benutzen und die Größe des HeroPanelSmall von der
+ * Größe dieses Panels abhängig machen, statt konstant in der Klasse
  */
-public class OtherHeroesPanel extends JPanel{
-    
-    
-    public OtherHeroesPanel(ArrayList<Hero> otherHeroes)
-    {
+public class OtherHeroesPanel extends JPanel {
+
+    public OtherHeroesPanel(ArrayList<Hero> otherHeroes) {
         super(new FlowLayout(FlowLayout.CENTER, 10, 0));
-                
+
         for (Hero h : otherHeroes) {
             add(new HeroPanelSmall(h));
         }
-        
+
         setOpaque(false);
     }
 }

@@ -24,6 +24,16 @@ import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
+/**
+ * Panel zur detaillierten Darstellung eines Helden. Enthält neben allen
+ * Elementen des HeroPanelSmall auch Texte für Namen und Ability-Descriptions
+ * sowie eine Liste von Buttons für die verfügbaren Actions, mit denen sie
+ * während des Zugs des Spielers ausgeführt werden können.
+ *
+ * Die Größe ist dynamisch veränderbar.
+ * 
+ * @author Alfa
+ */
 public class HeroPanelLarge extends JPanel {
 
     private Hero displayedHero;
@@ -41,7 +51,6 @@ public class HeroPanelLarge extends JPanel {
     private JLabel heroNameLabel;
     private JTextArea abilityDescriptionField;
 
-    //TODO: Passende Werte finden bzw. koordinieren
     private static final double AVATAR_POSITION_RELATIVE_X = 0.633;
     private static final double AVATAR_POSITION_RELATIVE_Y = 0.06;
     private static final double AVATAR_SIZE_RELATIVE_X = 0.325;
@@ -250,8 +259,8 @@ public class HeroPanelLarge extends JPanel {
             if (currentPoints > 0) {
                 g2d.drawImage(actionPointImage,
                         (int) (getWidth() * ACTIONPOINTICON_POSITION_RELATIVE_X),
-                        (int) (getHeight() * ACTIONPOINTICON_POSITION_RELATIVE_Y) 
-                                + (iconSize_Y + (int) (POINTICON_DISTANCE_RELATIVE_Y * getHeight())) * i,
+                        (int) (getHeight() * ACTIONPOINTICON_POSITION_RELATIVE_Y)
+                        + (iconSize_Y + (int) (POINTICON_DISTANCE_RELATIVE_Y * getHeight())) * i,
                         iconSize_X, iconSize_Y,
                         this);
                 currentPoints--;
@@ -259,7 +268,7 @@ public class HeroPanelLarge extends JPanel {
                 g2d.drawImage(actionPointUsedImage,
                         (int) (getWidth() * ACTIONPOINTICON_POSITION_RELATIVE_X),
                         (int) (getHeight() * ACTIONPOINTICON_POSITION_RELATIVE_Y)
-                                + (iconSize_Y + (int) (POINTICON_DISTANCE_RELATIVE_Y * getHeight())) * i,
+                        + (iconSize_Y + (int) (POINTICON_DISTANCE_RELATIVE_Y * getHeight())) * i,
                         iconSize_X, iconSize_Y,
                         this);
             }

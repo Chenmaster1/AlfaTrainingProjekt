@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 /**
- *
+ * Panel zur Darstellung einer ArenaCard. Die Größe ist dynamisch veränderbar.
  */
 public class ArenaCardPanel extends JPanel {
 
@@ -22,9 +22,9 @@ public class ArenaCardPanel extends JPanel {
     private JTextArea descriptionField;
 
     private static final double ARTWORK_POSITION_RELATIVE_X = 0.06;
-    private static final double ARTWORK_POSITION_RELATIVE_Y = 0.09;
-    private static final double ARTWORK_SIZE_RELATIVE_X = 0.89;
-    private static final double ARTWORK_SIZE_RELATIVE_Y = 0.40;
+    private static final double ARTWORK_POSITION_RELATIVE_Y = 0.095;
+    private static final double ARTWORK_SIZE_RELATIVE_X = 0.889;
+    private static final double ARTWORK_SIZE_RELATIVE_Y = 0.393;
 
     private static final double NAMELABEL_POSITION_RELATIVE_X = 0.09;
     private static final double NAMELABEL_POSITION_RELATIVE_Y = 0.03;
@@ -37,7 +37,7 @@ public class ArenaCardPanel extends JPanel {
     private static final double DESCRIPTIONFIELD_SIZE_RELATIVE_Y = 0.3;
 
     /**
-     * Panel zur Darstellung einer ArenaCard. 
+     * Panel zur Darstellung einer ArenaCard.
      *
      * @param displayedCard Die darzustellende ArenaCard
      */
@@ -45,7 +45,7 @@ public class ArenaCardPanel extends JPanel {
         this.displayedCard = displayedCard;
 
         artworkImage = displayedCard.getImage();
-        
+
         backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Arena_Cards/Arenacard_empty.jpg"))
                 .getImage();
 
@@ -54,13 +54,13 @@ public class ArenaCardPanel extends JPanel {
 
         initializeTextFields();
     }
-    
+
     /**
      * Zeichnet das Panel. Alle Elemente werden relativ zur aktuellen Panelgröße
      * angepasst (siehe die entsprechend definierten Konstanten), sodass ein
      * Vergrößern bzw. Verkleinern problemlos möglich ist.
-     * 
-     * @param g 
+     *
+     * @param g
      */
     @Override
     public void paintComponent(Graphics g) {
@@ -68,21 +68,19 @@ public class ArenaCardPanel extends JPanel {
 
         //Hintergrund
         g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-        
+
         //Artwork
-        g2d.drawImage(artworkImage, (int)(ARTWORK_POSITION_RELATIVE_X * getWidth()),
-               (int)(ARTWORK_POSITION_RELATIVE_Y * getHeight()),
-               (int)(ARTWORK_SIZE_RELATIVE_X * getWidth()), 
-               (int)(ARTWORK_SIZE_RELATIVE_Y * getHeight()), this);
-        
+        g2d.drawImage(artworkImage, (int) (ARTWORK_POSITION_RELATIVE_X * getWidth()),
+                (int) (ARTWORK_POSITION_RELATIVE_Y * getHeight()),
+                (int) (ARTWORK_SIZE_RELATIVE_X * getWidth()),
+                (int) (ARTWORK_SIZE_RELATIVE_Y * getHeight()), this);
+
         //Namensfeld Bounds setzen
         nameLabel.setBounds((int) (NAMELABEL_POSITION_RELATIVE_X * getWidth()),
                 (int) (NAMELABEL_POSITION_RELATIVE_Y * getHeight()),
                 (int) (NAMELABEL_SIZE_RELATIVE_X * getWidth()),
                 (int) (NAMELABEL_SIZE_RELATIVE_Y * getHeight()));
-        
-        
-        
+
         //Descriptionfeld Bounds setzen
         descriptionField.setBounds((int) (DESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
                 (int) (DESCRIPTIONFIELD_POSITION_RELATIVE_Y * getHeight()),
@@ -98,7 +96,6 @@ public class ArenaCardPanel extends JPanel {
         nameLabel = new JLabel(displayedCard.getName());
 //        nameLabel.setOpaque(true);
         this.add(nameLabel);
-        
 
         descriptionField = new JTextArea(displayedCard.getDescription());
         descriptionField.setOpaque(false);
@@ -108,7 +105,5 @@ public class ArenaCardPanel extends JPanel {
 //        descriptionField.setOpaque(true);
         this.add(descriptionField);
     }
-
-    
 
 }

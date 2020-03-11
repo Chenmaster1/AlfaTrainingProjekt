@@ -19,8 +19,8 @@ import Dice.AttackDice;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 /**
- * Eine Testklasse für das GamePanel. Zeigt ein GamePanel standalone in einem
- * JFrame an.
+ * Eine Testklasse für das GamePanel. Zeigt ein GamePanel mitsamt aller Elemente
+ * standalone in einem JFrame an.
  */
 public class GamePanelTest extends JFrame {
 
@@ -75,7 +75,6 @@ public class GamePanelTest extends JFrame {
         acp.setBounds(600, 400, 186, 260);
         gsp.add(acp);
 
-        
         gsp.getPanelAttackDice().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {

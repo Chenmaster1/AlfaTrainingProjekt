@@ -10,26 +10,26 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 /**
- * Eine Testklasse für die Arena
+ * Eine Testklasse für die Arena. Siehe auch: GamePanelTest (enthält auch ein
+ * MapPanel)
  */
-public class MapPanelTest extends JFrame{
-    
+public class MapPanelTest extends JFrame {
+
     private boolean state;
-    public MapPanelTest()
-    {
-        
+
+    public MapPanelTest() {
+
         final ArrayList<Hideout> hideoutArray = new ArrayList<>();
-        for (int i = 0;i<20;i++)
-        {
-            Hideout h = new Hideout(0,HideoutType.FOREST);
+        for (int i = 0; i < 20; i++) {
+            Hideout h = new Hideout(0, HideoutType.FOREST);
             h.setActive(true);
             hideoutArray.add(h);
-            
+
         }
         final MapPanel mp = new MapPanel(hideoutArray);
         setContentPane(mp);
         mp.setMapState(MapPanel.MAPSTATE_AIMING);
-        
+
         mp.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
@@ -48,19 +48,17 @@ public class MapPanelTest extends JFrame{
                 repaint();
             }
         });
-        
+
 //        getContentPane().setPreferredSize(new Dimension(1080, 1080));
-         setLocation(-1080, 0);
+        setLocation(-1080, 0);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         pack();
     }
-    
-    public static final void main(String args[])
-    {
+
+    public static final void main(String args[]) {
         MapPanelTest mpt = new MapPanelTest();
-        
-        
+
     }
 
 }
