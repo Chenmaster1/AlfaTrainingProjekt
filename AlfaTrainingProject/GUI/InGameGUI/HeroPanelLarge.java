@@ -79,6 +79,13 @@ public class HeroPanelLarge extends JPanel {
     private static final double HERODESCRIPTIONFIELD_SIZE_RELATIVE_X = 0.45;
     private static final double HERODESCRIPTIONFIELD_SIZE_RELATIVE_Y = 0.2;
 
+    /**
+     * GroßformatPanel für Helden, genutzt für den Hauptspieler. Zeigt alle
+     * relevanten Infos an wie HP, AP, Delay, Actionliste, Name, Beschreibung,
+     * Bild etc.
+     *
+     * @param hero Der darzustellende Hero
+     */
     public HeroPanelLarge(Hero hero) {
 
         displayedHero = hero;
@@ -106,6 +113,28 @@ public class HeroPanelLarge extends JPanel {
         initializeTextFields();
     }
 
+    /**
+     * Aktiviert bzw deaktiviert die Buttons für die Aktionen abhängig davon, ob
+     * diese aktuell aktiviert sind oder nicht. Muss aufgerufen werden, wenn
+     * sich am Status der Actions bzw. Abilities etwas ändert.
+     *
+     * TODO: Evtl. zusätzliche Flag einbauen, die alles deaktiviert (wenn z.B.
+     * andere Spieler am Zug sind)
+     */
+    public void updateButtonsEnabled() {
+        for (JButton b : buttonArrayList) {
+            b.setEnabled(actionArrayList.get(buttonArrayList.indexOf(b)).isEnabled());
+
+        }
+    }
+
+    /**
+     * Zeichnet das Panel. Alle Elemente werden relativ zur aktuellen Panelgröße
+     * angepasst (siehe die entsprechend definierten Konstanten), sodass ein
+     * Vergrößern bzw. Verkleinern problemlos möglich ist.
+     *
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
 
@@ -136,11 +165,52 @@ public class HeroPanelLarge extends JPanel {
 
         //ActionPanel Größe anpassen
         updateActionListPanelBounds();
-        
+
         //Textfelder Größe anpassen
         updateTextFieldsBounds();
     }
 
+    /**
+     * Initialisiert das Teil-Panel, welches die JButtons zur Aktionsauswahl
+     * enthält.
+     */
+    private void initializeActionListPanel() {
+        actionListPanel = new JPanel();
+        actionListPanel.setLayout(new GridLayout(ACTIONLIST_CELLS, 1));
+        actionListPanel.setOpaque(false);
+        add(actionListPanel);
+    }
+
+    /**
+     * Initialisiert die Textfelder, also sowohl den Heldennamen als auch die
+     * Liste der Abilities, welche aus dem Helden ausgelesen werden.
+     */
+    private void initializeTextFields() {
+        heroNameLabel = new JLabel(displayedHero.getName());
+        heroNameLabel.setForeground(Color.yellow);
+        add(heroNameLabel);
+
+        StringBuilder sbAbilities = new StringBuilder();
+        for (Ability ab : displayedHero.getAbilities()) {
+            sbAbilities.append(ab.getName());
+            sbAbilities.append(": ");
+            sbAbilities.append(ab.getDescription());
+            sbAbilities.append("\n");
+        }
+
+        abilityDescriptionField = new JTextArea(sbAbilities.toString());
+        abilityDescriptionField.setEditable(false);
+        abilityDescriptionField.setOpaque(false);
+        abilityDescriptionField.setLineWrap(true);
+        abilityDescriptionField.setWrapStyleWord(true);
+        add(abilityDescriptionField);
+    }
+
+    /**
+     * Untermethode zum Zeichnen der Delay-Tokens.
+     *
+     * @param g2d
+     */
     private void drawDelayTokenIcons(Graphics2D g2d) {
         int delayTokenSize_X = (int) (DELAYTOKEN_SIZE_RELATIVE_X * getWidth());
         int delayTokenSize_Y = (int) (DELAYTOKEN_SIZE_RELATIVE_Y * getHeight());
@@ -162,6 +232,16 @@ public class HeroPanelLarge extends JPanel {
 
     }
 
+    /**
+     * Untermethode zum Zeichnen der Actionpoint-Icons. Die reale Größe der
+     * Icons wird vor dem Aufruf aus den relativen Konstanten und der
+     * Fenstergröße berechnet und übergeben, weil sie die gleiche ist wie bei
+     * den Hitpoint-Icons.
+     *
+     * @param g2d
+     * @param iconSize_X
+     * @param iconSize_Y
+     */
     private void drawActionPointIcons(Graphics2D g2d, int iconSize_X, int iconSize_Y) {
         int maxPoints = displayedHero.getMaxActionPoints();
         int currentPoints = displayedHero.getCurrentActionPoints();
@@ -170,14 +250,16 @@ public class HeroPanelLarge extends JPanel {
             if (currentPoints > 0) {
                 g2d.drawImage(actionPointImage,
                         (int) (getWidth() * ACTIONPOINTICON_POSITION_RELATIVE_X),
-                        (int) (getHeight() * ACTIONPOINTICON_POSITION_RELATIVE_Y) + (iconSize_Y + (int) (POINTICON_DISTANCE_RELATIVE_Y * getHeight())) * i,
+                        (int) (getHeight() * ACTIONPOINTICON_POSITION_RELATIVE_Y) 
+                                + (iconSize_Y + (int) (POINTICON_DISTANCE_RELATIVE_Y * getHeight())) * i,
                         iconSize_X, iconSize_Y,
                         this);
                 currentPoints--;
             } else {
                 g2d.drawImage(actionPointUsedImage,
                         (int) (getWidth() * ACTIONPOINTICON_POSITION_RELATIVE_X),
-                        (int) (getHeight() * ACTIONPOINTICON_POSITION_RELATIVE_Y) + (iconSize_Y + (int) (POINTICON_DISTANCE_RELATIVE_Y * getHeight())) * i,
+                        (int) (getHeight() * ACTIONPOINTICON_POSITION_RELATIVE_Y)
+                                + (iconSize_Y + (int) (POINTICON_DISTANCE_RELATIVE_Y * getHeight())) * i,
                         iconSize_X, iconSize_Y,
                         this);
             }
@@ -185,6 +267,16 @@ public class HeroPanelLarge extends JPanel {
 
     }
 
+    /**
+     * Untermethode zum Zeichnen der Hitpoint-Icons. Die reale Größe der Icons
+     * wird vor dem Aufruf aus den relativen Konstanten und der Fenstergröße
+     * berechnet und übergeben, weil sie die gleiche ist wie bei den
+     * Actionpoint-Icons.
+     *
+     * @param g2d
+     * @param iconSize_X
+     * @param iconSize_Y
+     */
     private void drawHitPointIcons(Graphics2D g2d, int iconSize_X, int iconSize_Y) {
         int maxPoints = displayedHero.getMaxHitPoints();
         int currentPoints = displayedHero.getCurrentHitPoints();
@@ -208,35 +300,11 @@ public class HeroPanelLarge extends JPanel {
 
     }
 
-    private void initializeActionListPanel() {
-        actionListPanel = new JPanel();
-        actionListPanel.setLayout(new GridLayout(ACTIONLIST_CELLS, 1));
-        actionListPanel.setOpaque(false);
-        add(actionListPanel);
-    }
-
-    private void initializeTextFields() {
-        heroNameLabel = new JLabel(displayedHero.getName());
-        heroNameLabel.setForeground(Color.yellow);
-        add(heroNameLabel);
-
-        StringBuilder sbAbilities = new StringBuilder();
-        for (Ability ab : displayedHero.getAbilities())
-        {
-            sbAbilities.append(ab.getName());
-            sbAbilities.append(": ");
-            sbAbilities.append(ab.getDescription());
-            sbAbilities.append("\n");
-        }
-        
-        abilityDescriptionField = new JTextArea(sbAbilities.toString());
-        abilityDescriptionField.setEditable(false);
-        abilityDescriptionField.setOpaque(false);
-        abilityDescriptionField.setLineWrap(true);
-        abilityDescriptionField.setWrapStyleWord(true);
-        add(abilityDescriptionField);
-    }
-
+    /**
+     * Liest die aktuelle ArrayList der Actions aus und erzeugt eine
+     * entsprechende Liste an Buttons für das actionListPanel. Wird immer
+     * aufgerufen, wenn eine neue ArrayList mit Actions zugewiesen wird.
+     */
     private void updateActionListPanelContent() {
         actionListPanel.removeAll();
         buttonArrayList.clear();
@@ -251,13 +319,13 @@ public class HeroPanelLarge extends JPanel {
         repaint();
     }
 
-    public void updateButtonsEnabled() {
-        for (JButton b : buttonArrayList) {
-            b.setEnabled(actionArrayList.get(buttonArrayList.indexOf(b)).isEnabled());
-
-        }
-    }
-
+    /**
+     * Passt die Bounds des actionListPanel an die Gesamtpanel-Größe an. Wird in
+     * paintComponent aufgerufen.
+     *
+     * Unabhängig von der aktuellen Anzahl der Buttons im actionListPanel liegt
+     * der unterste Button stets am unteren Rand des Gesamtpanel an.
+     */
     private void updateActionListPanelBounds() {
 
         int size_Y = (int) (ACTIONLIST_SIZE_RELATIVE_Y * getHeight());
@@ -271,12 +339,16 @@ public class HeroPanelLarge extends JPanel {
                 size_Y);
     }
 
+    /**
+     * Passt die Bounds der Textfelder (Name und Liste der Abilities) an die
+     * Gesamtpanel-Größe an. Wird in paintComponent aufgerufen.
+     */
     private void updateTextFieldsBounds() {
         heroNameLabel.setBounds((int) (HERONAMELABEL_POSITION_RELATIVE_X * getWidth()),
                 (int) (HERONAMELABEL_POSITION_RELATIVE_Y * getHeight()),
                 (int) (HERONAMELABEL_SIZE_RELATIVE_X * getWidth()),
                 (int) (HERONAMELABEL_SIZE_RELATIVE_Y * getHeight()));
-        
+
         abilityDescriptionField.setBounds((int) (HERODESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
                 (int) (HERODESCRIPTIONFIELD_POSITION_RELATIVE_Y * getHeight()),
                 (int) (HERODESCRIPTIONFIELD_SIZE_RELATIVE_X * getWidth()),
@@ -291,6 +363,15 @@ public class HeroPanelLarge extends JPanel {
         return buttonArrayList;
     }
 
+    /**
+     * Setzt eine neue Liste an möglichen Actions und passt die Buttons
+     * entsprechend an. Nur benutzen, wenn die Optionen permanent verändert
+     * werden sollen. Soll eine Aktion vorübergehend (de)aktiviert werden, dann
+     * an dieser setEnabled(boolean) benutzen und hier updateButtonsEnabled()
+     * aufrufen.
+     *
+     * @param actionArrayList Die neue Aktionsliste
+     */
     public void setActionArrayList(ArrayList<Action> actionArrayList) {
         this.actionArrayList = actionArrayList;
         updateActionListPanelContent();
