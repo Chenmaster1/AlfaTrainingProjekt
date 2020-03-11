@@ -1,6 +1,7 @@
 package Arenacards;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.ImageIcon;
 
@@ -18,7 +19,6 @@ public class Arenacards {
 	private String commentary;
 	private String author;
 	private Image image;
-	private ArenacardType arenacardType;
 	private int delayTokens;
 	private int cardNumber;
 	
@@ -30,14 +30,6 @@ public class Arenacards {
 		this.author = MyFrame.bundle.getString("ArenacardAuthor" + cardNumber);
 		//"Images/BackGround_FullScreenBlurred.png"
 		this.image = new ImageIcon(getClass().getClassLoader().getResource(MyFrame.bundle.getString("ArenacardImage" + cardNumber))).getImage();		
-		switch(MyFrame.bundle.getString("ArenacardType" + cardNumber)) {
-			case "ACTIONCARD":
-				arenacardType = ArenacardType.ACTIONCARD;
-				break;
-			case "EVENTCARD":
-				arenacardType = ArenacardType.EVENTCARD;
-				break;
-		}
 		
 		if(cardNumber == 8 || cardNumber == 9 || cardNumber == 14)
 			delayTokens = 3;
@@ -50,11 +42,16 @@ public class Arenacards {
 	 * erstellt die Liste der Arenakarten
 	 * @return
 	 */
-	public static ArrayList<Arenacards> createNewArenacards(){
+	public static void createNewArenacards(){
 		for(int count = 0; count <= 16; count++) {
 			arenacards.add(new Arenacards(count));
 		}
-		return arenacards;
+		shuffle();
+	}
+	
+	private static void shuffle() {
+		//Karten mischen
+		Collections.shuffle(arenacards);
 	}
 	
 	/**
@@ -119,25 +116,25 @@ public class Arenacards {
 	}
 
 	private void useFallingRocks(SingleplayerGame singleplayerGame) {
-		// TODO Auto-generated method stub
+		// TODO ueberlegen ob und wie gemacht werden soll
 		
 	}
 
 	private void useNorthernSpiders(SingleplayerGame singleplayerGame) {
-		// TODO Auto-generated method stub
+		// TODO ueberlegen ob und wie gemacht werden soll
 		
 	}
 
 	private void useSeismicActivities(SingleplayerGame singleplayerGame) {
 		//3 Verzoegerungsmarken. verzoegerungsmarken werden abgebaut bei speziellem wuerfelwurf (in singleplayergame abfangen und aufrufen)
-		
+		// TODO anders implementieren, was soll passieren
 		if(delayTokens > 0) {
 			delayTokens--;
 			if(delayTokens == 0) {
 				//TODO alle spieler im ödland aufdecken und ausdauer um 1 verringern
 			}
 		}
-		//TODO boolean setzen
+		//TODO boolean setzen. wenn man sich selber aufdeckt, kann man sich wieder instant verstecken, solange diese karte aktiv ist
 		
 	}
 
@@ -158,14 +155,13 @@ public class Arenacards {
 	}
 
 	private void useTreacherousCrow(SingleplayerGame singleplayerGame) {
-
 		singleplayerGame.setCurrentActionPointsToZero();
 		singleplayerGame.getCurrentHero().addDelayTokens(1);
 		
 	}
 
 	private void useMysteriousIdol2(SingleplayerGame singleplayerGame) {
-		//TODO wuerfelwurf und aufruf ueber singleplayergame?
+		//TODO wuerfelwurf und aufruf ueber singleplayergame? // anders implementieren, was soll passieren
 		//Verzögerungsmarken auf dieser Karte. können abgebaut werden
 		if(delayTokens > 0) {
 			delayTokens--;
@@ -176,7 +172,7 @@ public class Arenacards {
 	}
 	
 	private void useMysteriousIdol1(SingleplayerGame singleplayerGame) {
-		//TODO wuerfelwurf und aufruf ueber singleplayergame?
+		//TODO wuerfelwurf und aufruf ueber singleplayergame? // anders implementieren, was soll passieren
 		//erst Verzögerungsmarken entfernen. also held würfelt, falls klappt, dann verringern	
 		if(delayTokens > 0) {
 			delayTokens--;
@@ -188,7 +184,7 @@ public class Arenacards {
 	}
 
 	private void useForestHut(SingleplayerGame singleplayerGame) {
-		// TODO Helden und Karten verbinden (über hashmap????)
+		// TODO Helden und Karten verbinden (über hashmap????) // anders implementieren, was soll passieren
 		
 		//falls held sichtbar, karte entfernen
 		//ansonsten currentactionpoints um 1 erhoehen
@@ -201,6 +197,7 @@ public class Arenacards {
 	}
 
 	private void useStrangeRedShrooms(SingleplayerGame singleplayerGame) {
+		//TODO beibehalten?
 		//beim ablegen, direkt verstecken und 3 verzögerungsmarken aufnehmen
 		for(Action action : singleplayerGame.getActions()) {
 			if(action instanceof ActionHide) {
