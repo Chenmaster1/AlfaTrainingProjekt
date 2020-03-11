@@ -11,6 +11,7 @@ import Hideouts.HideoutType;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import javax.swing.JFrame;
 
@@ -29,12 +30,14 @@ public class GamePanelTest extends JFrame {
 		// testArray hideouts
 		final ArrayList<Hideout> hideoutArray = new ArrayList<>();
 		for (int i = 0; i < 20; i++) {
-			Hideout h = new Hideout(0, HideoutType.FOREST);
+			Hideout h = new Hideout(i, HideoutType.FOREST);
+			
 			h.setActive(true);
 			hideoutArray.add(h);
 
 		}
 
+		
 		final MapPanel mp = new MapPanel(hideoutArray);
 		mp.setMapState(MapPanel.MAPSTATE_AIMING);
 
@@ -48,10 +51,27 @@ public class GamePanelTest extends JFrame {
 			h.setDelayTokens(new Random().nextInt(4));
 			h.setCurrentActionPoints(new Random().nextInt(h.getMaxActionPoints()));
 			h.setCurrentHitPoints(new Random().nextInt(h.getMaxHitPoints()));
-		}
+//			h.setVisible(new Random().nextBoolean());
+			h.setVisible(true);
+			}
 
 		Hero mainHero = new HeroDahlia();
+		mainHero.setVisible(false);
 		mainHero.setDelayTokens(4);
+		mp.setCurrentHero(mainHero);
+		
+		
+		//test Hideout-Hero Map
+		HashMap<Hideout, Hero> testHideoutHero = new HashMap<>();
+		testHideoutHero.put(hideoutArray.get(4), otherHeroes.get(0));
+		testHideoutHero.put(hideoutArray.get(8), otherHeroes.get(1));
+		testHideoutHero.put(hideoutArray.get(12), otherHeroes.get(2));
+		testHideoutHero.put(hideoutArray.get(13), otherHeroes.get(3));
+		testHideoutHero.put(hideoutArray.get(17), mainHero);
+		
+		mp.setHideoutHeroes(testHideoutHero);
+		
+		
 		final GameSidePanel gsp = new GameSidePanel(otherHeroes, mainHero);
 
 		GamePanel gp = new GamePanel(mp, gsp);
@@ -73,7 +93,7 @@ public class GamePanelTest extends JFrame {
 		// ist hier nur als visueller Test der einzelkomponente
 		ArenaCardPanel acp = new ArenaCardPanel(new Arenacards(9));
 //		acp.setBounds(0, 0, 744, 1040);
-		 acp.setBounds(600, 400, 186, 260);
+		acp.setBounds(870, 10, 186, 260);
 		mp.add(acp);
 
 		gsp.getPanelAttackDice().addMouseListener(new MouseAdapter() {

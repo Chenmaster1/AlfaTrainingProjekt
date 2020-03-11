@@ -73,7 +73,7 @@ public class HeroPanelSmall extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         // Avatar als Hintergrund
-        g2d.drawImage(displayedHero.getAvatar().getImage(), 0, 0, getWidth(), getHeight(), this);
+        g2d.drawImage(displayedHero.getAvatar(), 0, 0, getWidth(), getHeight(), this);
 
         //reale Abmessungen der Aktions- und Lebenspunkte basierend auf der aktuellen Panelgröße
         int iconSize_X = (int) (POINTICON_SIZE_RELATIVE_X * getWidth());

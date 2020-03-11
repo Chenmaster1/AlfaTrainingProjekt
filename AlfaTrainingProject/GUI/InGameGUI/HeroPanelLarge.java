@@ -158,7 +158,7 @@ public class HeroPanelLarge extends JPanel {
         g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
         // Overlay für den Heldenavatar
-        g2d.drawImage(displayedHero.getAvatar().getImage(),
+        g2d.drawImage(displayedHero.getAvatar(),
                 (int) (AVATAR_POSITION_RELATIVE_X * getWidth()),
                 (int) (AVATAR_POSITION_RELATIVE_Y * getHeight()),
                 (int) (AVATAR_SIZE_RELATIVE_X * getWidth()),

@@ -1,5 +1,6 @@
 package Heroes;
 
+import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public abstract class Hero {
 
     protected ArrayList<Ability> abilities;
 
-    private ImageIcon avatar;
+    private Image avatar;
 
     private KiLogic ki;
 
@@ -56,7 +57,7 @@ public abstract class Hero {
         this.maxActionPoints = maxActionPoints;
         this.power = power;
         this.ki = ki;
-        this.avatar = new ImageIcon(getClass().getClassLoader().getResource(avatarPath));
+        this.avatar = new ImageIcon(getClass().getClassLoader().getResource(avatarPath)).getImage();
         this.abilities = new ArrayList<Ability>();
         
         // Standardwerte: KI-kontrolliert, nicht sichtbar, kein Delay, volle
@@ -115,7 +116,7 @@ public abstract class Hero {
         return currentActionPoints;
     }
 
-    public ImageIcon getAvatar() {
+    public Image getAvatar() {
         return avatar;
     }
 

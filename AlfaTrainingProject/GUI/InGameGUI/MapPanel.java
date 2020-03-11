@@ -2,6 +2,9 @@ package InGameGUI;
 
 import Heroes.Hero;
 import Hideouts.Hideout;
+
+import java.awt.AlphaComposite;
+import java.awt.Composite;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,6 +28,10 @@ public class MapPanel extends JPanel {
 	public final static int MAPSTATE_REGULAR = 0, MAPSTATE_AIMING = 1;
 	private final static int PANELSIZE = 1080;
 
+	private final static double HEROICON_DISTANCE_RELATIVE = 0.25;
+	private final static double HEROICON_SIZE_RELATIVE = 0.07;
+	private final static float HEROICON_HIDDEN_ALPHA = 0.5f;
+
 	private Image backgroundImage;
 	private Image aimOverlay;
 	private ArrayList<Image> inactiveFieldOverlays;
@@ -44,6 +51,7 @@ public class MapPanel extends JPanel {
 		backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Gameboard_Empty.png"))
 				.getImage();
 		aimOverlay = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Tower_Aim.png")).getImage();
+
 		inactiveFieldOverlays = new ArrayList<>();
 		for (int i = 0; i < hideouts.size(); i++) {
 			inactiveFieldOverlays
@@ -93,7 +101,7 @@ public class MapPanel extends JPanel {
 		}
 
 		// zuletzt Overlays für Helden
-//        drawVisibleHeros(g2d);
+		drawVisibleHeros(g2d);
 	}
 
 	/**
@@ -115,7 +123,7 @@ public class MapPanel extends JPanel {
 	private void drawAimOverlay(Graphics2D g2d) {
 		AffineTransform oldTransform = g2d.getTransform();
 
-		g2d.rotate(getDegree(currentAimedAtField), PANELSIZE / 2, PANELSIZE / 2);
+		g2d.rotate(getRadiant(currentAimedAtField), PANELSIZE / 2, PANELSIZE / 2);
 
 		g2d.drawImage(aimOverlay, PANELSIZE / 2 - aimOverlay.getWidth(this) / 2,
 				PANELSIZE / 2 - aimOverlay.getHeight(this) / 2, this);
@@ -124,14 +132,16 @@ public class MapPanel extends JPanel {
 	}
 
 	/**
-	 * Ermittelt die Position eines Feldes in Grad (0 inklusive bis 360.0
+	 * Ermittelt die Position eines Feldes in Radiant (Pi inklusive bis 3 Pi
 	 * exklusive). Feld 0 befindet sich oben in der Mitte, der Rest folgt im
 	 * Uhrzeigersinn.
 	 * 
-	 * @param aimedAtField Die Feldnummer des Feldes, dessen Winkel bestimmt werden soll
-	 * @return Der Winkel in Grad des übergebenen Feldes zu Feld 0 (mittig oben).
+	 * @param aimedAtField Die Feldnummer des Feldes, dessen Winkel bestimmt werden
+	 *                     soll
+	 * @return Der Winkel in Radiant des übergebenen Feldes zu Feld 0 (mittig oben).
 	 */
-	private double getDegree(int aimedAtField) {
+	private double getRadiant(int aimedAtField) {
+
 		return Math.toRadians((aimedAtField) * (360.0 / hideouts.size()) + 180);
 	}
 
@@ -145,15 +155,42 @@ public class MapPanel extends JPanel {
 	private void drawVisibleHeros(Graphics2D g2d) {
 		for (Hideout h : hideoutHeroes.keySet()) {
 			Hero occupyingHero = hideoutHeroes.get(h);
+			Image heroIcon = occupyingHero.getAvatar();
+
+			AffineTransform oldTransform = g2d.getTransform();
+			
+			int heroIconTotalWidth = (int) (HEROICON_SIZE_RELATIVE * getWidth());
+			int heroIconTotalHeight = (int) (HEROICON_SIZE_RELATIVE * getHeight());
+			
+			//Vorwärtsdrehen aufs richtige Feld
+			g2d.rotate(getRadiant(h.getFieldNumber()), PANELSIZE / 2, PANELSIZE / 2);
+			//Rückwärtsdrehen auf der Stelle
+			g2d.rotate(-getRadiant(h.getFieldNumber()), PANELSIZE / 2, 
+					(PANELSIZE / 2) 
+					+ (int) (HEROICON_DISTANCE_RELATIVE * getHeight()) 
+							+ heroIconTotalHeight/2);
 			if (occupyingHero.isVisible()) {
-				// TODO: Hero-Icon zeichnen
-			}
-			if ((occupyingHero == currentHero) && !occupyingHero.isVisible()) {
-				// TODO: Hero-Icon halbtransparent zeichnen
+
+				
+				g2d.drawImage(heroIcon, PANELSIZE / 2 - heroIconTotalWidth / 2,
+						PANELSIZE / 2 + (int) (HEROICON_DISTANCE_RELATIVE * getHeight()), heroIconTotalWidth,
+						heroIconTotalHeight, this);
+			} else if (occupyingHero == currentHero) {
+				Composite oldComposite = g2d.getComposite();
+				Composite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, HEROICON_HIDDEN_ALPHA);
+				g2d.setComposite(alphaComposite);
+
+				
+				g2d.drawImage(heroIcon, PANELSIZE / 2 - heroIconTotalWidth / 2,
+						PANELSIZE / 2 + (int) (HEROICON_DISTANCE_RELATIVE * getHeight()), heroIconTotalWidth,
+						heroIconTotalHeight, this);
+
+				g2d.setComposite(oldComposite);
 			}
 
+			g2d.setTransform(oldTransform);
+
 		}
-		;
 
 	}
 
