@@ -224,7 +224,7 @@ public class Arenacards {
 
 	private void useMysteriousFruit(SingleplayerGame singleplayerGame) {
 		//Wenn abgelegt, im aktuellen Zug eine Aktion mehr
-		singleplayerGame.increaseCrurrentActionPointsBy(1);
+		singleplayerGame.increaseCurrentActionPointsBy(1);
 		
 	}
 
@@ -232,4 +232,25 @@ public class Arenacards {
 		//heilt ausdauer beim aktuellen Helden
 		singleplayerGame.getCurrentHero().setCurrentHitPoints(singleplayerGame.getCurrentHero().getCurrentHitPoints() + 1);	
 	}
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCommentary() {
+        return commentary;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public int getDelayTokens() {
+        return delayTokens;
+    }
+
 }

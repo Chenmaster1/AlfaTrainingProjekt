@@ -116,7 +116,7 @@ public class SingleplayerGame {
         this.attackMode = attackMode;
     }
     
-    public void increaseCrurrentActionPointsBy(int increasment) {
+    public void increaseCurrentActionPointsBy(int increasment) {
     	currentHero.setCurrentActionPoints(currentHero.getCurrentActionPoints() + increasment);
     }
 
