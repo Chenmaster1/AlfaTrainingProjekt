@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- *
+ * 
  */
 public class HideDicePanel extends JPanel implements Runnable {
 

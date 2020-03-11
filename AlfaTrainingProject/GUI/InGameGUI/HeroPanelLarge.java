@@ -1,5 +1,6 @@
 package InGameGUI;
 
+import Abilities.Ability;
 import Actions.Action;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,7 +16,10 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
@@ -31,14 +35,17 @@ public class HeroPanelLarge extends JPanel {
     private Image delayTokenImage;
 
     private ArrayList<Action> actionArrayList;
+    private ArrayList<JButton> buttonArrayList;
 
     private JPanel actionListPanel;
+    private JLabel heroNameLabel;
+    private JTextArea abilityDescriptionField;
 
     //TODO: Passende Werte finden bzw. koordinieren
-    private static final double AVATARPOSITION_RELATIVE_X = 0.633;
-    private static final double AVATARPOSITION_RELATIVE_Y = 0.06;
-    private static final double AVATARSIZE_RELATIVE_X = 0.325;
-    private static final double AVATARSIZE_RELATIVE_Y = 0.5;
+    private static final double AVATAR_POSITION_RELATIVE_X = 0.633;
+    private static final double AVATAR_POSITION_RELATIVE_Y = 0.06;
+    private static final double AVATAR_SIZE_RELATIVE_X = 0.325;
+    private static final double AVATAR_SIZE_RELATIVE_Y = 0.5;
 
     private static final double ACTIONPOINTICON_POSITION_RELATIVE_X = 0.01;
     private static final double ACTIONPOINTICON_POSITION_RELATIVE_Y = 0.16;
@@ -56,11 +63,21 @@ public class HeroPanelLarge extends JPanel {
     private static final double DELAYTOKEN_SIZE_RELATIVE_X = 0.04;
     private static final double DELAYTOKEN_SIZE_RELATIVE_Y = 0.1;
 
-    private static final double ACTIONLISTPOSITION_RELATIVE_X = 0.09;
-    private static final double ACTIONLISTPOSITION_RELATIVE_Y = 0.36;
-    private static final double ACTIONLISTSIZE_RELATIVE_X = 0.45;
-    private static final double ACTIONLISTSIZE_RELATIVE_Y = 0.5;
+    private static final double ACTIONLIST_POSITION_RELATIVE_X = 0.09;
+    private static final double ACTIONLIST_POSITION_RELATIVE_Y = 0.36;
+    private static final double ACTIONLIST_SIZE_RELATIVE_X = 0.45;
+    private static final double ACTIONLIST_SIZE_RELATIVE_Y = 0.5;
     private static final int ACTIONLIST_CELLS = 5;
+
+    private static final double HERONAMELABEL_POSITION_RELATIVE_X = 0.09;
+    private static final double HERONAMELABEL_POSITION_RELATIVE_Y = 0.075;
+    private static final double HERONAMELABEL_SIZE_RELATIVE_X = 0.45;
+    private static final double HERONAMELABEL_SIZE_RELATIVE_Y = 0.04;
+
+    private static final double HERODESCRIPTIONFIELD_POSITION_RELATIVE_X = 0.09;
+    private static final double HERODESCRIPTIONFIELD_POSITION_RELATIVE_Y = 0.16;
+    private static final double HERODESCRIPTIONFIELD_SIZE_RELATIVE_X = 0.45;
+    private static final double HERODESCRIPTIONFIELD_SIZE_RELATIVE_Y = 0.2;
 
     public HeroPanelLarge(Hero hero) {
 
@@ -82,11 +99,11 @@ public class HeroPanelLarge extends JPanel {
 
         setLayout(null);
         actionArrayList = new ArrayList<>();
+        buttonArrayList = new ArrayList<>();
 
         initializeActionListPanel();
 
-//        updateActionListPanelContent();
-//    updateActionListPanelSize();
+        initializeTextFields();
     }
 
     @Override
@@ -99,10 +116,10 @@ public class HeroPanelLarge extends JPanel {
 
         // Overlay für den Heldenavatar
         g2d.drawImage(displayedHero.getAvatar().getImage(),
-                (int) (AVATARPOSITION_RELATIVE_X * getWidth()),
-                (int) (AVATARPOSITION_RELATIVE_Y * getHeight()),
-                (int) (AVATARSIZE_RELATIVE_X * getWidth()),
-                (int) (AVATARSIZE_RELATIVE_Y * getHeight()), this);
+                (int) (AVATAR_POSITION_RELATIVE_X * getWidth()),
+                (int) (AVATAR_POSITION_RELATIVE_Y * getHeight()),
+                (int) (AVATAR_SIZE_RELATIVE_X * getWidth()),
+                (int) (AVATAR_SIZE_RELATIVE_Y * getHeight()), this);
 
         //Icongröße für Action- und Hitpoints berechnen
         int iconSize_X = (int) (POINTICON_SIZE_RELATIVE_X * getWidth());
@@ -118,7 +135,10 @@ public class HeroPanelLarge extends JPanel {
         drawDelayTokenIcons(g2d);
 
         //ActionPanel Größe anpassen
-        updateActionListPanelSize();
+        updateActionListPanelBounds();
+        
+        //Textfelder Größe anpassen
+        updateTextFieldsBounds();
     }
 
     private void drawDelayTokenIcons(Graphics2D g2d) {
@@ -188,11 +208,6 @@ public class HeroPanelLarge extends JPanel {
 
     }
 
-    public void setActionArrayList(ArrayList<Action> actionArrayList) {
-        this.actionArrayList = actionArrayList;
-        updateActionListPanelContent();
-    }
-
     private void initializeActionListPanel() {
         actionListPanel = new JPanel();
         actionListPanel.setLayout(new GridLayout(ACTIONLIST_CELLS, 1));
@@ -200,27 +215,85 @@ public class HeroPanelLarge extends JPanel {
         add(actionListPanel);
     }
 
+    private void initializeTextFields() {
+        heroNameLabel = new JLabel(displayedHero.getName());
+        heroNameLabel.setForeground(Color.yellow);
+        add(heroNameLabel);
+
+        StringBuilder sbAbilities = new StringBuilder();
+        for (Ability ab : displayedHero.getAbilities())
+        {
+            sbAbilities.append(ab.getName());
+            sbAbilities.append(": ");
+            sbAbilities.append(ab.getDescription());
+            sbAbilities.append("\n");
+        }
+        
+        abilityDescriptionField = new JTextArea(sbAbilities.toString());
+        abilityDescriptionField.setEditable(false);
+        abilityDescriptionField.setOpaque(false);
+        abilityDescriptionField.setLineWrap(true);
+        abilityDescriptionField.setWrapStyleWord(true);
+        add(abilityDescriptionField);
+    }
+
     private void updateActionListPanelContent() {
         actionListPanel.removeAll();
+        buttonArrayList.clear();
         JButton actionButton;
         for (Action a : actionArrayList) {
             actionButton = new JButton(a.getName());
-            actionButton.setEnabled(a.isEnabled());
+            actionButton.setFocusable(false);
+            buttonArrayList.add(actionButton);
             actionListPanel.add(actionButton);
+        }
+        updateButtonsEnabled();
+        repaint();
+    }
+
+    public void updateButtonsEnabled() {
+        for (JButton b : buttonArrayList) {
+            b.setEnabled(actionArrayList.get(buttonArrayList.indexOf(b)).isEnabled());
+
         }
     }
 
-    private void updateActionListPanelSize() {
+    private void updateActionListPanelBounds() {
 
-        int size_Y = (int) (ACTIONLISTSIZE_RELATIVE_Y * getHeight());
+        int size_Y = (int) (ACTIONLIST_SIZE_RELATIVE_Y * getHeight());
         int buttonsize_Y = size_Y / ACTIONLIST_CELLS;
         int numButtons = actionArrayList.size();
-        int position_Y = ((int) (ACTIONLISTPOSITION_RELATIVE_Y * getHeight())) + (ACTIONLIST_CELLS - numButtons) * buttonsize_Y;
+        int position_Y = ((int) (ACTIONLIST_POSITION_RELATIVE_Y * getHeight())) + (ACTIONLIST_CELLS - numButtons) * buttonsize_Y;
 
-        actionListPanel.setBounds((int) (ACTIONLISTPOSITION_RELATIVE_X * getWidth()),
+        actionListPanel.setBounds((int) (ACTIONLIST_POSITION_RELATIVE_X * getWidth()),
                 position_Y,
-                (int) (ACTIONLISTSIZE_RELATIVE_X * getWidth()),
+                (int) (ACTIONLIST_SIZE_RELATIVE_X * getWidth()),
                 size_Y);
+    }
+
+    private void updateTextFieldsBounds() {
+        heroNameLabel.setBounds((int) (HERONAMELABEL_POSITION_RELATIVE_X * getWidth()),
+                (int) (HERONAMELABEL_POSITION_RELATIVE_Y * getHeight()),
+                (int) (HERONAMELABEL_SIZE_RELATIVE_X * getWidth()),
+                (int) (HERONAMELABEL_SIZE_RELATIVE_Y * getHeight()));
+        
+        abilityDescriptionField.setBounds((int) (HERODESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
+                (int) (HERODESCRIPTIONFIELD_POSITION_RELATIVE_Y * getHeight()),
+                (int) (HERODESCRIPTIONFIELD_SIZE_RELATIVE_X * getWidth()),
+                (int) (HERODESCRIPTIONFIELD_SIZE_RELATIVE_Y * getHeight()));
+    }
+
+    public ArrayList<Action> getActionArrayList() {
+        return actionArrayList;
+    }
+
+    public ArrayList<JButton> getButtonArrayList() {
+        return buttonArrayList;
+    }
+
+    public void setActionArrayList(ArrayList<Action> actionArrayList) {
+        this.actionArrayList = actionArrayList;
+        updateActionListPanelContent();
     }
 
 }
