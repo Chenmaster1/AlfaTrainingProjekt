@@ -17,8 +17,8 @@ public class KiLogicFlint extends KiLogic {
 		//es wird solange eine Action ausgefuehrt, wie Aktionspunkte uebrig sind
 		//Flint hat als Faehigkeit, seinen letzten Actionmove als Doppelwurf auszufuehren.
 		//Seine Prioritaet liegt seinen letzten Zug als Angriff zu spielen, zuvor Delay abbauen, dann verstecken, (einmal die Faehigkeit anwenden) und dann angreifen
-		while(singleplayerGame.getCurrentActionPoints() > 1) {
-			if(hero.getDelayTokens() > 0 && singleplayerGame.getCurrentActionPoints() > 1) {
+		while(singleplayerGame.getCurrentHero().getCurrentActionPoints() > 1) {
+			if(hero.getDelayTokens() > 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() > 1) {
 				for(Action action : actions) {
 					if(action instanceof ActionWorkOffDelay) {
 						resultAction = action;

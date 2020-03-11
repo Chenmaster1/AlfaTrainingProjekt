@@ -72,16 +72,16 @@ public class KiLogicDahlia extends KiLogic
         // 1HP Dahlia - if Dahlia is visible and has 1 hitpoints
         if (numHeroesVisible != 0 && hero.isVisible() && hero.getCurrentHitPoints() == 1)
         {
-            if (hero.getDelayTokens() > 0 && singleplayerGame.getCurrentActionPoints() > 1)
+            if (hero.getDelayTokens() > 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() > 1)
             {
                 returnAction = removeDelay;
             }
-            if (hero.getDelayTokens() == 0 && singleplayerGame.getCurrentActionPoints() > 1)
+            if (hero.getDelayTokens() == 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() > 1)
             {
                 returnAction = seekHideout;
             }
 
-            if (hero.getDelayTokens() == 0 && singleplayerGame.getCurrentActionPoints() == 1)
+            if (hero.getDelayTokens() == 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() == 1)
             {
                 returnAction = attackSmth;
             }
