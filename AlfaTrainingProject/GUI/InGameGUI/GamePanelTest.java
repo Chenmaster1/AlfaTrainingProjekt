@@ -56,16 +56,22 @@ public class GamePanelTest extends JFrame {
         GamePanel gp = new GamePanel(mp, gsp);
 
         ArrayList<Action> testActionArrayList = new ArrayList<>();
-        testActionArrayList.add(new ActionAttack(1));
-        testActionArrayList.add(new ActionHide(1));
-        testActionArrayList.add(new ActionWorkOffDelay(1));
+        Action action1 = new ActionAttack(1);
+        Action action2 = new ActionHide(1);
+        Action action3 = new ActionWorkOffDelay(1);
+        action1.setEnabled(true);
+        action2.setEnabled(true);
+        action3.setEnabled(true);
+        testActionArrayList.add(action1);
+        testActionArrayList.add(action2);
+        testActionArrayList.add(action3);
 
         gsp.getPanelPlayerHero().setActionArrayList(testActionArrayList);
 
         gsp.getPanelAttackDice().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent me) {
-                gsp.getPanelAttackDice().increaseCurrentAnimationFrame();
+            public void mousePressed(MouseEvent me) {
+                
                 gsp.getPanelAttackDice().setRollResult((new Random().nextInt(5)) + 1);
                 //gsp.getPanelAttackDice().setRunning(true);
                 //gsp.getThreadAttackDicePanel().start();
@@ -74,14 +80,14 @@ public class GamePanelTest extends JFrame {
 
         gsp.getPanelHideDice().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent me) {
+            public void mousePressed(MouseEvent me) {
                 gsp.getPanelHideDice().setRollResult((new Random().nextInt(3)) + 1);
             }
         });
 
         mp.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent me) {
+            public void mousePressed(MouseEvent me) {
 //                if (state)
 //                {
 //                    mp.setMapState(MapPanel.MAPSTATE_REGULAR);

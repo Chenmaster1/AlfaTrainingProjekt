@@ -31,6 +31,7 @@ public class HeroPanelLarge extends JPanel {
     private Image delayTokenImage;
 
     private ArrayList<Action> actionArrayList;
+    private ArrayList<JButton> buttonArrayList;
 
     private JPanel actionListPanel;
 
@@ -57,7 +58,7 @@ public class HeroPanelLarge extends JPanel {
     private static final double DELAYTOKEN_SIZE_RELATIVE_Y = 0.1;
 
     private static final double ACTIONLISTPOSITION_RELATIVE_X = 0.09;
-    private static final double ACTIONLISTPOSITION_RELATIVE_Y = 0.35;
+    private static final double ACTIONLISTPOSITION_RELATIVE_Y = 0.36;
     private static final double ACTIONLISTSIZE_RELATIVE_X = 0.45;
     private static final double ACTIONLISTSIZE_RELATIVE_Y = 0.5;
     private static final int ACTIONLIST_CELLS = 5;
@@ -82,6 +83,7 @@ public class HeroPanelLarge extends JPanel {
 
         setLayout(null);
         actionArrayList = new ArrayList<>();
+        buttonArrayList = new ArrayList<>();
 
         initializeActionListPanel();
 
@@ -188,11 +190,6 @@ public class HeroPanelLarge extends JPanel {
 
     }
 
-    public void setActionArrayList(ArrayList<Action> actionArrayList) {
-        this.actionArrayList = actionArrayList;
-        updateActionListPanelContent();
-    }
-
     private void initializeActionListPanel() {
         actionListPanel = new JPanel();
         actionListPanel.setLayout(new GridLayout(ACTIONLIST_CELLS, 1));
@@ -202,10 +199,22 @@ public class HeroPanelLarge extends JPanel {
 
     private void updateActionListPanelContent() {
         actionListPanel.removeAll();
+        buttonArrayList.clear();
         JButton actionButton;
         for (Action a : actionArrayList) {
             actionButton = new JButton(a.getName());
+            actionButton.setFocusable(false);
+            buttonArrayList.add(actionButton);
             actionListPanel.add(actionButton);
+        }
+        updateButtonsEnabled();
+        repaint();
+    }
+
+    public void updateButtonsEnabled() {
+        for (JButton b : buttonArrayList) {
+            b.setEnabled(actionArrayList.get(buttonArrayList.indexOf(b)).isEnabled());
+
         }
     }
 
@@ -220,6 +229,19 @@ public class HeroPanelLarge extends JPanel {
                 position_Y,
                 (int) (ACTIONLISTSIZE_RELATIVE_X * getWidth()),
                 size_Y);
+    }
+
+    public ArrayList<Action> getActionArrayList() {
+        return actionArrayList;
+    }
+
+    public ArrayList<JButton> getButtonArrayList() {
+        return buttonArrayList;
+    }
+
+    public void setActionArrayList(ArrayList<Action> actionArrayList) {
+        this.actionArrayList = actionArrayList;
+        updateActionListPanelContent();
     }
 
 }

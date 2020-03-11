@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- *
+ * 
  */
 public class HideDicePanel extends JPanel implements Runnable {
 
@@ -110,6 +110,8 @@ public class HideDicePanel extends JPanel implements Runnable {
     }
 
     public void setRollResult(int result) {
+        currentAnimationFrame++;
+        
         switch (result) {
             case HideDice.RESULT_NOTHING:
                 if (currentAnimationFrame < 60 && currentAnimationFrame >= 1) {
