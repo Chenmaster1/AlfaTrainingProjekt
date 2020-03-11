@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import Heroes.Hero;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
@@ -82,11 +83,15 @@ public class HeroPanelLarge extends JPanel {
     private static final double HERONAMELABEL_POSITION_RELATIVE_Y = 0.075;
     private static final double HERONAMELABEL_SIZE_RELATIVE_X = 0.45;
     private static final double HERONAMELABEL_SIZE_RELATIVE_Y = 0.04;
-
-    private static final double HERODESCRIPTIONFIELD_POSITION_RELATIVE_X = 0.09;
-    private static final double HERODESCRIPTIONFIELD_POSITION_RELATIVE_Y = 0.16;
-    private static final double HERODESCRIPTIONFIELD_SIZE_RELATIVE_X = 0.45;
-    private static final double HERODESCRIPTIONFIELD_SIZE_RELATIVE_Y = 0.2;
+    
+    private static final double HERONAMELABEL_TEXT_SIZE_RELATIVE_Y = 0.04;
+    
+    private static final double ABILITYDESCRIPTIONFIELD_POSITION_RELATIVE_X = 0.09;
+    private static final double ABILITYDESCRIPTIONFIELD_POSITION_RELATIVE_Y = 0.16;
+    private static final double ABILITYDESCRIPTIONFIELD_SIZE_RELATIVE_X = 0.45;
+    private static final double ABILITYDESCRIPTIONFIELD_SIZE_RELATIVE_Y = 0.2;
+    
+    private static final double ABILITYDESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y = 0.045;
 
     /**
      * GroßformatPanel für Helden, genutzt für den Hauptspieler. Zeigt alle
@@ -357,11 +362,25 @@ public class HeroPanelLarge extends JPanel {
                 (int) (HERONAMELABEL_POSITION_RELATIVE_Y * getHeight()),
                 (int) (HERONAMELABEL_SIZE_RELATIVE_X * getWidth()),
                 (int) (HERONAMELABEL_SIZE_RELATIVE_Y * getHeight()));
+        
+        //Font des Labels anpassen, abhängig von der Panelhöhe
+        Font heroNameLabelFont = heroNameLabel.getFont();
+        int newFontSize = (int)(HERONAMELABEL_TEXT_SIZE_RELATIVE_Y * getHeight());
+        heroNameLabel.setFont(new Font(heroNameLabelFont.getName(), Font.BOLD, newFontSize));
+        
+        
 
-        abilityDescriptionField.setBounds((int) (HERODESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
-                (int) (HERODESCRIPTIONFIELD_POSITION_RELATIVE_Y * getHeight()),
-                (int) (HERODESCRIPTIONFIELD_SIZE_RELATIVE_X * getWidth()),
-                (int) (HERODESCRIPTIONFIELD_SIZE_RELATIVE_Y * getHeight()));
+        abilityDescriptionField.setBounds((int) (ABILITYDESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
+                (int) (ABILITYDESCRIPTIONFIELD_POSITION_RELATIVE_Y * getHeight()),
+                (int) (ABILITYDESCRIPTIONFIELD_SIZE_RELATIVE_X * getWidth()),
+                (int) (ABILITYDESCRIPTIONFIELD_SIZE_RELATIVE_Y * getHeight()));
+        
+      //Font des Textfeldes anpassen, abhängig von der Panelhöhe
+        Font abilityDescriptionFieldFont = abilityDescriptionField.getFont();
+        newFontSize = (int)(ABILITYDESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y * getHeight());
+        abilityDescriptionField.setFont(new Font(abilityDescriptionFieldFont.getName(), Font.PLAIN, newFontSize));
+        
+        
     }
 
     public ArrayList<Action> getActionArrayList() {

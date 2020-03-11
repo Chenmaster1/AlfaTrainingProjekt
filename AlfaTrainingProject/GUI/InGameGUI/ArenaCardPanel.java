@@ -1,6 +1,8 @@
 package InGameGUI;
 
 import Arenacards.Arenacards;
+
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -26,15 +28,20 @@ public class ArenaCardPanel extends JPanel {
     private static final double ARTWORK_SIZE_RELATIVE_X = 0.889;
     private static final double ARTWORK_SIZE_RELATIVE_Y = 0.393;
 
-    private static final double NAMELABEL_POSITION_RELATIVE_X = 0.09;
+    private static final double NAMELABEL_POSITION_RELATIVE_X = 0.06;
     private static final double NAMELABEL_POSITION_RELATIVE_Y = 0.03;
     private static final double NAMELABEL_SIZE_RELATIVE_X = 0.84;
     private static final double NAMELABEL_SIZE_RELATIVE_Y = 0.06;
+    
+    private static final double NAMELABEL_TEXT_SIZE_RELATIVE_Y = 0.05;
 
     private static final double DESCRIPTIONFIELD_POSITION_RELATIVE_X = 0.09;
     private static final double DESCRIPTIONFIELD_POSITION_RELATIVE_Y = 0.55;
     private static final double DESCRIPTIONFIELD_SIZE_RELATIVE_X = 0.84;
     private static final double DESCRIPTIONFIELD_SIZE_RELATIVE_Y = 0.3;
+    
+    private static final double DESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y = 0.03;
+    
 
     /**
      * Panel zur Darstellung einer ArenaCard.
@@ -80,12 +87,22 @@ public class ArenaCardPanel extends JPanel {
                 (int) (NAMELABEL_POSITION_RELATIVE_Y * getHeight()),
                 (int) (NAMELABEL_SIZE_RELATIVE_X * getWidth()),
                 (int) (NAMELABEL_SIZE_RELATIVE_Y * getHeight()));
+        
+        //Namensfeld Fontgröße anpassen
+        Font nameLabelFont = nameLabel.getFont();
+        int newFontSize = (int)(NAMELABEL_TEXT_SIZE_RELATIVE_Y * getHeight());
+        nameLabel.setFont(new Font(nameLabelFont.getName(), Font.PLAIN, newFontSize));
 
         //Descriptionfeld Bounds setzen
         descriptionField.setBounds((int) (DESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
                 (int) (DESCRIPTIONFIELD_POSITION_RELATIVE_Y * getHeight()),
                 (int) (DESCRIPTIONFIELD_SIZE_RELATIVE_X * getWidth()),
                 (int) (DESCRIPTIONFIELD_SIZE_RELATIVE_Y * getHeight()));
+        
+        //Descriptionfield Fontgröße anpassen
+        Font descriptionFieldFont = descriptionField.getFont();
+        newFontSize = (int)(DESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y * getHeight());
+        descriptionField.setFont(new Font(descriptionFieldFont.getName(), Font.PLAIN, newFontSize));
     }
 
     /**
