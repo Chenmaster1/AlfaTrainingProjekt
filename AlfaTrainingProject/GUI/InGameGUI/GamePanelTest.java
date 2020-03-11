@@ -108,7 +108,7 @@ public class GamePanelTest extends JFrame {
         setContentPane(gp);
 
 //        getContentPane().setPreferredSize(new Dimension(1080, 1080));
-        setLocation(-1920, 0);
+        setLocation(0, 0);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         pack();
