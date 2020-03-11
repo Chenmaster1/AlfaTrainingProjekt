@@ -21,20 +21,20 @@ public class ArenaCardPanel extends JPanel {
     private JLabel nameLabel;
     private JTextArea descriptionField;
 
-    private static final double ARTWORK_POSITION_RELATIVE_X = 0.633;
-    private static final double ARTWORK_POSITION_RELATIVE_Y = 0.06;
-    private static final double ARTWORK_SIZE_RELATIVE_X = 0.325;
-    private static final double ARTWORK_SIZE_RELATIVE_Y = 0.5;
+    private static final double ARTWORK_POSITION_RELATIVE_X = 0.06;
+    private static final double ARTWORK_POSITION_RELATIVE_Y = 0.09;
+    private static final double ARTWORK_SIZE_RELATIVE_X = 0.89;
+    private static final double ARTWORK_SIZE_RELATIVE_Y = 0.40;
 
-    private static final double NAMELABEL_POSITION_RELATIVE_X = 0.633;
-    private static final double NAMELABEL_POSITION_RELATIVE_Y = 0.06;
-    private static final double NAMELABEL_SIZE_RELATIVE_X = 0.325;
-    private static final double NAMELABEL_SIZE_RELATIVE_Y = 0.5;
+    private static final double NAMELABEL_POSITION_RELATIVE_X = 0.09;
+    private static final double NAMELABEL_POSITION_RELATIVE_Y = 0.03;
+    private static final double NAMELABEL_SIZE_RELATIVE_X = 0.84;
+    private static final double NAMELABEL_SIZE_RELATIVE_Y = 0.06;
 
-    private static final double DESCRIPTIONFIELD_POSITION_RELATIVE_X = 0.633;
-    private static final double DESCRIPTIONFIELD_POSITION_RELATIVE_Y = 0.06;
-    private static final double DESCRIPTIONFIELD_SIZE_RELATIVE_X = 0.325;
-    private static final double DESCRIPTIONFIELD_SIZE_RELATIVE_Y = 0.5;
+    private static final double DESCRIPTIONFIELD_POSITION_RELATIVE_X = 0.09;
+    private static final double DESCRIPTIONFIELD_POSITION_RELATIVE_Y = 0.55;
+    private static final double DESCRIPTIONFIELD_SIZE_RELATIVE_X = 0.84;
+    private static final double DESCRIPTIONFIELD_SIZE_RELATIVE_Y = 0.3;
 
     /**
      * Panel zur Darstellung einer ArenaCard. 
@@ -46,7 +46,8 @@ public class ArenaCardPanel extends JPanel {
 
         artworkImage = displayedCard.getImage();
         
-        backgroundImage = displayedCard.getImage();
+        backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Arena_Cards/Arenacard_empty.jpg"))
+                .getImage();
 
         setLayout(null);
 
@@ -94,13 +95,16 @@ public class ArenaCardPanel extends JPanel {
      */
     private void initializeTextFields() {
         nameLabel = new JLabel(displayedCard.getName());
+//        nameLabel.setOpaque(true);
         this.add(nameLabel);
+        
 
         descriptionField = new JTextArea(displayedCard.getDescription());
         descriptionField.setOpaque(false);
         descriptionField.setEditable(false);
         descriptionField.setLineWrap(true);
         descriptionField.setWrapStyleWord(true);
+//        descriptionField.setOpaque(true);
         this.add(descriptionField);
     }
 
