@@ -31,6 +31,7 @@ public class HeroPanelLarge extends JPanel {
     private Image delayTokenImage;
 
     private ArrayList<Action> actionArrayList;
+    private ArrayList<JButton> buttonArrayList;
 
     private JPanel actionListPanel;
 
@@ -82,6 +83,7 @@ public class HeroPanelLarge extends JPanel {
 
         setLayout(null);
         actionArrayList = new ArrayList<>();
+        buttonArrayList = new ArrayList<>();
 
         initializeActionListPanel();
 
@@ -188,11 +190,6 @@ public class HeroPanelLarge extends JPanel {
 
     }
 
-    public void setActionArrayList(ArrayList<Action> actionArrayList) {
-        this.actionArrayList = actionArrayList;
-        updateActionListPanelContent();
-    }
-
     private void initializeActionListPanel() {
         actionListPanel = new JPanel();
         actionListPanel.setLayout(new GridLayout(ACTIONLIST_CELLS, 1));
@@ -202,11 +199,22 @@ public class HeroPanelLarge extends JPanel {
 
     private void updateActionListPanelContent() {
         actionListPanel.removeAll();
+        buttonArrayList.clear();
         JButton actionButton;
         for (Action a : actionArrayList) {
             actionButton = new JButton(a.getName());
-            actionButton.setEnabled(a.isEnabled());
+            actionButton.setFocusable(false);
+            buttonArrayList.add(actionButton);
             actionListPanel.add(actionButton);
+        }
+        updateButtonsEnabled();
+        repaint();
+    }
+
+    public void updateButtonsEnabled() {
+        for (JButton b : buttonArrayList) {
+            b.setEnabled(actionArrayList.get(buttonArrayList.indexOf(b)).isEnabled());
+
         }
     }
 
@@ -221,6 +229,19 @@ public class HeroPanelLarge extends JPanel {
                 position_Y,
                 (int) (ACTIONLISTSIZE_RELATIVE_X * getWidth()),
                 size_Y);
+    }
+
+    public ArrayList<Action> getActionArrayList() {
+        return actionArrayList;
+    }
+
+    public ArrayList<JButton> getButtonArrayList() {
+        return buttonArrayList;
+    }
+
+    public void setActionArrayList(ArrayList<Action> actionArrayList) {
+        this.actionArrayList = actionArrayList;
+        updateActionListPanelContent();
     }
 
 }

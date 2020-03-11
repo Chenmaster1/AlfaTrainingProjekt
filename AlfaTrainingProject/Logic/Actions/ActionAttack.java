@@ -24,7 +24,7 @@ public boolean doubleThrow = false;
         Es sollen bis zur Zielauswahl alle
         Aktionen deaktiviert werden. Auf dem Spielfeld soll das Ziel-Overlay 
         eingeblendet werden (dazu MouseListener aktivieren). All das passiert, 
-        indem der gameState auf GAMESTATE_AIMING gesetzt wird (siehe setGameState(int)).
+        indem der gameState auf GAMESTATE_AIMING gesetzt wird (siehe setGameState).
         Der eigentliche Treffervorgang, der im Anschluss durch einen Klick auf 
         die gewünschte Position ausgelöst wird, ist nicht als Action repräsentiert
         sondern wird direkt vom SingleplayerGame ausgeführt, mit der 

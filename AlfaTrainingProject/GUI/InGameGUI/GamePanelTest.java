@@ -56,9 +56,15 @@ public class GamePanelTest extends JFrame {
         GamePanel gp = new GamePanel(mp, gsp);
 
         ArrayList<Action> testActionArrayList = new ArrayList<>();
-        testActionArrayList.add(new ActionAttack(1));
-        testActionArrayList.add(new ActionHide(1));
-        testActionArrayList.add(new ActionWorkOffDelay(1));
+        Action action1 = new ActionAttack(1);
+        Action action2 = new ActionHide(1);
+        Action action3 = new ActionWorkOffDelay(1);
+        action1.setEnabled(true);
+        action2.setEnabled(true);
+        action3.setEnabled(true);
+        testActionArrayList.add(action1);
+        testActionArrayList.add(action2);
+        testActionArrayList.add(action3);
 
         gsp.getPanelPlayerHero().setActionArrayList(testActionArrayList);
 
