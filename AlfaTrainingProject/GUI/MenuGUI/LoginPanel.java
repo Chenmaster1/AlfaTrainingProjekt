@@ -41,7 +41,7 @@ public class LoginPanel extends JPanel {
 
 	private boolean isInitiated = false;
 
-	private final int BTN_WIDTH = 100;
+	private final int BTN_WIDTH = 150;
 	private final int BTN_HEIGHT = 30;
 
 	private Image backgroundImage;
@@ -96,8 +96,25 @@ public class LoginPanel extends JPanel {
 		if (!isInitiated) {
 			initializeComponents();
 			isInitiated = true;
+		}else {
+			if(!TESTVERSION){
+				if(Files.exists(Paths.get(path + "\\hota.txt"))) {
+					try {
+						
+						BufferedReader br = new BufferedReader(new FileReader(path + "\\hota.txt"));
+						String name = br.readLine();
+						String password = br.readLine();
+						ResultSet rs = Database.getInstance().executeQuery(Queries.loginUser(name));
+						rs.next();
+						if (rs.getString(1).equals(password)) {
+							switchToMainFramePanel();
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}		
 		}
-
 	}
 
 	private void initializeComponents() {
@@ -110,6 +127,7 @@ public class LoginPanel extends JPanel {
 		txtUser = new JTextField(25);
 		txtUser.setSize(BTN_WIDTH * 2, BTN_HEIGHT);
 		txtUser.setLocation(frame.getWidth() / 2 - BTN_WIDTH, frame.getHeight() / 2 - 65);
+		txtUser.setOpaque(true);
 		add(txtUser);
 
 		lblPw = new JLabel(MyFrame.bundle.getString("lblPassword"), SwingConstants.CENTER);
@@ -122,11 +140,8 @@ public class LoginPanel extends JPanel {
 		txtPassword.setLocation(frame.getWidth() / 2 - BTN_WIDTH, frame.getHeight() / 2 + 5);
 		add(txtPassword);
 
-		btnRegister = new JButton(MyFrame.bundle.getString("btnRegister"));
-		btnRegister.setSize(BTN_WIDTH, BTN_HEIGHT);
-		btnRegister.setLocation(frame.getWidth() / 2 - BTN_WIDTH - 5, frame.getHeight() / 2 + 45);
-		btnRegister.setFocusable(false);
-		btnRegister.addActionListener(new ActionListener() {
+		btnRegister = new MyButton(MyFrame.bundle.getString("btnRegister"), new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		addButton(btnRegister, frame.getWidth() / 2 - 200 - 5, frame.getHeight() / 2 + 45, new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -134,13 +149,9 @@ public class LoginPanel extends JPanel {
 
 			}
 		});
-		add(btnRegister);
 
-		btnLogin = new JButton(MyFrame.bundle.getString("btnLogin"));
-		btnLogin.setSize(BTN_WIDTH, BTN_HEIGHT);
-		btnLogin.setLocation(frame.getWidth() / 2 + 5, frame.getHeight() / 2 + 45);
-		btnLogin.setFocusable(false);
-		btnLogin.addActionListener(new ActionListener() {
+		btnLogin = new MyButton(MyFrame.bundle.getString("btnLogin"), new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		addButton(btnLogin, frame.getWidth() / 2 + 5, frame.getHeight() / 2 + 45, new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -153,13 +164,9 @@ public class LoginPanel extends JPanel {
 
 			}
 		});
-		add(btnLogin);
-
-		btnExit = new JButton(MyFrame.bundle.getString("btnClose"));
-		btnExit.setSize(BTN_WIDTH, BTN_HEIGHT);
-		btnExit.setLocation(frame.getWidth() / 2 - BTN_WIDTH / 2, frame.getHeight() / 2 + 85);
-		btnExit.setFocusable(false);
-		btnExit.addActionListener(new ActionListener() {
+		
+		btnExit = new MyButton(MyFrame.bundle.getString("btnClose"), new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		addButton(btnExit, frame.getWidth() / 2 - 200 / 2, frame.getHeight() / 2 + 105, new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -167,7 +174,6 @@ public class LoginPanel extends JPanel {
 				frame.dispose();
 			}
 		});
-		add(btnExit);
 
 		if (TESTVERSION) {
 			lblHint = new JLabel("TESTVERSION EINFACH LOGIN DRUECKEN", SwingConstants.CENTER);
@@ -181,26 +187,17 @@ public class LoginPanel extends JPanel {
 			txtPassword.setEditable(false);
 			btnRegister.setEnabled(false);
 		}
-		else {
-                   
-			if(Files.exists(Paths.get(path + "\\hota.txt"))) {
-				try {
-					
-					BufferedReader br = new BufferedReader(new FileReader(path + "\\hota.txt"));
-					String name = br.readLine();
-					String password = br.readLine();
-					ResultSet rs = Database.getInstance().executeQuery(Queries.loginUser(name));
-					rs.next();
-					if (rs.getString(1).equals(password)) {
-						switchToMainFramePanel();
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 
+	private void addButton(JButton button,int posX,int posY, ActionListener action) {
+		button.setHorizontalTextPosition(SwingConstants.CENTER);
+		button.setBounds(posX, posY, 200, 50);
+		button.addActionListener(action);
+		add(button);
+	}
+	
+	
+	
 	private void onLoginClicked() throws SQLException {
 		if (!TESTVERSION) {
 

@@ -71,12 +71,7 @@ public class MainFramePanel extends JPanel{
 		 * @author Kevin
 		 */
 	private void initializeButtons() {
-		addButton(btnNew, getWidth()/2 - 100, getHeight()/2 - 90);
-		addButton(btnLoad, getWidth()/2 - 100, getHeight()/2 - 30);
-		addButton(btnSettings, getWidth()/2 - 100, getHeight()/2 + 30);
-		addButton(btnClose, getWidth()/2 - 100, getHeight()/2 + 90);
-			
-		btnNew.addActionListener(new ActionListener() {
+		addButton(btnNew, getWidth()/2 - 100, getHeight()/2 - 90, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -84,7 +79,7 @@ public class MainFramePanel extends JPanel{
 			}
 		});
 		
-		btnLoad.addActionListener(new ActionListener() {
+		addButton(btnLoad, getWidth()/2 - 100, getHeight()/2 - 30, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -92,7 +87,9 @@ public class MainFramePanel extends JPanel{
 			}
 		});
 		
-		btnSettings.addActionListener(new ActionListener() {
+		btnLoad.setEnabled(false);
+		
+		addButton(btnSettings, getWidth()/2 - 100, getHeight()/2 + 30, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -100,13 +97,13 @@ public class MainFramePanel extends JPanel{
 			}
 		});
 		
-		btnClose.addActionListener(new ActionListener() {
+		addButton(btnClose, getWidth()/2 - 100, getHeight()/2 + 90, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				onCloseClicked();			
 			}
-		});	
+		});
 	}
 		
 	/**
@@ -116,9 +113,10 @@ public class MainFramePanel extends JPanel{
 	 * @param posX	Die Position x
 	 * @param posY Die Position y
 	 */
-	private void addButton(JButton button,int posX,int posY) {
+	private void addButton(JButton button,int posX,int posY, ActionListener action) {
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
 		button.setBounds(posX, posY, 200, 50);
+		button.addActionListener(action);
 		add(button);
 	}
 	
