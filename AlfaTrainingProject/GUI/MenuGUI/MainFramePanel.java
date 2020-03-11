@@ -87,6 +87,8 @@ public class MainFramePanel extends JPanel{
 			}
 		});
 		
+		btnLoad.setEnabled(false);
+		
 		addButton(btnSettings, getWidth()/2 - 100, getHeight()/2 + 30, new ActionListener() {
 			
 			@Override
