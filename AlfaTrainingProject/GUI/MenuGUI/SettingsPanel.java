@@ -12,7 +12,6 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,10 +25,14 @@ import javax.swing.event.ChangeListener;
 
 
 /**
- * Game Settings volume language save settings in file
+ * Game Settings volume language if no file is found MyFrame-<ode>public static
+ * String MyFrame.path</code> use
+ * MyFrame-<code>public static String language = "/Bundle_DE", volume = "50";</code>
  *
+ * Changes to setting will be stored in
+ * <code>MyFrame.path\hota_setting.txt</code>
  *
- * @author
+ * @author Yovo
  *
  */
 @SuppressWarnings("serial")
@@ -47,11 +50,12 @@ public class SettingsPanel extends JPanel
     private JButton cancelBtn;
     private JButton saveBtn;
 
-    private File file;
-    private String path;
-    //language should be loaded somewhere else
-    private String language = "german";
     private Boolean createFile = true;
+    private File file;
+    //private String path;
+    //language should be loaded somewhere else
+    //private String language = "german";
+    //
 
 
     public SettingsPanel(MainFramePanel parentPanel, JFrame frame)
@@ -78,43 +82,26 @@ public class SettingsPanel extends JPanel
     }
 
 
+    /**
+     * set volumeSlider to
+     * MyFrame-<code>public static String volume = "50";</code>
+     *
+     * check if <code>MyFrame.path\hota_setting.txt</code> exists, if file
+     * exists, set <code>createFile = false</code>
+     *
+     * @author Yovo
+     *
+     */
     private void getSettings()
     {
-        //get setting from HeroesOfTheArena\hota_setting.txt
-        // get path
-        try
-        {
-            Process p = Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
-            p.waitFor();
+        volumeSlider.setValue(Integer.parseInt(MyFrame.volume));
 
-            InputStream in = p.getInputStream();
-            byte[] b = new byte[in.available()];
-            in.read(b);
-            in.close();
-
-            path = new String(b);
-            path = path.split("\\s\\s+")[4];
-            //final path:
-            path += "\\HeroesOfTheArena";
-
-        }
-        catch (Throwable t)
-        {
-            t.printStackTrace();
-        }
-
-        //get setting from HeroesOfTheArena\hota_setting.txt
-        // read file and save to volume and language
-        if (Files.exists(Paths.get(path + "\\hota_setting.txt")))
+        //check if file exists, if not set flag createFile = false
+        if (Files.exists(Paths.get(MyFrame.path + "\\hota_setting.txt")))
         {
             try
             {
-                BufferedReader br = new BufferedReader(new FileReader(path + "\\hota_setting.txt"));
-                String volume = br.readLine();
-                String language = br.readLine();
-                System.out.println("string language " + language);
-//String Volume und language wären dann die in der txt gespeicherten Daten                                        
-                volumeSlider.setValue(Integer.parseInt(volume));
+                BufferedReader br = new BufferedReader(new FileReader(MyFrame.path + "\\hota_setting.txt"));
                 createFile = false;
             }
             catch (Exception e)
@@ -172,7 +159,7 @@ public class SettingsPanel extends JPanel
 
         });
 
-        // Language controll over actionPerformed -> im File speicher 
+        // Language controll over actionPerformed -> save to file 
         languageLbl.setBounds(getWidth() / 2 - 300, 750, 600, 50);
         languageLbl.setBackground(Color.lightGray);
         languageLbl.setOpaque(true);
@@ -182,15 +169,10 @@ public class SettingsPanel extends JPanel
         langGerBtn.setBounds(getWidth() / 2 - 105, 820, 100, 30);
         langGerBtn.addActionListener(new ActionListener()
         {
-
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                language = "german";
-                //MyFrame.setLanguage("/Bundle_DE");
-                //ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages/Bundle_DE");
-
-                //repaint();
+                MyFrame.language = "german";
             }
 
 
@@ -203,10 +185,7 @@ public class SettingsPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                language = "english";
-                // MyFrame.setLanguage("/Bundle_EN");
-                //ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages/Bundle_EN");
-                //repaint();
+                MyFrame.language = "english";
             }
 
 
@@ -252,29 +231,33 @@ public class SettingsPanel extends JPanel
     }
 
 
+    /**
+     * no setting file exists <br>
+     * create the File and save volume and language to
+     * <code>MyFrame.path\hota_setting.txt</code>
+     *
+     * @author Yovo
+     *
+     */
     private void saveClicked()
     {
         if (createFile)
         {
-            System.out.println("save that new bitch");
-
             try
             {
 
-                if (!Files.isDirectory(Paths.get(path + "\\")))
+                if (!Files.isDirectory(Paths.get(MyFrame.path + "\\")))
                 {
-                    Files.createDirectory(Paths.get(path + "\\"));
-                    Files.createFile(Paths.get(path + "\\hota_setting.txt"));
+                    Files.createDirectory(Paths.get(MyFrame.path + "\\"));
+                    Files.createFile(Paths.get(MyFrame.path + "\\hota_setting.txt"));
                 }
-                else if (!Files.isDirectory(Paths.get(path + "\\hota_setting.txt")))
+                else if (!Files.isDirectory(Paths.get(MyFrame.path + "\\hota_setting.txt")))
                 {
-                    Files.createFile(Paths.get(path + "\\hota_setting.txt"));
+                    Files.createFile(Paths.get(MyFrame.path + "\\hota_setting.txt"));
                 }
 
-                FileWriter fw = new FileWriter(path + "\\hota_setting.txt");
-
-                //save current settings to hota_setting.txt
-                fw.write(volumeSlider.getValue() + "\n" + language);
+                FileWriter fw = new FileWriter(MyFrame.path + "\\hota_setting.txt");
+                fw.write(volumeSlider.getValue() + "\n" + MyFrame.language);
                 fw.close();
 
             }
@@ -284,34 +267,28 @@ public class SettingsPanel extends JPanel
                 e.printStackTrace();
             }
         }
-        
-        
-        
-        
-        
-        
+
+        /**
+         * setting file exists <br>
+         * override volume and language at
+         * <code>MyFrame.path\hota_setting.txt</code>
+         *
+         * @author Yovo
+         *
+         */
         if (!createFile)
         {
-            System.out.println("supdate that bitch");
-
-            try
+             try
             {
-
-                FileWriter fw = new FileWriter(path + "\\hota_setting.txt");
-               
-
-                //save current settings to hota_setting.txt
-                fw.write(volumeSlider.getValue() + "\n" + language);
+                FileWriter fw = new FileWriter(MyFrame.path + "\\hota_setting.txt");
+                fw.write(volumeSlider.getValue() + "\n" + MyFrame.language);
                 fw.close();
-
             }
             catch (Exception e)
             {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-        
 
         // frame.setContentPane(parentPanel);
         //frame.repaint();
