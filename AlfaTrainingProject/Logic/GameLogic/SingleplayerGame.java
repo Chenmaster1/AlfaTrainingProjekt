@@ -25,6 +25,11 @@ public class SingleplayerGame {
     private int currentActionPoints;
     private GamePanel panel;
 
+    //------------------booleans fuer Spielkontrolle ueber Karten------------------------
+    private boolean mysteriousIdol1 = false;
+    private boolean mysteriousIdol2 = false;
+    //------------------booleans fuer Spielkontrolle ueber Karten------------------------
+    
     public SingleplayerGame(GamePanel gamePanel, Map map) {
         this.panel = gamePanel;
         this.map = map;
@@ -121,7 +126,19 @@ public class SingleplayerGame {
     public void setAttackMode(AttackMode attackMode) {
     	this.attackMode = attackMode;
     }
+    
+    public void increaseCrurrentActionPointsBy(int increasment) {
+    	currentActionPoints += increasment;
+    }
 
+    public void setMysteriousIdol1(boolean active) {
+    	this.mysteriousIdol1 = active;
+    }
+    
+    public void setMysteriousIdol2(boolean active) {
+    	this.mysteriousIdol2 = active;
+    }
+    
     /**
      * TODO: Diese Methode soll die Standardaktionen sowie die Heldenspezifischen
      * Abilities zu einer Liste zusammenführen und diese in der GUI anzeigen
