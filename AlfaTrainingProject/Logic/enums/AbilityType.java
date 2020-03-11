@@ -1,5 +1,5 @@
 package enums;
 
 public enum AbilityType {
-	TURN, REACTION
+	TURN, REACTION, PASSIVE
 }
