@@ -31,6 +31,8 @@ import javax.swing.plaf.basic.BasicBorders;
 
 import Database.Database;
 import Database.Queries;
+import SoundThread.mp3test;
+import alfatrainingprojekt.AlfaTrainingProjekt;
 
 @SuppressWarnings("serial")
 public class LoginPanel extends JPanel {
@@ -161,6 +163,7 @@ public class LoginPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				mp3test.stopPlayer();
 				frame.dispose();
 			}
 		});
