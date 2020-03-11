@@ -31,21 +31,23 @@ public class Arenacards {
         this.author = MyFrame.bundle.getString("ArenacardAuthor" + cardNumber);
         //"Images/BackGround_FullScreenBlurred.png"
 
+        
+        //Den Imagepfad zusammenbauen. cardNumber 0 ist Endung 01 usw.
         StringBuilder sb = new StringBuilder();
         sb.append("Arena_Cards/arena");
-        int additionalZeros = 2 - ("" + cardNumber).length();
-
+        int imageNumber = cardNumber + 1;
+        int additionalZeros = 2 - ("" + imageNumber).length();
         for (int j = 0; j < additionalZeros; j++) {
             sb.append("0");
         }
-        sb.append(cardNumber + ".jpg");
+        sb.append(imageNumber + ".jpg");
+        
+        //Das Image laden
         this.image = new ImageIcon(getClass().getClassLoader().getResource(sb.toString())).getImage();
 
         if (cardNumber == 8 || cardNumber == 9 || cardNumber == 14) {
             delayTokens = 3;
         }
-
-        
 
     }
 

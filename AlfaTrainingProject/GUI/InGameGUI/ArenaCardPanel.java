@@ -50,6 +50,7 @@ public class ArenaCardPanel extends JPanel {
                 .getImage();
 
         setLayout(null);
+        setOpaque(false);
 
         initializeTextFields();
     }
