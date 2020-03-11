@@ -22,9 +22,13 @@ public class SingleplayerGame {
     private ArrayList<Action> standardActions;
     private ArrayList<Action> actions;
     private Hero currentHero;
-    private int currentActionPoints;
     private GamePanel panel;
 
+    //------------------booleans fuer Spielkontrolle ueber Karten------------------------
+    private boolean mysteriousIdol1 = false;
+    private boolean mysteriousIdol2 = false;
+    //------------------booleans fuer Spielkontrolle ueber Karten------------------------
+    
     public SingleplayerGame(GamePanel gamePanel, Map map) {
         this.panel = gamePanel;
         this.map = map;
@@ -35,13 +39,10 @@ public class SingleplayerGame {
 
         //abilites einen flag geben. wird ein held betroffen, wird der flag seiner ability überprüft. 
         //führt entprechend abilies dann aus, wann die flag es zulässt
-    	
-    	//Fuer die Auswahl eines Feldes, wird beim bewegen der Maus der winkel zum Mittelpunkt berechnet und der Tower entsprechend mitbewegt
-    	//beim klick wird eingerastet und angegriffen (eventuell verzoegerung mit einarbeiten)
-    	
-    	//vllt doch erstmal ohne db? nur helden und safegame? wären inbegriffen. hardcoden?
-    	
-    	//eventuell threadhandler schreiben
+        //Fuer die Auswahl eines Feldes, wird beim bewegen der Maus der winkel zum Mittelpunkt berechnet und der Tower entsprechend mitbewegt
+        //beim klick wird eingerastet und angegriffen (eventuell verzoegerung mit einarbeiten)
+        //vllt doch erstmal ohne db? nur helden und safegame? wären inbegriffen. hardcoden?
+        //eventuell threadhandler schreiben
     }
 
     //-------------------------GETTER-------------------------//
@@ -57,10 +58,6 @@ public class SingleplayerGame {
         return currentHero;
     }
 
-    public int getCurrentActionPoints() {
-        return currentActionPoints;
-    }
-
     public Map getMap() {
         return map;
     }
@@ -68,15 +65,14 @@ public class SingleplayerGame {
     public ArrayList<Action> getActions() {
         return actions;
     }
-    
-    //-------------------------SETTER-------------------------//
 
+    //-------------------------SETTER-------------------------//
     /**
      * Reduziert die aktuellen Aktionspunkte um 1, auf maximal 0
      */
     public void reduceCurrentActionPoints() {
-        if (currentActionPoints >= 1) {
-            currentActionPoints -= 1;
+        if (currentHero.getCurrentActionPoints() >= 1) {
+            currentHero.setCurrentActionPoints(currentHero.getCurrentActionPoints() - 1);
         }
     }
 
@@ -85,9 +81,8 @@ public class SingleplayerGame {
      * vorher gegeben war
      */
     public void setCurrentActionPointsToZero() {
-        if (currentActionPoints >= 1) {
-            currentActionPoints = 0;
-        }
+
+        currentHero.setCurrentActionPoints(0);
     }
 
     /**
@@ -100,8 +95,7 @@ public class SingleplayerGame {
     }
 
     public void setGameState(GameState gameState) {
-        switch(gameState)
-        {
+        switch (gameState) {
             case AIMING:
                 //TODO: Aktionen deaktivieren (oder besser generell bei der
                 //Generation 
@@ -111,22 +105,35 @@ public class SingleplayerGame {
                 generateActionList();
                 this.gameState = gameState;
                 break;
-                
+
             case CHOOSING:
                 this.gameState = gameState;
                 break;
         }
     }
-    
+
     public void setAttackMode(AttackMode attackMode) {
-    	this.attackMode = attackMode;
+        this.attackMode = attackMode;
+    }
+    
+    public void increaseCrurrentActionPointsBy(int increasment) {
+    	currentHero.setCurrentActionPoints(currentHero.getCurrentActionPoints() + increasment);
     }
 
+    public void setMysteriousIdol1(boolean active) {
+    	this.mysteriousIdol1 = active;
+    }
+    
+    public void setMysteriousIdol2(boolean active) {
+    	this.mysteriousIdol2 = active;
+    }
+    
     /**
-     * TODO: Diese Methode soll die Standardaktionen sowie die Heldenspezifischen
-     * Abilities zu einer Liste zusammenführen und diese in der GUI anzeigen
-     * bzw updaten lassen. Ob sie aktive Optionen sind, muss sowohl von der Aktion 
-     * selbst (isEnabled()) als auch vom aktuellen gameState abhängen.
+     * TODO: Diese Methode soll die Standardaktionen sowie die
+     * Heldenspezifischen Abilities zu einer Liste zusammenführen und diese in
+     * der GUI anzeigen bzw updaten lassen. Ob sie aktive Optionen sind, muss
+     * sowohl von der Aktion selbst (isEnabled()) als auch vom aktuellen
+     * gameState abhängen.
      */
     private void generateActionList() {
         throw new UnsupportedOperationException("Not supported yet.");

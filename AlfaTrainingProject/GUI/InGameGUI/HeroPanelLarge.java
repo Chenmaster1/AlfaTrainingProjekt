@@ -1,5 +1,6 @@
 package InGameGUI;
 
+import Abilities.Ability;
 import Actions.Action;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -38,7 +39,7 @@ public class HeroPanelLarge extends JPanel {
 
     private JPanel actionListPanel;
     private JLabel heroNameLabel;
-    private JTextArea heroDescriptionField;
+    private JTextArea abilityDescriptionField;
 
     //TODO: Passende Werte finden bzw. koordinieren
     private static final double AVATAR_POSITION_RELATIVE_X = 0.633;
@@ -219,11 +220,21 @@ public class HeroPanelLarge extends JPanel {
         heroNameLabel.setForeground(Color.yellow);
         add(heroNameLabel);
 
-        heroDescriptionField = new JTextArea(displayedHero.getDescription());
-        heroDescriptionField.setEditable(false);
-//        heroDescriptionField.setOpaque(false);
-        heroDescriptionField.setLineWrap(true);
-        add(heroDescriptionField);
+        StringBuilder sbAbilities = new StringBuilder();
+        for (Ability ab : displayedHero.getAbilities())
+        {
+            sbAbilities.append(ab.getName());
+            sbAbilities.append(": ");
+            sbAbilities.append(ab.getDescription());
+            sbAbilities.append("\n");
+        }
+        
+        abilityDescriptionField = new JTextArea(sbAbilities.toString());
+        abilityDescriptionField.setEditable(false);
+        abilityDescriptionField.setOpaque(false);
+        abilityDescriptionField.setLineWrap(true);
+        abilityDescriptionField.setWrapStyleWord(true);
+        add(abilityDescriptionField);
     }
 
     private void updateActionListPanelContent() {
@@ -266,7 +277,7 @@ public class HeroPanelLarge extends JPanel {
                 (int) (HERONAMELABEL_SIZE_RELATIVE_X * getWidth()),
                 (int) (HERONAMELABEL_SIZE_RELATIVE_Y * getHeight()));
         
-        heroDescriptionField.setBounds((int) (HERODESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
+        abilityDescriptionField.setBounds((int) (HERODESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
                 (int) (HERODESCRIPTIONFIELD_POSITION_RELATIVE_Y * getHeight()),
                 (int) (HERODESCRIPTIONFIELD_SIZE_RELATIVE_X * getWidth()),
                 (int) (HERODESCRIPTIONFIELD_SIZE_RELATIVE_Y * getHeight()));

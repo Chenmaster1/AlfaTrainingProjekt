@@ -31,6 +31,8 @@ import javax.swing.plaf.basic.BasicBorders;
 
 import Database.Database;
 import Database.Queries;
+import SoundThread.mp3test;
+import alfatrainingprojekt.AlfaTrainingProjekt;
 
 @SuppressWarnings("serial")
 public class LoginPanel extends JPanel {
@@ -123,6 +125,7 @@ public class LoginPanel extends JPanel {
 		btnRegister = new JButton(MyFrame.bundle.getString("btnRegister"));
 		btnRegister.setSize(BTN_WIDTH, BTN_HEIGHT);
 		btnRegister.setLocation(frame.getWidth() / 2 - BTN_WIDTH - 5, frame.getHeight() / 2 + 45);
+		btnRegister.setFocusable(false);
 		btnRegister.addActionListener(new ActionListener() {
 
 			@Override
@@ -136,6 +139,7 @@ public class LoginPanel extends JPanel {
 		btnLogin = new JButton(MyFrame.bundle.getString("btnLogin"));
 		btnLogin.setSize(BTN_WIDTH, BTN_HEIGHT);
 		btnLogin.setLocation(frame.getWidth() / 2 + 5, frame.getHeight() / 2 + 45);
+		btnLogin.setFocusable(false);
 		btnLogin.addActionListener(new ActionListener() {
 
 			@Override
@@ -154,10 +158,12 @@ public class LoginPanel extends JPanel {
 		btnExit = new JButton(MyFrame.bundle.getString("btnClose"));
 		btnExit.setSize(BTN_WIDTH, BTN_HEIGHT);
 		btnExit.setLocation(frame.getWidth() / 2 - BTN_WIDTH / 2, frame.getHeight() / 2 + 85);
+		btnExit.setFocusable(false);
 		btnExit.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				mp3test.stopPlayer();
 				frame.dispose();
 			}
 		});

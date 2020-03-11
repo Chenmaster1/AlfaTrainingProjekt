@@ -39,7 +39,7 @@ public class KiLogicWorok extends KiLogic {
 		if (!hero.isVisible()) {
 			// Wenn Worok nur noch 1 AP hat und mindestens ein
 			// DelayToken, delay abbauen
-			if ((singleplayerGame.getCurrentActionPoints() == 1) && hero.getDelayTokens() > 0) {
+			if ((singleplayerGame.getCurrentHero().getCurrentActionPoints() == 1) && hero.getDelayTokens() > 0) {
 				chosenAction = delayAction;
 			}
 			// Sonst angreifen
@@ -61,7 +61,7 @@ public class KiLogicWorok extends KiLogic {
 			// Wenn außer Worok noch andere sichtbar sind
 			else {
 				// Wenn es die letzte Aktion ist, verstecken bzw. delay abbauen
-				if (singleplayerGame.getCurrentActionPoints() == 1) {
+				if (singleplayerGame.getCurrentHero().getCurrentActionPoints() == 1) {
 					if (hero.getDelayTokens() > 0) {
 						chosenAction = delayAction;
 					} else {

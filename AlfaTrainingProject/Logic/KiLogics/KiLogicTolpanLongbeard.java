@@ -22,8 +22,8 @@ public class KiLogicTolpanLongbeard extends KiLogic {
 		//es wird solange eine Action ausgefuehrt, wie Aktionspunkte uebrig sind
 		//Tolpan hat keine Faehigkeit die während seines Zuges eingesetzt wird
 		//seine Prioritaet liegt beim verzoegerung abbauen, dann verstecken, (einmal die Faehigkeit anwenden) und dann angreifen
-		while(singleplayerGame.getCurrentActionPoints() > 0) {
-			if(hero.getDelayTokens() > 0 && singleplayerGame.getCurrentActionPoints() == 1) {
+		while(singleplayerGame.getCurrentHero().getCurrentActionPoints() > 0) {
+			if(hero.getDelayTokens() > 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() == 1) {
 				for(Action action : actions) {
 					if(action instanceof ActionWorkOffDelay) {
 						resultAction = (ActionWorkOffDelay) action;

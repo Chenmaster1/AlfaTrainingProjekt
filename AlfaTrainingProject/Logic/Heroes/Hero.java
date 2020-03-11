@@ -160,5 +160,9 @@ public abstract class Hero {
     public void setCurrentActionPoints(int currentActionPoints) {
         this.currentActionPoints = currentActionPoints;
     }
+    
+    public void addDelayTokens(int number) {
+    	delayTokens += number;
+    }
 
 }

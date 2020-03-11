@@ -19,6 +19,7 @@ public class MyButton extends JButton implements MouseListener{
         super(text, icon);
         opacity = (float) 0.5;
         addMouseListener(this);
+        setFocusable(false);
     }
     
     @Override
