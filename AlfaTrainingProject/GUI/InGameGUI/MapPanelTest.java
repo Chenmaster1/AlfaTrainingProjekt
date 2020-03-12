@@ -30,7 +30,7 @@ public class MapPanelTest extends JFrame {
         }
         final MapPanel mp = new MapPanel(hideoutArray, new HashMap<Hideout,Hero>(), new HeroWorok());
         setContentPane(mp);
-        mp.setMapState(MapPanel.MAPSTATE_AIMING);
+        mp.setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
 
         mp.addMouseListener(new MouseAdapter() {
             @Override

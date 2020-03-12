@@ -1,7 +1,7 @@
 package InGameGUI;
 
 import Heroes.Hero;
-import static InGameGUI.MapPanel.MAPSTATE_AIMING;
+import static InGameGUI.MapPanel.MAPSTATE_PLAYER_AIMING;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;

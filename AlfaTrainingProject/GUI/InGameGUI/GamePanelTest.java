@@ -74,7 +74,7 @@ public class GamePanelTest extends JFrame {
         testHideoutHero.put(hideoutArray.get(17), mainHero);
 
         final MapPanel mp = new MapPanel(hideoutArray, testHideoutHero, mainHero);
-        mp.setMapState(MapPanel.MAPSTATE_AIMING);
+        mp.setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
 
         final GameSidePanel gsp = new GameSidePanel(otherHeroes, mainHero);
 
