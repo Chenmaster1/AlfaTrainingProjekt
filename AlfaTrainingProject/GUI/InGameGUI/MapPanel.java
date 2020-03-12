@@ -21,17 +21,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- * Das Panel mit dem eigentlichen Spielfeld bzw der Arena.
- * TODO: Skalierbar machen
+ * Das Panel mit dem eigentlichen Spielfeld bzw der Arena. TODO: Skalierbar
+ * machen
  */
 public class MapPanel extends JPanel {
 
     public final static int MAPSTATE_REGULAR = 0, MAPSTATE_AIMING = 1;
-    private final static int PANELSIZE = 1080;
+//    private final static int PANELSIZE = 1080;
 
     private final static double HEROICON_DISTANCE_RELATIVE = 0.25;
     private final static double HEROICON_SIZE_RELATIVE = 0.07;
     private final static float HEROICON_HIDDEN_ALPHA = 0.5f;
+    
+    private final static double AIMOVERLAY_SIZE_RELATIVE_X = 537 / 1080.0;
+    private final static double AIMOVERLAY_SIZE_RELATIVE_Y = 748 / 1080.0;
 
     private Image backgroundImage;
     private Image aimOverlay;
@@ -47,7 +50,6 @@ public class MapPanel extends JPanel {
         super();
 
         setLayout(null);
-        setPreferredSize(new Dimension(PANELSIZE, PANELSIZE));
 
         backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Gameboard_Empty.png"))
                 .getImage();
@@ -92,7 +94,7 @@ public class MapPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         // Grundkarte ganz unten
-        g2d.drawImage(backgroundImage, 0, 0, PANELSIZE, PANELSIZE, this);
+        g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
         // Overlays für zerstörte Verstecke
         drawDisabledFields(g2d);
@@ -124,10 +126,21 @@ public class MapPanel extends JPanel {
     private void drawAimOverlay(Graphics2D g2d) {
         AffineTransform oldTransform = g2d.getTransform();
 
-        g2d.rotate(getRadiant(currentAimedAtField), PANELSIZE / 2, PANELSIZE / 2);
+        g2d.rotate(getRadiant(currentAimedAtField), getWidth() / 2, getHeight() / 2);
 
-        g2d.drawImage(aimOverlay, PANELSIZE / 2 - aimOverlay.getWidth(this) / 2,
-                PANELSIZE / 2 - aimOverlay.getHeight(this) / 2, this);
+            
+        int absoluteWidth = (int)(AIMOVERLAY_SIZE_RELATIVE_X * getWidth());
+        int absoluteHeight = (int)(AIMOVERLAY_SIZE_RELATIVE_Y * getHeight());
+        
+        System.out.println(absoluteHeight + "    " + absoluteWidth);
+        
+
+        g2d.drawImage(aimOverlay, 
+                getWidth() / 2 - absoluteWidth / 2,
+                getHeight() / 2 - absoluteHeight / 2,
+                absoluteWidth,
+                absoluteHeight,
+                this);
 
         g2d.setTransform(oldTransform);
     }
@@ -149,8 +162,8 @@ public class MapPanel extends JPanel {
 
     /**
      * Zeichnet alle sichtbaren Helden-Icons auf die entsprechenden Felder. Der
- eigene Held (mainHero) ist immer sichtbar und wird halb transparent
- dargestellt, wenn er versteckt ist.
+     * eigene Held (mainHero) ist immer sichtbar und wird halb transparent
+     * dargestellt, wenn er versteckt ist.
      *
      * @param g2d
      */
@@ -165,18 +178,18 @@ public class MapPanel extends JPanel {
             int heroIconTotalHeight = (int) (HEROICON_SIZE_RELATIVE * getHeight());
 
             //Vorwärtsdrehen aufs richtige Feld (um den Panelmittelpunkt)
-            g2d.rotate(getRadiant(h.getFieldNumber()), PANELSIZE / 2, PANELSIZE / 2);
+            g2d.rotate(getRadiant(h.getFieldNumber()), getWidth() / 2, getHeight() / 2);
             //Rückwärtsdrehen auf der Stelle, damit das Icon gerade ist
-            g2d.rotate(-getRadiant(h.getFieldNumber()), PANELSIZE / 2,
-                    (PANELSIZE / 2)
+            g2d.rotate(-getRadiant(h.getFieldNumber()), getWidth() / 2,
+                    (getHeight() / 2)
                     + (int) (HEROICON_DISTANCE_RELATIVE * getHeight())
                     + heroIconTotalHeight / 2);
             //Wenn der Held sichtbar ist, immer opak anzeigen
             if (occupyingHero.isVisible()) {
 
                 g2d.drawImage(heroIcon,
-                        PANELSIZE / 2 - heroIconTotalWidth / 2,
-                        PANELSIZE / 2 + (int) (HEROICON_DISTANCE_RELATIVE * getHeight()),
+                        getWidth() / 2 - heroIconTotalWidth / 2,
+                        getHeight() / 2 + (int) (HEROICON_DISTANCE_RELATIVE * getHeight()),
                         heroIconTotalWidth,
                         heroIconTotalHeight, this);
             } //Wenn der Held versteckt ist, nur halbtransparent anzeigen und nur, wenn es sich um den Spielerheld handelt
@@ -186,8 +199,8 @@ public class MapPanel extends JPanel {
                     Composite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, HEROICON_HIDDEN_ALPHA);
                     g2d.setComposite(alphaComposite);
 
-                    g2d.drawImage(heroIcon, PANELSIZE / 2 - heroIconTotalWidth / 2,
-                            PANELSIZE / 2 + (int) (HEROICON_DISTANCE_RELATIVE * getHeight()), heroIconTotalWidth,
+                    g2d.drawImage(heroIcon, getWidth() / 2 - heroIconTotalWidth / 2,
+                            getHeight() / 2 + (int) (HEROICON_DISTANCE_RELATIVE * getHeight()), heroIconTotalWidth,
                             heroIconTotalHeight, this);
 
                     g2d.setComposite(oldComposite);
@@ -236,7 +249,7 @@ public class MapPanel extends JPanel {
         int numFields = hideouts.size();
         int degreesPerField = 360 / numFields;
 
-        Point center = new Point(PANELSIZE / 2, PANELSIZE / 2);
+        Point center = new Point(getWidth() / 2, getHeight() / 2);
 
         int x_diff = aimedAtPoint.x - center.x;
         int y_diff = aimedAtPoint.y - center.y;
