@@ -32,7 +32,7 @@ public class MapPanel extends JPanel {
     private final static double HEROICON_DISTANCE_RELATIVE = 0.25;
     private final static double HEROICON_SIZE_RELATIVE = 0.07;
     private final static float HEROICON_HIDDEN_ALPHA = 0.5f;
-    
+
     private final static double AIMOVERLAY_SIZE_RELATIVE_X = 537 / 1080.0;
     private final static double AIMOVERLAY_SIZE_RELATIVE_Y = 748 / 1080.0;
 
@@ -128,14 +128,10 @@ public class MapPanel extends JPanel {
 
         g2d.rotate(getRadiant(currentAimedAtField), getWidth() / 2, getHeight() / 2);
 
-            
-        int absoluteWidth = (int)(AIMOVERLAY_SIZE_RELATIVE_X * getWidth());
-        int absoluteHeight = (int)(AIMOVERLAY_SIZE_RELATIVE_Y * getHeight());
-        
-        System.out.println(absoluteHeight + "    " + absoluteWidth);
-        
+        int absoluteWidth = (int) (AIMOVERLAY_SIZE_RELATIVE_X * getWidth());
+        int absoluteHeight = (int) (AIMOVERLAY_SIZE_RELATIVE_Y * getHeight());
 
-        g2d.drawImage(aimOverlay, 
+        g2d.drawImage(aimOverlay,
                 getWidth() / 2 - absoluteWidth / 2,
                 getHeight() / 2 - absoluteHeight / 2,
                 absoluteWidth,
