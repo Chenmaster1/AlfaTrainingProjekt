@@ -40,10 +40,10 @@ public class MapPanel extends JPanel {
     private int mapState;
     private HashMap<Hideout, Hero> hideoutHeroes;
     private ArrayList<Hideout> hideouts;
-    private Hero currentHero;
+    private Hero mainHero;
     private int currentAimedAtField;
 
-    public MapPanel(ArrayList<Hideout> hideouts) {
+    public MapPanel(ArrayList<Hideout> hideouts, HashMap<Hideout, Hero> hideoutHeroes, Hero mainHero) {
         super();
 
         setLayout(null);
@@ -60,8 +60,8 @@ public class MapPanel extends JPanel {
                             .getImage());
         }
 
-        hideoutHeroes = null;
-        currentHero = null;
+        this.hideoutHeroes = hideoutHeroes;
+        this.mainHero = mainHero;
         this.hideouts = hideouts;
         mapState = MAPSTATE_REGULAR;
         currentAimedAtField = 0;
@@ -69,8 +69,8 @@ public class MapPanel extends JPanel {
         addAimMouseListener();
     }
 
-    public void setCurrentHero(Hero currentHero) {
-        this.currentHero = currentHero;
+    public void setMainHero(Hero mainHero) {
+        this.mainHero = mainHero;
     }
 
     public void setHideoutHeroes(HashMap<Hideout, Hero> hideoutHeroes) {
@@ -149,8 +149,8 @@ public class MapPanel extends JPanel {
 
     /**
      * Zeichnet alle sichtbaren Helden-Icons auf die entsprechenden Felder. Der
-     * eigene Held (currentHero) ist immer sichtbar und wird halb transparent
-     * dargestellt, wenn er versteckt ist.
+ eigene Held (mainHero) ist immer sichtbar und wird halb transparent
+ dargestellt, wenn er versteckt ist.
      *
      * @param g2d
      */
@@ -181,7 +181,7 @@ public class MapPanel extends JPanel {
                         heroIconTotalHeight, this);
             } //Wenn der Held versteckt ist, nur halbtransparent anzeigen und nur, wenn es sich um den Spielerheld handelt
             else {
-                if (occupyingHero == currentHero) {
+                if (occupyingHero == mainHero) {
                     Composite oldComposite = g2d.getComposite();
                     Composite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, HEROICON_HIDDEN_ALPHA);
                     g2d.setComposite(alphaComposite);

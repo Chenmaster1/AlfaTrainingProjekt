@@ -47,9 +47,6 @@ public class GamePanelTest extends JFrame {
 
         }
 
-        final MapPanel mp = new MapPanel(hideoutArray);
-        mp.setMapState(MapPanel.MAPSTATE_AIMING);
-
         // testArray Gegnerhelden
         ArrayList<Hero> otherHeroes = new ArrayList<>();
         otherHeroes.add(new HeroWorok());
@@ -67,7 +64,6 @@ public class GamePanelTest extends JFrame {
         Hero mainHero = new HeroDahlia();
         mainHero.setVisible(false);
         mainHero.setDelayTokens(4);
-        mp.setCurrentHero(mainHero);
 
         //test Hideout-Hero Map
         HashMap<Hideout, Hero> testHideoutHero = new HashMap<>();
@@ -77,7 +73,8 @@ public class GamePanelTest extends JFrame {
         testHideoutHero.put(hideoutArray.get(13), otherHeroes.get(3));
         testHideoutHero.put(hideoutArray.get(17), mainHero);
 
-        mp.setHideoutHeroes(testHideoutHero);
+        final MapPanel mp = new MapPanel(hideoutArray, testHideoutHero, mainHero);
+        mp.setMapState(MapPanel.MAPSTATE_AIMING);
 
         final GameSidePanel gsp = new GameSidePanel(otherHeroes, mainHero);
 

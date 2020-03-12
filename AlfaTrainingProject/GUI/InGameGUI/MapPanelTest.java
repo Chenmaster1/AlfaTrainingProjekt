@@ -1,5 +1,6 @@
 package InGameGUI;
 
+import Heroes.HeroWorok;
 import Hideouts.Hideout;
 import Hideouts.HideoutType;
 import java.awt.Dimension;
@@ -7,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JFrame;
 
 /**
@@ -26,7 +28,7 @@ public class MapPanelTest extends JFrame {
             hideoutArray.add(h);
 
         }
-        final MapPanel mp = new MapPanel(hideoutArray);
+        final MapPanel mp = new MapPanel(hideoutArray, new HashMap<>(), new HeroWorok());
         setContentPane(mp);
         mp.setMapState(MapPanel.MAPSTATE_AIMING);
 
