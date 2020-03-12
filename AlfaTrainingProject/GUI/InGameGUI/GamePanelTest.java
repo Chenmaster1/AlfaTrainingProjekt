@@ -95,10 +95,11 @@ public class GamePanelTest extends JFrame {
 
         // Das folgende Panel befindet sich standardm‰ﬂig NICHT im gamesidepanel,
         // ist hier nur als visueller Test der einzelkomponente
-        ArenaCardPanel acp = new ArenaCardPanel(new Arenacards(9));
+//        ArenaCardPanel acp = new ArenaCardPanel(new Arenacards(9));
 //		acp.setBounds(0, 0, 744, 1040);
-        acp.setBounds(870, 10, 186, 260);
-        mp.add(acp);
+//        acp.setBounds(870, 10, 186, 260);
+//        mp.add(acp);
+
 
         gsp.getPanelAttackDice().addMouseListener(new MouseAdapter() {
             @Override
@@ -139,7 +140,7 @@ public class GamePanelTest extends JFrame {
 
         setContentPane(gp);
 
-//        getContentPane().setPreferredSize(new Dimension(1080, 1080));
+        setUndecorated(true);
         setLocation(0, 0);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);

@@ -34,13 +34,14 @@ public class GamePanel extends JPanel {
     protected void paintComponent(Graphics grphcs) {
         //MapPanel quadratisch links hinein
 //        mapPanel.setPreferredSize(new Dimension(getHeight(), getHeight()));
-        
+
+//        System.out.println("MapPanel(W/H): " + mapPanel.getWidth() + " " + mapPanel.getHeight() + 
+//                "  GameSidePanel(W/H): " + gameSidePanel.getWidth() + " " + gameSidePanel.getHeight());
+
         //GameSidePanel füllt den Rest
 //        gameSidePanel.setPreferredSize(new Dimension(getWidth() - getHeight(), getHeight()));
-        
+
         super.paintComponent(grphcs);
     }
-    
-    
 
 }
