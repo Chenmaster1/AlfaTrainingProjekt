@@ -43,10 +43,11 @@ public class MapPanel extends JPanel {
     private int mapState;
     private HashMap<Hideout, Hero> hideoutHeroes;
     private ArrayList<Hideout> hideouts;
+    
     private Hero mainHero;
     private int currentAimedAtField;
 
-    public MapPanel(ArrayList<Hideout> hideouts, HashMap<Hideout, Hero> hideoutHeroes, Hero mainHero) {
+    public MapPanel(ArrayList<Hideout> hideouts, HashMap<Hideout,Hero> hideoutHeroes, Hero mainHero) {
         super();
 
         setLayout(null);
