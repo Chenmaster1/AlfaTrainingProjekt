@@ -49,8 +49,9 @@ public class SingleplayerGame {
     }
 
     public void createGame() {
+    	
     	mainFrame.setContentPane(panel);
-    	mainFrame.getIgnoreRepaint();
+    	mainFrame.repaint();
     }
     
     //-------------------------GETTER-------------------------//
