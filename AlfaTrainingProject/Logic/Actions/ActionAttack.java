@@ -35,4 +35,11 @@ public boolean doubleThrow = false;
         singleplayerGame.setAttackMode(AttackMode.NORMAL_ATTACK);
     }
 
+
+    @Override
+    public void updateEnabled(SingleplayerGame singlePlayerGame)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

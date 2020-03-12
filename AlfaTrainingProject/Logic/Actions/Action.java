@@ -51,4 +51,8 @@ public abstract class Action {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+
+    public abstract void updateEnabled(SingleplayerGame singlePlayerGame);
+    
 }

@@ -20,11 +20,18 @@ public class AbilityTolpanLongbeardHide extends Ability {
 
     @Override
     public void useAction(SingleplayerGame singleplayerGame) {
-        for (Action action : singleplayerGame.getActions()) {
-            if (action instanceof ActionHide) {
-                action.useAction(singleplayerGame);
-            }
-        }
+// TODO       for (Action action : singleplayerGame.getActions()) {
+//            if (action instanceof ActionHide) {
+//                action.useAction(singleplayerGame);
+//            }
+//        }
+    }
+
+
+    @Override
+    public void updateEnabled(SingleplayerGame singlePlayerGame)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

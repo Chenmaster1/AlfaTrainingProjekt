@@ -3,6 +3,9 @@ package GameLogic;
 import java.util.ArrayList;
 
 import Actions.Action;
+import Actions.ActionAttack;
+import Actions.ActionHide;
+import Actions.ActionWorkOffDelay;
 import Dice.AttackDice;
 import Dice.HideDice;
 import Heroes.Hero;
@@ -24,7 +27,7 @@ public class SingleplayerGame
     private AttackDice attackDice;
     private HideDice hideDice;
     private ArrayList<Action> standardActions;
-    private ArrayList<Action> actions;
+    private ArrayList<ArrayList<Action>> heroActionsLists;
     private Hero currentHero;
     private int currentHeroIndex;
     private GamePanel gamePanel;
@@ -33,6 +36,7 @@ public class SingleplayerGame
     //------------------booleans fuer Spielkontrolle ueber Karten------------------------
     private boolean mysteriousIdol1 = false;
     private boolean mysteriousIdol2 = false;
+
     //------------------booleans fuer Spielkontrolle ueber Karten------------------------
 
     public SingleplayerGame(JFrame mainFrame, GamePanel gamePanel, Map map)
@@ -40,6 +44,21 @@ public class SingleplayerGame
         this.mainFrame = mainFrame;
         this.gamePanel = gamePanel;
         this.map = map;
+
+        heroActionsLists = new ArrayList<ArrayList<Action>>();
+        standardActions = new ArrayList<Action>();
+        standardActions.add(new ActionAttack(1));
+        standardActions.add(new ActionHide(1));
+        standardActions.add(new ActionWorkOffDelay(1));
+
+        ArrayList<Action> heroActionList;
+
+        for (Hero h : map.getHeroes())
+        {
+            heroActionList = new ArrayList<>(standardActions);
+            heroActionList.addAll(h.getAbilities());
+            heroActionsLists.add(heroActionList);
+        }
     }
 
 
@@ -47,33 +66,32 @@ public class SingleplayerGame
     {
 
         showGame();
-        
+
         // get Hero who does the first turn
         int heroCount = map.getHeroes().size();
         Random randomPlayer = new Random();
         setCurrentHeroIndex(randomPlayer.nextInt(heroCount));
-        
-        // beginn turn 
-        while (true){
-        //player´s turn
-        if(currentHero.isPlayerControlled())
-        {
-            playerTurn();
-        }   
-        
-        //ki´s turn
-        else 
-        {
-            kiTurn();
-        } 
-        // to not exceed playerBase
-        setCurrentHeroIndex((currentHeroIndex +1 )%heroCount);
-   
-     }
-        
-        
-        // zug auslagern
 
+        // beginn turn 
+        while (true)
+        {
+            //player´s turn
+            if (currentHero.isPlayerControlled())
+            {
+                playerTurn();
+            }
+
+            //ki´s turn
+            else
+            {
+                kiTurn();
+            }
+            // to not exceed playerBase
+            setCurrentHeroIndex((currentHeroIndex + 1) % heroCount);
+
+        }
+
+        // zug auslagern
         //randomPlayer.
         //TODO als pairprogramming
         //abilites einen flag geben. wird ein held betroffen, wird der flag seiner ability überprüft. 
@@ -112,9 +130,6 @@ public class SingleplayerGame
     }
 
 
-   
-    
-    
     public Hero getCurrentHero()
     {
         return currentHero;
@@ -126,19 +141,17 @@ public class SingleplayerGame
         return map;
     }
 
-
-    public ArrayList<Action> getActions()
-    {
-        return actions;
-    }
-
+//
+//    public ArrayList<Action> getActions()
+//    {
+//        return heroActionsList;
+//    }
 
     //-------------------------SETTER-------------------------//
     /**
      * Reduziert die aktuellen Aktionspunkte um 1, auf maximal 0
      */
-    
-     public void setCurrentHero(Hero currentHero)
+    public void setCurrentHero(Hero currentHero)
     {
         this.currentHero = currentHero;
         this.currentHeroIndex = map.getHeroes().indexOf(currentHero);
@@ -150,7 +163,8 @@ public class SingleplayerGame
         this.currentHero = map.getHeroes().get(currentHeroIndex);
         this.currentHeroIndex = currentHeroIndex;
     }
-    
+
+
     public void reduceCurrentActionPoints()
     {
         if (map.getHeroes().get(currentHeroIndex).getCurrentActionPoints() >= 1)
@@ -243,43 +257,36 @@ public class SingleplayerGame
 
     private void playerTurn()
     {
-        
-        
-        
-        
-        
-        
+
     }
 
 
     private void kiTurn()
     {
-        
+
         currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
-        
-        while(currentHero.getCurrentActionPoints() != 0)
+
+        while (currentHero.getCurrentActionPoints() != 0)
         {
-//            currentHero.getAbilities().
-            
+                
+            for ( Action a : heroActionsLists.get(currentHeroIndex))
+            {
+                a.updateEnabled(this);
+                        
+
+            }
+
+             // heroActionsLists
+
+
+
+
             //while !=0 update die Aktionsliste ob dis/enabled
             // aktionsliste an ki übergeben
             //auswahl kütt zurück
             //aktion ausführen
-            
             // AP verringern sich entsprechend
-            
-        
-            
         }
-        
-       
-
-        
-
-
-
-
-
 
     }
 

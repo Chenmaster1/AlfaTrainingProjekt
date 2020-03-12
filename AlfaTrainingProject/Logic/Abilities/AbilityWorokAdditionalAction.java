@@ -22,4 +22,11 @@ public class AbilityWorokAdditionalAction extends Ability{
         // als Action kein Effekt, stattdessen implementiert in getMaxActionPoints()
     }
 
+
+    @Override
+    public void updateEnabled(SingleplayerGame singlePlayerGame)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

@@ -214,13 +214,13 @@ public class Arenacards {
     private void useStrangeRedShrooms(SingleplayerGame singleplayerGame) {
         //TODO beibehalten?
         //beim ablegen, direkt verstecken und 3 verzögerungsmarken aufnehmen
-        for (Action action : singleplayerGame.getActions()) {
-            if (action instanceof ActionHide) {
-                action.useAction(singleplayerGame);
-                singleplayerGame.getCurrentHero().addDelayTokens(3);
-                break;
-            }
-        }
+//        for (Action action : singleplayerGame.getActions()) {
+//            if (action instanceof ActionHide) {
+//                action.useAction(singleplayerGame);
+//                singleplayerGame.getCurrentHero().addDelayTokens(3);
+//                break;
+//            }
+//        }
     }
 
     private void useHiddenPit(SingleplayerGame singleplayerGame) {
