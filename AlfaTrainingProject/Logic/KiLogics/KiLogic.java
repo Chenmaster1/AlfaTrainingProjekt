@@ -44,33 +44,30 @@ public abstract class KiLogic {
 		//es wird solange eine Action ausgefuehrt, wie Aktionspunkte uebrig sind
 		//Tolpan hat keine Faehigkeit die während seines Zuges eingesetzt wird
 		//seine Prioritaet liegt beim verzoegerung abbauen, dann verstecken, (einmal die Faehigkeit anwenden) und dann angreifen
-		while(singleplayerGame.getCurrentHero().getCurrentActionPoints() > 0) {
-			if(hero.getDelayTokens() > 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() == 1) {
-				for(Action action : actions) {
-					if(action instanceof ActionWorkOffDelay) {
-						resultAction = (ActionWorkOffDelay) action;
-					}
-				}	 
-			}else if(hero.isVisible() && hero.getDelayTokens() == 0) {
-				for(Action action : actions) {
-				  	if(action instanceof ActionHide)
-				  		resultAction = (ActionHide) action;
+	
+		if(hero.getDelayTokens() > 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() == 1) {
+			for(Action action : actions) {
+				if(action instanceof ActionWorkOffDelay) {
+					resultAction = (ActionWorkOffDelay) action;
 				}
-			//Hier eventuell ability einfuegen
-			}else{
-				/*
-				 * TODO Angriff. Falls ein Held sichtbar ist, diesen angreifen. Ansonsten primaer Felder angreifen, 
-				 * bei denen man selber nicht getroffen wernden kann 
-				 */
-				
-				for(Action action : actions) {
-					if(action instanceof ActionAttack) {
-						resultAction = (ActionAttack) action;
-					}
-				}
-				
+			}	 
+		}else if(hero.isVisible() && hero.getDelayTokens() == 0) {
+			for(Action action : actions) {
+			  	if(action instanceof ActionHide)
+			  		resultAction = (ActionHide) action;
 			}
+		//Hier eventuell ability einfuegen
+		}else{
+			/*
+			 * TODO Angriff. Falls ein Held sichtbar ist, diesen angreifen. Ansonsten primaer Felder angreifen, 
+			 * bei denen man selber nicht getroffen wernden kann 
+			 */
 			
+			for(Action action : actions) {
+				if(action instanceof ActionAttack) {
+					resultAction = (ActionAttack) action;
+				}
+			}
 			
 		}
 		return resultAction;
