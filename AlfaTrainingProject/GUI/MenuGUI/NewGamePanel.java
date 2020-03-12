@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +19,13 @@ import javax.swing.JCheckBox;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import GameLogic.SingleplayerGame;
+import GameLogic.SingleplayerGameCreator;
+import Heroes.Hero;
+import InGameGUI.GamePanel;
+import InGameGUI.GameSidePanel;
+import InGameGUI.MapPanel;
 
 public class NewGamePanel extends JPanel { 
     
@@ -84,13 +92,7 @@ public class NewGamePanel extends JPanel {
         g.drawImage(AvatarImage4, 1126, 665, this);
         g.drawImage(AvatarImage5, 1416, 665, this);
     }
-
-    private void cancelClicked()
-    {
-        frame.setContentPane(parentPanel);
-        frame.repaint();
-    }    
-    
+  
     private void fillPanel()
     {
         setSize(frame.getSize());
@@ -123,7 +125,7 @@ public class NewGamePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                cancelClicked();
+                newGameClicked();
             }
         });
         
@@ -149,5 +151,18 @@ public class NewGamePanel extends JPanel {
         add(Playcardmode_BasiccheckBox);
         add(Playcardmode_AdvancedcheckBox);
     }
-
+    
+    private void cancelClicked()
+    {
+        frame.setContentPane(parentPanel);
+        frame.repaint();
+    }    
+    
+    private void newGameClicked()
+    {
+    	//TODO Werte auslesen und daraus Singleplayergame erstellen
+    	SingleplayerGame singlePlayerGame = SingleplayerGameCreator.createTestSingleplayerGame(frame);
+    	
+    	singlePlayerGame.createGame();
+    }    
 }

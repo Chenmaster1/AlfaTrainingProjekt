@@ -48,6 +48,12 @@ public class SingleplayerGame {
         //eventuell threadhandler schreiben
     }
 
+    public void createGame() {
+    	
+    	mainFrame.setContentPane(panel);
+    	mainFrame.repaint();
+    }
+    
     //-------------------------GETTER-------------------------//
     public HideDice getHideDice() {
         return hideDice;

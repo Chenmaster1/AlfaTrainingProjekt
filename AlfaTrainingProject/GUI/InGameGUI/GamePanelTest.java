@@ -78,7 +78,7 @@ public class GamePanelTest extends JFrame {
 
         final GameSidePanel gsp = new GameSidePanel(otherHeroes, mainHero);
 
-        GamePanel gp = new GamePanel(mp, gsp);
+        GamePanel gp = new GamePanel(mp, gsp, this);
 
         ArrayList<Action> testActionArrayList = new ArrayList<>();
         Action action1 = new ActionAttack(1);
@@ -138,7 +138,7 @@ public class GamePanelTest extends JFrame {
             }
         });
 
-        setContentPane(gp);
+        //setContentPane(gp);
 
         setUndecorated(true);
         setLocation(0, 0);
