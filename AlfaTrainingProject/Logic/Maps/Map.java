@@ -26,6 +26,7 @@ public class Map {
 	 * @author Kevin
 	 */
 	public Map(HashMap<Hideout, Hero> hideoutHero, ArrayList<Hideout> hideouts, ArrayList<Hero> heroes) {
+           
 		this.hideoutHero = hideoutHero;
 		this.hideouts = hideouts;
 		this.heroes = heroes;

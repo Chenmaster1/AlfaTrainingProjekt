@@ -32,7 +32,7 @@ public class SingleplayerGameCreator {
      */
     public static SingleplayerGame createSingleplayerGame(JFrame mainFrame, ArrayList<Hero> heroes, Hero mainHero) {
         //MODEL-OBJEKTE
-
+        
         //Helden sind übergeben
         //Hideouts initialisieren
         ArrayList<Hideout> hideouts = new ArrayList<>();
