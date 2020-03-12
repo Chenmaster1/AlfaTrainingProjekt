@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 /**
  * Das Panel, auf dem die Sidebar mit Helden, Aktionen usw angezeigt wird.
  */
-class GameSidePanel extends JPanel {
+public class GameSidePanel extends JPanel {
 
     private final static int PANELSIZE_X = 840;
     private final static int PANELSIZE_Y = 1080;

@@ -10,6 +10,7 @@ import InGameGUI.GamePanel;
 import Maps.Map;
 import enums.AttackMode;
 import enums.GameState;
+import javax.swing.JFrame;
 
 public class SingleplayerGame {
 
@@ -23,13 +24,15 @@ public class SingleplayerGame {
     private ArrayList<Action> actions;
     private Hero currentHero;
     private GamePanel panel;
+    private JFrame mainFrame;
 
     //------------------booleans fuer Spielkontrolle ueber Karten------------------------
     private boolean mysteriousIdol1 = false;
     private boolean mysteriousIdol2 = false;
     //------------------booleans fuer Spielkontrolle ueber Karten------------------------
     
-    public SingleplayerGame(GamePanel gamePanel, Map map) {
+    public SingleplayerGame(JFrame mainFrame, GamePanel gamePanel, Map map) {
+        this.mainFrame = mainFrame;
         this.panel = gamePanel;
         this.map = map;
     }

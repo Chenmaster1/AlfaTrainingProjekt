@@ -3,7 +3,6 @@ package Maps;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Cards.EventCard;
 import Heroes.Hero;
 import Hideouts.Hideout;
 
@@ -11,13 +10,12 @@ import Hideouts.Hideout;
  * Dies ist das Grundgeruest jedes Spielfelds
  * @author Kevin
  */
-public abstract class Map {
+public class Map {
 
 	private HashMap<Hideout, Hero> hideoutHero;
 	
 	private ArrayList<Hideout> hideouts;
 	private ArrayList<Hero> heroes;
-	private ArrayList<EventCard> eventcards;
 
 	/**
 	 * Dies ist der Konstruktor eines Spielfelds
@@ -27,11 +25,10 @@ public abstract class Map {
 	 * @param eventcards Alle Eventkarten im Spiel
 	 * @author Kevin
 	 */
-	public Map(HashMap<Hideout, Hero> hideoutHero, ArrayList<Hideout> hideouts, ArrayList<Hero> heroes, ArrayList<EventCard> eventcards) {
+	public Map(HashMap<Hideout, Hero> hideoutHero, ArrayList<Hideout> hideouts, ArrayList<Hero> heroes) {
 		this.hideoutHero = hideoutHero;
 		this.hideouts = hideouts;
 		this.heroes = heroes;
-		this.eventcards = eventcards;
 	}
 	
 	//-------------------------GETTER-------------------------//
@@ -44,9 +41,6 @@ public abstract class Map {
 	}
 	public ArrayList<Hero> getHeroes() {
 		return heroes;
-	}
-	public ArrayList<EventCard> getEventcards() {
-		return eventcards;
 	}
 	
 }
