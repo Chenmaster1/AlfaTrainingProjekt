@@ -224,9 +224,13 @@ public class SingleplayerGame
     }
 
 
-    public void increaseCurrentActionPointsBy(int increasment)
+    public void increaseCurrentActionPointsBy(int increment)
     {
-        map.getHeroes().get(currentHeroIndex).setCurrentActionPoints(map.getHeroes().get(currentHeroIndex).getCurrentActionPoints() + increasment);
+        currentHero.setCurrentActionPoints(currentHero.getCurrentActionPoints()+increment);
+    }
+    public void decreaseCurrentActionPointsBy(int decrement)
+    {
+        currentHero.setCurrentActionPoints(currentHero.getCurrentActionPoints()-decrement);
     }
 
 
@@ -275,12 +279,12 @@ public class SingleplayerGame
             }
 
             
-             currentHero.getKiLogic().chooseAction(heroActionsLists.get(currentHeroIndex), this);
+             Action currentAction = currentHero.getKiLogic().chooseAction(heroActionsLists.get(currentHeroIndex), this);
+              currentAction.useAction(this);
+              decreaseCurrentActionPointsBy(currentAction.getActionPointsRequired());
+        
                      
-                     
-                     
-                     
-            //while !=0 update die Aktionsliste ob dis/enabled
+            
             // aktionsliste an ki übergeben
             //auswahl kütt zurück
             //aktion ausführen
