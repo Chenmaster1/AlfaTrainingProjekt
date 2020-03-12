@@ -23,8 +23,8 @@ public class GameSidePanel extends JPanel {
 
     private Image backgroundImage;
 
-    //Array der Gegnerhelden, angezeigt im OtherHeroesPanel oben
-    private ArrayList<Hero> otherHeroes;
+    //Array aller Helden
+    private ArrayList<Hero> heroes;
 
     //der Held des Hauptspielers, angezeigt im zentralen HeroPanelLarge
     private Hero playerHero;
@@ -41,20 +41,19 @@ public class GameSidePanel extends JPanel {
     private Thread threadAttackDicePanel;
     private Thread threadHideDicePanel;
 
-    public GameSidePanel(ArrayList<Hero> otherHeroes, Hero playerHero) {
+    public GameSidePanel(ArrayList<Hero> heroes, Hero playerHero) {
         super();
         
-        this.otherHeroes = otherHeroes;
+        this.heroes = heroes;
         this.playerHero = playerHero;
 
         setPreferredSize(new Dimension(PANELSIZE_X, PANELSIZE_Y));
         backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Gameboard_Right.png"))
                 .getImage();
 
-        //TODO: Layout (evtl. weitere Unterteilungen), Elemente hinzufügen
         setLayout(null);
 
-        panelOtherHeroes = new OtherHeroesPanel(otherHeroes);
+        panelOtherHeroes = new OtherHeroesPanel(heroes);
         panelOtherHeroes.setBounds(14, 85, 780, 200);
 
         panelPlayerHero = new HeroPanelLarge(playerHero);
@@ -94,8 +93,8 @@ public class GameSidePanel extends JPanel {
 
     }
 
-    public void setOtherHeroes(ArrayList<Hero> otherHeroes) {
-        this.otherHeroes = otherHeroes;
+    public void setHeroes(ArrayList<Hero> heroes) {
+        this.heroes = heroes;
     }
 
     public OtherHeroesPanel getPanelOtherHeroes() {

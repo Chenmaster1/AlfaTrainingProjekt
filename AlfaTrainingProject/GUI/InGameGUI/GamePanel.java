@@ -50,4 +50,12 @@ public class GamePanel extends JPanel {
         super.paintComponent(grphcs);
     }
 
+	public MapPanel getMapPanel() {
+		return mapPanel;
+	}
+
+	public GameSidePanel getGameSidePanel() {
+		return gameSidePanel;
+	}
+
 }

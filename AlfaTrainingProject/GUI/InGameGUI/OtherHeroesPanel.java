@@ -17,13 +17,15 @@ import javax.swing.JPanel;
  */
 public class OtherHeroesPanel extends JPanel {
 
-    public OtherHeroesPanel(ArrayList<Hero> otherHeroes) {
-        super(new FlowLayout(FlowLayout.CENTER, 10, 0));
+	public OtherHeroesPanel(ArrayList<Hero> heroes) {
+		super(new FlowLayout(FlowLayout.CENTER, 10, 0));
 
-        for (Hero h : otherHeroes) {
-            add(new HeroPanelSmall(h));
-        }
+		for (Hero h : heroes) {
+			if (!h.isPlayerControlled()) {
+				add(new HeroPanelSmall(h));
+			}
+		}
 
-        setOpaque(false);
-    }
+		setOpaque(false);
+	}
 }
