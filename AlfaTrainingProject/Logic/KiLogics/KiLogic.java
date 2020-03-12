@@ -81,7 +81,8 @@ public abstract class KiLogic {
 		//falls verzoegerungsmarken und actionspoints = 1, dann verzoegerung abbauen
 		else if(currentHero.getDelayTokens() > 0 && currentHero.getCurrentActionPoints() == 1) {
 			for(Action action : enabledActions)
-				resultAction = action;
+				if(action instanceof ActionWorkOffDelay)
+					resultAction = action;
 		}else {
 			for(Action action : enabledActions)
 				if(action instanceof ActionAttack)
