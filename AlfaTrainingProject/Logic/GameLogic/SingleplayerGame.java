@@ -23,7 +23,7 @@ public class SingleplayerGame {
     private ArrayList<Action> standardActions;
     private ArrayList<Action> actions;
     private Hero currentHero;
-    private GamePanel panel;
+    private GamePanel gamePanel;
     private JFrame mainFrame;
 
     //------------------booleans fuer Spielkontrolle ueber Karten------------------------
@@ -33,7 +33,7 @@ public class SingleplayerGame {
     
     public SingleplayerGame(JFrame mainFrame, GamePanel gamePanel, Map map) {
         this.mainFrame = mainFrame;
-        this.panel = gamePanel;
+        this.gamePanel = gamePanel;
         this.map = map;
     }
 
@@ -48,10 +48,10 @@ public class SingleplayerGame {
         //eventuell threadhandler schreiben
     }
 
-    public void createGame() {
+    public void showGame() {
     	
-    	mainFrame.setContentPane(panel);
-    	mainFrame.repaint();
+    	mainFrame.setContentPane(gamePanel);
+    	mainFrame.pack();
     }
     
     //-------------------------GETTER-------------------------//

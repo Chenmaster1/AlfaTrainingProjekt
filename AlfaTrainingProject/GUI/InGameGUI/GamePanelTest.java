@@ -138,7 +138,7 @@ public class GamePanelTest extends JFrame {
             }
         });
 
-        //setContentPane(gp);
+        setContentPane(gp);
 
         setUndecorated(true);
         setLocation(0, 0);
