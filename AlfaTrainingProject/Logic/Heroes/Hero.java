@@ -84,6 +84,11 @@ public abstract class Hero {
     public int getMaxHitPoints() {
         return maxHitPoints;
     }
+    
+    public KiLogic getKiLogic()
+    {
+        return ki;
+    }
 
     public int getMaxActionPoints() {
         return maxActionPoints;

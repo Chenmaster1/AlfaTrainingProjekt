@@ -20,7 +20,7 @@ public class KiLogicDahlia extends KiLogic
 {
 
     @Override
-    public Action chooseAction(ArrayList<Action> actions, Hero hero, SingleplayerGame singleplayerGame)
+    public Action chooseAction(ArrayList<Action> actions, SingleplayerGame singleplayerGame)
     {
         Action returnAction = null, attackSmth = null, removeDelay = null, seekHideout = null;
 
@@ -58,30 +58,30 @@ public class KiLogicDahlia extends KiLogic
         }
 
         // if only enemys are visible - attack enemy  
-        if (numHeroesVisible != 0 && !hero.isVisible())
+        if (numHeroesVisible != 0 && !singleplayerGame.getCurrentHero().isVisible())
         {
             returnAction = attackSmth;
         }
 
         // 2+HP Dahlia - if Dahlia is visible and has at least 2 hitpoints
-        if (numHeroesVisible != 0 && hero.isVisible() && hero.getCurrentHitPoints() >= 2)
+        if (numHeroesVisible != 0 && singleplayerGame.getCurrentHero().isVisible() && singleplayerGame.getCurrentHero().getCurrentHitPoints() >= 2)
         {
             returnAction = attackSmth;
         }
 
         // 1HP Dahlia - if Dahlia is visible and has 1 hitpoints
-        if (numHeroesVisible != 0 && hero.isVisible() && hero.getCurrentHitPoints() == 1)
+        if (numHeroesVisible != 0 && singleplayerGame.getCurrentHero().isVisible() && singleplayerGame.getCurrentHero().getCurrentHitPoints() == 1)
         {
-            if (hero.getDelayTokens() > 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() > 1)
+            if (singleplayerGame.getCurrentHero().getDelayTokens() > 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() > 1)
             {
                 returnAction = removeDelay;
             }
-            if (hero.getDelayTokens() == 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() > 1)
+            if (singleplayerGame.getCurrentHero().getDelayTokens() == 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() > 1)
             {
                 returnAction = seekHideout;
             }
 
-            if (hero.getDelayTokens() == 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() == 1)
+            if (singleplayerGame.getCurrentHero().getDelayTokens() == 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() == 1)
             {
                 returnAction = attackSmth;
             }

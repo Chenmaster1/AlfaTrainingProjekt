@@ -272,15 +272,14 @@ public class SingleplayerGame
             for ( Action a : heroActionsLists.get(currentHeroIndex))
             {
                 a.updateEnabled(this);
-                        
-
             }
 
-             // heroActionsLists
-
-
-
-
+            
+             currentHero.getKiLogic().chooseAction(heroActionsLists.get(currentHeroIndex), this);
+                     
+                     
+                     
+                     
             //while !=0 update die Aktionsliste ob dis/enabled
             // aktionsliste an ki übergeben
             //auswahl kütt zurück

@@ -12,7 +12,7 @@ import Heroes.Hero;
 public class KiLogicWorok extends KiLogic {
 
 	@Override
-	public Action chooseAction(ArrayList<Action> actions, Hero hero, SingleplayerGame singleplayerGame) {
+	public Action chooseAction(ArrayList<Action> actions, SingleplayerGame singleplayerGame) {
 		Action attackAction = null, delayAction = null, hideAction = null, chosenAction = null;
 
 		// Aktionsobjekte bereithalten. TODO: evtl. optimieren, fühlt sich umständlich
@@ -36,10 +36,10 @@ public class KiLogicWorok extends KiLogic {
 		}
 
 		// Wenn Worok nicht sichtbar ist
-		if (!hero.isVisible()) {
+		if (!singleplayerGame.getCurrentHero().isVisible()) {
 			// Wenn Worok nur noch 1 AP hat und mindestens ein
 			// DelayToken, delay abbauen
-			if ((singleplayerGame.getCurrentHero().getCurrentActionPoints() == 1) && hero.getDelayTokens() > 0) {
+			if ((singleplayerGame.getCurrentHero().getCurrentActionPoints() == 1) && singleplayerGame.getCurrentHero().getDelayTokens() > 0) {
 				chosenAction = delayAction;
 			}
 			// Sonst angreifen
@@ -52,7 +52,7 @@ public class KiLogicWorok extends KiLogic {
 		else {
 			// Wenn Worok als einziger sichtbar ist, verstecken bzw. delay abbauen
 			if (numHeroesVisible == 1) {
-				if (hero.getDelayTokens() > 0) {
+				if (singleplayerGame.getCurrentHero().getDelayTokens() > 0) {
 					chosenAction = delayAction;
 				} else {
 					chosenAction = hideAction;
@@ -62,7 +62,7 @@ public class KiLogicWorok extends KiLogic {
 			else {
 				// Wenn es die letzte Aktion ist, verstecken bzw. delay abbauen
 				if (singleplayerGame.getCurrentHero().getCurrentActionPoints() == 1) {
-					if (hero.getDelayTokens() > 0) {
+					if (singleplayerGame.getCurrentHero().getDelayTokens() > 0) {
 						chosenAction = delayAction;
 					} else {
 						chosenAction = hideAction;

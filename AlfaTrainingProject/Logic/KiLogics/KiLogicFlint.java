@@ -10,7 +10,7 @@ import java.util.ArrayList;
     
 public class KiLogicFlint extends KiLogic {
 	@Override
-	public Action chooseAction(ArrayList<Action> actions, Hero hero, SingleplayerGame singleplayerGame) {
+	public Action chooseAction(ArrayList<Action> actions, SingleplayerGame singleplayerGame) {
 			
 		Action resultAction = null;
 			
@@ -18,13 +18,13 @@ public class KiLogicFlint extends KiLogic {
 		//Flint hat als Faehigkeit, seinen letzten Actionmove als Doppelwurf auszufuehren.
 		//Seine Prioritaet liegt seinen letzten Zug als Angriff zu spielen, zuvor Delay abbauen, dann verstecken, (einmal die Faehigkeit anwenden) und dann angreifen
 		
-			if(hero.getDelayTokens() > 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() > 1) {
+			if(singleplayerGame.getCurrentHero().getDelayTokens() > 0 && singleplayerGame.getCurrentHero().getCurrentActionPoints() > 1) {
 				for(Action action : actions) {
 					if(action instanceof ActionWorkOffDelay) {
 						resultAction = action;
 					}
 				}	 
-			}else if(hero.isVisible() && hero.getDelayTokens() == 0) {
+			}else if(singleplayerGame.getCurrentHero().isVisible() && singleplayerGame.getCurrentHero().getDelayTokens() == 0) {
 				for(Action action : actions) {
 					//if(action instanceof ActionHide)
 					resultAction = action;
