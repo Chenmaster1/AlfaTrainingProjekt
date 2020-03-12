@@ -3,6 +3,8 @@ package InGameGUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -15,10 +17,14 @@ public class GamePanel extends JPanel {
     private MapPanel mapPanel;
     private GameSidePanel gameSidePanel;
 
+    private JFrame frame;
+    
     private static final int MAPPANEL_STANDARD_SIZE = 1080;
 
-    public GamePanel(MapPanel mp, GameSidePanel gsp) {
+    public GamePanel(MapPanel mp, GameSidePanel gsp, JFrame mainFrame) {
         super();
+        frame = mainFrame;
+        //frame.setContentPane(this);
         mapPanel = mp;
         mapPanel.setPreferredSize(new Dimension(MAPPANEL_STANDARD_SIZE, MAPPANEL_STANDARD_SIZE));
 
