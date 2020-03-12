@@ -23,16 +23,17 @@ public class SingleplayerGameCreator {
 
     /**
      * Erzeugt ein SingleplayerGame basierend auf der Standardkarte und gibt es
-     * zurück. Es enthält 5 Helden (inklusive Hauptspieler), die zufällig auf
-     * die 20 hideouts verteilt werden.
-     *
-     * @param mainFrame Das JFrame, in dem dieses SingleplayerGame sich
-     * darstellen soll.
-     * @return
+     * zurück. 
+     * 
+     * @param mainFrame Das JFrame, in dem das SingleplayerGame dargestellt werden soll
+     * @param heroes    Die Liste der teilnehmenden Helden inklusive dem Spielerheld
+     * @param mainHero  Der Held des Spielers
+     * @return 
      */
-    public static SingleplayerGame createTestSingleplayerGame(JFrame mainFrame) {
+    public static SingleplayerGame createSingleplayerGame(JFrame mainFrame, ArrayList<Hero> heroes, Hero mainHero) {
         //MODEL-OBJEKTE
 
+        //Helden sind übergeben
         //Hideouts initialisieren
         ArrayList<Hideout> hideouts = new ArrayList<>();
         Hideout hideout = null;
@@ -49,16 +50,6 @@ public class SingleplayerGameCreator {
             hideout.setActive(true);
             hideouts.add(hideout);
         }
-
-        //Helden initialisieren
-        ArrayList<Hero> heroes = new ArrayList<>();
-        heroes.add(new HeroBalthur());
-        heroes.add(new HeroDahlia());
-        heroes.add(new HeroTolpanLongbeard());
-        heroes.add(new HeroWorok());
-        heroes.add(new HeroWorok());
-
-        heroes.get(4).setPlayerControlled(true);
 
         //erste Verstecke zufällig initialisieren
         HashMap<Hideout, Hero> hideoutHero = new HashMap<>();
@@ -87,5 +78,32 @@ public class SingleplayerGameCreator {
         //SingleplayerGame als CONTROL-Objekt zusammensetzen
         SingleplayerGame resultGame = new SingleplayerGame(mainFrame, gamePanel, standardMap);
         return resultGame;
+
     }
+
+    /**
+     * Erzeugt ein Test - SingleplayerGame basierend auf der Standardkarte und gibt es
+     * zurück. Es enthält 5 Helden (inklusive Hauptspieler).
+     *
+     * @param mainFrame Das JFrame, in dem dieses SingleplayerGame sich
+     * darstellen soll.
+     * @return
+     */
+    public static SingleplayerGame createTestSingleplayerGame(JFrame mainFrame) {
+
+        //Helden initialisieren
+        ArrayList<Hero> heroes = new ArrayList<>();
+        heroes.add(new HeroBalthur());
+        heroes.add(new HeroDahlia());
+        heroes.add(new HeroTolpanLongbeard());
+        heroes.add(new HeroWorok());
+        heroes.add(new HeroWorok());
+
+        heroes.get(4).setPlayerControlled(true);
+        Hero mainHero = heroes.get(4);
+
+        SingleplayerGame resultGame = createSingleplayerGame(mainFrame, heroes, mainHero);
+        return resultGame;
+    }
+
 }
