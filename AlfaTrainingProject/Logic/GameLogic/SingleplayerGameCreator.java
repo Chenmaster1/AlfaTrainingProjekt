@@ -62,7 +62,8 @@ public class SingleplayerGameCreator {
 
             hideoutHero.put(hideouts.get(fieldNumber), h);
         }
-
+       
+            
         //das Mapobjekt zusammensetzen
         Map standardMap = new Map(hideoutHero, hideouts, heroes);
 

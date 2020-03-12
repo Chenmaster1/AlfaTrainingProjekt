@@ -98,6 +98,7 @@ public class MapPanel extends JPanel {
 
         // Overlays für zerstörte Verstecke
         drawDisabledFields(g2d);
+        
         // ggf Overlay für den Zielmechanismus
         if (mapState == MAPSTATE_AIMING) {
             drawAimOverlay(g2d);
