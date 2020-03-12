@@ -127,7 +127,9 @@ public class MainFramePanel extends JPanel{
 	 * @author Kevin
 	 */
 	private void onNewClicked() {
-		//TODO
+		frame.remove(this);	//altes Panel entfernen
+		new NewGamePanel(this, frame);		//neues Panel hinzufuegen
+		repaint();		//neu darstellen
 	}
 	
 	/**
