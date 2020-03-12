@@ -22,6 +22,7 @@ public abstract class Hero {
     protected ArrayList<Ability> abilities;
 
     private Image avatar;
+    private Image mapIcon;
 
     private KiLogic ki;
 
@@ -48,7 +49,7 @@ public abstract class Hero {
      * aus der Datenbank zu holen
      * @author Kevin
      */
-    public Hero(String name, String description, String artwork, int maxHitPoints, int maxActionPoints, double power, KiLogic ki, String avatarPath) {
+    public Hero(String name, String description, String artwork, int maxHitPoints, int maxActionPoints, double power, KiLogic ki, String avatarPath, String mapIconPath) {
 
         this.name = name;
         this.description = description;
@@ -58,6 +59,7 @@ public abstract class Hero {
         this.power = power;
         this.ki = ki;
         this.avatar = new ImageIcon(getClass().getClassLoader().getResource(avatarPath)).getImage();
+        this.mapIcon = new ImageIcon(getClass().getClassLoader().getResource(mapIconPath)).getImage();
         this.abilities = new ArrayList<Ability>();
         
         // Standardwerte: KI-kontrolliert, nicht sichtbar, kein Delay, volle
@@ -118,6 +120,10 @@ public abstract class Hero {
 
     public Image getAvatar() {
         return avatar;
+    }
+
+    public Image getMapIcon() {
+        return mapIcon;
     }
 
     public String getDescription() {

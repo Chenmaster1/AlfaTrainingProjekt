@@ -155,7 +155,7 @@ public class MapPanel extends JPanel {
 	private void drawVisibleHeros(Graphics2D g2d) {
 		for (Hideout h : hideoutHeroes.keySet()) {
 			Hero occupyingHero = hideoutHeroes.get(h);
-			Image heroIcon = occupyingHero.getAvatar();
+			Image heroIcon = occupyingHero.getMapIcon();
 
 			AffineTransform oldTransform = g2d.getTransform();
 			

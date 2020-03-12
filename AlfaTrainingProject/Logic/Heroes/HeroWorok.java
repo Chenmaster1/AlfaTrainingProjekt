@@ -14,7 +14,7 @@ public class HeroWorok extends Hero {
 
 	public HeroWorok() {
 
-		super("Worok", "WorokDescription", "WorokArtwork", 3, 3, 0.3, new KiLogicWorok(), "Hero_Card/Avatar_Worok.jpg");
+		super("Worok", "WorokDescription", "WorokArtwork", 3, 3, 0.3, new KiLogicWorok(), "Hero_Card/Avatar_Worok.jpg", "Gameboard/Spiel_Avatar_Worok.png");
 
                 //passive Fähigkeit, macht selbst nichts, Effekt implementiert in getMaxActionPoints()
 		abilities.add(new AbilityWorokAdditionalAction(0));

@@ -16,7 +16,7 @@ public class HeroDahlia extends Hero {
     public HeroDahlia() {
         super("Dahlia", "DahliaDescription", "DahliaArtwork",
                 4, 3, 0.3,
-                new KiLogicDahlia(), "Hero_Card/Avatar_Dahlia.jpg");
+                new KiLogicDahlia(), "Hero_Card/Avatar_Dahlia.jpg", "Gameboard/Spiel_Avatar_Dahlia.png");
 
         abilities.add(new AbilityDahliaWhenHitGetNewHideout(0));
     }
