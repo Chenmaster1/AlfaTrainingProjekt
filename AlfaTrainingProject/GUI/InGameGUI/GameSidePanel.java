@@ -43,6 +43,7 @@ public class GameSidePanel extends JPanel {
 
     public GameSidePanel(ArrayList<Hero> otherHeroes, Hero playerHero) {
         super();
+        
         this.otherHeroes = otherHeroes;
         this.playerHero = playerHero;
 
