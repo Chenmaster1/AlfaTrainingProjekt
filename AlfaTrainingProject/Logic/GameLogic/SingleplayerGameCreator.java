@@ -68,9 +68,9 @@ public class SingleplayerGameCreator {
 
         //--------------------
         //VIEW-Objekte
-        MapPanel mp = new MapPanel(hideouts, hideoutHero, heroes.get(4));
+        MapPanel mp = new MapPanel(hideouts, hideoutHero, mainHero);
 
-        GameSidePanel gsp = new GameSidePanel(heroes, heroes.get(4));
+        GameSidePanel gsp = new GameSidePanel(heroes, mainHero);
 
         GamePanel gamePanel = new GamePanel(mp, gsp);
 
