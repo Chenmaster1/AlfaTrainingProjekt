@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import MenuGUI.MainFramePanel;
+
 /**
  * Das Gesamtpanel, dass während des Spiels gezeigt wird. Beinhaltet das
  * eigentliche Spielfeld sowie die Sidebar mit Helden, Aktionen usw.
@@ -16,7 +18,7 @@ public class GamePanel extends JPanel {
 
     private MapPanel mapPanel;
     private GameSidePanel gameSidePanel;
-
+    private MainFramePanel mainFramePanel;
     private JFrame frame;
     
     private static final int MAPPANEL_STANDARD_SIZE = 1080;
@@ -25,6 +27,22 @@ public class GamePanel extends JPanel {
         super();
         frame = mainFrame;
         //frame.setContentPane(this);
+        mapPanel = mp;
+        mapPanel.setPreferredSize(new Dimension(MAPPANEL_STANDARD_SIZE, MAPPANEL_STANDARD_SIZE));
+
+        gameSidePanel = gsp;
+
+        setLayout(new BorderLayout());
+
+        add(mapPanel, BorderLayout.LINE_START);
+        add(gameSidePanel, BorderLayout.LINE_END);
+    }
+    
+    public GamePanel(MapPanel mp, GameSidePanel gsp, JFrame mainFrame, MainFramePanel mainFramePanel) {
+        super();
+        frame = mainFrame;
+        //frame.setContentPane(this);
+        this.mainFramePanel = mainFramePanel;
         mapPanel = mp;
         mapPanel.setPreferredSize(new Dimension(MAPPANEL_STANDARD_SIZE, MAPPANEL_STANDARD_SIZE));
 
@@ -58,4 +76,7 @@ public class GamePanel extends JPanel {
 		return gameSidePanel;
 	}
 
+	public MainFramePanel getMainFramePanel() {
+		return mainFramePanel;
+	}
 }

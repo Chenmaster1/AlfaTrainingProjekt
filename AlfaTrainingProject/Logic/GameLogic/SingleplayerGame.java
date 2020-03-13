@@ -21,6 +21,8 @@ import javax.swing.JOptionPane;
 import Abilities.Ability;
 import static Dice.AttackDice.*;
 import InGameGUI.MapPanel;
+import MenuGUI.MainFramePanel;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +31,8 @@ public class SingleplayerGame {
     private JFrame mainFrame;
     private GamePanel gamePanel;
     private GameData gameData;
-
+    private MainFramePanel mainFramePanel;
+    
     private AttackMode attackMode = AttackMode.NO_ATTACK;
     private GameState gameState;
 
@@ -49,10 +52,11 @@ public class SingleplayerGame {
 
     // ------------------booleans fuer Spielkontrolle ueber
     // Karten------------------------
-    public SingleplayerGame(JFrame mainFrame, GamePanel gamePanel, GameData map) {
+    public SingleplayerGame(JFrame mainFrame, GamePanel gamePanel, GameData map, MainFramePanel mainFramePanel) {
         this.mainFrame = mainFrame;
         this.gamePanel = gamePanel;
         this.gameData = map;
+        this.mainFramePanel = mainFramePanel;
 
         attackDice = new AttackDice();
         hideDice = new HideDice();
@@ -79,7 +83,8 @@ public class SingleplayerGame {
         int heroCount = gameData.getHeroes().size();
         Random randomPlayer = new Random();
         setCurrentHeroIndex(randomPlayer.nextInt(heroCount));
-
+        
+        lblWhileLoop:
         while (true) {
             // player´s turn
             if (currentHero.isPlayerControlled()) {
@@ -99,8 +104,14 @@ public class SingleplayerGame {
             
             if(alive == 1)
             	for(Hero hero : gameData.getHeroes())
-            		if(!hero.isDead())
+            		if(!hero.isDead()) {
             			JOptionPane.showMessageDialog(mainFrame,hero.getName() + " hat gewonnen");
+            			mainFrame.setContentPane(mainFramePanel);
+            			mainFrame.repaint();
+            			break lblWhileLoop; 
+            		}
+            
+            			
         }
 
         // zug auslagern

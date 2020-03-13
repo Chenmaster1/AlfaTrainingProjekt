@@ -10,6 +10,7 @@ import Hideouts.Hideout;
 import Hideouts.HideoutType;
 import InGameGUI.GamePanel;
 import InGameGUI.MapPanel;
+import MenuGUI.MainFramePanel;
 import InGameGUI.GameSidePanel;
 import GameData.GameData;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class SingleplayerGameCreator {
      * @param mainHero  Der Held des Spielers
      * @return 
      */
-    public static SingleplayerGame createSingleplayerGame(JFrame mainFrame, ArrayList<Hero> heroes, Hero mainHero) {
+    public static SingleplayerGame createSingleplayerGame(JFrame mainFrame, ArrayList<Hero> heroes, Hero mainHero, MainFramePanel mainFramePanel) {
         //MODEL-OBJEKTE
         
         //Helden sind übergeben
@@ -73,11 +74,11 @@ public class SingleplayerGameCreator {
 
         GameSidePanel gsp = new GameSidePanel(heroes, mainHero);
 
-        GamePanel gamePanel = new GamePanel(mp, gsp, mainFrame);
+        GamePanel gamePanel = new GamePanel(mp, gsp, mainFrame, mainFramePanel);
 
         //------------
         //SingleplayerGame als CONTROL-Objekt zusammensetzen
-        SingleplayerGame resultGame = new SingleplayerGame(mainFrame, gamePanel, standardMap);
+        SingleplayerGame resultGame = new SingleplayerGame(mainFrame, gamePanel, standardMap, mainFramePanel);
         return resultGame;
 
     }
@@ -90,7 +91,7 @@ public class SingleplayerGameCreator {
      * darstellen soll.
      * @return
      */
-    public static SingleplayerGame createTestSingleplayerGame(JFrame mainFrame) {
+    public static SingleplayerGame createTestSingleplayerGame(JFrame mainFrame, MainFramePanel mainFramePanel) {
 
         //Helden initialisieren
         ArrayList<Hero> heroes = new ArrayList<>();
@@ -103,7 +104,7 @@ public class SingleplayerGameCreator {
         heroes.get(4).setPlayerControlled(true);
         Hero mainHero = heroes.get(4);
 
-        SingleplayerGame resultGame = createSingleplayerGame(mainFrame, heroes, mainHero);
+        SingleplayerGame resultGame = createSingleplayerGame(mainFrame, heroes, mainHero, mainFramePanel);
         return resultGame;
     }
 

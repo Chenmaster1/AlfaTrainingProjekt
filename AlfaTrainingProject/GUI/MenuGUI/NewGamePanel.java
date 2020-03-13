@@ -161,7 +161,7 @@ public class NewGamePanel extends JPanel {
     private void newGameClicked()
     {
     	//TODO Werte auslesen und daraus Singleplayergame erstellen
-    	SingleplayerGame singlePlayerGame = SingleplayerGameCreator.createTestSingleplayerGame(frame);
+    	SingleplayerGame singlePlayerGame = SingleplayerGameCreator.createTestSingleplayerGame(frame, parentPanel);
     	
     	singlePlayerGame.startGame();
     }    
