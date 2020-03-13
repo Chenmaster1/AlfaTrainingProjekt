@@ -137,8 +137,15 @@ public abstract class KiLogic {
 	 */
 	public int chooseAttackField(SingleplayerGame singleplayerGame) {
 
+		ArrayList<Hideout> availableHideouts = new ArrayList<Hideout>();
+		
+		for(Hideout hideout : singleplayerGame.getGameData().getHideouts())
+			if(hideout.isActive())
+				availableHideouts.add(hideout);
+		
+		
 		int ownPosition = -1;
-		for (Hideout hideout : singleplayerGame.getGameData().getHideouts()) {
+		for (Hideout hideout : availableHideouts) {
 
 			if (singleplayerGame.getGameData().getHideoutHero().containsKey(hideout)) {
 
@@ -151,14 +158,17 @@ public abstract class KiLogic {
 		// falls Ein held sichtbar ist, der nicht er selber ist, wird dieser vorrangig
 		// angegriffen
 		for (Hero hero : singleplayerGame.getGameData().getHeroes()) {
-			if (hero.isVisible() && !(hero.equals(singleplayerGame.getCurrentHero()))) {
-				HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getGameData().getHideoutHero();
-				for (Hideout key : hideoutHeroMap.keySet()) {
-					if (hideoutHeroMap.get(key).equals(hero)) {
-						return key.getFieldNumber();
+			if(!hero.isDead()) {
+				if (hero.isVisible() && !(hero.equals(singleplayerGame.getCurrentHero()))) {
+					HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getGameData().getHideoutHero();
+					for (Hideout key : hideoutHeroMap.keySet()) {
+						if (hideoutHeroMap.get(key).equals(hero)) {
+							return key.getFieldNumber();
+						}
 					}
 				}
 			}
+			
 		}
 
 		// es wird solange ein Hideout gewaehlt, bis ein passendes getroffen wird.
@@ -169,26 +179,24 @@ public abstract class KiLogic {
 
 		while (true) {
 			Random random = new Random();
-			int attackField = random.nextInt(singleplayerGame.getGameData().getHideouts().size());
+			int attackField = random.nextInt(availableHideouts.size());
 			int activeFields = 0;
 
-			if (singleplayerGame.getGameData().getHideouts().get(attackField).isActive()) {
+			for (Hideout hideout : availableHideouts) {
+				if (hideout.isActive())
+					activeFields++;
+			}
 
-				for (Hideout hideout : singleplayerGame.getGameData().getHideouts()) {
-					if (hideout.isActive())
-						activeFields++;
-				}
-
-				if (activeFields >= 7) {
-					int hideoutCount = singleplayerGame.getGameData().getHideouts().size();
-					if (attackField < (ownPosition + 2) % hideoutCount
-							|| attackField > (ownPosition - 2 + hideoutCount) % hideoutCount) {
-						return attackField;
-					}
-				} else {
+			if (activeFields >= 7) {
+				int hideoutCount = availableHideouts.size();
+				if (attackField < (ownPosition + 2) % hideoutCount
+						|| attackField > (ownPosition - 2 + hideoutCount) % hideoutCount) {
 					return attackField;
 				}
+			} else {
+				return attackField;
 			}
+			
 		}
 		// reduce sollte bereits in der action, bzw ability aufgerufen werde, sofern die
 		// ability einen Zug ersetzt

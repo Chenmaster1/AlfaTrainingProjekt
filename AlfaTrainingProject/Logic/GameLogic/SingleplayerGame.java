@@ -170,6 +170,7 @@ public class SingleplayerGame {
             // auswahl kütt zurück
             // aktion ausführen
             // AP verringern sich entsprechend
+            gamePanel.repaint();
         }
 
     }

@@ -60,6 +60,7 @@ public class ActionHide extends Action {
                 break;
 			}
 		}
+		hero.setVisible(false);
 		oldHideout.setActive(false);
         hideoutHeroMap.remove(oldHideout);
         hideoutHeroMap.put(newHideout, hero);

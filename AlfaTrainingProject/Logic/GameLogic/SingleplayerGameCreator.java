@@ -3,6 +3,7 @@ package GameLogic;
 import Heroes.Hero;
 import Heroes.HeroBalthur;
 import Heroes.HeroDahlia;
+import Heroes.HeroFlint;
 import Heroes.HeroTolpanLongbeard;
 import Heroes.HeroWorok;
 import Hideouts.Hideout;
@@ -97,7 +98,7 @@ public class SingleplayerGameCreator {
         heroes.add(new HeroDahlia());
         heroes.add(new HeroTolpanLongbeard());
         heroes.add(new HeroWorok());
-        heroes.add(new HeroWorok());
+        heroes.add(new HeroFlint());
 
         heroes.get(4).setPlayerControlled(true);
         Hero mainHero = heroes.get(4);
