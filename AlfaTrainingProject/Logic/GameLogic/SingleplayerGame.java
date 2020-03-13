@@ -88,7 +88,7 @@ public class SingleplayerGame {
             }
             // to not exceed playerBase
             setCurrentHeroIndex((currentHeroIndex + 1) % heroCount);
-            gamePanel.repaint();
+            
         }
 
         // zug auslagern
@@ -170,7 +170,7 @@ public class SingleplayerGame {
             // auswahl kütt zurück
             // aktion ausführen
             // AP verringern sich entsprechend
-            
+            gamePanel.repaint();
         }
 
     }
