@@ -100,6 +100,7 @@ public class SingleplayerGame {
 
 		while (true) {
 			if (!currentHero.isDead()) {
+				currentHero.setIsAttackable(true);
 				// player´s turn
 				if (currentHero.isPlayerControlled()) {
 
@@ -458,8 +459,8 @@ public class SingleplayerGame {
 				} // Hero is hit
 				else {
 					// TODO invulnerability
-					occupyingHero.setCurrentHitPoints(occupyingHero.getCurrentHitPoints() - 1);
-
+					if(occupyingHero.isAttackable())
+						occupyingHero.heroGotHit();
 					// check if hero died / disable field
 					if (occupyingHero.isDead()) {
 						gameData.getHideouts().get(finalRolledAttackField).setActive(false);

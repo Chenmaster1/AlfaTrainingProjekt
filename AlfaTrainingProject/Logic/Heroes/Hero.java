@@ -88,6 +88,8 @@ public abstract class Hero {
     public void heroGotHit() {
     	currentHitPoints--;
     	isAttackable = false;
+    	if(currentHitPoints <=0)
+            isDead = true;
     }
     // -------------------------GETTER-------------------------//
     public int getMaxHitPoints() {
