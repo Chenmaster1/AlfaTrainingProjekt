@@ -65,7 +65,8 @@ public class ActionHide extends Action {
     @Override
     public void updateEnabled(SingleplayerGame singlePlayerGame)
     {
-    	//verstecken geht nur, wenn keine verzoegerungsmarken aktiv sind und der Held sichtbar ist
+    	//TODO nur aktive zaehlen. falls aktive Felder >= anzahl der aktiven Helden, dann kann man sich verstecken
+    	//verstecken geht nur, wenn keine verzoegerungsmarken aktiv sind und actionpoints verfuegbar sind
         if(singlePlayerGame.getCurrentHero().getDelayTokens() == 0 && singlePlayerGame.getCurrentHero().isVisible())
         	setEnabled(true);
         else
