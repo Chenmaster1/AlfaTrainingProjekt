@@ -36,16 +36,16 @@ public class ActionHide extends Action {
 		HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getGameData().getHideoutHero();
 		
 		for(Hideout hideout : singleplayerGame.getGameData().getHideouts()) {
-			boolean used = false;
+			boolean isUsed = false;
 			for(Hideout usedHideout : hideoutHeroMap.keySet()) {
 				if(hideout.getFieldNumber() == usedHideout.getFieldNumber()) {
-					used = true;
+					isUsed = true;
 					break;
 				}
 					
 			}
 			
-			if((!used) && hideout.isActive()) {
+			if((!isUsed) && hideout.isActive()) {
 				availableHideouts.add(hideout);
 			}
 		}
@@ -60,8 +60,9 @@ public class ActionHide extends Action {
                 break;
 			}
 		}
-                hideoutHeroMap.remove(oldHideout);
-                hideoutHeroMap.put(newHideout, hero);
+		oldHideout.setActive(false);
+        hideoutHeroMap.remove(oldHideout);
+        hideoutHeroMap.put(newHideout, hero);
 	}
 
 
