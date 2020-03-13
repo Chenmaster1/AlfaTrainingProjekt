@@ -57,7 +57,7 @@ public class ActionHide extends Action {
 		for(Hideout hideout : hideoutHeroMap.keySet()) {
 			if(hideoutHeroMap.get(hideout).equals(hero)) {
 				oldHideout = hideout;
-                                break;
+                break;
 			}
 		}
                 hideoutHeroMap.remove(oldHideout);
@@ -69,11 +69,22 @@ public class ActionHide extends Action {
     public void updateEnabled(SingleplayerGame singlePlayerGame)
     {
     	//TODO nur aktive zaehlen. falls aktive Felder >= anzahl der aktiven Helden, dann kann man sich verstecken
-    	//verstecken geht nur, wenn keine verzoegerungsmarken aktiv sind und actionpoints verfuegbar sind
-        if(singlePlayerGame.getCurrentHero().getDelayTokens() == 0 && singlePlayerGame.getCurrentHero().isVisible())
-        	setEnabled(true);
-        else
-        	setEnabled(false);
+    	int activeHideoutsCount = 0;
+    	for(Hideout hideout : singlePlayerGame.getGameData().getHideouts()) {
+    		if(hideout.isActive())
+    			activeHideoutsCount++;
+    	}
+    	
+    	if(activeHideoutsCount > singlePlayerGame.getGameData().getHeroes().size()) {
+        	//verstecken geht nur, wenn keine verzoegerungsmarken aktiv sind und actionpoints verfuegbar sind
+            if(singlePlayerGame.getCurrentHero().getDelayTokens() == 0 && singlePlayerGame.getCurrentHero().isVisible())
+            	setEnabled(true);
+            else
+            	setEnabled(false);
+    	}else {
+    		setEnabled(false);
+    	}
+
     }
 	
 }
