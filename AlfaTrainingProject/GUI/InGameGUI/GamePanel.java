@@ -18,7 +18,6 @@ public class GamePanel extends JPanel {
 
 	private MapPanel mapPanel;
 	private GameSidePanel gameSidePanel;
-	private MainFramePanel mainFramePanel;
 	private JFrame frame;
 
 	private static final int MAPPANEL_STANDARD_SIZE = 1080;
@@ -35,22 +34,6 @@ public class GamePanel extends JPanel {
 
 		gameSidePanel = gsp;
 		gameSidePanel.setPreferredSize(new Dimension(GAMESIDEPANEL_STANDARD_SIZE_X, GAMESIDEPANEL_STANDARD_SIZE_Y));
-
-		setLayout(new BorderLayout());
-
-		add(mapPanel, BorderLayout.LINE_START);
-		add(gameSidePanel, BorderLayout.LINE_END);
-	}
-
-	public GamePanel(MapPanel mp, GameSidePanel gsp, JFrame mainFrame, MainFramePanel mainFramePanel) {
-		super();
-		frame = mainFrame;
-		// frame.setContentPane(this);
-		this.mainFramePanel = mainFramePanel;
-		mapPanel = mp;
-		mapPanel.setPreferredSize(new Dimension(MAPPANEL_STANDARD_SIZE, MAPPANEL_STANDARD_SIZE));
-
-		gameSidePanel = gsp;
 
 		setLayout(new BorderLayout());
 
@@ -77,9 +60,5 @@ public class GamePanel extends JPanel {
 
 	public GameSidePanel getGameSidePanel() {
 		return gameSidePanel;
-	}
-
-	public MainFramePanel getMainFramePanel() {
-		return mainFramePanel;
 	}
 }
