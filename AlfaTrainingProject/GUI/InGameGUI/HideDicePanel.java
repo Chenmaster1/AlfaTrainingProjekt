@@ -177,6 +177,11 @@ public class HideDicePanel extends JPanel implements Runnable {
             }
             else
             {
+            	// SingleplayerGame aufwecken (Verstecken auswerten)
+				synchronized (this) {
+					this.notify();
+				}
+
             	synchronized(this)
             	{
             		try {

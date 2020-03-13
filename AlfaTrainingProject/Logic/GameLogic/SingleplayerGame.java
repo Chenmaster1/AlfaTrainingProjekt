@@ -314,6 +314,10 @@ public class SingleplayerGame {
 	public GameData getGameData() {
 		return gameData;
 	}
+	
+	public GamePanel getGamePanel() {
+		return gamePanel;
+	}
 
 	// -------------------------SETTER-------------------------//
 	/**
@@ -427,6 +431,36 @@ public class SingleplayerGame {
 	private void shootAtAttackField(int currentAttackField) {
 		int numberOfHideouts = gameData.getHideouts().size();
 		int diceResult = attackDice.rollDice();
+		
+		//Zielmaske einfrieren
+		gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_KI_AIMING);
+		
+		//Animation starten
+		gamePanel.getGameSidePanel().getPanelAttackDice().setRollResult(diceResult);
+		//Auf Animation warten
+		
+		synchronized(gamePanel.getGameSidePanel().getPanelAttackDice())
+		{
+			try {
+				gamePanel.getGameSidePanel().getPanelAttackDice().wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Zielmaske entfernen
+		gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_REGULAR);
+		
+		
+		
 		int finalRolledAttackField;
 		switch (diceResult) {
 		case RESULT_CENTER_HIT:
@@ -447,6 +481,8 @@ public class SingleplayerGame {
 		default:
 			finalRolledAttackField = -1;
 		}
+		
+		
 
 		// hit that field
 		if (gameData.getHideoutHero().containsKey(gameData.getHideouts().get(finalRolledAttackField))) {

@@ -62,6 +62,27 @@ public class ActionHide extends Action {
 		// HideDice benutzen
 		int rollResult = singleplayerGame.getHideDice().rollDice();
 
+		//Animation des Würfels starten
+		singleplayerGame.getGamePanel().getGameSidePanel().getPanelHideDice().setRollResult(rollResult);
+		
+		// Pausieren, bis Dice-Animation diesen Thread wieder notified, Monitor-Objekt
+		// ist das HideDicePanel
+		synchronized (singleplayerGame.getGamePanel().getGameSidePanel().getPanelHideDice()) {
+			try {
+				singleplayerGame.getGamePanel().getGameSidePanel().getPanelHideDice().wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		// Geländetyp bestimmen
 		Hideout oldHideout = null;
 		for (Hideout hideout : hideoutHeroMap.keySet()) {
@@ -92,7 +113,7 @@ public class ActionHide extends Action {
 			}
 			hero.addDelayTokens(additionalDelayTokens);
 		case HideDice.RESULT_GREEN:
-			//Neu verstecken
+			// Neu verstecken
 			hero.setVisible(false);
 			oldHideout.setActive(false);
 
@@ -109,7 +130,7 @@ public class ActionHide extends Action {
 
 	@Override
 	public void updateEnabled(SingleplayerGame singlePlayerGame) {
-		
+
 		int activeHideoutsCount = 0;
 		int heroesAliveCount = 0;
 		for (Hideout hideout : singlePlayerGame.getGameData().getHideouts()) {
