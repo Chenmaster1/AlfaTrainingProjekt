@@ -7,7 +7,7 @@ import GameLogic.SingleplayerGame;
 import MenuGUI.MyFrame;
 import Heroes.Hero;
 import Hideouts.Hideout;
-import Maps.Map;
+import GameData.GameData;
 
 public class ActionHide extends Action {
 
@@ -33,9 +33,9 @@ public class ActionHide extends Action {
 	private void hideHero(Hero hero, SingleplayerGame singleplayerGame) {
 		ArrayList<Hideout> availableHideouts = new ArrayList<Hideout>();
 		
-		HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getMap().getHideoutHero();
+		HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getGameData().getHideoutHero();
 		
-		for(Hideout hideout : singleplayerGame.getMap().getHideouts()) {
+		for(Hideout hideout : singleplayerGame.getGameData().getHideouts()) {
 			boolean used = false;
 			for(Hideout usedHideout : hideoutHeroMap.keySet()) {
 				if(hideout.getFieldNumber() == usedHideout.getFieldNumber()) {
@@ -50,15 +50,18 @@ public class ActionHide extends Action {
 			}
 		}
 		
-		int newHideout = (int) (Math.random() * availableHideouts.size());
-		
+		int newHideoutNumber = (int) (Math.random() * availableHideouts.size());
+		Hideout newHideout = availableHideouts.get(newHideoutNumber);
+                Hideout oldHideout = null;
+                
 		for(Hideout hideout : hideoutHeroMap.keySet()) {
 			if(hideoutHeroMap.get(hideout).equals(hero)) {
-				hideoutHeroMap.remove(hideout);
-				hideoutHeroMap.put(singleplayerGame.getMap().getHideouts().get(newHideout), hero);
-				hero.setVisible(false);
+				oldHideout = hideout;
+                                break;
 			}
 		}
+                hideoutHeroMap.remove(oldHideout);
+                hideoutHeroMap.put(newHideout, hero);
 	}
 
 
