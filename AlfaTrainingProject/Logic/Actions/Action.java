@@ -12,7 +12,8 @@ public abstract class Action {
 
     private String name;
     private int actionPointsRequired;
-    private boolean enabled;
+    //TODO true entfernen when updateEnabled fertig implementiert
+    private boolean enabled=true;
 
     /**
      * Dies ist der Konstruktor fuer jede Aktion

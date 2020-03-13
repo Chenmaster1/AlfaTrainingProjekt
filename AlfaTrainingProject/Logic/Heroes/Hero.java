@@ -39,6 +39,7 @@ public abstract class Hero {
 
     private boolean isVisible;
     private boolean isPlayerControlled;
+    private boolean isDead;
 
     private double power;
 
@@ -143,6 +144,12 @@ public abstract class Hero {
         return artwork;
     }
 
+
+    public boolean isDead()
+    {
+        return isDead;
+    }
+
     // -------------------------SETTER-------------------------//
     public void setMaxHitPoints(int maxHitPoints) {
         this.maxHitPoints = maxHitPoints;
@@ -153,6 +160,8 @@ public abstract class Hero {
     }
 
     public void setCurrentHitPoints(int currentHitPoints) {
+        if(currentHitPoints <=0)
+            isDead = true;
         this.currentHitPoints = currentHitPoints;
     }
 
