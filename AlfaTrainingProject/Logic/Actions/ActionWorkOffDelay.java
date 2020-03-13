@@ -1,5 +1,6 @@
 package Actions;
 
+import Dice.HideDice;
 import GameLogic.SingleplayerGame;
 import MenuGUI.MyFrame;
 
@@ -20,23 +21,21 @@ public class ActionWorkOffDelay extends Action {
 
 	@Override
 	public void useAction(SingleplayerGame singleplayerGame) {
-		//TODO eventuell alle zahlen von 1 bis 6 abdecken. es sind aber nur 3 verschiedene nötig (gruenes x, rotes x und kein zeichen)
+		
 		int diceResult = singleplayerGame.getHideDice().rollDice();
 		
 		switch(diceResult) {
-			case 0: // green
-				//Verzoegerungsmarken und Aktionspunkte um 1 verringern
-				singleplayerGame.reduceCurrentActionPoints();
+			case HideDice.RESULT_GREEN: 
+				//Verzoegerungsmarken um 1 verringern
 				singleplayerGame.reduceDelayTokens();	
 				break;
-			case 1: // red
-				//was passiert bei rot
+			case HideDice.RESULT_RED: 
+				//Verzoegerungsmarken um 1 verringern und Zug beenden
 				singleplayerGame.reduceDelayTokens();
 				singleplayerGame.setCurrentActionPointsToZero();
 				break;
-			case 2: // nothing
-				//nichts passiert
-				return;
+			case HideDice.RESULT_NOTHING: // nothing
+				break;
 		}
 	}
 

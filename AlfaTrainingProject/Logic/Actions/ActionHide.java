@@ -3,26 +3,28 @@ package Actions;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Dice.HideDice;
 import GameLogic.SingleplayerGame;
 import MenuGUI.MyFrame;
 import Heroes.Hero;
 import Hideouts.Hideout;
+import Hideouts.HideoutType;
 import GameData.GameData;
 
 public class ActionHide extends Action {
 
 	public ActionHide(int actionPointRequired) {
 		super(actionPointRequired, MyFrame.bundle.getString("hideRoll"));
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void useAction(SingleplayerGame singleplayerGame) {
 		hideHero(singleplayerGame.getCurrentHero(), singleplayerGame);
 	}
-	
+
 	/**
 	 * falls sich nicht der aktuelle Held versteckt, wird diese Methode aufgerufen
+	 * 
 	 * @param hero
 	 * @param singleplayerGame
 	 */
@@ -34,73 +36,105 @@ public class ActionHide extends Action {
 		ArrayList<Hideout> availableHideouts = new ArrayList<Hideout>();
 		ArrayList<Hero> aliveHeroes = new ArrayList<Hero>();
 		HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getGameData().getHideoutHero();
-		
-		for(Hideout hideout : singleplayerGame.getGameData().getHideouts()) {
+
+		// availableHideouts wird mit allen noch verfügbaren Hideouts befüllt
+		for (Hideout hideout : singleplayerGame.getGameData().getHideouts()) {
 			boolean isUsed = false;
-			for(Hideout usedHideout : hideoutHeroMap.keySet()) {
-				if(hideout.getFieldNumber() == usedHideout.getFieldNumber()) {
+			for (Hideout usedHideout : hideoutHeroMap.keySet()) {
+				if (hideout == usedHideout) {
 					isUsed = true;
 					break;
 				}
-					
+
 			}
-			
-			if((!isUsed) && hideout.isActive()) {
+
+			if ((!isUsed) && hideout.isActive()) {
 				availableHideouts.add(hideout);
 			}
 		}
-		
-		for(Hero heroFromList : singleplayerGame.getGameData().getHeroes()) {
-			if(!heroFromList.isDead())
+
+		// aliveHeroes mit allen lebenden Helden füllen
+		for (Hero heroFromList : singleplayerGame.getGameData().getHeroes()) {
+			if (!heroFromList.isDead())
 				aliveHeroes.add(heroFromList);
 		}
-		
-		if(availableHideouts.size() > aliveHeroes.size()) {
-			int newHideoutNumber = (int) (Math.random() * availableHideouts.size());
-			Hideout newHideout = availableHideouts.get(newHideoutNumber);
-	                Hideout oldHideout = null;
-	                
-			for(Hideout hideout : hideoutHeroMap.keySet()) {
-				if(hideoutHeroMap.get(hideout).equals(hero)) {
-					oldHideout = hideout;
-	                break;
-				}
+
+		// HideDice benutzen
+		int rollResult = singleplayerGame.getHideDice().rollDice();
+
+		// Geländetyp bestimmen
+		Hideout oldHideout = null;
+		for (Hideout hideout : hideoutHeroMap.keySet()) {
+			if (hideoutHeroMap.get(hideout).equals(hero)) {
+				oldHideout = hideout;
+				break;
 			}
+		}
+		HideoutType oldHideoutType = oldHideout.getHideoutType();
+
+		// KEIN break im RESULT_RED case, weil Verstecken auch ausgeführt werden soll
+		switch (rollResult) {
+		case HideDice.RESULT_RED:
+			int additionalDelayTokens;
+			switch (oldHideoutType) {
+			case DESERT:
+				additionalDelayTokens = 2;
+				break;
+			case WETLANDS:
+				additionalDelayTokens = 1;
+				break;
+			case FOREST:
+				additionalDelayTokens = 0;
+				break;
+			default:
+				additionalDelayTokens = -1;
+				break;
+			}
+			hero.addDelayTokens(additionalDelayTokens);
+		case HideDice.RESULT_GREEN:
+			//Neu verstecken
 			hero.setVisible(false);
 			oldHideout.setActive(false);
-	        hideoutHeroMap.remove(oldHideout);
-	        hideoutHeroMap.put(newHideout, hero);
+
+			int newHideoutNumber = (int) (Math.random() * availableHideouts.size());
+			Hideout newHideout = availableHideouts.get(newHideoutNumber);
+			hideoutHeroMap.remove(oldHideout);
+			hideoutHeroMap.put(newHideout, hero);
+			break;
+		case HideDice.RESULT_NOTHING:
+			break;
 		}
-		
+
 	}
 
+	@Override
+	public void updateEnabled(SingleplayerGame singlePlayerGame) {
+		// TODO nur aktive zaehlen. falls aktive Felder >= anzahl der aktiven Helden,
+		// dann kann man sich verstecken
+		int activeHideoutsCount = 0;
+		int heroesAliveCount = 0;
+		for (Hideout hideout : singlePlayerGame.getGameData().getHideouts()) {
+			if (hideout.isActive())
+				activeHideoutsCount++;
+		}
 
-    @Override
-    public void updateEnabled(SingleplayerGame singlePlayerGame)
-    {
-    	//TODO nur aktive zaehlen. falls aktive Felder >= anzahl der aktiven Helden, dann kann man sich verstecken
-    	int activeHideoutsCount = 0;
-    	int heroesAliveCount = 0;
-    	for(Hideout hideout : singlePlayerGame.getGameData().getHideouts()) {
-    		if(hideout.isActive())
-    			activeHideoutsCount++;
-    	}
-    	
-    	for(Hero hero : singlePlayerGame.getGameData().getHeroes()) {
-    		if(!hero.isDead())
-    			heroesAliveCount++;
-    	}
-    	
-    	if(!(activeHideoutsCount <= heroesAliveCount)) {
-        	//verstecken geht nur, wenn keine verzoegerungsmarken aktiv sind und actionpoints verfuegbar sind
-            if(singlePlayerGame.getCurrentHero().getDelayTokens() == 0 && singlePlayerGame.getCurrentHero().isVisible())
-            	setEnabled(true);
-            else
-            	setEnabled(false);
-    	}else {
-    		setEnabled(false);
-    	}
+		for (Hero hero : singlePlayerGame.getGameData().getHeroes()) {
+			if (!hero.isDead())
+				heroesAliveCount++;
+		}
 
-    }
-	
+		if (!(activeHideoutsCount <= heroesAliveCount)) {
+			// verstecken geht nur, wenn keine verzoegerungsmarken aktiv sind und
+			// actionpoints verfuegbar sind
+			if (singlePlayerGame.getCurrentHero().getDelayTokens() == 0
+					&& singlePlayerGame.getCurrentHero().isVisible())
+				setEnabled(true);
+			else
+				setEnabled(false);
+		} else {
+			setEnabled(false);
+		}
+
+	}
+
 }

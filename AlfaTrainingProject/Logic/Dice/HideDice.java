@@ -12,7 +12,7 @@ import java.util.Random;
  * @author Yovo
  */
 public class HideDice extends Dice {
-	public static final int RESULT_SUCCESS = 1, RESULT_FAILURE = 2, RESULT_NOTHING = 3;
+	public static final int RESULT_GREEN = 1, RESULT_RED = 2, RESULT_NOTHING = 3;
 
 	public HideDice() {
 		countSides = 6;
@@ -26,13 +26,13 @@ public class HideDice extends Dice {
 		int resultHideDice = 0;
 		switch (rolledHideDice) {
 		case 0:
-			resultHideDice = RESULT_SUCCESS;
+			resultHideDice = RESULT_GREEN;
 			break;
 		case 1:
-			resultHideDice = RESULT_SUCCESS;
+			resultHideDice = RESULT_GREEN;
 			break;
 		case 2:
-			resultHideDice = RESULT_FAILURE;
+			resultHideDice = RESULT_RED;
 			break;
 		case 3:
 			resultHideDice = RESULT_NOTHING;

@@ -139,12 +139,12 @@ public class HideDicePanel extends JPanel implements Runnable {
                     targetAnimationFrame = 60;
                 }
                 break;
-            case HideDice.RESULT_FAILURE:
+            case HideDice.RESULT_RED:
 
                 targetAnimationFrame = 20;
 
                 break;
-            case HideDice.RESULT_SUCCESS:
+            case HideDice.RESULT_GREEN:
                 if (currentAnimationFrame < 20 || currentAnimationFrame >= 81) {
                     targetAnimationFrame = 80;
                 }
