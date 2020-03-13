@@ -140,7 +140,7 @@ public class GamePanelTest extends JFrame {
 
         setContentPane(gp);
 
-        setUndecorated(true);
+//        setUndecorated(true);
         setLocation(0, 0);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);

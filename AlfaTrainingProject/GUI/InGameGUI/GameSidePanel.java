@@ -18,106 +18,145 @@ import javax.swing.JPanel;
  */
 public class GameSidePanel extends JPanel {
 
-    private final static int PANELSIZE_X = 840;
-    private final static int PANELSIZE_Y = 1080;
+	
+	private final static double PANELOTHERHEROES_POSITION_RELATIVE_X = 14 / 840.0;
+	private final static double PANELOTHERHEROES_POSITION_RELATIVE_Y = 85 / 1080.0;
+	private final static double PANELOTHERHEROES_SIZE_RELATIVE_X = 780 / 840.0;
+	private final static double PANELOTHERHEROES_SIZE_RELATIVE_Y = 200 / 1080.0;
 
-    private Image backgroundImage;
+	private final static double PANELPLAYERHERO_POSITION_RELATIVE_X = 30 / 840.0;
+	private final static double PANELPLAYERHERO_POSITION_RELATIVE_Y = 340 / 1080.0;
+	private final static double PANELPLAYERHERO_SIZE_RELATIVE_X = 558 / 840.0;
+	private final static double PANELPLAYERHERO_SIZE_RELATIVE_Y = 393 / 1080.0;
 
-    //Array aller Helden
-    private ArrayList<Hero> heroes;
+	private final static double PANELATTACKDICE_POSITION_RELATIVE_X = 20 / 840.0;
+	private final static double PANELATTACKDICE_POSITION_RELATIVE_Y = 750 / 1080.0;
+	private final static double PANELATTACKDICE_SIZE_RELATIVE_X = 350 / 840.0;
+	private final static double PANELATTACKDICE_SIZE_RELATIVE_Y = 250 / 1080.0;
 
-    //der Held des Hauptspielers, angezeigt im zentralen HeroPanelLarge
-    private Hero playerHero;
+	private final static double PANELHIDEDICE_POSITION_RELATIVE_X = 370 / 840.0;
+	private final static double PANELHIDEDICE_POSITION_RELATIVE_Y = 742 / 1080.0;
+	private final static double PANELHIDEDICE_SIZE_RELATIVE_X = 437 / 840.0;
+	private final static double PANELHIDEDICE_SIZE_RELATIVE_Y = 295 / 1080.0;
 
-    //Die Hero-Panels
-    private OtherHeroesPanel panelOtherHeroes;
-    private HeroPanelLarge panelPlayerHero;
+	private Image backgroundImage;
 
-    //Die Dice-Panels
-    private AttackDicePanel panelAttackDice;
-    private HideDicePanel panelHideDice;
+	// Array aller Helden
+	private ArrayList<Hero> heroes;
 
-    //Die Threads für die Würfelanimationen, werden im Konstruktor gestartet
-    private Thread threadAttackDicePanel;
-    private Thread threadHideDicePanel;
+	// der Held des Hauptspielers, angezeigt im zentralen HeroPanelLarge
+	private Hero playerHero;
 
-    public GameSidePanel(ArrayList<Hero> heroes, Hero playerHero) {
-        super();
-        
-        this.heroes = heroes;
-        this.playerHero = playerHero;
+	// Die Hero-Panels
+	private OtherHeroesPanel panelOtherHeroes;
+	private HeroPanelLarge panelPlayerHero;
 
-        setPreferredSize(new Dimension(PANELSIZE_X, PANELSIZE_Y));
-        backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Gameboard_Right.png"))
-                .getImage();
+	// Die Dice-Panels
+	private AttackDicePanel panelAttackDice;
+	private HideDicePanel panelHideDice;
 
-        setLayout(null);
+	// Die Threads für die Würfelanimationen, werden im Konstruktor gestartet
+	private Thread threadAttackDicePanel;
+	private Thread threadHideDicePanel;
 
-        panelOtherHeroes = new OtherHeroesPanel(heroes);
-        panelOtherHeroes.setBounds(14, 85, 780, 200);
+	public GameSidePanel(ArrayList<Hero> heroes, Hero playerHero) {
+		super();
 
-        panelPlayerHero = new HeroPanelLarge(playerHero);
-        panelPlayerHero.setBounds(30, 340, 558, 393);
+		this.heroes = heroes;
+		this.playerHero = playerHero;
 
-        panelAttackDice = new AttackDicePanel();
-        panelAttackDice.setBounds(20, 750, 350, 250);
-        threadAttackDicePanel = new Thread(panelAttackDice);
-        threadAttackDicePanel.start();
+		backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Gameboard_Right.png"))
+				.getImage();
 
-        panelHideDice = new HideDicePanel();
-        panelHideDice.setBounds(370, 742, 437, 295);
-        threadHideDicePanel = new Thread(panelHideDice);
-        threadHideDicePanel.start();
+		setLayout(null);
 
-        add(panelOtherHeroes);
-        add(panelPlayerHero);
-        add(panelAttackDice);
-        add(panelHideDice);
+		panelOtherHeroes = new OtherHeroesPanel(heroes);
+		panelPlayerHero = new HeroPanelLarge(playerHero);
+		panelAttackDice = new AttackDicePanel();
+		panelHideDice = new HideDicePanel();
 
-    }
+		threadAttackDicePanel = new Thread(panelAttackDice);
+		threadHideDicePanel = new Thread(panelHideDice);
 
-    /**
-     * Zeichnet das Panel. Die meisten Elemente werden als eigene Components
-     * hinzugefügt und zeichnen sich daher selbst, nur das Hintergrundbild wird
-     * hier extra gezeichnet.
-     *
-     * @param g
-     */
-    @Override
-    public void paintComponent(Graphics g) {
+		threadAttackDicePanel.start();
+		threadHideDicePanel.start();
 
-        Graphics2D g2d = (Graphics2D) g;
+		add(panelOtherHeroes);
+		add(panelPlayerHero);
+		add(panelAttackDice);
+		add(panelHideDice);
 
-        // Hintergrund ganz unten
-        g2d.drawImage(backgroundImage, 0, 0, PANELSIZE_X, PANELSIZE_Y, this);
+	}
 
-    }
+	/**
+	 * Zeichnet das Panel. Die meisten Elemente werden als eigene Components
+	 * hinzugefügt und zeichnen sich daher selbst, nur das Hintergrundbild wird hier
+	 * extra gezeichnet.
+	 *
+	 * @param g
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
 
-    public void setHeroes(ArrayList<Hero> heroes) {
-        this.heroes = heroes;
-    }
+		Graphics2D g2d = (Graphics2D) g;
 
-    public OtherHeroesPanel getPanelOtherHeroes() {
-        return panelOtherHeroes;
-    }
+		// Hintergrund ganz unten
+		g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
-    public HeroPanelLarge getPanelPlayerHero() {
-        return panelPlayerHero;
-    }
+		// Bounds setzen für das panelOtherHeroes
+		panelOtherHeroes.setBounds(
+				(int)(PANELOTHERHEROES_POSITION_RELATIVE_X * getWidth()),
+				(int)(PANELOTHERHEROES_POSITION_RELATIVE_Y * getHeight()),
+				(int)(PANELOTHERHEROES_SIZE_RELATIVE_X * getWidth()), 
+				(int)(PANELOTHERHEROES_SIZE_RELATIVE_Y * getHeight()));
+		
+		// Bounds setzen für das panelPlayerHero
+		panelPlayerHero.setBounds(
+				(int)(PANELPLAYERHERO_POSITION_RELATIVE_X * getWidth()),
+				(int)(PANELPLAYERHERO_POSITION_RELATIVE_Y * getHeight()),
+				(int)(PANELPLAYERHERO_SIZE_RELATIVE_X * getWidth()), 
+				(int)(PANELPLAYERHERO_SIZE_RELATIVE_Y * getHeight()));
+		
+		// Bounds setzen für das panelAttackDice
+		panelAttackDice.setBounds(
+				(int)(PANELATTACKDICE_POSITION_RELATIVE_X * getWidth()),
+				(int)(PANELATTACKDICE_POSITION_RELATIVE_Y * getHeight()),
+				(int)(PANELATTACKDICE_SIZE_RELATIVE_X * getWidth()), 
+				(int)(PANELATTACKDICE_SIZE_RELATIVE_Y * getHeight()));
+		
+		// Bounds setzen für das panelHideDice
+		panelHideDice.setBounds(
+				(int)(PANELHIDEDICE_POSITION_RELATIVE_X * getWidth()),
+				(int)(PANELHIDEDICE_POSITION_RELATIVE_Y * getHeight()),
+				(int)(PANELHIDEDICE_SIZE_RELATIVE_X * getWidth()), 
+				(int)(PANELHIDEDICE_SIZE_RELATIVE_Y * getHeight()));
+	}
 
-    public AttackDicePanel getPanelAttackDice() {
-        return panelAttackDice;
-    }
+	public void setHeroes(ArrayList<Hero> heroes) {
+		this.heroes = heroes;
+	}
 
-    public HideDicePanel getPanelHideDice() {
-        return panelHideDice;
-    }
+	public OtherHeroesPanel getPanelOtherHeroes() {
+		return panelOtherHeroes;
+	}
 
-    public Thread getThreadAttackDicePanel() {
-        return threadAttackDicePanel;
-    }
+	public HeroPanelLarge getPanelPlayerHero() {
+		return panelPlayerHero;
+	}
 
-    public Thread getThreadHideDicePanel() {
-        return threadHideDicePanel;
-    }
+	public AttackDicePanel getPanelAttackDice() {
+		return panelAttackDice;
+	}
+
+	public HideDicePanel getPanelHideDice() {
+		return panelHideDice;
+	}
+
+	public Thread getThreadAttackDicePanel() {
+		return threadAttackDicePanel;
+	}
+
+	public Thread getThreadHideDicePanel() {
+		return threadHideDicePanel;
+	}
 }

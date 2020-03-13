@@ -37,8 +37,6 @@ public class HeroPanelSmall extends JPanel {
     private static final double DELAYTOKEN_SIZE_RELATIVE_Y = 0.18;
     private static final double DELAYTOKEN_BOTTOMMARGIN_RELATIVE_Y = 0.05;
 
-    private static final int PANELSIZE_X = 180;
-    private static final int PANELSIZE_Y = 187;
 
     public HeroPanelSmall(Hero hero) {
 
@@ -57,7 +55,6 @@ public class HeroPanelSmall extends JPanel {
                 .getImage();
 
         setLayout(null);
-        setPreferredSize(new Dimension(PANELSIZE_X, PANELSIZE_Y));
 
     }
 

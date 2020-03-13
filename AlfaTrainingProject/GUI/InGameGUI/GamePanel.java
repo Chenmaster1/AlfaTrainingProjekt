@@ -16,57 +16,60 @@ import MenuGUI.MainFramePanel;
  */
 public class GamePanel extends JPanel {
 
-    private MapPanel mapPanel;
-    private GameSidePanel gameSidePanel;
-    private MainFramePanel mainFramePanel;
-    private JFrame frame;
-    
-    private static final int MAPPANEL_STANDARD_SIZE = 1080;
+	private MapPanel mapPanel;
+	private GameSidePanel gameSidePanel;
+	private MainFramePanel mainFramePanel;
+	private JFrame frame;
 
-    public GamePanel(MapPanel mp, GameSidePanel gsp, JFrame mainFrame) {
-        super();
-        frame = mainFrame;
-        //frame.setContentPane(this);
-        mapPanel = mp;
-        mapPanel.setPreferredSize(new Dimension(MAPPANEL_STANDARD_SIZE, MAPPANEL_STANDARD_SIZE));
+	private static final int MAPPANEL_STANDARD_SIZE = 1080;
 
-        gameSidePanel = gsp;
+	private static final int GAMESIDEPANEL_STANDARD_SIZE_X = 840;
+	private static final int GAMESIDEPANEL_STANDARD_SIZE_Y = 1080;
 
-        setLayout(new BorderLayout());
+	public GamePanel(MapPanel mp, GameSidePanel gsp, JFrame mainFrame) {
+		super();
+		frame = mainFrame;
+		// frame.setContentPane(this);
+		mapPanel = mp;
+		mapPanel.setPreferredSize(new Dimension(MAPPANEL_STANDARD_SIZE, MAPPANEL_STANDARD_SIZE));
 
-        add(mapPanel, BorderLayout.LINE_START);
-        add(gameSidePanel, BorderLayout.LINE_END);
-    }
-    
-    public GamePanel(MapPanel mp, GameSidePanel gsp, JFrame mainFrame, MainFramePanel mainFramePanel) {
-        super();
-        frame = mainFrame;
-        //frame.setContentPane(this);
-        this.mainFramePanel = mainFramePanel;
-        mapPanel = mp;
-        mapPanel.setPreferredSize(new Dimension(MAPPANEL_STANDARD_SIZE, MAPPANEL_STANDARD_SIZE));
+		gameSidePanel = gsp;
+		gameSidePanel.setPreferredSize(new Dimension(GAMESIDEPANEL_STANDARD_SIZE_X, GAMESIDEPANEL_STANDARD_SIZE_Y));
 
-        gameSidePanel = gsp;
+		setLayout(new BorderLayout());
 
-        setLayout(new BorderLayout());
+		add(mapPanel, BorderLayout.LINE_START);
+		add(gameSidePanel, BorderLayout.LINE_END);
+	}
 
-        add(mapPanel, BorderLayout.LINE_START);
-        add(gameSidePanel, BorderLayout.LINE_END);
-    }
+	public GamePanel(MapPanel mp, GameSidePanel gsp, JFrame mainFrame, MainFramePanel mainFramePanel) {
+		super();
+		frame = mainFrame;
+		// frame.setContentPane(this);
+		this.mainFramePanel = mainFramePanel;
+		mapPanel = mp;
+		mapPanel.setPreferredSize(new Dimension(MAPPANEL_STANDARD_SIZE, MAPPANEL_STANDARD_SIZE));
 
-    @Override
-    protected void paintComponent(Graphics grphcs) {
-        //MapPanel quadratisch links hinein
-//        mapPanel.setPreferredSize(new Dimension(getHeight(), getHeight()));
+		gameSidePanel = gsp;
 
-//        System.out.println("MapPanel(W/H): " + mapPanel.getWidth() + " " + mapPanel.getHeight() + 
-//                "  GameSidePanel(W/H): " + gameSidePanel.getWidth() + " " + gameSidePanel.getHeight());
+		setLayout(new BorderLayout());
 
-        //GameSidePanel füllt den Rest
-//        gameSidePanel.setPreferredSize(new Dimension(getWidth() - getHeight(), getHeight()));
+		add(mapPanel, BorderLayout.LINE_START);
+		add(gameSidePanel, BorderLayout.LINE_END);
+	}
 
-        super.paintComponent(grphcs);
-    }
+	@Override
+	protected void paintComponent(Graphics grphcs) {
+		// MapPanel quadratisch links hinein
+		mapPanel.setPreferredSize(new Dimension(getHeight(), getHeight()));
+
+//        System.out.println("MapPanel(W/H): " + mapPanel.getWidth() + " " + mapPanel.getHeight()); 
+
+		// GameSidePanel füllt den Rest
+		gameSidePanel.setPreferredSize(new Dimension(getWidth() - getHeight(), getHeight()));
+//        System.out.println("GameSidePanel(W/H): " + gameSidePanel.getWidth() + " " + gameSidePanel.getHeight());
+
+	}
 
 	public MapPanel getMapPanel() {
 		return mapPanel;
