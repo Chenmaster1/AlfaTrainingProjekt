@@ -16,7 +16,7 @@ public class mp3test implements Runnable
 {
 
     private static MP3Player player;
-
+    private static int volume;
 
     @Override
     public void run()
@@ -28,7 +28,7 @@ public class mp3test implements Runnable
             player.setRepeat(true);
             player.addToPlayList(getClass().getClassLoader().getResource("MainSound.mp4"));
             player.play();
-            player.setVolume(50);
+            player.setVolume(volume);
 
         }
         catch (Exception ex)
@@ -40,7 +40,16 @@ public class mp3test implements Runnable
 
     public static void setVolume(int volume)
     {
+       
         player.setVolume(volume);
+      
+    }
+    
+     public static void setVolumInitialize(int volumeInitialice)
+    {
+       volume = volumeInitialice;
+        //player.setVolume(volume);
+      
     }
 
     public static void stopPlayer() {
