@@ -38,7 +38,7 @@ public class MyFrame extends JFrame
      * Yovo
      */
     public static String path;
-    public static String language = "/Bundle_DE", volume;
+    public static String language = "/Bundle_DE", volume ="50";
     public static Boolean volumFromFile = true;
 
 
@@ -90,7 +90,7 @@ public class MyFrame extends JFrame
             {
                 e.printStackTrace();
                 language = "/Bundle_DE";
-                //volume = "50";
+                volume = "50";
             }
         }
     }
