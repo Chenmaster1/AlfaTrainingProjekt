@@ -83,7 +83,8 @@ public class SingleplayerGame {
                 playerTurn();
             } // ki´s turn
             else {
-                kiTurn();
+            	if(!currentHero.isDead())
+            		kiTurn();
             }
             // to not exceed playerBase
             setCurrentHeroIndex((currentHeroIndex + 1) % heroCount);
