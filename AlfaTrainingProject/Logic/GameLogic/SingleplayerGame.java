@@ -25,16 +25,22 @@ import MenuGUI.MainFramePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 
 public class SingleplayerGame {
 
-    private JFrame mainFrame;
+    private final JFrame mainFrame;
     private GamePanel gamePanel;
     private GameData gameData;
     private MainFramePanel mainFramePanel;
+
+    private MouseListener mapPanelClickListener;
+    private int chosenAttackField;
 
     private AttackMode attackMode = AttackMode.NO_ATTACK;
     private GameState gameState;
@@ -94,14 +100,17 @@ public class SingleplayerGame {
 
         lblWhileLoop:
         while (true) {
-            // player´s turn
-            if (currentHero.isPlayerControlled()) {
-                //TODO wenn playerturn fertig, dann einkommentieren
-                playerTurn();
-            } // ki´s turn
-            else {
-                if (!currentHero.isDead()) {
+            if (!currentHero.isDead()) {
+                // player´s turn
+                if (currentHero.isPlayerControlled()) {
+
+                    playerTurn();
+
+                } // ki´s turn
+                else {
+
                     kiTurn();
+
                 }
             }
             // to not exceed playerBase
@@ -127,19 +136,6 @@ public class SingleplayerGame {
 
         }
 
-        // zug auslagern
-        // randomPlayer.
-        // TODO als pairprogramming
-        // abilites einen flag geben. wird ein held betroffen, wird der flag seiner
-        // ability überprüft.
-        // führt entprechend abilies dann aus, wann die flag es zulässt
-        // Fuer die Auswahl eines Feldes, wird beim bewegen der Maus der winkel zum
-        // Mittelpunkt berechnet und der Tower entsprechend mitbewegt
-        // beim klick wird eingerastet und angegriffen (eventuell verzoegerung mit
-        // einarbeiten)
-        // vllt doch erstmal ohne db? nur helden und safegame? wären inbegriffen.
-        // hardcoden?
-        // eventuell threadhandler schreiben
     }
 
     /**
@@ -190,6 +186,19 @@ public class SingleplayerGame {
 
         }
 
+        //MapPanel MouseClick Listener
+        mapPanelClickListener = new MouseAdapter() {
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+                chosenAttackField = gamePanel.getMapPanel().getCurrentAimedAtField();
+                synchronized (mainFrame) {
+                    mainFrame.notifyAll();
+                }
+            }
+
+        };
+
     }
 
     private void showGame() {
@@ -220,7 +229,6 @@ public class SingleplayerGame {
                     Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
 
             chosenPlayerAction.useAction(this);
             decreaseCurrentActionPointsBy(chosenPlayerAction.getActionPointsRequired());
@@ -348,6 +356,18 @@ public class SingleplayerGame {
                 } //playerTurn
                 else {
                     gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
+                    gamePanel.getMapPanel().addMouseListener(mapPanelClickListener);
+
+                    synchronized (mainFrame) {
+                        try {
+                            mainFrame.wait();
+                            System.out.println("AIMING continued");
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    gamePanel.getMapPanel().removeMouseListener(mapPanelClickListener);
+                    shootAtAttackField(chosenAttackField);
                 }
 
                 break;
