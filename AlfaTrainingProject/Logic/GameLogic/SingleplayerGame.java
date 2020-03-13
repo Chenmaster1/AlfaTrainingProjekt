@@ -35,7 +35,7 @@ public class SingleplayerGame {
     private GamePanel gamePanel;
     private GameData gameData;
     private MainFramePanel mainFramePanel;
-    
+
     private AttackMode attackMode = AttackMode.NO_ATTACK;
     private GameState gameState;
 
@@ -44,8 +44,9 @@ public class SingleplayerGame {
 
     private ArrayList<Action> standardActions;
     private ArrayList<ArrayList<Action>> heroActionsLists;
-    
+
     private ArrayList<Action> playerActions;
+    private Action chosenPlayerAction;
 
     private AttackDice attackDice;
     private HideDice hideDice;
@@ -67,7 +68,7 @@ public class SingleplayerGame {
         hideDice = new HideDice();
 
         initializeActionLists();
-        
+
         initializeButtonListeners();
     }
 
@@ -77,7 +78,9 @@ public class SingleplayerGame {
 
         Thread gameLogicThread = new Thread() {
             public void run() {
+
                 startGameLogic();
+
             }
         };
         gameLogicThread.start();
@@ -88,36 +91,40 @@ public class SingleplayerGame {
         int heroCount = gameData.getHeroes().size();
         Random randomPlayer = new Random();
         setCurrentHeroIndex(randomPlayer.nextInt(heroCount));
-        
+
         lblWhileLoop:
         while (true) {
             // player´s turn
             if (currentHero.isPlayerControlled()) {
-            	//TODO wenn playerturn fertig, dann einkommentieren
-            	//playerTurn();
+                //TODO wenn playerturn fertig, dann einkommentieren
+//                playerTurn();
             } // ki´s turn
             else {
-            	if(!currentHero.isDead())
-            		kiTurn();
+                if (!currentHero.isDead()) {
+                    kiTurn();
+                }
             }
             // to not exceed playerBase
             setCurrentHeroIndex((currentHeroIndex + 1) % heroCount);
-            
+
             int alive = 0;
-            for(Hero hero : gameData.getHeroes()) 
-            	if(!hero.isDead())
-            		alive++;
-            
-            if(alive == 1)
-            	for(Hero hero : gameData.getHeroes())
-            		if(!hero.isDead()) {
-            			JOptionPane.showMessageDialog(mainFrame,hero.getName() + " hat gewonnen");
-            			mainFrame.setContentPane(mainFramePanel);
-            			mainFrame.repaint();
-            			break lblWhileLoop; 
-            		}
-            
-            			
+            for (Hero hero : gameData.getHeroes()) {
+                if (!hero.isDead()) {
+                    alive++;
+                }
+            }
+
+            if (alive == 1) {
+                for (Hero hero : gameData.getHeroes()) {
+                    if (!hero.isDead()) {
+                        JOptionPane.showMessageDialog(mainFrame, hero.getName() + " hat gewonnen");
+                        mainFrame.setContentPane(mainFramePanel);
+                        mainFrame.repaint();
+                        break lblWhileLoop;
+                    }
+                }
+            }
+
         }
 
         // zug auslagern
@@ -165,6 +172,26 @@ public class SingleplayerGame {
         }
     }
 
+    private void initializeButtonListeners() {
+        ArrayList<JButton> playerButtons = gamePanel.getGameSidePanel().getPanelPlayerHero().getButtonArrayList();
+        for (int i = 0; i < playerButtons.size(); i++) {
+            Action playerAction = playerActions.get(i);
+            playerButtons.get(i).addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    chosenPlayerAction = playerAction;
+                    System.out.println("notifying");
+                    synchronized (this) {
+                        this.notifyAll();
+                    }
+                    System.out.println("notified");
+                }
+            });
+
+        }
+
+    }
+
     private void showGame() {
 
         mainFrame.setContentPane(gamePanel);
@@ -174,16 +201,49 @@ public class SingleplayerGame {
     private void playerTurn() {
         setGameState(GameState.CHOOSING);
         gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(true);
+        currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
+
+        while (currentHero.getCurrentActionPoints() != 0) {
+
+            for (Action a : heroActionsLists.get(currentHeroIndex)) {
+                //a.updateEnabled(this);
+
+            }
+            gamePanel.getGameSidePanel().getPanelPlayerHero().updateButtonsEnabled();
+
+            System.out.println("playerTurn Waiting");
+            synchronized (this) {
+                try {
+                    this.wait();
+                    System.out.println("playerTurn continued");
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+
+            chosenPlayerAction.useAction(this);
+            decreaseCurrentActionPointsBy(chosenPlayerAction.getActionPointsRequired());
+
+            // is currentHero ki / player?
+            // aktionsliste an ki übergeben
+            // auswahl kütt zurück
+            // aktion ausführen
+            // AP verringern sich entsprechend
+            gamePanel.repaint();
+        }
+
     }
 
     private void kiTurn() {
         setGameState(GameState.CHOOSING);
+        gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(false);
         currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
 
         while (currentHero.getCurrentActionPoints() != 0) {
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(50);
             } catch (InterruptedException ex) {
                 Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -287,7 +347,7 @@ public class SingleplayerGame {
 
                 } //playerTurn
                 else {
-                  gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
+                    gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
                 }
 
                 break;
@@ -371,24 +431,7 @@ public class SingleplayerGame {
 
     private void usePlayerAction(Action chosenAction) {
         chosenAction.useAction(this);
-        
-    } 
-    
-    private void initializeButtonListeners() {
-        ArrayList<JButton> playerButtons = gamePanel.getGameSidePanel().getPanelPlayerHero().getButtonArrayList();
-        for (int i = 0; i < playerButtons.size(); i++)
-        {
-            Action tester = playerActions.get(i);
-            playerButtons.get(i).addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    usePlayerAction(tester);
-                }
-            });
-            
-        }
-        
-        
+
     }
 
 }
