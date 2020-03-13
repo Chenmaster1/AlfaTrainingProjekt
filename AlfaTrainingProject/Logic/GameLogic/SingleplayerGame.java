@@ -57,6 +57,8 @@ public class SingleplayerGame {
         hideDice = new HideDice();
 
         initializeActionLists();
+        
+        initializeButtonListeners();
     }
 
     public void startGame() {
@@ -336,6 +338,22 @@ public class SingleplayerGame {
             }
         }
         gamePanel.repaint();
+    }
+
+    private void initializeButtonListeners() {
+        int playerHeroIndex = -1;
+        for (int i = 0; i < gameData.getHeroes().size(); i++)
+        {
+            if (gameData.getHeroes().get(i).isPlayerControlled())
+            {
+                playerHeroIndex = i;
+                break;
+            }
+        }
+        
+        ArrayList<Action> playerActions = heroActionsLists.get(playerHeroIndex);
+        
+        
     }
 
 }
