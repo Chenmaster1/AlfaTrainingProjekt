@@ -32,7 +32,7 @@ public class MyFrame extends JFrame
 
     /**
      * global settings for volume, language get infos from
-     *  <code>HeroesOfTheArena\hota_setting.txt</code> if no file is found, use
+     * <code>HeroesOfTheArena\hota_setting.txt</code> if no file is found, use
      * <code>public static String language = "/Bundle_DE", volume = "50"</code>
      * filepath <code>public static String path;</xode> is prepared * @author
      * Yovo
@@ -40,6 +40,7 @@ public class MyFrame extends JFrame
     public static String path;
     public static String language = "/Bundle_DE", volume;
     public static Boolean volumFromFile = true;
+
 
     // get filepath
     static
@@ -70,8 +71,11 @@ public class MyFrame extends JFrame
             {
                 BufferedReader br = new BufferedReader(new FileReader(path + "\\hota_setting.txt"));
                 if (volumFromFile)
-                volume = br.readLine();
-                
+                {
+                    volume = br.readLine();
+                    SoundThread.mp3test.setVolumInitialize(Integer.parseInt(volume));
+                }
+
                 language = br.readLine();
                 if (language.equalsIgnoreCase("german"))
                 {
@@ -90,6 +94,7 @@ public class MyFrame extends JFrame
             }
         }
     }
+
 
     // load language package 
     public static ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages" + language); //Bundle, bzw path aus der Datenbank holen
