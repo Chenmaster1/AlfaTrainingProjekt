@@ -26,9 +26,7 @@ public class HeroPanelSmall extends JPanel {
     private Image actionPointUsedImage;
     private Image delayTokenImage;
 
-    //TODO: Passende Werte finden, evtl. weitere definieren 
-    //(z.b. für einen Abstand vom oberen Rand etc)
-    private static final double POINTICON_TOPMARGIN_RELATIVE_Y = 0.05;
+       private static final double POINTICON_TOPMARGIN_RELATIVE_Y = 0.05;
     private static final double POINTICON_SIDEMARGIN_RELATIVE_X = 0.05;
     private static final double POINTICON_SIZE_RELATIVE_X = 0.125;
     private static final double POINTICON_SIZE_RELATIVE_Y = 0.125;

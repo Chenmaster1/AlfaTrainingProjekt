@@ -379,6 +379,7 @@ public class SingleplayerGame {
 			} // playerTurn
 			else {
 				gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
+				gamePanel.getMapPanel().repaint();
 				gamePanel.getMapPanel().addMouseListener(mapPanelClickListener);
 
 				synchronized (mainFrame) {

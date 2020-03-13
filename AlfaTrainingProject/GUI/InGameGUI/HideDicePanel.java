@@ -166,8 +166,7 @@ public class HideDicePanel extends JPanel implements Runnable {
      * Die Animation wird von einem eigenen Thread behandelt, in dem in kurzen
      * Abständen getestet wird, ob das gezeigte Frame geändert werden muss.
      *
-     * TODO: Nur starten, wenn tatsächlich gewürfelt wird und anschließend bis
-     * zum nächsten Wurf pausieren. wait bzw. notify
+     * 
      */
     @Override
     public void run() {

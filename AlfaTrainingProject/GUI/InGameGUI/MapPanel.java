@@ -21,8 +21,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- * Das Panel mit dem eigentlichen Spielfeld bzw der Arena. TODO: Skalierbar
- * machen
+ * Das Panel mit dem eigentlichen Spielfeld bzw der Arena. 
+ * 
  */
 public class MapPanel extends JPanel {
 
@@ -79,7 +79,7 @@ public class MapPanel extends JPanel {
 					setCurrentAimedAtField(newField);
 				}
 			}
-
+			
 		};
 	}
 
