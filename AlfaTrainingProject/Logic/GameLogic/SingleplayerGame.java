@@ -97,7 +97,7 @@ public class SingleplayerGame {
             // player´s turn
             if (currentHero.isPlayerControlled()) {
                 //TODO wenn playerturn fertig, dann einkommentieren
-//                playerTurn();
+                playerTurn();
             } // ki´s turn
             else {
                 if (!currentHero.isDead()) {
@@ -181,8 +181,8 @@ public class SingleplayerGame {
                 public void actionPerformed(ActionEvent ae) {
                     chosenPlayerAction = playerAction;
                     System.out.println("notifying");
-                    synchronized (this) {
-                        this.notifyAll();
+                    synchronized (mainFrame) {
+                        mainFrame.notifyAll();
                     }
                     System.out.println("notified");
                 }
@@ -212,9 +212,9 @@ public class SingleplayerGame {
             gamePanel.getGameSidePanel().getPanelPlayerHero().updateButtonsEnabled();
 
             System.out.println("playerTurn Waiting");
-            synchronized (this) {
+            synchronized (mainFrame) {
                 try {
-                    this.wait();
+                    mainFrame.wait();
                     System.out.println("playerTurn continued");
                 } catch (InterruptedException ex) {
                     Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
