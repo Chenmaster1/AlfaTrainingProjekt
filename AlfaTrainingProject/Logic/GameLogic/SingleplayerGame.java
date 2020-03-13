@@ -171,7 +171,8 @@ public class SingleplayerGame {
     }
 
     private void playerTurn() {
-
+        setGameState(GameState.CHOOSING);
+        gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(true);
     }
 
     private void kiTurn() {
@@ -376,11 +377,11 @@ public class SingleplayerGame {
         ArrayList<JButton> playerButtons = gamePanel.getGameSidePanel().getPanelPlayerHero().getButtonArrayList();
         for (int i = 0; i < playerButtons.size(); i++)
         {
+            Action tester = playerActions.get(i);
             playerButtons.get(i).addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
-                    //final Action tester = playerActions.get(i);
-                    //usePlayerAction(tester);
+                    usePlayerAction(tester);
                 }
             });
             
