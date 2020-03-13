@@ -180,14 +180,8 @@ public abstract class KiLogic {
 		while (true) {
 			Random random = new Random();
 			int attackField = random.nextInt(availableHideouts.size());
-			int activeFields = 0;
 
-			for (Hideout hideout : availableHideouts) {
-				if (hideout.isActive())
-					activeFields++;
-			}
-
-			if (activeFields >= 7) {
+			if (availableHideouts.size() >= 7) {
 				int hideoutCount = availableHideouts.size();
 				if (attackField < (ownPosition + 2) % hideoutCount
 						|| attackField > (ownPosition - 2 + hideoutCount) % hideoutCount) {
