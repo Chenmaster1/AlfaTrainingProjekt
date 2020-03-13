@@ -395,6 +395,7 @@ public class HeroPanelLarge extends JPanel {
 
 	public void setButtonsEnabled(boolean buttonsEnabled) {
 		this.buttonsEnabled = buttonsEnabled;
+                updateButtonsEnabled();
 	}
 
 }
