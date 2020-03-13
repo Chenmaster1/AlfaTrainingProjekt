@@ -182,13 +182,12 @@ public abstract class KiLogic {
 			int attackField = random.nextInt(availableHideouts.size());
 
 			if (availableHideouts.size() >= 7) {
-				int hideoutCount = availableHideouts.size();
-				if (attackField < (ownPosition + 2) % hideoutCount
-						|| attackField > (ownPosition - 2 + hideoutCount) % hideoutCount) {
-					return attackField;
+				if (attackField < (ownPosition + 2) % availableHideouts.size()
+						|| attackField > (ownPosition - 2 + availableHideouts.size()) % availableHideouts.size()) {
+					return availableHideouts.get(attackField).getFieldNumber();
 				}
 			} else {
-				return attackField;
+				return availableHideouts.get(attackField).getFieldNumber();
 			}
 			
 		}
