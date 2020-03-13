@@ -16,6 +16,7 @@ import enums.AttackMode;
 import enums.GameState;
 import java.util.Random;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import Abilities.Ability;
 import static Dice.AttackDice.*;
@@ -82,10 +83,7 @@ public class SingleplayerGame {
         while (true) {
             // player´s turn
             if (currentHero.isPlayerControlled()) {
-                //TODO playerTurn nehmen, sobald fertig
-            	//playerTurn();
-            	if(!currentHero.isDead())
-            		kiTurn();
+            	playerTurn();
             } // ki´s turn
             else {
             	if(!currentHero.isDead())
@@ -94,6 +92,15 @@ public class SingleplayerGame {
             // to not exceed playerBase
             setCurrentHeroIndex((currentHeroIndex + 1) % heroCount);
             
+            int alive = 0;
+            for(Hero hero : gameData.getHeroes()) 
+            	if(!hero.isDead())
+            		alive++;
+            
+            if(alive == 1)
+            	for(Hero hero : gameData.getHeroes())
+            		if(!hero.isDead())
+            			JOptionPane.showMessageDialog(mainFrame,hero.getName() + " hat gewonnen");
         }
 
         // zug auslagern
