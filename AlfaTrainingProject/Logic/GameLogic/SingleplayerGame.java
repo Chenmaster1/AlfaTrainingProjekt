@@ -82,7 +82,10 @@ public class SingleplayerGame {
         while (true) {
             // player´s turn
             if (currentHero.isPlayerControlled()) {
-                playerTurn();
+                //TODO playerTurn nehmen, sobald fertig
+            	//playerTurn();
+            	if(!currentHero.isDead())
+            		kiTurn();
             } // ki´s turn
             else {
             	if(!currentHero.isDead())

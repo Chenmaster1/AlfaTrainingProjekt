@@ -54,40 +54,40 @@ public abstract class KiLogic {
 		if(currentHero.isVisible() && currentHero.getDelayTokens() ==0) {
 			for(Action action : enabledActions)
 				if(action instanceof ActionHide)
-					resultAction = action;
+					return action;
 		}
 		//falls actionpoints > verzoegerungsmarken, dann angreifen
-		else if(currentHero.getCurrentActionPoints() > currentHero.getDelayTokens()) {
+		if(currentHero.getCurrentActionPoints() > currentHero.getDelayTokens()) {
 			for(Action action : enabledActions)
 				if(action instanceof ActionAttack)
-					resultAction = action;
+					return action;
 		}
 		//falls actionpoints <= verzoegerungsmarken, aber actionpoints >1, 
 		//dann zufaellig angreifen oder verzoegerung abbauen
-		else if(currentHero.getCurrentActionPoints() > 1 
+		if(currentHero.getCurrentActionPoints() > 1 
 				&& currentHero.getCurrentActionPoints() <= currentHero.getDelayTokens()) {
 			int random = (int) (Math.random() * 2);
 			for(Action action : enabledActions) {
 				
 				if(random == 0) {
 					if(action instanceof ActionAttack)
-						resultAction = action;
+						return action;
 				}else {
 					if(action instanceof ActionWorkOffDelay) 
-						resultAction = action;
+						return action;
 				}
 			}				
 		}
 		//falls verzoegerungsmarken und actionspoints = 1, dann verzoegerung abbauen
-		else if(currentHero.getDelayTokens() > 0 && currentHero.getCurrentActionPoints() == 1) {
+		if(currentHero.getDelayTokens() > 0 && currentHero.getCurrentActionPoints() == 1)
 			for(Action action : enabledActions)
 				if(action instanceof ActionWorkOffDelay)
-					resultAction = action;
-		}else {
-			for(Action action : enabledActions)
-				if(action instanceof ActionAttack)
-					resultAction = action;
-		}
+					return action;
+		
+		for(Action action : enabledActions)
+			if(action instanceof ActionAttack)
+				resultAction = action;
+		
 		//ansonsten angreifen
 
 		return resultAction;
@@ -177,20 +177,20 @@ public abstract class KiLogic {
 		// und ein entsprechendes Feld wird gewaehlt
 		// sind weniger aktiv wird nur geschaut ob das Feld aktiv ist
 
-		while (true) {
+//		while (true) {
 			Random random = new Random();
 			int attackField = random.nextInt(availableHideouts.size());
-
-			if (availableHideouts.size() >= 7) {
-				if (attackField < (ownPosition + 2) % availableHideouts.size()
-						|| attackField > (ownPosition - 2 + availableHideouts.size()) % availableHideouts.size()) {
-					return availableHideouts.get(attackField).getFieldNumber();
-				}
-			} else {
+			//TODO neu ueberdenken. erstmal generell angreifen
+//			if (availableHideouts.size() >= 7) {
+//				if (attackField < (ownPosition + 2) % availableHideouts.size()
+//						|| attackField > (ownPosition - 2 + availableHideouts.size()) % availableHideouts.size()) {
+//					return availableHideouts.get(attackField).getFieldNumber();
+//				}
+//			} else {
 				return availableHideouts.get(attackField).getFieldNumber();
-			}
+			//}
 			
-		}
+//		}
 		// reduce sollte bereits in der action, bzw ability aufgerufen werde, sofern die
 		// ability einen Zug ersetzt
 		// singleplayerGame.reduceCurrentActionPoints();

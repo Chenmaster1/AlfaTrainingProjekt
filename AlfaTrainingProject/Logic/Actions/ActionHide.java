@@ -32,7 +32,7 @@ public class ActionHide extends Action {
 
 	private void hideHero(Hero hero, SingleplayerGame singleplayerGame) {
 		ArrayList<Hideout> availableHideouts = new ArrayList<Hideout>();
-		
+		ArrayList<Hero> aliveHeroes = new ArrayList<Hero>();
 		HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getGameData().getHideoutHero();
 		
 		for(Hideout hideout : singleplayerGame.getGameData().getHideouts()) {
@@ -50,20 +50,28 @@ public class ActionHide extends Action {
 			}
 		}
 		
-		int newHideoutNumber = (int) (Math.random() * availableHideouts.size());
-		Hideout newHideout = availableHideouts.get(newHideoutNumber);
-                Hideout oldHideout = null;
-                
-		for(Hideout hideout : hideoutHeroMap.keySet()) {
-			if(hideoutHeroMap.get(hideout).equals(hero)) {
-				oldHideout = hideout;
-                break;
-			}
+		for(Hero heroFromList : singleplayerGame.getGameData().getHeroes()) {
+			if(!heroFromList.isDead())
+				aliveHeroes.add(heroFromList);
 		}
-		hero.setVisible(false);
-		oldHideout.setActive(false);
-        hideoutHeroMap.remove(oldHideout);
-        hideoutHeroMap.put(newHideout, hero);
+		
+		if(availableHideouts.size() > aliveHeroes.size()) {
+			int newHideoutNumber = (int) (Math.random() * availableHideouts.size());
+			Hideout newHideout = availableHideouts.get(newHideoutNumber);
+	                Hideout oldHideout = null;
+	                
+			for(Hideout hideout : hideoutHeroMap.keySet()) {
+				if(hideoutHeroMap.get(hideout).equals(hero)) {
+					oldHideout = hideout;
+	                break;
+				}
+			}
+			hero.setVisible(false);
+			oldHideout.setActive(false);
+	        hideoutHeroMap.remove(oldHideout);
+	        hideoutHeroMap.put(newHideout, hero);
+		}
+		
 	}
 
 
@@ -83,7 +91,7 @@ public class ActionHide extends Action {
     			heroesAliveCount++;
     	}
     	
-    	if(activeHideoutsCount > heroesAliveCount) {
+    	if(!(activeHideoutsCount <= heroesAliveCount)) {
         	//verstecken geht nur, wenn keine verzoegerungsmarken aktiv sind und actionpoints verfuegbar sind
             if(singlePlayerGame.getCurrentHero().getDelayTokens() == 0 && singlePlayerGame.getCurrentHero().isVisible())
             	setEnabled(true);
