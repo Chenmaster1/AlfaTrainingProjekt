@@ -90,10 +90,7 @@ public class KiLogicFlint extends KiLogic {
 //				}
 //				//Hier eventuell ability einfuegen
 //				}else{
-//				/*
-//				 * TODO Angriff. Falls ein Held sichtbar ist, diesen angreifen. Ansonsten primaer Felder angreifen, 
-//				 * bei denen man selber nicht getroffen wernden kann 
-//				 */
+//				
 //				
 //				for(Action action : actions) {
 //					if(action instanceof ActionAttack) {

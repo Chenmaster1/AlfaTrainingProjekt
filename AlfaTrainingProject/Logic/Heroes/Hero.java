@@ -188,7 +188,6 @@ public abstract class Hero {
 
     public void setDelayTokens(int delayTokens) {
         this.delayTokens = delayTokens;
-        // TODO Actions entsprechend auf enabled oder disabled setzen
     }
 
     public void setCurrentActionPoints(int currentActionPoints) {

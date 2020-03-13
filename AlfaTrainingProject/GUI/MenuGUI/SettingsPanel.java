@@ -232,7 +232,7 @@ public class SettingsPanel extends JPanel
     {
 //		frame.remove(this);
         frame.setContentPane(parentPanel);
-        frame.repaint();
+//        frame.repaint();
     }
 
 

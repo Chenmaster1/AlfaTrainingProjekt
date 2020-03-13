@@ -109,8 +109,7 @@ public class ActionHide extends Action {
 
 	@Override
 	public void updateEnabled(SingleplayerGame singlePlayerGame) {
-		// TODO nur aktive zaehlen. falls aktive Felder >= anzahl der aktiven Helden,
-		// dann kann man sich verstecken
+		
 		int activeHideoutsCount = 0;
 		int heroesAliveCount = 0;
 		for (Hideout hideout : singlePlayerGame.getGameData().getHideouts()) {

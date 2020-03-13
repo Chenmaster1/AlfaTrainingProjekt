@@ -31,8 +31,9 @@ public boolean doubleThrow = false;
         fireAt(int fieldPosition) Methode.
          */
         
-        singleplayerGame.setGameState(GameState.AIMING);
+
         singleplayerGame.setAttackMode(AttackMode.NORMAL_ATTACK);
+        singleplayerGame.setGameState(GameState.AIMING);
     }
 
 

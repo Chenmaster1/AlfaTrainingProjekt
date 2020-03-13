@@ -458,7 +458,6 @@ public class SingleplayerGame {
 					occupyingHero.setVisible(true);
 				} // Hero is hit
 				else {
-					// TODO invulnerability
 					if(occupyingHero.isAttackable())
 						occupyingHero.heroGotHit();
 					// check if hero died / disable field

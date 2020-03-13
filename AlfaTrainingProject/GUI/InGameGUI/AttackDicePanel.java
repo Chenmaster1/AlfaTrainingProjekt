@@ -127,6 +127,12 @@ public class AttackDicePanel extends JPanel implements Runnable {
     public void setRollResult(int result) {
         currentAnimationFrame++;
 
+        synchronized(this)
+    	{
+        	//System.out.println("WakingUp");
+    		this.notify();
+    	}
+        
         switch (result) {
             case AttackDice.RESULT_CENTER_HIT:
                 if (currentAnimationFrame < 130 && currentAnimationFrame >= 70) {
@@ -184,6 +190,18 @@ public class AttackDicePanel extends JPanel implements Runnable {
             if (currentAnimationFrame != targetAnimationFrame) {
                 currentAnimationFrame = (currentAnimationFrame + 1) % 220;
                 repaint();
+            }
+            else
+            {
+            	synchronized(this)
+            	{
+            		try {
+            			//System.out.println("Waiting");
+						this.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+            	}
             }
 
             try {

@@ -21,8 +21,10 @@ public class AbilityFlintAttackTwice  extends Ability{
 		//Wirklich nötig das hier zu machen? dann müsste auch actionattack umgeschrieben werden
 		//Falls anders geklöst wie?
 		//enum setzten und in singleplayergame abarbeiten. zb so:	
-		singleplayerGame.setGameState(GameState.AIMING);
+		
 		singleplayerGame.setAttackMode(AttackMode.ATTACK_TWICE);
+		singleplayerGame.setGameState(GameState.AIMING);
+		
 		
 	}
 

@@ -127,6 +127,12 @@ public class HideDicePanel extends JPanel implements Runnable {
     public void setRollResult(int result) {
         currentAnimationFrame++;
         
+        synchronized(this)
+    	{
+        	//System.out.println("WakingUp");
+    		this.notify();
+    	}
+        
         switch (result) {
             case HideDice.RESULT_NOTHING:
                 if (currentAnimationFrame < 60 && currentAnimationFrame >= 1) {
@@ -169,6 +175,18 @@ public class HideDicePanel extends JPanel implements Runnable {
             if (currentAnimationFrame != targetAnimationFrame) {
                 currentAnimationFrame = (currentAnimationFrame + 1) % 120;
                 repaint();
+            }
+            else
+            {
+            	synchronized(this)
+            	{
+            		try {
+            			//System.out.println("Waiting");
+						this.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+            	}
             }
 
             try {
