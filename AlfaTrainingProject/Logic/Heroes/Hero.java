@@ -40,7 +40,8 @@ public abstract class Hero {
     private boolean isVisible;
     private boolean isPlayerControlled;
     private boolean isDead;
-
+    private boolean isAttackable;
+    
     private double power;
 
     /**
@@ -62,7 +63,7 @@ public abstract class Hero {
         this.avatar = new ImageIcon(getClass().getClassLoader().getResource(avatarPath)).getImage();
         this.mapIcon = new ImageIcon(getClass().getClassLoader().getResource(mapIconPath)).getImage();
         this.abilities = new ArrayList<Ability>();
-        
+        this.isAttackable = true;
         // Standardwerte: KI-kontrolliert, nicht sichtbar, kein Delay, volle
         // Lebenspunkte
         setPlayerControlled(false);
@@ -81,6 +82,13 @@ public abstract class Hero {
         return hero.getName().equals(name);
     }
 
+    /**
+     * nur einmal pro runde angreifbar
+     */
+    public void heroGotHit() {
+    	currentHitPoints--;
+    	isAttackable = false;
+    }
     // -------------------------GETTER-------------------------//
     public int getMaxHitPoints() {
         return maxHitPoints;
@@ -150,6 +158,9 @@ public abstract class Hero {
         return isDead;
     }
 
+    public boolean isAttackable() {
+    	return isAttackable;
+    }
     // -------------------------SETTER-------------------------//
     public void setMaxHitPoints(int maxHitPoints) {
         this.maxHitPoints = maxHitPoints;
@@ -184,6 +195,10 @@ public abstract class Hero {
     
     public void addDelayTokens(int number) {
     	delayTokens += number;
+    }
+    
+    public void setIsAttackable(boolean isAttackable) {
+    	this.isAttackable = isAttackable;
     }
 
 }
