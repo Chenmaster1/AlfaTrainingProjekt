@@ -237,7 +237,7 @@ public class SingleplayerGame {
 
             setGameState(GameState.CHOOSING);
             for (Action a : heroActionsLists.get(currentHeroIndex)) {
-                //a.updateEnabled(this);
+                a.updateEnabled(this);
 
             }
             gamePanel.getGameSidePanel().getPanelPlayerHero().updateButtonsEnabled();
@@ -255,11 +255,6 @@ public class SingleplayerGame {
             chosenPlayerAction.useAction(this);
             decreaseCurrentActionPointsBy(chosenPlayerAction.getActionPointsRequired());
 
-            // is currentHero ki / player?
-            // aktionsliste an ki übergeben
-            // auswahl kütt zurück
-            // aktion ausführen
-            // AP verringern sich entsprechend
             gamePanel.repaint();
         }
 
@@ -274,12 +269,12 @@ public class SingleplayerGame {
 
             setGameState(GameState.CHOOSING);
             try {
-                Thread.sleep(50);
+                Thread.sleep(500);
             } catch (InterruptedException ex) {
                 Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
             }
             for (Action a : heroActionsLists.get(currentHeroIndex)) {
-                //a.updateEnabled(this);
+                a.updateEnabled(this);
             }
 
             Action currentAction = currentHero.getKiLogic().chooseAction(heroActionsLists.get(currentHeroIndex), this);
@@ -287,11 +282,7 @@ public class SingleplayerGame {
             currentAction.useAction(this);
             decreaseCurrentActionPointsBy(currentAction.getActionPointsRequired());
 
-            // is currentHero ki / player?
-            // aktionsliste an ki übergeben
-            // auswahl kütt zurück
-            // aktion ausführen
-            // AP verringern sich entsprechend
+            
             gamePanel.repaint();
         }
 
@@ -373,7 +364,11 @@ public class SingleplayerGame {
 
                     gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_KI_AIMING);
                     gamePanel.getMapPanel().setCurrentAimedAtField(currentAttackField);
-
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     shootAtAttackField(currentAttackField);
 
                 } //playerTurn
