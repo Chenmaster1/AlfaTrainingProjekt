@@ -104,12 +104,14 @@ public class SingleplayerGame {
                 if (currentHero.isPlayerControlled()) {
 
                     playerTurn();
-                    checkAllHeroesAlive();
+                    if(checkAllHeroesAlive())
+                    	return;
                 } // ki´s turn
                 else {
 
                     kiTurn();
-                    checkAllHeroesAlive();
+                    if(checkAllHeroesAlive())
+                    	return;
                 }
             }
             // to not exceed playerBase
@@ -120,13 +122,13 @@ public class SingleplayerGame {
 
     }
     
-    private void checkAllHeroesAlive() {
+    private boolean checkAllHeroesAlive() {
     	//nach jedem turn fragen
         int alive = 0;
         for (Hero hero : gameData.getHeroes()) {
         	if(hero.isDead() && hero.isPlayerControlled()) {
         		backToMainMenu(hero, false);
-        		return;
+        		return true;
         	}
             if (!hero.isDead()) {
                 alive++;
@@ -137,10 +139,12 @@ public class SingleplayerGame {
             for (Hero hero : gameData.getHeroes()) {
                 if (!hero.isDead()) {                    	
                 	backToMainMenu(hero, true);
-            		return;
+            		return true;
                 }
             }
         }
+        
+        return false;
     }
 
    /**
