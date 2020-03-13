@@ -39,7 +39,8 @@ public boolean doubleThrow = false;
     @Override
     public void updateEnabled(SingleplayerGame singlePlayerGame)
     {
-        
+        //Angreifen kann man immer
+    	setEnabled(true);
     }
 
 }

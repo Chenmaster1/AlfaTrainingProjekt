@@ -44,6 +44,10 @@ public class ActionWorkOffDelay extends Action {
     @Override
     public void updateEnabled(SingleplayerGame singlePlayerGame)
     {
-        
+        //workoffdelay funktioniert nur, wenn der held verzoegerungsmarken hat
+    	if(singlePlayerGame.getCurrentHero().getDelayTokens() > 0)
+    		setEnabled(true);
+    	else
+    		setEnabled(false);
     }
 }

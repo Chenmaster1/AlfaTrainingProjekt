@@ -30,7 +30,10 @@ public class AbilityFlintAttackTwice  extends Ability{
     @Override
     public void updateEnabled(SingleplayerGame singlePlayerGame)
     {
-        
+        if(singlePlayerGame.getCurrentHero().getCurrentActionPoints() == 1)
+        	setEnabled(true);
+        else
+        	setEnabled(false);
     }
 
 }

@@ -20,18 +20,14 @@ public class AbilityTolpanLongbeardHide extends Ability {
 
     @Override
     public void useAction(SingleplayerGame singleplayerGame) {
-// TODO       for (Action action : singleplayerGame.getActions()) {
-//            if (action instanceof ActionHide) {
-//                action.useAction(singleplayerGame);
-//            }
-//        }
+    	
     }
 
 
     @Override
     public void updateEnabled(SingleplayerGame singlePlayerGame)
     {
-        
+        //Tolpan hat nur eine passive faehigkeit, deswegen muss diese Methode nicht implementiert werden
     }
 
 }
