@@ -25,17 +25,23 @@ import MenuGUI.MainFramePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 
 public class SingleplayerGame {
 
-    private JFrame mainFrame;
+    private final JFrame mainFrame;
     private GamePanel gamePanel;
     private GameData gameData;
     private MainFramePanel mainFramePanel;
-    
+
+    private MouseListener mapPanelClickListener;
+    private int chosenAttackField;
+
     private AttackMode attackMode = AttackMode.NO_ATTACK;
     private GameState gameState;
 
@@ -44,8 +50,9 @@ public class SingleplayerGame {
 
     private ArrayList<Action> standardActions;
     private ArrayList<ArrayList<Action>> heroActionsLists;
-    
+
     private ArrayList<Action> playerActions;
+    private Action chosenPlayerAction;
 
     private AttackDice attackDice;
     private HideDice hideDice;
@@ -67,7 +74,7 @@ public class SingleplayerGame {
         hideDice = new HideDice();
 
         initializeActionLists();
-        
+
         initializeButtonListeners();
     }
 
@@ -77,7 +84,9 @@ public class SingleplayerGame {
 
         Thread gameLogicThread = new Thread() {
             public void run() {
+
                 startGameLogic();
+
             }
         };
         gameLogicThread.start();
@@ -88,51 +97,45 @@ public class SingleplayerGame {
         int heroCount = gameData.getHeroes().size();
         Random randomPlayer = new Random();
         setCurrentHeroIndex(randomPlayer.nextInt(heroCount));
-        
+
         lblWhileLoop:
         while (true) {
-            // player´s turn
-            if (currentHero.isPlayerControlled()) {
-            	//TODO wenn playerturn fertig, dann einkommentieren
-            	//playerTurn();
-            } // ki´s turn
-            else {
-            	if(!currentHero.isDead())
-            		kiTurn();
+            if (!currentHero.isDead()) {
+                // player´s turn
+                if (currentHero.isPlayerControlled()) {
+
+                    playerTurn();
+
+                } // ki´s turn
+                else {
+
+                    kiTurn();
+
+                }
             }
             // to not exceed playerBase
             setCurrentHeroIndex((currentHeroIndex + 1) % heroCount);
-            
+
             int alive = 0;
-            for(Hero hero : gameData.getHeroes()) 
-            	if(!hero.isDead())
-            		alive++;
-            
-            if(alive == 1)
-            	for(Hero hero : gameData.getHeroes())
-            		if(!hero.isDead()) {
-            			JOptionPane.showMessageDialog(mainFrame,hero.getName() + " hat gewonnen");
-            			mainFrame.setContentPane(mainFramePanel);
-            			mainFrame.repaint();
-            			break lblWhileLoop; 
-            		}
-            
-            			
+            for (Hero hero : gameData.getHeroes()) {
+                if (!hero.isDead()) {
+                    alive++;
+                }
+            }
+
+            if (alive == 1) {
+                for (Hero hero : gameData.getHeroes()) {
+                    if (!hero.isDead()) {
+                        JOptionPane.showMessageDialog(mainFrame, hero.getName() + " hat gewonnen");
+                        mainFrame.setContentPane(mainFramePanel);
+                        mainFrame.repaint();
+                        break lblWhileLoop;
+                    }
+                }
+            }
+
         }
 
-        // zug auslagern
-        // randomPlayer.
-        // TODO als pairprogramming
-        // abilites einen flag geben. wird ein held betroffen, wird der flag seiner
-        // ability überprüft.
-        // führt entprechend abilies dann aus, wann die flag es zulässt
-        // Fuer die Auswahl eines Feldes, wird beim bewegen der Maus der winkel zum
-        // Mittelpunkt berechnet und der Tower entsprechend mitbewegt
-        // beim klick wird eingerastet und angegriffen (eventuell verzoegerung mit
-        // einarbeiten)
-        // vllt doch erstmal ohne db? nur helden und safegame? wären inbegriffen.
-        // hardcoden?
-        // eventuell threadhandler schreiben
     }
 
     /**
@@ -165,6 +168,39 @@ public class SingleplayerGame {
         }
     }
 
+    private void initializeButtonListeners() {
+        ArrayList<JButton> playerButtons = gamePanel.getGameSidePanel().getPanelPlayerHero().getButtonArrayList();
+        for (int i = 0; i < playerButtons.size(); i++) {
+            Action playerAction = playerActions.get(i);
+            playerButtons.get(i).addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    chosenPlayerAction = playerAction;
+                    System.out.println("notifying");
+                    synchronized (mainFrame) {
+                        mainFrame.notifyAll();
+                    }
+                    System.out.println("notified");
+                }
+            });
+
+        }
+
+        //MapPanel MouseClick Listener
+        mapPanelClickListener = new MouseAdapter() {
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+                chosenAttackField = gamePanel.getMapPanel().getCurrentAimedAtField();
+                synchronized (mainFrame) {
+                    mainFrame.notifyAll();
+                }
+            }
+
+        };
+
+    }
+
     private void showGame() {
 
         mainFrame.setContentPane(gamePanel);
@@ -174,16 +210,48 @@ public class SingleplayerGame {
     private void playerTurn() {
         setGameState(GameState.CHOOSING);
         gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(true);
+        currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
+
+        while (currentHero.getCurrentActionPoints() != 0) {
+
+            for (Action a : heroActionsLists.get(currentHeroIndex)) {
+                //a.updateEnabled(this);
+
+            }
+            gamePanel.getGameSidePanel().getPanelPlayerHero().updateButtonsEnabled();
+
+            System.out.println("playerTurn Waiting");
+            synchronized (mainFrame) {
+                try {
+                    mainFrame.wait();
+                    System.out.println("playerTurn continued");
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            chosenPlayerAction.useAction(this);
+            decreaseCurrentActionPointsBy(chosenPlayerAction.getActionPointsRequired());
+
+            // is currentHero ki / player?
+            // aktionsliste an ki übergeben
+            // auswahl kütt zurück
+            // aktion ausführen
+            // AP verringern sich entsprechend
+            gamePanel.repaint();
+        }
+
     }
 
     private void kiTurn() {
         setGameState(GameState.CHOOSING);
+        gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(false);
         currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
 
         while (currentHero.getCurrentActionPoints() != 0) {
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(50);
             } catch (InterruptedException ex) {
                 Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -287,7 +355,19 @@ public class SingleplayerGame {
 
                 } //playerTurn
                 else {
-                  gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
+                    gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
+                    gamePanel.getMapPanel().addMouseListener(mapPanelClickListener);
+
+                    synchronized (mainFrame) {
+                        try {
+                            mainFrame.wait();
+                            System.out.println("AIMING continued");
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    gamePanel.getMapPanel().removeMouseListener(mapPanelClickListener);
+                    shootAtAttackField(chosenAttackField);
                 }
 
                 break;
@@ -371,24 +451,7 @@ public class SingleplayerGame {
 
     private void usePlayerAction(Action chosenAction) {
         chosenAction.useAction(this);
-        
-    } 
-    
-    private void initializeButtonListeners() {
-        ArrayList<JButton> playerButtons = gamePanel.getGameSidePanel().getPanelPlayerHero().getButtonArrayList();
-        for (int i = 0; i < playerButtons.size(); i++)
-        {
-            Action tester = playerActions.get(i);
-            playerButtons.get(i).addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    usePlayerAction(tester);
-                }
-            });
-            
-        }
-        
-        
+
     }
 
 }
