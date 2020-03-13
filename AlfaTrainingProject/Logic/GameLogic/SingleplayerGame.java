@@ -208,12 +208,13 @@ public class SingleplayerGame {
     }
 
     private void playerTurn() {
-        setGameState(GameState.CHOOSING);
+
         gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(true);
         currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
 
         while (currentHero.getCurrentActionPoints() != 0) {
 
+            setGameState(GameState.CHOOSING);
             for (Action a : heroActionsLists.get(currentHeroIndex)) {
                 //a.updateEnabled(this);
 
@@ -244,12 +245,13 @@ public class SingleplayerGame {
     }
 
     private void kiTurn() {
-        setGameState(GameState.CHOOSING);
+
         gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(false);
         currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
 
         while (currentHero.getCurrentActionPoints() != 0) {
 
+            setGameState(GameState.CHOOSING);
             try {
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
