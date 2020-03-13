@@ -66,7 +66,7 @@ public class SingleplayerGame {
 		Random randomPlayer = new Random();
 		setCurrentHeroIndex(randomPlayer.nextInt(heroCount));
 
-		// beginn turn
+		          System.out.println("huhustartGame");
 		while (true) {
 			// player´s turn
 			if (currentHero.isPlayerControlled()) {
@@ -137,7 +137,7 @@ public class SingleplayerGame {
 	}
 
 	private void kiTurn() {
-
+            System.out.println("huhukiturn");
 		currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
 
 		while (currentHero.getCurrentActionPoints() != 0) {
