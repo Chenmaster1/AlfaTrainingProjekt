@@ -20,10 +20,10 @@ import javax.swing.JFrame;
 import Abilities.Ability;
 import static Dice.AttackDice.*;
 import InGameGUI.MapPanel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-
-public class SingleplayerGame
-{
+public class SingleplayerGame {
 
     private JFrame mainFrame;
     private GamePanel gamePanel;
@@ -48,9 +48,7 @@ public class SingleplayerGame
 
     // ------------------booleans fuer Spielkontrolle ueber
     // Karten------------------------
-
-    public SingleplayerGame(JFrame mainFrame, GamePanel gamePanel, GameData map)
-    {
+    public SingleplayerGame(JFrame mainFrame, GamePanel gamePanel, GameData map) {
         this.mainFrame = mainFrame;
         this.gamePanel = gamePanel;
         this.gameData = map;
@@ -61,28 +59,30 @@ public class SingleplayerGame
         initializeActionLists();
     }
 
-
-    public void startGame()
-    {
+    public void startGame() {
 
         showGame();
 
+        Thread gameLogicThread = new Thread() {
+            public void run() {
+                startGameLogic();
+            }
+        };
+        gameLogicThread.start();
+    }
+
+    private void startGameLogic() {
         // get Hero who does the first turn
         int heroCount = gameData.getHeroes().size();
         Random randomPlayer = new Random();
         setCurrentHeroIndex(randomPlayer.nextInt(heroCount));
 
-        while (true)
-        {
+        while (true) {
             // player´s turn
-            if (currentHero.isPlayerControlled())
-            {
+            if (currentHero.isPlayerControlled()) {
                 playerTurn();
-            }
-
-            // ki´s turn
-            else
-            {
+            } // ki´s turn
+            else {
                 kiTurn();
             }
             // to not exceed playerBase
@@ -105,14 +105,12 @@ public class SingleplayerGame
         // eventuell threadhandler schreiben
     }
 
-
     /**
      * Diese Methode führt die Standardaktionen sowie die Heldenspezifischen
      * Abilities zu einer Liste zusammen und übergibt der GUI die Liste des
      * Hauptsspielers.
      */
-    private void initializeActionLists()
-    {
+    private void initializeActionLists() {
         heroActionsLists = new ArrayList<ArrayList<Action>>();
         standardActions = new ArrayList<Action>();
         standardActions.add(new ActionAttack(1));
@@ -121,55 +119,48 @@ public class SingleplayerGame
 
         ArrayList<Action> heroActionList;
 
-        for (Hero h : gameData.getHeroes())
-        {
+        for (Hero h : gameData.getHeroes()) {
             heroActionList = new ArrayList<>(standardActions);
-            for (Ability heroAbility : h.getAbilities())
-            {
-                if (heroAbility.getAbilityType() != AbilityType.PASSIVE)
-                {
+            for (Ability heroAbility : h.getAbilities()) {
+                if (heroAbility.getAbilityType() != AbilityType.PASSIVE) {
                     heroActionList.add(heroAbility);
                 }
             }
             heroActionsLists.add(heroActionList);
 
-            if (h.isPlayerControlled())
-            {
+            if (h.isPlayerControlled()) {
                 gamePanel.getGameSidePanel().getPanelPlayerHero().setActionArrayList(heroActionList);
             }
         }
     }
 
-
-    private void showGame()
-    {
+    private void showGame() {
 
         mainFrame.setContentPane(gamePanel);
         mainFrame.pack();
     }
 
-
-    private void playerTurn()
-    {
+    private void playerTurn() {
 
     }
 
-
-    private void kiTurn()
-    {
+    private void kiTurn() {
         setGameState(GameState.CHOOSING);
         currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
-       
-        while (currentHero.getCurrentActionPoints() != 0)
-        {
 
-            for (Action a : heroActionsLists.get(currentHeroIndex))
-            {
+        while (currentHero.getCurrentActionPoints() != 0) {
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            for (Action a : heroActionsLists.get(currentHeroIndex)) {
                 //a.updateEnabled(this);
             }
 
             Action currentAction = currentHero.getKiLogic().chooseAction(heroActionsLists.get(currentHeroIndex), this);
-         
+
             currentAction.useAction(this);
             decreaseCurrentActionPointsBy(currentAction.getActionPointsRequired());
 
@@ -183,48 +174,35 @@ public class SingleplayerGame
     }
 
     // -------------------------GETTER-------------------------//
-
-    public HideDice getHideDice()
-    {
+    public HideDice getHideDice() {
         return hideDice;
     }
 
-
-    public AttackDice getAttackDice()
-    {
+    public AttackDice getAttackDice() {
         return attackDice;
     }
 
-
-    public int getCurrentHeroIndex()
-    {
+    public int getCurrentHeroIndex() {
         return currentHeroIndex;
     }
 
-
-    public Hero getCurrentHero()
-    {
+    public Hero getCurrentHero() {
         return currentHero;
     }
 
-
-    public GameData getGameData()
-    {
+    public GameData getGameData() {
         return gameData;
     }
 
     // -------------------------SETTER-------------------------//
-
     /**
      * Setzt den Helden, der gerade am Zug ist. Updated auch automatisch den
      * currentHeroIndex.
      */
-    public void setCurrentHero(Hero currentHero)
-    {
+    public void setCurrentHero(Hero currentHero) {
         this.currentHero = currentHero;
         this.currentHeroIndex = gameData.getHeroes().indexOf(currentHero);
     }
-
 
     /**
      * Setzt den Index des Helden, der gerade am Zug ist. Updated auch
@@ -232,53 +210,40 @@ public class SingleplayerGame
      *
      * @param currentHeroIndex
      */
-    public void setCurrentHeroIndex(int currentHeroIndex)
-    {
+    public void setCurrentHeroIndex(int currentHeroIndex) {
         this.currentHeroIndex = currentHeroIndex;
         this.currentHero = gameData.getHeroes().get(currentHeroIndex);
     }
 
-
-    public void reduceCurrentActionPoints()
-    {
-        if (gameData.getHeroes().get(currentHeroIndex).getCurrentActionPoints() >= 1)
-        {
+    public void reduceCurrentActionPoints() {
+        if (gameData.getHeroes().get(currentHeroIndex).getCurrentActionPoints() >= 1) {
             gameData.getHeroes().get(currentHeroIndex)
                     .setCurrentActionPoints(gameData.getHeroes().get(currentHeroIndex).getCurrentActionPoints() - 1);
         }
     }
 
-
     /**
      * Reduziert die aktuelle Aktionspunkte sofort auf 0, egal welcher wert
      * vorher gegeben war
      */
-    public void setCurrentActionPointsToZero()
-    {
+    public void setCurrentActionPointsToZero() {
 
         currentHero.setCurrentActionPoints(0);
     }
 
-
     /**
      * Reduziert die Verzoegerungs Tokens um 1 auf maximal 0
      */
-    public void reduceDelayTokens()
-    {
-        if (currentHero.getDelayTokens() >= 1)
-        {
+    public void reduceDelayTokens() {
+        if (currentHero.getDelayTokens() >= 1) {
             currentHero.setDelayTokens(currentHero.getDelayTokens() - 1);
         }
     }
 
-
-    public void setGameState(GameState gameState)
-    {
-        switch (gameState)
-        {
+    public void setGameState(GameState gameState) {
+        switch (gameState) {
             case AIMING:
-                if (!currentHero.isPlayerControlled())
-                {
+                if (!currentHero.isPlayerControlled()) {
                     // getting AttackField
                     int currentAttackField = currentHero.getKiLogic().chooseAttackField(this);
 
@@ -287,16 +252,12 @@ public class SingleplayerGame
 
                     shootAtAttackField(currentAttackField);
 
-                }
-
-                //playerTurn
-                else
-
-                {
+                } //playerTurn
+                else {
 
                 }
 
-            break;
+                break;
 
             case CHOOSING:
                 gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_REGULAR);
@@ -306,44 +267,31 @@ public class SingleplayerGame
         this.gameState = gameState;
     }
 
-
-    public void setAttackMode(AttackMode attackMode)
-    {
+    public void setAttackMode(AttackMode attackMode) {
         this.attackMode = attackMode;
     }
 
-
-    public void increaseCurrentActionPointsBy(int increment)
-    {
+    public void increaseCurrentActionPointsBy(int increment) {
         currentHero.setCurrentActionPoints(currentHero.getCurrentActionPoints() + increment);
     }
 
-
-    public void decreaseCurrentActionPointsBy(int decrement)
-    {
+    public void decreaseCurrentActionPointsBy(int decrement) {
         currentHero.setCurrentActionPoints(currentHero.getCurrentActionPoints() - decrement);
     }
 
-
-    public void setMysteriousIdol1(boolean active)
-    {
+    public void setMysteriousIdol1(boolean active) {
         this.mysteriousIdol1 = active;
     }
 
-
-    public void setMysteriousIdol2(boolean active)
-    {
+    public void setMysteriousIdol2(boolean active) {
         this.mysteriousIdol2 = active;
     }
 
-
-    private void shootAtAttackField(int currentAttackField)
-    {
+    private void shootAtAttackField(int currentAttackField) {
         int numberOfHideouts = gameData.getHideouts().size();
         int diceResult = attackDice.rollDice();
         int finalRolledAttackField;
-        switch (diceResult)
-        {
+        switch (diceResult) {
             case RESULT_CENTER_HIT:
                 finalRolledAttackField = currentAttackField;
                 break;
@@ -364,43 +312,28 @@ public class SingleplayerGame
         }
 
         // hit that field
-        if (gameData.getHideoutHero().containsKey(gameData.getHideouts().get(finalRolledAttackField)))
-        {
+        if (gameData.getHideoutHero().containsKey(gameData.getHideouts().get(finalRolledAttackField))) {
             //Field is occupied by a hero
             Hero occupyingHero = gameData.getHideoutHero().get(gameData.getHideouts().get(finalRolledAttackField));
 
-           
-            if (occupyingHero != null)
-            {
-                 // Hero is detected / unveiled
-                if (!occupyingHero.isVisible())
-                {
+            if (occupyingHero != null) {
+                // Hero is detected / unveiled
+                if (!occupyingHero.isVisible()) {
                     occupyingHero.setVisible(true);
-                }
-
-                // Hero is hit
-                else
-                {
+                } // Hero is hit
+                else {
                     //TODO invulnerability
                     occupyingHero.setCurrentHitPoints(occupyingHero.getCurrentHitPoints() - 1);
 
                     //check if hero died / disable field
-                    if (occupyingHero.isDead())
-                    {
+                    if (occupyingHero.isDead()) {
                         gameData.getHideouts().get(finalRolledAttackField).setActive(false);
                     }
 
                 }
             }
         }
-         gamePanel.repaint ();
+        gamePanel.repaint();
     }
 
-
-   
-
-
 }
-
-
-
