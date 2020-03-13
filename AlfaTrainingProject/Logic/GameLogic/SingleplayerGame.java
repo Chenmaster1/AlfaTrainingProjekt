@@ -10,7 +10,7 @@ import Dice.AttackDice;
 import Dice.HideDice;
 import Heroes.Hero;
 import InGameGUI.GamePanel;
-import Maps.Map;
+import GameData.GameData;
 import enums.AbilityType;
 import enums.AttackMode;
 import enums.GameState;
@@ -27,7 +27,7 @@ public class SingleplayerGame
 
     private JFrame mainFrame;
     private GamePanel gamePanel;
-    private Map map;
+    private GameData gameData;
 
     private AttackMode attackMode = AttackMode.NO_ATTACK;
     private GameState gameState;
@@ -49,11 +49,11 @@ public class SingleplayerGame
     // ------------------booleans fuer Spielkontrolle ueber
     // Karten------------------------
 
-    public SingleplayerGame(JFrame mainFrame, GamePanel gamePanel, Map map)
+    public SingleplayerGame(JFrame mainFrame, GamePanel gamePanel, GameData map)
     {
         this.mainFrame = mainFrame;
         this.gamePanel = gamePanel;
-        this.map = map;
+        this.gameData = map;
 
         attackDice = new AttackDice();
         hideDice = new HideDice();
@@ -68,7 +68,7 @@ public class SingleplayerGame
         showGame();
 
         // get Hero who does the first turn
-        int heroCount = map.getHeroes().size();
+        int heroCount = gameData.getHeroes().size();
         Random randomPlayer = new Random();
         setCurrentHeroIndex(randomPlayer.nextInt(heroCount));
 
@@ -121,7 +121,7 @@ public class SingleplayerGame
 
         ArrayList<Action> heroActionList;
 
-        for (Hero h : map.getHeroes())
+        for (Hero h : gameData.getHeroes())
         {
             heroActionList = new ArrayList<>(standardActions);
             for (Ability heroAbility : h.getAbilities())
@@ -208,9 +208,9 @@ public class SingleplayerGame
     }
 
 
-    public Map getMap()
+    public GameData getGameData()
     {
-        return map;
+        return gameData;
     }
 
     // -------------------------SETTER-------------------------//
@@ -222,7 +222,7 @@ public class SingleplayerGame
     public void setCurrentHero(Hero currentHero)
     {
         this.currentHero = currentHero;
-        this.currentHeroIndex = map.getHeroes().indexOf(currentHero);
+        this.currentHeroIndex = gameData.getHeroes().indexOf(currentHero);
     }
 
 
@@ -235,16 +235,16 @@ public class SingleplayerGame
     public void setCurrentHeroIndex(int currentHeroIndex)
     {
         this.currentHeroIndex = currentHeroIndex;
-        this.currentHero = map.getHeroes().get(currentHeroIndex);
+        this.currentHero = gameData.getHeroes().get(currentHeroIndex);
     }
 
 
     public void reduceCurrentActionPoints()
     {
-        if (map.getHeroes().get(currentHeroIndex).getCurrentActionPoints() >= 1)
+        if (gameData.getHeroes().get(currentHeroIndex).getCurrentActionPoints() >= 1)
         {
-            map.getHeroes().get(currentHeroIndex)
-                    .setCurrentActionPoints(map.getHeroes().get(currentHeroIndex).getCurrentActionPoints() - 1);
+            gameData.getHeroes().get(currentHeroIndex)
+                    .setCurrentActionPoints(gameData.getHeroes().get(currentHeroIndex).getCurrentActionPoints() - 1);
         }
     }
 
@@ -296,14 +296,10 @@ public class SingleplayerGame
 
                 }
 
-// TODO: Aktionen deaktivieren (oder besser generell bei der
-                // Generation
-                // der Aktionsliste den gameState abfragen und sie hier neu
-                // generieren), Zieloverlay einblenden,
-                // MouseListener aktivieren
-                break;
+            break;
 
             case CHOOSING:
+                gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_REGULAR);
                 break;
 
         }
@@ -343,7 +339,7 @@ public class SingleplayerGame
 
     private void shootAtAttackField(int currentAttackField)
     {
-        int numberOfHideouts = map.getHideouts().size();
+        int numberOfHideouts = gameData.getHideouts().size();
         int diceResult = attackDice.rollDice();
         int finalRolledAttackField;
         switch (diceResult)
@@ -368,10 +364,10 @@ public class SingleplayerGame
         }
 
         // hit that field
-        if (map.getHideoutHero().containsKey(map.getHideouts().get(finalRolledAttackField)))
+        if (gameData.getHideoutHero().containsKey(gameData.getHideouts().get(finalRolledAttackField)))
         {
             //Field is occupied by a hero
-            Hero occupyingHero = map.getHideoutHero().get(map.getHideouts().get(finalRolledAttackField));
+            Hero occupyingHero = gameData.getHideoutHero().get(gameData.getHideouts().get(finalRolledAttackField));
 
            
             if (occupyingHero != null)
@@ -391,7 +387,7 @@ public class SingleplayerGame
                     //check if hero died / disable field
                     if (occupyingHero.isDead())
                     {
-                        map.getHideouts().get(finalRolledAttackField).setActive(false);
+                        gameData.getHideouts().get(finalRolledAttackField).setActive(false);
                     }
 
                 }

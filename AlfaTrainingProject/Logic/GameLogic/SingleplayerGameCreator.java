@@ -10,7 +10,7 @@ import Hideouts.HideoutType;
 import InGameGUI.GamePanel;
 import InGameGUI.MapPanel;
 import InGameGUI.GameSidePanel;
-import Maps.Map;
+import GameData.GameData;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -64,7 +64,7 @@ public class SingleplayerGameCreator {
         }
 
         //das Mapobjekt zusammensetzen
-        Map standardMap = new Map(hideoutHero, hideouts, heroes);
+        GameData standardMap = new GameData(hideoutHero, hideouts, heroes);
 
         //--------------------
         //VIEW-Objekte

@@ -138,11 +138,11 @@ public abstract class KiLogic {
 	public int chooseAttackField(SingleplayerGame singleplayerGame) {
 
 		int ownPosition = -1;
-		for (Hideout hideout : singleplayerGame.getMap().getHideouts()) {
+		for (Hideout hideout : singleplayerGame.getGameData().getHideouts()) {
 
-			if (singleplayerGame.getMap().getHideoutHero().containsKey(hideout)) {
+			if (singleplayerGame.getGameData().getHideoutHero().containsKey(hideout)) {
 
-				if (singleplayerGame.getMap().getHideoutHero().get(hideout).equals(singleplayerGame.getCurrentHero())) {
+				if (singleplayerGame.getGameData().getHideoutHero().get(hideout).equals(singleplayerGame.getCurrentHero())) {
 					ownPosition = hideout.getFieldNumber();
 				}
 			}
@@ -150,9 +150,9 @@ public abstract class KiLogic {
 
 		// falls Ein held sichtbar ist, der nicht er selber ist, wird dieser vorrangig
 		// angegriffen
-		for (Hero hero : singleplayerGame.getMap().getHeroes()) {
+		for (Hero hero : singleplayerGame.getGameData().getHeroes()) {
 			if (hero.isVisible() && !(hero.equals(singleplayerGame.getCurrentHero()))) {
-				HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getMap().getHideoutHero();
+				HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getGameData().getHideoutHero();
 				for (Hideout key : hideoutHeroMap.keySet()) {
 					if (hideoutHeroMap.get(key).equals(hero)) {
 						return key.getFieldNumber();
@@ -169,18 +169,18 @@ public abstract class KiLogic {
 
 		while (true) {
 			Random random = new Random();
-			int attackField = random.nextInt(21);
+			int attackField = random.nextInt(singleplayerGame.getGameData().getHideouts().size());
 			int activeFields = 0;
 
-			if (singleplayerGame.getMap().getHideouts().get(attackField).isActive()) {
+			if (singleplayerGame.getGameData().getHideouts().get(attackField).isActive()) {
 
-				for (Hideout hideout : singleplayerGame.getMap().getHideouts()) {
+				for (Hideout hideout : singleplayerGame.getGameData().getHideouts()) {
 					if (hideout.isActive())
 						activeFields++;
 				}
 
 				if (activeFields >= 7) {
-					int hideoutCount = singleplayerGame.getMap().getHideouts().size();
+					int hideoutCount = singleplayerGame.getGameData().getHideouts().size();
 					if (attackField < (ownPosition + 2) % hideoutCount
 							|| attackField > (ownPosition - 2 + hideoutCount) % hideoutCount) {
 						return attackField;

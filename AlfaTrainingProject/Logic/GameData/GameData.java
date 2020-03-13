@@ -1,4 +1,4 @@
-package Maps;
+package GameData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import Hideouts.Hideout;
  * Dies ist das Grundgeruest jedes Spielfelds
  * @author Kevin
  */
-public class Map {
+public class GameData {
 
 	private HashMap<Hideout, Hero> hideoutHero;
 	
@@ -25,7 +25,7 @@ public class Map {
 	 * @param eventcards Alle Eventkarten im Spiel
 	 * @author Kevin
 	 */
-	public Map(HashMap<Hideout, Hero> hideoutHero, ArrayList<Hideout> hideouts, ArrayList<Hero> heroes) {
+	public GameData(HashMap<Hideout, Hero> hideoutHero, ArrayList<Hideout> hideouts, ArrayList<Hero> heroes) {
            
 		this.hideoutHero = hideoutHero;
 		this.hideouts = hideouts;
