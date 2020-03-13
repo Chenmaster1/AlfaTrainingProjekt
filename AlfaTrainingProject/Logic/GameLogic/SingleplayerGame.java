@@ -254,7 +254,7 @@ public class SingleplayerGame {
 
                 } //playerTurn
                 else {
-
+                  gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
                 }
 
                 break;
