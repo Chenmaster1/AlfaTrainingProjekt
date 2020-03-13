@@ -20,8 +20,11 @@ import javax.swing.JFrame;
 import Abilities.Ability;
 import static Dice.AttackDice.*;
 import InGameGUI.MapPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 
 public class SingleplayerGame {
 
@@ -37,6 +40,8 @@ public class SingleplayerGame {
 
     private ArrayList<Action> standardActions;
     private ArrayList<ArrayList<Action>> heroActionsLists;
+    
+    private final ArrayList<Action> playerActions;
 
     private AttackDice attackDice;
     private HideDice hideDice;
@@ -132,6 +137,7 @@ public class SingleplayerGame {
             heroActionsLists.add(heroActionList);
 
             if (h.isPlayerControlled()) {
+                playerActions = heroActionList;
                 gamePanel.getGameSidePanel().getPanelPlayerHero().setActionArrayList(heroActionList);
             }
         }
@@ -340,18 +346,24 @@ public class SingleplayerGame {
         gamePanel.repaint();
     }
 
-    private void initializeButtonListeners() {
-        int playerHeroIndex = -1;
-        for (int i = 0; i < gameData.getHeroes().size(); i++)
-        {
-            if (gameData.getHeroes().get(i).isPlayerControlled())
-            {
-                playerHeroIndex = i;
-                break;
-            }
-        }
+    private void usePlayerAction(Action chosenAction) {
+        chosenAction.useAction(this);
         
-        ArrayList<Action> playerActions = heroActionsLists.get(playerHeroIndex);
+    } 
+    
+    private void initializeButtonListeners() {
+        ArrayList<JButton> playerButtons = gamePanel.getGameSidePanel().getPanelPlayerHero().getButtonArrayList();
+        for (int i = 0; i < playerButtons.size(); i++)
+        {
+            playerButtons.get(i).addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    //final Action tester = playerActions.get(i);
+                    //usePlayerAction(tester);
+                }
+            });
+            
+        }
         
         
     }
