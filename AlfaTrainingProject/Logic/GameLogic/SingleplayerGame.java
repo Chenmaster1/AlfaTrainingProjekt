@@ -97,47 +97,68 @@ public class SingleplayerGame {
         int heroCount = gameData.getHeroes().size();
         Random randomPlayer = new Random();
         setCurrentHeroIndex(randomPlayer.nextInt(heroCount));
-
-        lblWhileLoop:
+        
         while (true) {
             if (!currentHero.isDead()) {
                 // player´s turn
                 if (currentHero.isPlayerControlled()) {
 
                     playerTurn();
-
+                    checkAllHeroesAlive();
                 } // ki´s turn
                 else {
 
                     kiTurn();
-
+                    checkAllHeroesAlive();
                 }
             }
             // to not exceed playerBase
             setCurrentHeroIndex((currentHeroIndex + 1) % heroCount);
-
-            int alive = 0;
-            for (Hero hero : gameData.getHeroes()) {
-                if (!hero.isDead()) {
-                    alive++;
-                }
-            }
-
-            if (alive == 1) {
-                for (Hero hero : gameData.getHeroes()) {
-                    if (!hero.isDead()) {
-                        JOptionPane.showMessageDialog(mainFrame, hero.getName() + " hat gewonnen");
-                        mainFrame.setContentPane(mainFramePanel);
-                        mainFrame.repaint();
-                        break lblWhileLoop;
-                    }
-                }
-            }
-
+            
+            
         }
 
     }
+    
+    private void checkAllHeroesAlive() {
+    	//nach jedem turn fragen
+        int alive = 0;
+        for (Hero hero : gameData.getHeroes()) {
+        	if(hero.isDead() && hero.isPlayerControlled()) {
+        		backToMainMenu(hero, false);
+        		return;
+        	}
+            if (!hero.isDead()) {
+                alive++;
+            }
+        }
+      
+        if (alive == 1) {
+            for (Hero hero : gameData.getHeroes()) {
+                if (!hero.isDead()) {                    	
+                	backToMainMenu(hero, true);
+            		return;
+                }
+            }
+        }
+    }
 
+   /**
+    * 
+    * @param hero
+    * @param isWon
+    */
+    private void backToMainMenu(Hero hero, boolean isWon) {
+    	String message;
+    	if(isWon)
+    		message = "Du hast gewonnen";
+    	else
+    		message = "Du hast verloren";
+    	JOptionPane.showMessageDialog(mainFrame, message);
+        mainFrame.setContentPane(mainFramePanel);
+        mainFrame.repaint();
+    }
+    
     /**
      * Diese Methode führt die Standardaktionen sowie die Heldenspezifischen
      * Abilities zu einer Liste zusammen und übergibt der GUI die Liste des
