@@ -36,7 +36,7 @@ public class AbilityDahliaWhenHitGetNewHideout extends Ability
     @Override
     public void updateEnabled(SingleplayerGame singlePlayerGame)
     {
-        
+        //Tolpan hat nur eine passive faehigkeit, deswegen muss diese Methode nicht implementiert werden
     }
     
 }

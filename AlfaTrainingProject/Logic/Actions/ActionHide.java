@@ -65,7 +65,11 @@ public class ActionHide extends Action {
     @Override
     public void updateEnabled(SingleplayerGame singlePlayerGame)
     {
-        
+    	//verstecken geht nur, wenn keine verzoegerungsmarken aktiv sind und der Held sichtbar ist
+        if(singlePlayerGame.getCurrentHero().getDelayTokens() == 0 && singlePlayerGame.getCurrentHero().isVisible())
+        	setEnabled(true);
+        else
+        	setEnabled(false);
     }
 	
 }

@@ -26,7 +26,7 @@ public class AbilityWorokAdditionalAction extends Ability{
     @Override
     public void updateEnabled(SingleplayerGame singlePlayerGame)
     {
-       
+        //Worok hat nur eine passive faehigkeit, deswegen muss diese Methode nicht implementiert werden
     }
 
 }
