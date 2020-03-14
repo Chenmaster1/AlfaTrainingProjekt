@@ -351,20 +351,24 @@ public class HeroPanelLarge extends JPanel {
 				(int) (HERONAMELABEL_SIZE_RELATIVE_X * getWidth()),
 				(int) (HERONAMELABEL_SIZE_RELATIVE_Y * getHeight()));
 
+		//TODO: Fonts erstellen verbraucht viel CPU, andere Lösung finden
+		
 		// Font des Labels anpassen, abhängig von der Panelhöhe
-		Font heroNameLabelFont = heroNameLabel.getFont();
-		int newFontSize = (int) (HERONAMELABEL_TEXT_SIZE_RELATIVE_Y * getHeight());
-		heroNameLabel.setFont(new Font(heroNameLabelFont.getName(), Font.BOLD, newFontSize));
+//		Font heroNameLabelFont = heroNameLabel.getFont();
+//		int newFontSize = (int) (HERONAMELABEL_TEXT_SIZE_RELATIVE_Y * getHeight());
+//		heroNameLabel.setFont(new Font(heroNameLabelFont.getName(), Font.BOLD, newFontSize));
 
 		abilityDescriptionField.setBounds((int) (ABILITYDESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
 				(int) (ABILITYDESCRIPTIONFIELD_POSITION_RELATIVE_Y * getHeight()),
 				(int) (ABILITYDESCRIPTIONFIELD_SIZE_RELATIVE_X * getWidth()),
 				(int) (ABILITYDESCRIPTIONFIELD_SIZE_RELATIVE_Y * getHeight()));
 
+		//TODO: Fonts erstellen verbraucht viel CPU, andere Lösung finden
+		
 		// Font des Textfeldes anpassen, abhängig von der Panelhöhe
-		Font abilityDescriptionFieldFont = abilityDescriptionField.getFont();
-		newFontSize = (int) (ABILITYDESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y * getHeight());
-		abilityDescriptionField.setFont(new Font(abilityDescriptionFieldFont.getName(), Font.PLAIN, newFontSize));
+//		Font abilityDescriptionFieldFont = abilityDescriptionField.getFont();
+//		newFontSize = (int) (ABILITYDESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y * getHeight());
+//		abilityDescriptionField.setFont(new Font(abilityDescriptionFieldFont.getName(), Font.PLAIN, newFontSize));
 
 	}
 
