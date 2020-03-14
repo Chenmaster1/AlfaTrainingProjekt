@@ -82,15 +82,6 @@ public abstract class Hero {
         return hero.getName().equals(name);
     }
 
-    /**
-     * nur einmal pro runde angreifbar
-     */
-    public void heroGotHit() {
-    	currentHitPoints--;
-    	isAttackable = false;
-    	if(currentHitPoints <=0)
-            isDead = true;
-    }
     // -------------------------GETTER-------------------------//
     public int getMaxHitPoints() {
         return maxHitPoints;
@@ -198,7 +189,7 @@ public abstract class Hero {
     	delayTokens += number;
     }
     
-    public void setIsAttackable(boolean isAttackable) {
+    public void setAttackable(boolean isAttackable) {
     	this.isAttackable = isAttackable;
     }
 

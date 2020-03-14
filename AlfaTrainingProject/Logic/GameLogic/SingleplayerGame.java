@@ -23,6 +23,7 @@ import Abilities.Ability;
 import static Dice.AttackDice.*;
 import InGameGUI.MapPanel;
 import MenuGUI.MainFramePanel;
+import MenuGUI.MyFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -189,7 +190,7 @@ public class SingleplayerGame {
 
 		while (true) {
 			if (!currentHero.isDead()) {
-				currentHero.setIsAttackable(true);
+				currentHero.setAttackable(true);
 				// player´s turn
 				if (currentHero.isPlayerControlled()) {
 
@@ -287,7 +288,7 @@ public class SingleplayerGame {
 				}
 
 				if (heroesAliveCount == activeHideoutsCount) {
-					suddenDeathActive = true;
+					activateSuddenDeath();
 				}
 			}
 		}
@@ -353,7 +354,7 @@ public class SingleplayerGame {
 				}
 
 				if (heroesAliveCount == activeHideoutsCount) {
-					suddenDeathActive = true;
+					activateSuddenDeath();
 				}
 			}
 		}
@@ -361,7 +362,7 @@ public class SingleplayerGame {
 		return gameOver;
 
 	}
-	
+
 	/**
 	 * TODO vermutlich sollten die Actions als Control-Objekte ins gleiche Package
 	 * wie SingleplayerGame und diese Methode auf package protected stehen
@@ -492,17 +493,40 @@ public class SingleplayerGame {
 					occupyingHero.setVisible(true);
 				} // Hero is hit
 				else {
-					if (occupyingHero.isAttackable() || suddenDeathActive)
-						occupyingHero.heroGotHit();
-					// check if hero died / disable field
-					if (occupyingHero.isDead()) {
-						gameData.getHideouts().get(finalRolledAttackField).setActive(false);
+					if (occupyingHero.isAttackable()) {
+						occupyingHero.setCurrentHitPoints(occupyingHero.getCurrentHitPoints() - 1);
+
+						if (!suddenDeathActive) {
+							occupyingHero.setAttackable(false);
+						}
+
+						// check if hero died / disable field
+						if (occupyingHero.isDead()) {
+							gameData.getHideouts().get(finalRolledAttackField).setActive(false);
+						}
 					}
 
 				}
 			}
 		}
 		gamePanel.repaint();
+	}
+
+	/**
+	 * Startet den Sudden-Death Modus, in dem Helden mehrmals pro Runde getroffen
+	 * werden koennen.
+	 */
+	private void activateSuddenDeath() {
+		// Flag setzen
+		suddenDeathActive = true;
+
+		// Helden sofort verwundbar machen
+		for (Hero h : gameData.getHeroes()) {
+			h.setAttackable(true);
+
+		}
+
+		JOptionPane.showMessageDialog(mainFrame, MyFrame.bundle.getString("suddenDeathAnnounced"));
 	}
 
 	/**
