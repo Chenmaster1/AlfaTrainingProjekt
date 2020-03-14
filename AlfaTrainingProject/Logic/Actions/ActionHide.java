@@ -62,9 +62,9 @@ public class ActionHide extends Action {
 		// HideDice benutzen
 		int rollResult = singleplayerGame.getHideDice().rollDice();
 
-		//Animation des Würfels starten
+		// Animation des Würfels starten
 		singleplayerGame.getGamePanel().getGameSidePanel().getPanelHideDice().setRollResult(rollResult);
-		
+
 		// Pausieren, bis Dice-Animation diesen Thread wieder notified, Monitor-Objekt
 		// ist das HideDicePanel
 		synchronized (singleplayerGame.getGamePanel().getGameSidePanel().getPanelHideDice()) {
@@ -144,8 +144,7 @@ public class ActionHide extends Action {
 		}
 
 		if (!(activeHideoutsCount <= heroesAliveCount)) {
-			// verstecken geht nur, wenn keine verzoegerungsmarken aktiv sind und
-			// actionpoints verfuegbar sind
+//			 verstecken geht nur, wenn keine verzoegerungsmarken aktiv sind und der Hero sichtbar ist
 			if (singlePlayerGame.getCurrentHero().getDelayTokens() == 0
 					&& singlePlayerGame.getCurrentHero().isVisible())
 				setEnabled(true);

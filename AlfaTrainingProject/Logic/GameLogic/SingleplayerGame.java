@@ -9,6 +9,7 @@ import Actions.ActionWorkOffDelay;
 import Dice.AttackDice;
 import Dice.HideDice;
 import Heroes.Hero;
+import Hideouts.Hideout;
 import InGameGUI.GamePanel;
 import GameData.GameData;
 import enums.AbilityType;
@@ -57,6 +58,8 @@ public class SingleplayerGame {
 	private AttackDice attackDice;
 	private HideDice hideDice;
 
+	boolean suddenDeathActive;
+
 	// ------------------booleans fuer Spielkontrolle ueber
 	// Karten------------------------
 	private boolean mysteriousIdol1 = false;
@@ -64,6 +67,7 @@ public class SingleplayerGame {
 
 	// ------------------booleans fuer Spielkontrolle ueber
 	// Karten------------------------
+
 	public SingleplayerGame(JFrame mainFrame, GamePanel gamePanel, GameData map, MainFramePanel mainFramePanel) {
 		this.mainFrame = mainFrame;
 		this.gamePanel = gamePanel;
@@ -78,6 +82,85 @@ public class SingleplayerGame {
 		initializeButtonListeners();
 	}
 
+	/**
+	 * Diese Methode führt für jeden Helden die Standardaktionen sowie die
+	 * Heldenspezifischen Abilities zu einer Liste zusammen und übergibt der GUI die
+	 * Liste des Hauptsspielers, damit diese in JButtons umgemünzt werden kann.
+	 * 
+	 * Abilities mit dem AbilityType PASSIVE werden übersprungen, da sie nicht aktiv
+	 * einsetzbar sind. Ihre Effekte müssen anderweitig implementiert werden – als
+	 * Action existieren sie nur, um der GUI ihren Erklärungstext geben zu können
+	 * (wird auf dem HeroPanelLarge angezeigt).
+	 */
+	private void initializeActionLists() {
+		heroActionsLists = new ArrayList<ArrayList<Action>>();
+		standardActions = new ArrayList<Action>();
+		standardActions.add(new ActionAttack(1));
+		standardActions.add(new ActionHide(1));
+		standardActions.add(new ActionWorkOffDelay(1));
+
+		ArrayList<Action> heroActionList;
+
+		for (Hero h : gameData.getHeroes()) {
+			heroActionList = new ArrayList<>(standardActions);
+			for (Ability heroAbility : h.getAbilities()) {
+				if (heroAbility.getAbilityType() != AbilityType.PASSIVE) {
+					heroActionList.add(heroAbility);
+				}
+			}
+			heroActionsLists.add(heroActionList);
+
+			if (h.isPlayerControlled()) {
+				playerActions = heroActionList;
+				gamePanel.getGameSidePanel().getPanelPlayerHero().setActionArrayList(heroActionList);
+			}
+		}
+	}
+
+	/**
+	 * Initialisiert die ActionListener der Buttons, mit denen der Spieler seine
+	 * Aktion auswählt. Diese speichern die Wahl als Attribut im SingleplayerGame
+	 * und benutzen dann notify(), um den gameLogicThread wieder zu wecken (siehe
+	 * playerTurn()).
+	 * 
+	 * Ein nach dem gleichen Prinzip funktionierender MouseListener wird für die
+	 * Zielauswahl initialisiert. Dieser wird bei einer Angriffsaktion des Spielers
+	 * temporär beim MapPanel angemeldet (siehe setGameState).
+	 */
+	private void initializeButtonListeners() {
+		ArrayList<JButton> playerButtons = gamePanel.getGameSidePanel().getPanelPlayerHero().getButtonArrayList();
+		for (int i = 0; i < playerButtons.size(); i++) {
+			final Action playerAction = playerActions.get(i);
+			playerButtons.get(i).addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent ae) {
+					chosenPlayerAction = playerAction;
+					gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(false);
+					// System.out.println("notifying");
+					synchronized (mainFrame) {
+						mainFrame.notifyAll();
+					}
+					// System.out.println("notified");
+				}
+			});
+
+		}
+
+		// MapPanel MouseClick Listener
+		mapPanelClickListener = new MouseAdapter() {
+
+			@Override
+			public void mousePressed(MouseEvent me) {
+				chosenAttackField = gamePanel.getMapPanel().getCurrentAimedAtField();
+				synchronized (mainFrame) {
+					mainFrame.notifyAll();
+				}
+			}
+
+		};
+
+	}
+
 	public void startGame() {
 
 		showGame();
@@ -90,6 +173,12 @@ public class SingleplayerGame {
 			}
 		};
 		gameLogicThread.start();
+	}
+
+	private void showGame() {
+
+		mainFrame.setContentPane(gamePanel);
+		mainFrame.pack();
 	}
 
 	private void startGameLogic() {
@@ -134,6 +223,288 @@ public class SingleplayerGame {
 		}
 	}
 
+	private boolean playerTurn() {
+
+		gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(true);
+		currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
+		boolean gameOver = false;
+
+		while (currentHero.getCurrentActionPoints() != 0) {
+			setGameState(GameState.CHOOSING);
+
+			// Die Button-Blockierung aufheben
+			gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(true);
+
+			// Verfügbarkeits-Status der Aktionen updaten
+			for (Action a : heroActionsLists.get(currentHeroIndex)) {
+				a.updateEnabled(this);
+
+			}
+
+			// Die Buttons je nach Verfügbarkeits-Status der jeweiligen Aktionen enablen
+			gamePanel.getGameSidePanel().getPanelPlayerHero().updateButtonsEnabled();
+
+			// Auf Entscheidung des Spielers warten, wird von den Action-Buttons wieder
+			// notified
+			synchronized (mainFrame) {
+				try {
+					mainFrame.wait();
+					// System.out.println("playerTurn continued");
+				} catch (InterruptedException ex) {
+					Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+
+			// Aktion wurde gewählt. Entsprechend AP reduzieren, Reduktion anzeigen und dann
+			// Aktion ausführen
+			decreaseCurrentActionPointsBy(chosenPlayerAction.getActionPointsRequired());
+			gamePanel.getGameSidePanel().repaint();
+			chosenPlayerAction.useAction(this);
+
+			// Auswirkungen der Aktion anzeigen
+			gamePanel.repaint();
+
+			// Wenn diese Aktion das Spiel beendet hat (siehe isGameOver), dann aus der
+			// Aktionsschleife springen und true zurückgeben
+			if (isGameOver()) {
+				gameOver = true;
+				break;
+			}
+
+			// Wenn nach der Aktion nur noch so viele offene Verstecke wie Spieler da sind,
+			// Sudden Death aktivieren (Unverwundbarkeit ausgeschaltet)
+			if (!suddenDeathActive) {
+				int activeHideoutsCount = 0;
+				int heroesAliveCount = 0;
+				for (Hideout hideout : gameData.getHideouts()) {
+					if (hideout.isActive())
+						activeHideoutsCount++;
+				}
+
+				for (Hero hero : gameData.getHeroes()) {
+					if (!hero.isDead())
+						heroesAliveCount++;
+				}
+
+				if (heroesAliveCount == activeHideoutsCount) {
+					suddenDeathActive = true;
+				}
+			}
+		}
+
+		return gameOver;
+
+	}
+
+	private boolean kiTurn() {
+
+		gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(false);
+		currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
+		boolean gameOver = false;
+
+		while (currentHero.getCurrentActionPoints() != 0) {
+
+			setGameState(GameState.CHOOSING);
+
+			// Verfügbarkeits-Status der Aktionen updaten
+			for (Action a : heroActionsLists.get(currentHeroIndex)) {
+				a.updateEnabled(this);
+			}
+
+			// Eine Bedenkzeit der KI simulieren
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException ex) {
+				Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
+			}
+
+			// KiLogic des Heros nach Entscheidung fragen
+			Action currentAction = currentHero.getKiLogic().chooseAction(heroActionsLists.get(currentHeroIndex), this);
+
+			// Entsprechend AP reduzieren, Reduktion anzeigen und dann
+			// Aktion ausführen
+			decreaseCurrentActionPointsBy(currentAction.getActionPointsRequired());
+			gamePanel.getGameSidePanel().repaint();
+			currentAction.useAction(this);
+
+			// Auswirkungen der Aktion anzeigen
+			gamePanel.repaint();
+
+			// Wenn diese Aktion das Spiel beendet hat (siehe isGameOver), dann aus der
+			// Schleife springen und true zurückgeben
+			if (isGameOver()) {
+				gameOver = true;
+				break;
+			}
+
+			// Wenn nach der Aktion nur noch so viele offene Verstecke wie Spieler da sind,
+			// Sudden Death aktivieren (Unverwundbarkeit ausgeschaltet)
+			if (!suddenDeathActive) {
+				int activeHideoutsCount = 0;
+				int heroesAliveCount = 0;
+				for (Hideout hideout : gameData.getHideouts()) {
+					if (hideout.isActive())
+						activeHideoutsCount++;
+				}
+
+				for (Hero hero : gameData.getHeroes()) {
+					if (!hero.isDead())
+						heroesAliveCount++;
+				}
+
+				if (heroesAliveCount == activeHideoutsCount) {
+					suddenDeathActive = true;
+				}
+			}
+		}
+
+		return gameOver;
+
+	}
+	
+	/**
+	 * TODO vermutlich sollten die Actions als Control-Objekte ins gleiche Package
+	 * wie SingleplayerGame und diese Methode auf package protected stehen
+	 * 
+	 * @param gameState
+	 */
+	public void setGameState(GameState gameState) {
+		switch (gameState) {
+		case AIMING:
+			if (!currentHero.isPlayerControlled()) {
+				// AI-Zielvorgang
+
+				// getting AttackField
+				int currentAttackField = currentHero.getKiLogic().chooseAttackField(this);
+
+				// MAPSTATE_KI_AIMING erzeugt Zielmaske, aber ohne MouseListener
+				gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_KI_AIMING);
+				gamePanel.getMapPanel().setCurrentAimedAtField(currentAttackField);
+
+				// Kurz pausieren, damit die Zielauswahl deutlich sichtbar ist.
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException ex) {
+					Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
+				}
+
+				shootAtAttackField(currentAttackField);
+
+			} else {
+				// Spielerkontrollierter Zielvorgang
+
+				// MAPSTATE_PLAYER_AIMING erzeugt Zielmaske, mit MouseListener, d.h. sie folgt
+				// der Maus
+				gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
+				gamePanel.getMapPanel().repaint();
+
+				// Der Listener für den Mausklick auf MapPanel wird angemeldet
+				gamePanel.getMapPanel().addMouseListener(mapPanelClickListener);
+
+				// Thread pausieren, bis aufs MapPanel geklickt wurde (siehe Initialisierung des
+				// mapPanelClickListener)
+				synchronized (mainFrame) {
+					try {
+						mainFrame.wait();
+					} catch (InterruptedException ex) {
+						Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
+					}
+				}
+
+				// Zielfeld wurde angeklickt, mapPanelClickListener wieder entfernen und den
+				// Schuss ausloesen.
+				gamePanel.getMapPanel().removeMouseListener(mapPanelClickListener);
+				shootAtAttackField(chosenAttackField);
+			}
+
+			break;
+
+		case CHOOSING:
+			// Zielmaske wieder ausblenden, sonst nichts besonderes
+			gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_REGULAR);
+			break;
+
+		}
+		this.gameState = gameState;
+	}
+
+	private void shootAtAttackField(int currentAttackField) {
+		int numberOfHideouts = gameData.getHideouts().size();
+		int diceResult = attackDice.rollDice();
+
+		// Zielmaske einfrieren
+		gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_KI_AIMING);
+
+		// Animation starten
+		gamePanel.getGameSidePanel().getPanelAttackDice().setRollResult(diceResult);
+
+		// Auf Animation warten
+		synchronized (gamePanel.getGameSidePanel().getPanelAttackDice()) {
+			try {
+				gamePanel.getGameSidePanel().getPanelAttackDice().wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		// Kurz pausieren, damit das Ergebnis der Animation vorm Angriff erkennbar ist
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Zielmaske entfernen
+		gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_REGULAR);
+
+		// Tatsächlich getroffenes Feld berechnen
+		int finalRolledAttackField;
+		switch (diceResult) {
+		case RESULT_CENTER_HIT:
+			finalRolledAttackField = currentAttackField;
+			break;
+		case RESULT_LEFT_CENTER_HIT:
+			finalRolledAttackField = (currentAttackField + numberOfHideouts - 1) % numberOfHideouts;
+			break;
+		case RESULT_RIGHT_CENTER_HIT:
+			finalRolledAttackField = (currentAttackField + numberOfHideouts + 1) % numberOfHideouts;
+			break;
+		case RESULT_OUTER_LEFT_HIT:
+			finalRolledAttackField = (currentAttackField + numberOfHideouts - 2) % numberOfHideouts;
+			break;
+		case RESULT_OUTER_RIGHT_HIT:
+			finalRolledAttackField = (currentAttackField + numberOfHideouts + 2) % numberOfHideouts;
+			break;
+		default:
+			finalRolledAttackField = -1;
+		}
+
+		// hit that field
+		if (gameData.getHideoutHero().containsKey(gameData.getHideouts().get(finalRolledAttackField))) {
+			// Field is occupied by a hero
+			Hero occupyingHero = gameData.getHideoutHero().get(gameData.getHideouts().get(finalRolledAttackField));
+
+			if (occupyingHero != null) {
+				// Hero is detected / unveiled
+				if (!occupyingHero.isVisible()) {
+					occupyingHero.setVisible(true);
+				} // Hero is hit
+				else {
+					if (occupyingHero.isAttackable() || suddenDeathActive)
+						occupyingHero.heroGotHit();
+					// check if hero died / disable field
+					if (occupyingHero.isDead()) {
+						gameData.getHideouts().get(finalRolledAttackField).setActive(false);
+					}
+
+				}
+			}
+		}
+		gamePanel.repaint();
+	}
+
 	/**
 	 * Gibt true zurück, wenn einer der Helden als einziger übrig ist ODER der
 	 * Spielerheld tot ist, sonst false.
@@ -150,11 +521,8 @@ public class SingleplayerGame {
 		for (Hero hero : gameData.getHeroes()) {
 			if (!hero.isDead()) {
 				alive++;
-			}
-			else
-			{
-				if(hero.isPlayerControlled())
-				{
+			} else {
+				if (hero.isPlayerControlled()) {
 					playerHeroDead = true;
 				}
 			}
@@ -183,152 +551,8 @@ public class SingleplayerGame {
 //		mainFrame.repaint();
 	}
 
-	/**
-	 * Diese Methode führt die Standardaktionen sowie die Heldenspezifischen
-	 * Abilities zu einer Liste zusammen und übergibt der GUI die Liste des
-	 * Hauptsspielers.
-	 */
-	private void initializeActionLists() {
-		heroActionsLists = new ArrayList<ArrayList<Action>>();
-		standardActions = new ArrayList<Action>();
-		standardActions.add(new ActionAttack(1));
-		standardActions.add(new ActionHide(1));
-		standardActions.add(new ActionWorkOffDelay(1));
-
-		ArrayList<Action> heroActionList;
-
-		for (Hero h : gameData.getHeroes()) {
-			heroActionList = new ArrayList<>(standardActions);
-			for (Ability heroAbility : h.getAbilities()) {
-				if (heroAbility.getAbilityType() != AbilityType.PASSIVE) {
-					heroActionList.add(heroAbility);
-				}
-			}
-			heroActionsLists.add(heroActionList);
-
-			if (h.isPlayerControlled()) {
-				playerActions = heroActionList;
-				gamePanel.getGameSidePanel().getPanelPlayerHero().setActionArrayList(heroActionList);
-			}
-		}
-	}
-
-	private void initializeButtonListeners() {
-		ArrayList<JButton> playerButtons = gamePanel.getGameSidePanel().getPanelPlayerHero().getButtonArrayList();
-		for (int i = 0; i < playerButtons.size(); i++) {
-			final Action playerAction = playerActions.get(i);
-			playerButtons.get(i).addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent ae) {
-					chosenPlayerAction = playerAction;
-					gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(false);
-					// System.out.println("notifying");
-					synchronized (mainFrame) {
-						mainFrame.notifyAll();
-					}
-					// System.out.println("notified");
-				}
-			});
-
-		}
-
-		// MapPanel MouseClick Listener
-		mapPanelClickListener = new MouseAdapter() {
-
-			@Override
-			public void mousePressed(MouseEvent me) {
-				chosenAttackField = gamePanel.getMapPanel().getCurrentAimedAtField();
-				synchronized (mainFrame) {
-					mainFrame.notifyAll();
-				}
-			}
-
-		};
-
-	}
-
-	private void showGame() {
-
-		mainFrame.setContentPane(gamePanel);
-		mainFrame.pack();
-	}
-
-	private boolean playerTurn() {
-
-		gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(true);
-		currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
-		boolean gameOver = false;
-
-		while (currentHero.getCurrentActionPoints() != 0) {
-			setGameState(GameState.CHOOSING);
-			gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(true);
-			for (Action a : heroActionsLists.get(currentHeroIndex)) {
-				a.updateEnabled(this);
-
-			}
-			gamePanel.getGameSidePanel().getPanelPlayerHero().updateButtonsEnabled();
-
-			// System.out.println("playerTurn Waiting");
-			synchronized (mainFrame) {
-				try {
-					mainFrame.wait();
-					// System.out.println("playerTurn continued");
-				} catch (InterruptedException ex) {
-					Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
-				}
-			}
-
-			decreaseCurrentActionPointsBy(chosenPlayerAction.getActionPointsRequired());
-			chosenPlayerAction.useAction(this);
-
-			gamePanel.repaint();
-
-			if (isGameOver()) {
-				gameOver = true;
-				break;
-			}
-		}
-
-		return gameOver;
-
-	}
-
-	private boolean kiTurn() {
-
-		gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(false);
-		currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
-		boolean gameOver = false;
-
-		while (currentHero.getCurrentActionPoints() != 0) {
-
-			setGameState(GameState.CHOOSING);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException ex) {
-				Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
-			}
-			for (Action a : heroActionsLists.get(currentHeroIndex)) {
-				a.updateEnabled(this);
-			}
-
-			Action currentAction = currentHero.getKiLogic().chooseAction(heroActionsLists.get(currentHeroIndex), this);
-
-			decreaseCurrentActionPointsBy(currentAction.getActionPointsRequired());
-			currentAction.useAction(this);
-
-			gamePanel.repaint();
-
-			if (isGameOver()) {
-				gameOver = true;
-				break;
-			}
-		}
-
-		return gameOver;
-
-	}
-
 	// -------------------------GETTER-------------------------//
+
 	public HideDice getHideDice() {
 		return hideDice;
 	}
@@ -398,50 +622,6 @@ public class SingleplayerGame {
 		}
 	}
 
-	public void setGameState(GameState gameState) {
-		switch (gameState) {
-		case AIMING:
-			if (!currentHero.isPlayerControlled()) {
-				// getting AttackField
-				int currentAttackField = currentHero.getKiLogic().chooseAttackField(this);
-
-				gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_KI_AIMING);
-				gamePanel.getMapPanel().setCurrentAimedAtField(currentAttackField);
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException ex) {
-					Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
-				}
-				shootAtAttackField(currentAttackField);
-
-			} // playerTurn
-			else {
-				gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
-				gamePanel.getMapPanel().repaint();
-				gamePanel.getMapPanel().addMouseListener(mapPanelClickListener);
-
-				synchronized (mainFrame) {
-					try {
-						mainFrame.wait();
-						// System.out.println("AIMING continued");
-					} catch (InterruptedException ex) {
-						Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
-					}
-				}
-				gamePanel.getMapPanel().removeMouseListener(mapPanelClickListener);
-				shootAtAttackField(chosenAttackField);
-			}
-
-			break;
-
-		case CHOOSING:
-			gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_REGULAR);
-			break;
-
-		}
-		this.gameState = gameState;
-	}
-
 	public void setAttackMode(AttackMode attackMode) {
 		this.attackMode = attackMode;
 	}
@@ -460,86 +640,6 @@ public class SingleplayerGame {
 
 	public void setMysteriousIdol2(boolean active) {
 		this.mysteriousIdol2 = active;
-	}
-
-	private void shootAtAttackField(int currentAttackField) {
-		int numberOfHideouts = gameData.getHideouts().size();
-		int diceResult = attackDice.rollDice();
-
-		// Zielmaske einfrieren
-		gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_KI_AIMING);
-
-		// Animation starten
-		gamePanel.getGameSidePanel().getPanelAttackDice().setRollResult(diceResult);
-		// Auf Animation warten
-
-		synchronized (gamePanel.getGameSidePanel().getPanelAttackDice()) {
-			try {
-				gamePanel.getGameSidePanel().getPanelAttackDice().wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		try {
-			Thread.sleep(200);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// Zielmaske entfernen
-		gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_REGULAR);
-
-		int finalRolledAttackField;
-		switch (diceResult) {
-		case RESULT_CENTER_HIT:
-			finalRolledAttackField = currentAttackField;
-			break;
-		case RESULT_LEFT_CENTER_HIT:
-			finalRolledAttackField = (currentAttackField + numberOfHideouts - 1) % numberOfHideouts;
-			break;
-		case RESULT_RIGHT_CENTER_HIT:
-			finalRolledAttackField = (currentAttackField + numberOfHideouts + 1) % numberOfHideouts;
-			break;
-		case RESULT_OUTER_LEFT_HIT:
-			finalRolledAttackField = (currentAttackField + numberOfHideouts - 2) % numberOfHideouts;
-			break;
-		case RESULT_OUTER_RIGHT_HIT:
-			finalRolledAttackField = (currentAttackField + numberOfHideouts + 2) % numberOfHideouts;
-			break;
-		default:
-			finalRolledAttackField = -1;
-		}
-
-		// hit that field
-		if (gameData.getHideoutHero().containsKey(gameData.getHideouts().get(finalRolledAttackField))) {
-			// Field is occupied by a hero
-			Hero occupyingHero = gameData.getHideoutHero().get(gameData.getHideouts().get(finalRolledAttackField));
-
-			if (occupyingHero != null) {
-				// Hero is detected / unveiled
-				if (!occupyingHero.isVisible()) {
-					occupyingHero.setVisible(true);
-				} // Hero is hit
-				else {
-					if (occupyingHero.isAttackable())
-						occupyingHero.heroGotHit();
-					// check if hero died / disable field
-					if (occupyingHero.isDead()) {
-						gameData.getHideouts().get(finalRolledAttackField).setActive(false);
-					}
-
-				}
-			}
-		}
-		gamePanel.repaint();
-	}
-
-	private void usePlayerAction(Action chosenAction) {
-		chosenAction.useAction(this);
-
 	}
 
 }
