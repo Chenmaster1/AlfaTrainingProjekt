@@ -19,6 +19,8 @@ import Hideouts.HideoutType;
 import SoundThread.MainTheme;
 import SoundThread.mp3test;
 import alfatrainingprojekt.AlfaTrainingProjekt;
+import resourceLoaders.ImageLoader;
+import resourceLoaders.ImageName;
 
 @SuppressWarnings("serial")
 public class MainFramePanel extends JPanel {
@@ -40,17 +42,13 @@ public class MainFramePanel extends JPanel {
 		setLayout(null);
 		frame.setContentPane(this);
 		setSize(frame.getSize());
-		backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Images/BackGround_FullScreen.png"))
-				.getImage();
+		backgroundImage = ImageLoader.getInstance().getImage(ImageName.MENU_BACKGROUND);
 
-		btnNew = new MyButton(MyFrame.bundle.getString("btnNew"),
-				new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
-		btnLoad = new MyButton(MyFrame.bundle.getString("btnLoad"),
-				new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
-		btnSettings = new MyButton(MyFrame.bundle.getString("btnSettings"),
-				new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
-		btnClose = new MyButton(MyFrame.bundle.getString("btnClose"),
-				new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		ImageIcon buttonImageIcon = new ImageIcon(ImageLoader.getInstance().getImage(ImageName.BUTTON));
+		btnNew = new MyButton(MyFrame.bundle.getString("btnNew"), buttonImageIcon);
+		btnLoad = new MyButton(MyFrame.bundle.getString("btnLoad"), buttonImageIcon);
+		btnSettings = new MyButton(MyFrame.bundle.getString("btnSettings"), buttonImageIcon);
+		btnClose = new MyButton(MyFrame.bundle.getString("btnClose"), buttonImageIcon);
 		initializeButtons();
 	}
 

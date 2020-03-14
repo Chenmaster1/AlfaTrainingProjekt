@@ -2,6 +2,10 @@ package InGameGUI;
 
 import Dice.AttackDice;
 import MenuGUI.MainFramePanel;
+import resourceLoaders.AnimationLoader;
+import resourceLoaders.AnimationName;
+import resourceLoaders.ImageLoader;
+import resourceLoaders.ImageName;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -50,30 +54,17 @@ public class AttackDicePanel extends JPanel implements Runnable {
 
 		// Animationsbilder laden
 		Image frame;
-		animationImages = new ArrayList<>();
-		for (int i = 0; i < 220; i++) {
-			// Pfad-String zusammenbasteln. image 0 -> 0000, 15 -> 0015 etc
-			StringBuilder sb = new StringBuilder();
-			sb.append("dice_w10/testsequence");
-			int additionalZeros = 4 - ("" + i).length();
-
-			for (int j = 0; j < additionalZeros; j++) {
-				sb.append("0");
-			}
-			sb.append(i + ".png");
-
-			frame = new ImageIcon(getClass().getClassLoader().getResource(sb.toString())).getImage();
-			animationImages.add(frame);
-		}
+		animationImages = AnimationLoader.getInstance().getAnimation(AnimationName.ATTACKDICE);
+		
 
 		// Tower und Spotlight laden
-		towerImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Tower.png")).getImage();
-		spotlightConeImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/spot_left.png"))
-				.getImage();
-		spotlightCircleImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/spot_tower.png"))
-				.getImage();
-
-//        setBackground(Color.BLACK);
+		towerImage =  ImageLoader.getInstance().getImage(ImageName.TOWER);
+		
+		spotlightConeImage =  ImageLoader.getInstance().getImage(ImageName.SPOT_LEFT);
+		
+		spotlightCircleImage =  ImageLoader.getInstance().getImage(ImageName.SPOT_TOWER);
+		
+		//        setBackground(Color.BLACK);
 		setOpaque(false);
 	}
 

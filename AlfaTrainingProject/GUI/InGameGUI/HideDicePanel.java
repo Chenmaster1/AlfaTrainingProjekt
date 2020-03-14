@@ -2,6 +2,11 @@ package InGameGUI;
 
 import Dice.AttackDice;
 import Dice.HideDice;
+import resourceLoaders.AnimationLoader;
+import resourceLoaders.AnimationName;
+import resourceLoaders.ImageLoader;
+import resourceLoaders.ImageName;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -49,27 +54,13 @@ public class HideDicePanel extends JPanel implements Runnable {
 
         // Animationsbilder laden
         Image frame;
-        animationImages = new ArrayList<>();
-        for (int i = 0; i < 120; i++) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("dice_w6/testsequence");
-            int additionalZeros = 4 - ("" + i).length();
-
-            for (int j = 0; j < additionalZeros; j++) {
-                sb.append("0");
-            }
-            sb.append(i + ".png");
-
-            frame = new ImageIcon(getClass().getClassLoader().getResource(sb.toString())).getImage();
-            animationImages.add(frame);
-        }
+        animationImages = AnimationLoader.getInstance().getAnimation(AnimationName.HIDEDICE);
+        
 
         // Tower und Spotlight laden
-        cardImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Hideout_Card.jpg")).getImage();
-        spotlightConeImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/spot_right.png"))
-                .getImage();
-        spotlightCircleImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/spot_hideout.png"))
-                .getImage();
+        cardImage = ImageLoader.getInstance().getImage(ImageName.HIDEOUT_CARD);
+        spotlightConeImage = ImageLoader.getInstance().getImage(ImageName.SPOT_RIGHT);
+        spotlightCircleImage = ImageLoader.getInstance().getImage(ImageName.SPOT_HIDEOUT);
 
 //        setBackground(Color.BLACK);
 		setOpaque(false);

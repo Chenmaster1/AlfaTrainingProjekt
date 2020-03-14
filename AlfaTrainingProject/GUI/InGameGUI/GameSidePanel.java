@@ -1,6 +1,9 @@
 package InGameGUI;
 
 import Heroes.Hero;
+import resourceLoaders.ImageLoader;
+import resourceLoaders.ImageName;
+
 import static InGameGUI.MapPanel.MAPSTATE_PLAYER_AIMING;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -65,9 +68,7 @@ public class GameSidePanel extends JPanel {
 		this.heroes = heroes;
 		this.playerHero = playerHero;
 
-		backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Gameboard_Right.png"))
-				.getImage();
-
+		backgroundImage = ImageLoader.getInstance().getImage(ImageName.GAMEBOARD_RIGHT);
 		setLayout(null);
 
 		panelOtherHeroes = new OtherHeroesPanel(heroes);

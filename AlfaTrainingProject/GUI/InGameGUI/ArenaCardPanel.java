@@ -1,6 +1,8 @@
 package InGameGUI;
 
 import Arenacards.Arenacards;
+import resourceLoaders.ImageLoader;
+import resourceLoaders.ImageName;
 
 import java.awt.Font;
 import java.awt.Graphics;
@@ -53,8 +55,7 @@ public class ArenaCardPanel extends JPanel {
 
         artworkImage = displayedCard.getImage();
 
-        backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Arena_Cards/Arenacard_empty.jpg"))
-                .getImage();
+        backgroundImage = ImageLoader.getInstance().getImage(ImageName.ARENACARD_EMPTY);
 
         setLayout(null);
         setOpaque(false);

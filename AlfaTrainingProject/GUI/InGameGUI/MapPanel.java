@@ -2,6 +2,10 @@ package InGameGUI;
 
 import Heroes.Hero;
 import Hideouts.Hideout;
+import resourceLoaders.AnimationLoader;
+import resourceLoaders.AnimationName;
+import resourceLoaders.ImageLoader;
+import resourceLoaders.ImageName;
 
 import java.awt.AlphaComposite;
 import java.awt.Composite;
@@ -21,7 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- * Das Panel mit dem eigentlichen Spielfeld bzw der Arena. 
+ * Das Panel mit dem eigentlichen Spielfeld bzw der Arena.
  * 
  */
 public class MapPanel extends JPanel {
@@ -53,16 +57,9 @@ public class MapPanel extends JPanel {
 
 		setLayout(null);
 
-		backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Gameboard_Empty.png"))
-				.getImage();
-		aimOverlay = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Tower_Aim.png")).getImage();
-
-		inactiveFieldOverlays = new ArrayList<>();
-		for (int i = 0; i < hideouts.size(); i++) {
-			inactiveFieldOverlays
-					.add(new ImageIcon(getClass().getClassLoader().getResource("Gameboard/" + i + "-Deactivated.png"))
-							.getImage());
-		}
+		backgroundImage = ImageLoader.getInstance().getImage(ImageName.GAMEBOARD_EMPTY);
+		aimOverlay = ImageLoader.getInstance().getImage(ImageName.TOWER_AIM);
+		inactiveFieldOverlays = AnimationLoader.getInstance().getAnimation(AnimationName.DEACTIVATED_HIDEOUTS);
 
 		this.hideoutHeroes = hideoutHeroes;
 		this.mainHero = mainHero;
@@ -79,7 +76,7 @@ public class MapPanel extends JPanel {
 					setCurrentAimedAtField(newField);
 				}
 			}
-			
+
 		};
 	}
 
