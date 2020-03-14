@@ -104,15 +104,18 @@ public class SingleplayerGame {
 				// player´s turn
 				if (currentHero.isPlayerControlled()) {
 
-					playerTurn();
-					if (checkAllHeroesAlive())
-						return;
+					boolean gameOver = playerTurn();
+
+					if (gameOver) {
+						break;
+					}
 				} // ki´s turn
 				else {
 
-					kiTurn();
-					if (checkAllHeroesAlive())
-						return;
+					boolean gameOver = kiTurn();
+					if (gameOver) {
+						break;
+					}
 				}
 			}
 			// to not exceed playerBase
@@ -120,31 +123,48 @@ public class SingleplayerGame {
 
 		}
 
+		for (Hero h : gameData.getHeroes()) {
+			if (h.isPlayerControlled()) {
+				if (h.isDead()) {
+					backToMainMenu(false);
+				} else {
+					backToMainMenu(true);
+				}
+			}
+		}
 	}
 
-	private boolean checkAllHeroesAlive() {
-		// nach jedem turn fragen
+	/**
+	 * Gibt true zurück, wenn einer der Helden als einziger übrig ist ODER der
+	 * Spielerheld tot ist, sonst false.
+	 * 
+	 * @return
+	 */
+	private boolean isGameOver() {
+		// nach jeder Aktion fragen, ob
+		boolean gameOver = false;
+
 		int alive = 0;
+		boolean playerHeroDead = false;
+
 		for (Hero hero : gameData.getHeroes()) {
-			if (hero.isDead() && hero.isPlayerControlled()) {
-				backToMainMenu(hero, false);
-				return true;
-			}
 			if (!hero.isDead()) {
 				alive++;
 			}
-		}
-
-		if (alive == 1) {
-			for (Hero hero : gameData.getHeroes()) {
-				if (!hero.isDead()) {
-					backToMainMenu(hero, true);
-					return true;
+			else
+			{
+				if(hero.isPlayerControlled())
+				{
+					playerHeroDead = true;
 				}
 			}
 		}
 
-		return false;
+		if (alive == 1 || playerHeroDead) {
+			gameOver = true;
+		}
+
+		return gameOver;
 	}
 
 	/**
@@ -152,7 +172,7 @@ public class SingleplayerGame {
 	 * @param hero
 	 * @param isWon
 	 */
-	private void backToMainMenu(Hero hero, boolean isWon) {
+	private void backToMainMenu(boolean isWon) {
 		String message;
 		if (isWon)
 			message = "Du hast gewonnen";
@@ -160,7 +180,7 @@ public class SingleplayerGame {
 			message = "Du hast verloren";
 		JOptionPane.showMessageDialog(mainFrame, message);
 		mainFrame.setContentPane(mainFramePanel);
-		mainFrame.repaint();
+//		mainFrame.repaint();
 	}
 
 	/**
@@ -202,11 +222,11 @@ public class SingleplayerGame {
 				public void actionPerformed(ActionEvent ae) {
 					chosenPlayerAction = playerAction;
 					gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(false);
-					//System.out.println("notifying");
+					// System.out.println("notifying");
 					synchronized (mainFrame) {
 						mainFrame.notifyAll();
 					}
-					//System.out.println("notified");
+					// System.out.println("notified");
 				}
 			});
 
@@ -233,10 +253,11 @@ public class SingleplayerGame {
 		mainFrame.pack();
 	}
 
-	private void playerTurn() {
+	private boolean playerTurn() {
 
 		gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(true);
 		currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
+		boolean gameOver = false;
 
 		while (currentHero.getCurrentActionPoints() != 0) {
 			setGameState(GameState.CHOOSING);
@@ -247,11 +268,11 @@ public class SingleplayerGame {
 			}
 			gamePanel.getGameSidePanel().getPanelPlayerHero().updateButtonsEnabled();
 
-			//System.out.println("playerTurn Waiting");
+			// System.out.println("playerTurn Waiting");
 			synchronized (mainFrame) {
 				try {
 					mainFrame.wait();
-					//System.out.println("playerTurn continued");
+					// System.out.println("playerTurn continued");
 				} catch (InterruptedException ex) {
 					Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
 				}
@@ -259,17 +280,24 @@ public class SingleplayerGame {
 
 			decreaseCurrentActionPointsBy(chosenPlayerAction.getActionPointsRequired());
 			chosenPlayerAction.useAction(this);
-			
 
 			gamePanel.repaint();
+
+			if (isGameOver()) {
+				gameOver = true;
+				break;
+			}
 		}
+
+		return gameOver;
 
 	}
 
-	private void kiTurn() {
+	private boolean kiTurn() {
 
 		gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(false);
 		currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
+		boolean gameOver = false;
 
 		while (currentHero.getCurrentActionPoints() != 0) {
 
@@ -287,10 +315,16 @@ public class SingleplayerGame {
 
 			decreaseCurrentActionPointsBy(currentAction.getActionPointsRequired());
 			currentAction.useAction(this);
-			
 
 			gamePanel.repaint();
+
+			if (isGameOver()) {
+				gameOver = true;
+				break;
+			}
 		}
+
+		return gameOver;
 
 	}
 
@@ -314,7 +348,7 @@ public class SingleplayerGame {
 	public GameData getGameData() {
 		return gameData;
 	}
-	
+
 	public GamePanel getGamePanel() {
 		return gamePanel;
 	}
@@ -389,7 +423,7 @@ public class SingleplayerGame {
 				synchronized (mainFrame) {
 					try {
 						mainFrame.wait();
-						//System.out.println("AIMING continued");
+						// System.out.println("AIMING continued");
 					} catch (InterruptedException ex) {
 						Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
 					}
@@ -431,16 +465,15 @@ public class SingleplayerGame {
 	private void shootAtAttackField(int currentAttackField) {
 		int numberOfHideouts = gameData.getHideouts().size();
 		int diceResult = attackDice.rollDice();
-		
-		//Zielmaske einfrieren
+
+		// Zielmaske einfrieren
 		gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_KI_AIMING);
-		
-		//Animation starten
+
+		// Animation starten
 		gamePanel.getGameSidePanel().getPanelAttackDice().setRollResult(diceResult);
-		//Auf Animation warten
-		
-		synchronized(gamePanel.getGameSidePanel().getPanelAttackDice())
-		{
+		// Auf Animation warten
+
+		synchronized (gamePanel.getGameSidePanel().getPanelAttackDice()) {
 			try {
 				gamePanel.getGameSidePanel().getPanelAttackDice().wait();
 			} catch (InterruptedException e) {
@@ -448,19 +481,17 @@ public class SingleplayerGame {
 				e.printStackTrace();
 			}
 		}
-		
+
 		try {
 			Thread.sleep(200);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//Zielmaske entfernen
+
+		// Zielmaske entfernen
 		gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_REGULAR);
-		
-		
-		
+
 		int finalRolledAttackField;
 		switch (diceResult) {
 		case RESULT_CENTER_HIT:
@@ -481,8 +512,6 @@ public class SingleplayerGame {
 		default:
 			finalRolledAttackField = -1;
 		}
-		
-		
 
 		// hit that field
 		if (gameData.getHideoutHero().containsKey(gameData.getHideouts().get(finalRolledAttackField))) {
@@ -495,7 +524,7 @@ public class SingleplayerGame {
 					occupyingHero.setVisible(true);
 				} // Hero is hit
 				else {
-					if(occupyingHero.isAttackable())
+					if (occupyingHero.isAttackable())
 						occupyingHero.heroGotHit();
 					// check if hero died / disable field
 					if (occupyingHero.isDead()) {
