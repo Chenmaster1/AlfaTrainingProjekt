@@ -398,4 +398,15 @@ public class HeroPanelLarge extends JPanel {
 		updateButtonsEnabled();
 	}
 
+	public void setDisplayedHero(Hero displayedHero) {
+		this.displayedHero = displayedHero;
+		
+		removeAll();
+		initializeActionListPanel();
+		initializeTextFields();
+		repaint();
+	}
+	
+	
+
 }
