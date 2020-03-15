@@ -11,8 +11,9 @@ public class HeroChoicePanelSingle extends JPanel {
 
 	private Hero displayedHero;
 	private HeroPanelSmall picturePanel;
-
 	private JCheckBox checkbox;
+	
+	private boolean heroSelected;
 
 	public HeroChoicePanelSingle(Hero displayedHero) {
 		this.displayedHero = displayedHero;
@@ -37,6 +38,24 @@ public class HeroChoicePanelSingle extends JPanel {
 	public JCheckBox getCheckbox() {
 		return checkbox;
 	}
+
+	public boolean isHeroSelected() {
+		return heroSelected;
+	}
+
+	public void setHeroSelected(boolean heroSelected) {
+		this.heroSelected = heroSelected;
+		
+		if(heroSelected)
+		{
+			checkbox.setEnabled(false);
+		}
+		else {
+			checkbox.setEnabled(true);
+		}
+	}
+	
+	
 	
 	
 }

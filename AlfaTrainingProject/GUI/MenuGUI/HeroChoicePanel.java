@@ -19,11 +19,11 @@ public class HeroChoicePanel extends JPanel {
 		setLayout(new GridLayout(1, heroList.size(), 100, 0));
 
 		heroChoicePanelSingleList = new ArrayList<>();
-		
+
 		HeroChoicePanelSingle hCPS;
 		for (Hero h : heroList) {
 			h.setCurrentActionPoints(h.getMaxActionPoints());
-			
+
 			hCPS = new HeroChoicePanelSingle(h);
 			heroChoicePanelSingleList.add(hCPS);
 			this.add(hCPS);
@@ -37,5 +37,16 @@ public class HeroChoicePanel extends JPanel {
 	public ArrayList<HeroChoicePanelSingle> getHeroChoicePanelSingleList() {
 		return heroChoicePanelSingleList;
 	}
-	
+
+	public void select(int index) {
+		for (int i = 0; i < heroChoicePanelSingleList.size(); i++) {
+			if (i == index) {
+				heroChoicePanelSingleList.get(i).setHeroSelected(true);
+			} else {
+				heroChoicePanelSingleList.get(i).setHeroSelected(false);
+			}
+		}
+
+	}
+
 }

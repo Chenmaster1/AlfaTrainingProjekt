@@ -88,10 +88,10 @@ public class SingleplayerGame {
 	 * Heldenspezifischen Abilities zu einer Liste zusammen und übergibt der GUI die
 	 * Liste des Hauptsspielers, damit diese in JButtons umgemünzt werden kann.
 	 * 
-	 * Abilities mit dem AbilityType PASSIVE werden übersprungen, da sie nicht aktiv
-	 * einsetzbar sind. Ihre Effekte müssen anderweitig implementiert werden – als
-	 * Action existieren sie nur, um der GUI ihren Erklärungstext geben zu können
-	 * (wird auf dem HeroPanelLarge angezeigt).
+	 * Abilities mit dem AbilityType PASSIVE oder REACTION werden übersprungen, da
+	 * sie nicht aktiv einsetzbar sind. Ihre Effekte müssen anderweitig
+	 * implementiert werden – als Action existieren sie nur, um der GUI ihren
+	 * Erklärungstext geben zu können (wird auf dem HeroPanelLarge angezeigt).
 	 */
 	private void initializeActionLists() {
 		heroActionsLists = new ArrayList<ArrayList<Action>>();
@@ -105,7 +105,8 @@ public class SingleplayerGame {
 		for (Hero h : gameData.getHeroes()) {
 			heroActionList = new ArrayList<>(standardActions);
 			for (Ability heroAbility : h.getAbilities()) {
-				if (heroAbility.getAbilityType() != AbilityType.PASSIVE) {
+				if (heroAbility.getAbilityType() != AbilityType.PASSIVE
+						&& heroAbility.getAbilityType() != AbilityType.REACTION) {
 					heroActionList.add(heroAbility);
 				}
 			}

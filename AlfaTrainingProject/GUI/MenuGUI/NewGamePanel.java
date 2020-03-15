@@ -41,8 +41,8 @@ import resourceLoaders.ImageName;
 
 public class NewGamePanel extends JPanel {
 
-	private MainFramePanel parentPanel;
-	private JFrame frame;
+	private MainFramePanel mainFramePanel;
+	private JFrame mainFrame;
 	private Image backgroundImage;
 	private Image BackgroundNewGame;
 	private Image PlayerImageBackground;
@@ -66,8 +66,8 @@ public class NewGamePanel extends JPanel {
 
 	public NewGamePanel(MainFramePanel parentPanel, JFrame frame) {
 		backgroundImage = ImageLoader.getInstance().getImage(ImageName.MENU_BACKGROUND_BLURRY);
-		this.parentPanel = parentPanel;
-		this.frame = frame;
+		this.mainFramePanel = parentPanel;
+		this.mainFrame = frame;
 
 		setLayout(null);
 
@@ -92,14 +92,19 @@ public class NewGamePanel extends JPanel {
 		// Listener für die kleinen Bilder erstellen
 		for (int i = 0; i < heroChoicePanel.getHeroChoicePanelSingleList().size(); i++) {
 			final Hero connectedHero = heroList.get(i);
+			final int index = i;
 			heroChoicePanel.getHeroChoicePanelSingleList().get(i).getPicturePanel()
 					.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mousePressed(MouseEvent e) {
 							heroPanelLarge.setDisplayedHero(connectedHero);
+							heroChoicePanel.select(index);
 						}
 					});
 		}
+
+		// Heldenauswahl initialisieren (erster Held in der Liste)
+		heroChoicePanel.select(0);
 
 		cancelBtn = new JButton(MyFrame.bundle.getString("btnCancel"));
 		newGameBtn = new JButton(MyFrame.bundle.getString("btnNew"));
@@ -213,13 +218,31 @@ public class NewGamePanel extends JPanel {
 	}
 
 	private void cancelClicked() {
-		frame.setContentPane(parentPanel);
-		frame.repaint();
+		mainFrame.setContentPane(mainFramePanel);
+		mainFrame.repaint();
 	}
 
 	private void newGameClicked() {
 		// TODO Werte auslesen und daraus Singleplayergame erstellen
-		SingleplayerGame singlePlayerGame = SingleplayerGameCreator.createTestSingleplayerGame(frame, parentPanel);
+		ArrayList<Hero> gameHeroes = new ArrayList<>();
+		Hero playerHero = null;
+		for (int i = 0; i < heroChoicePanel.getHeroChoicePanelSingleList().size(); i++) {
+			if (heroChoicePanel.getHeroChoicePanelSingleList().get(i).isHeroSelected()) {
+				playerHero = heroList.get(i);
+			} else {
+				if (heroChoicePanel.getHeroChoicePanelSingleList().get(i).getCheckbox().isSelected()) {
+					heroList.get(i).setCurrentActionPoints(0);
+					gameHeroes.add(heroList.get(i));
+				}
+			}
+		}
+		// Spielerheld zuletzt, damit die Reihenfolge stimmt
+		playerHero.setPlayerControlled(true);
+		playerHero.setCurrentActionPoints(0);
+		gameHeroes.add(playerHero);
+
+		SingleplayerGame singlePlayerGame = SingleplayerGameCreator.createSingleplayerGame(mainFrame, gameHeroes,
+				playerHero, mainFramePanel);
 
 		singlePlayerGame.startGame();
 	}
