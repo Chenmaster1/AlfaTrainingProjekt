@@ -415,6 +415,8 @@ public class HeroPanelLarge extends JPanel {
 		removeAll();
 		initializeActionListPanel();
 		initializeTextFields();
+		updateActionListPanelBounds();
+		updateTextFieldsBounds();
 		repaint();
 	}
 
