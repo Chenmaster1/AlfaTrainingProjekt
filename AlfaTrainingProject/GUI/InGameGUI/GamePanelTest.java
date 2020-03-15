@@ -8,6 +8,8 @@ import Arenacards.Arenacards;
 import Heroes.*;
 import Hideouts.Hideout;
 import Hideouts.HideoutType;
+
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -139,6 +141,7 @@ public class GamePanelTest extends JFrame {
         });
 
         setContentPane(gp);
+        gp.setPreferredSize(new Dimension(1920,1080));
 
 //        setUndecorated(true);
         setLocation(0, 0);

@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -27,7 +30,7 @@ public class GamePanel extends JPanel {
 	private MapPanel mapPanel;
 	private GameSidePanel gameSidePanel;
 	private JFrame frame;
-	
+
 	private static final int MAPPANEL_STANDARD_SIZE = 1080;
 
 	private static final int GAMESIDEPANEL_STANDARD_SIZE_X = 840;
@@ -36,7 +39,7 @@ public class GamePanel extends JPanel {
 	public GamePanel(MapPanel mp, GameSidePanel gsp, JFrame mainFrame) {
 		super();
 		frame = mainFrame;
-		//funktioniert noch nicht
+		// funktioniert noch nicht
 //		String name = "Escape"; // I think the exact name doesn't matter
 //		
 //		getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
@@ -68,17 +71,27 @@ public class GamePanel extends JPanel {
 
 		add(mapPanel, BorderLayout.LINE_START);
 		add(gameSidePanel, BorderLayout.LINE_END);
+
+		// Listener zum resizen
+		addComponentListener(new ComponentAdapter() {
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+				// MapPanel quadratisch links hinein
+				mapPanel.setPreferredSize(new Dimension(getHeight(), getHeight()));
+//		        System.out.println("MapPanel(W/H): " + mapPanel.getWidth() + " " + mapPanel.getHeight()); 
+
+				// GameSidePanel füllt den Rest
+				gameSidePanel.setPreferredSize(new Dimension(getWidth() - getHeight(), getHeight()));
+//		        System.out.println("GameSidePanel(W/H): " + gameSidePanel.getWidth() + " " + gameSidePanel.getHeight());
+
+			}
+
+		});
 	}
 
 	@Override
 	protected void paintComponent(Graphics grphcs) {
-		// MapPanel quadratisch links hinein
-		mapPanel.setPreferredSize(new Dimension(getHeight(), getHeight()));
-//        System.out.println("MapPanel(W/H): " + mapPanel.getWidth() + " " + mapPanel.getHeight()); 
-
-		// GameSidePanel füllt den Rest
-		gameSidePanel.setPreferredSize(new Dimension(getWidth() - getHeight(), getHeight()));
-//        System.out.println("GameSidePanel(W/H): " + gameSidePanel.getWidth() + " " + gameSidePanel.getHeight());
 
 	}
 
@@ -89,5 +102,5 @@ public class GamePanel extends JPanel {
 	public GameSidePanel getGameSidePanel() {
 		return gameSidePanel;
 	}
-	
+
 }

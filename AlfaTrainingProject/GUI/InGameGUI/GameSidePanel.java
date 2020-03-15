@@ -11,6 +11,9 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -21,7 +24,6 @@ import javax.swing.JPanel;
  */
 public class GameSidePanel extends JPanel {
 
-	
 	private final static double PANELOTHERHEROES_POSITION_RELATIVE_X = 14 / 840.0;
 	private final static double PANELOTHERHEROES_POSITION_RELATIVE_Y = 85 / 1080.0;
 	private final static double PANELOTHERHEROES_SIZE_RELATIVE_X = 780 / 840.0;
@@ -40,7 +42,7 @@ public class GameSidePanel extends JPanel {
 	private final static double PANELHIDEDICE_POSITION_RELATIVE_X = 370 / 840.0;
 	private final static double PANELHIDEDICE_POSITION_RELATIVE_Y = 742 / 1080.0;
 	private final static double PANELHIDEDICE_SIZE_RELATIVE_X = 437 / 840.0;
-	private final static double PANELHIDEDICE_SIZE_RELATIVE_Y = 295 / 1080.0;
+	private final static double PANELHIDEDICE_SIZE_RELATIVE_Y = 297 / 1080.0;
 
 	private Image backgroundImage;
 
@@ -87,6 +89,37 @@ public class GameSidePanel extends JPanel {
 		add(panelAttackDice);
 		add(panelHideDice);
 
+		//Unterpanels resizen per Listener (wenn dieses Panel in der Größe geändert wird.
+		addComponentListener(new ComponentAdapter() {
+
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				// Bounds setzen für das panelOtherHeroes
+				panelOtherHeroes.setBounds((int) (PANELOTHERHEROES_POSITION_RELATIVE_X * getWidth()),
+						(int) (PANELOTHERHEROES_POSITION_RELATIVE_Y * getHeight()),
+						(int) (PANELOTHERHEROES_SIZE_RELATIVE_X * getWidth()),
+						(int) (PANELOTHERHEROES_SIZE_RELATIVE_Y * getHeight()));
+
+				// Bounds setzen für das panelPlayerHero
+				panelPlayerHero.setBounds((int) (PANELPLAYERHERO_POSITION_RELATIVE_X * getWidth()),
+						(int) (PANELPLAYERHERO_POSITION_RELATIVE_Y * getHeight()),
+						(int) (PANELPLAYERHERO_SIZE_RELATIVE_X * getWidth()),
+						(int) (PANELPLAYERHERO_SIZE_RELATIVE_Y * getHeight()));
+
+				// Bounds setzen für das panelAttackDice
+				panelAttackDice.setBounds((int) (PANELATTACKDICE_POSITION_RELATIVE_X * getWidth()),
+						(int) (PANELATTACKDICE_POSITION_RELATIVE_Y * getHeight()),
+						(int) (PANELATTACKDICE_SIZE_RELATIVE_X * getWidth()),
+						(int) (PANELATTACKDICE_SIZE_RELATIVE_Y * getHeight()));
+
+				// Bounds setzen für das panelHideDice
+				panelHideDice.setBounds((int) (PANELHIDEDICE_POSITION_RELATIVE_X * getWidth()),
+						(int) (PANELHIDEDICE_POSITION_RELATIVE_Y * getHeight()),
+						(int) (PANELHIDEDICE_SIZE_RELATIVE_X * getWidth()),
+						(int) (PANELHIDEDICE_SIZE_RELATIVE_Y * getHeight()));
+			}
+		});
+
 	}
 
 	/**
@@ -103,34 +136,6 @@ public class GameSidePanel extends JPanel {
 
 		// Hintergrund ganz unten
 		g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-
-		// Bounds setzen für das panelOtherHeroes
-		panelOtherHeroes.setBounds(
-				(int)(PANELOTHERHEROES_POSITION_RELATIVE_X * getWidth()),
-				(int)(PANELOTHERHEROES_POSITION_RELATIVE_Y * getHeight()),
-				(int)(PANELOTHERHEROES_SIZE_RELATIVE_X * getWidth()), 
-				(int)(PANELOTHERHEROES_SIZE_RELATIVE_Y * getHeight()));
-		
-		// Bounds setzen für das panelPlayerHero
-		panelPlayerHero.setBounds(
-				(int)(PANELPLAYERHERO_POSITION_RELATIVE_X * getWidth()),
-				(int)(PANELPLAYERHERO_POSITION_RELATIVE_Y * getHeight()),
-				(int)(PANELPLAYERHERO_SIZE_RELATIVE_X * getWidth()), 
-				(int)(PANELPLAYERHERO_SIZE_RELATIVE_Y * getHeight()));
-		
-		// Bounds setzen für das panelAttackDice
-		panelAttackDice.setBounds(
-				(int)(PANELATTACKDICE_POSITION_RELATIVE_X * getWidth()),
-				(int)(PANELATTACKDICE_POSITION_RELATIVE_Y * getHeight()),
-				(int)(PANELATTACKDICE_SIZE_RELATIVE_X * getWidth()), 
-				(int)(PANELATTACKDICE_SIZE_RELATIVE_Y * getHeight()));
-		
-		// Bounds setzen für das panelHideDice
-		panelHideDice.setBounds(
-				(int)(PANELHIDEDICE_POSITION_RELATIVE_X * getWidth()),
-				(int)(PANELHIDEDICE_POSITION_RELATIVE_Y * getHeight()),
-				(int)(PANELHIDEDICE_SIZE_RELATIVE_X * getWidth()), 
-				(int)(PANELHIDEDICE_SIZE_RELATIVE_Y * getHeight()));
 	}
 
 	public void setHeroes(ArrayList<Hero> heroes) {

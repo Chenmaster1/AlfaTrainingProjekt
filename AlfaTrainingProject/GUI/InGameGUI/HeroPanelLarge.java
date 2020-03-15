@@ -5,6 +5,9 @@ import Actions.Action;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -123,6 +126,19 @@ public class HeroPanelLarge extends JPanel {
 		initializeActionListPanel();
 
 		initializeTextFields();
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				// ActionPanel Größe anpassen
+				updateActionListPanelBounds();
+
+				// Textfelder Größe anpassen
+				updateTextFieldsBounds();
+
+			}
+		});
+
 	}
 
 	/**
@@ -178,11 +194,6 @@ public class HeroPanelLarge extends JPanel {
 		// Overlays für Delaytokens
 		drawDelayTokenIcons(g2d);
 
-		// ActionPanel Größe anpassen
-		updateActionListPanelBounds();
-
-		// Textfelder Größe anpassen
-		updateTextFieldsBounds();
 	}
 
 	/**
@@ -351,8 +362,8 @@ public class HeroPanelLarge extends JPanel {
 				(int) (HERONAMELABEL_SIZE_RELATIVE_X * getWidth()),
 				(int) (HERONAMELABEL_SIZE_RELATIVE_Y * getHeight()));
 
-		//TODO: Fonts erstellen verbraucht viel CPU, andere Lösung finden
-		
+		// TODO: Fonts erstellen verbraucht viel CPU, andere Lösung finden
+
 		// Font des Labels anpassen, abhängig von der Panelhöhe
 //		Font heroNameLabelFont = heroNameLabel.getFont();
 //		int newFontSize = (int) (HERONAMELABEL_TEXT_SIZE_RELATIVE_Y * getHeight());
@@ -363,8 +374,8 @@ public class HeroPanelLarge extends JPanel {
 				(int) (ABILITYDESCRIPTIONFIELD_SIZE_RELATIVE_X * getWidth()),
 				(int) (ABILITYDESCRIPTIONFIELD_SIZE_RELATIVE_Y * getHeight()));
 
-		//TODO: Fonts erstellen verbraucht viel CPU, andere Lösung finden
-		
+		// TODO: Fonts erstellen verbraucht viel CPU, andere Lösung finden
+
 		// Font des Textfeldes anpassen, abhängig von der Panelhöhe
 //		Font abilityDescriptionFieldFont = abilityDescriptionField.getFont();
 //		newFontSize = (int) (ABILITYDESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y * getHeight());
@@ -400,13 +411,11 @@ public class HeroPanelLarge extends JPanel {
 
 	public void setDisplayedHero(Hero displayedHero) {
 		this.displayedHero = displayedHero;
-		
+
 		removeAll();
 		initializeActionListPanel();
 		initializeTextFields();
 		repaint();
 	}
-	
-	
 
 }
