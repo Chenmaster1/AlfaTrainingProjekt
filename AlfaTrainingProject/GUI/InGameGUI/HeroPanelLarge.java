@@ -82,7 +82,7 @@ public class HeroPanelLarge extends JPanel {
 	private static final double DELAYTOKEN_SIZE_RELATIVE_Y = 0.1;
 
 	private static final double ACTIONLIST_POSITION_RELATIVE_X = 0.09;
-	private static final double ACTIONLIST_POSITION_RELATIVE_Y = 0.36;
+	private static final double ACTIONLIST_POSITION_RELATIVE_Y = 0.39;
 	private static final double ACTIONLIST_SIZE_RELATIVE_X = 0.45;
 	private static final double ACTIONLIST_SIZE_RELATIVE_Y = 0.5;
 	private static final int ACTIONLIST_CELLS = 5;
@@ -364,10 +364,10 @@ public class HeroPanelLarge extends JPanel {
 
 		// TODO: Fonts erstellen verbraucht viel CPU, andere Lösung finden
 
-		// Font des Labels anpassen, abhängig von der Panelhöhe
-//		Font heroNameLabelFont = heroNameLabel.getFont();
-//		int newFontSize = (int) (HERONAMELABEL_TEXT_SIZE_RELATIVE_Y * getHeight());
-//		heroNameLabel.setFont(new Font(heroNameLabelFont.getName(), Font.BOLD, newFontSize));
+		//Font des Labels anpassen, abhängig von der Panelhöhe
+		Font heroNameLabelFont = heroNameLabel.getFont();
+		int newFontSize = (int) (HERONAMELABEL_TEXT_SIZE_RELATIVE_Y * getHeight());
+		heroNameLabel.setFont(new Font(heroNameLabelFont.getName(), Font.BOLD, newFontSize));
 
 		abilityDescriptionField.setBounds((int) (ABILITYDESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
 				(int) (ABILITYDESCRIPTIONFIELD_POSITION_RELATIVE_Y * getHeight()),
@@ -377,9 +377,9 @@ public class HeroPanelLarge extends JPanel {
 		// TODO: Fonts erstellen verbraucht viel CPU, andere Lösung finden
 
 		// Font des Textfeldes anpassen, abhängig von der Panelhöhe
-//		Font abilityDescriptionFieldFont = abilityDescriptionField.getFont();
-//		newFontSize = (int) (ABILITYDESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y * getHeight());
-//		abilityDescriptionField.setFont(new Font(abilityDescriptionFieldFont.getName(), Font.PLAIN, newFontSize));
+		Font abilityDescriptionFieldFont = abilityDescriptionField.getFont();
+		newFontSize = (int) (ABILITYDESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y * getHeight());
+		abilityDescriptionField.setFont(new Font(abilityDescriptionFieldFont.getName(), Font.PLAIN, newFontSize));
 
 	}
 

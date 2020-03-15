@@ -29,6 +29,9 @@ public class GameSidePanel extends JPanel {
 	private final static double PANELOTHERHEROES_SIZE_RELATIVE_X = 780 / 840.0;
 	private final static double PANELOTHERHEROES_SIZE_RELATIVE_Y = 200 / 1080.0;
 
+	// Verschmälerung des otherHeroesPanel pro fehlendem Helden
+	private final static double PANELOTHERHEROES_GAPSIZE_RELATIVE_X = 186 / 840.0;
+
 	private final static double PANELPLAYERHERO_POSITION_RELATIVE_X = 30 / 840.0;
 	private final static double PANELPLAYERHERO_POSITION_RELATIVE_Y = 340 / 1080.0;
 	private final static double PANELPLAYERHERO_SIZE_RELATIVE_X = 558 / 840.0;
@@ -48,6 +51,7 @@ public class GameSidePanel extends JPanel {
 
 	// Array aller Helden
 	private ArrayList<Hero> heroes;
+	private final int numOtherHeroes;
 
 	// der Held des Hauptspielers, angezeigt im zentralen HeroPanelLarge
 	private Hero playerHero;
@@ -64,16 +68,17 @@ public class GameSidePanel extends JPanel {
 	private Thread threadAttackDicePanel;
 	private Thread threadHideDicePanel;
 
-	public GameSidePanel(ArrayList<Hero> heroes, Hero playerHero) {
+	public GameSidePanel(ArrayList<Hero> allHeroes, Hero playerHero) {
 		super();
 
-		this.heroes = heroes;
+		this.heroes = allHeroes;
 		this.playerHero = playerHero;
+		this.numOtherHeroes = heroes.size() - 1;
 
 		backgroundImage = ImageLoader.getInstance().getImage(ImageName.GAMEBOARD_RIGHT);
 		setLayout(null);
 
-		panelOtherHeroes = new OtherHeroesPanel(heroes);
+		panelOtherHeroes = new OtherHeroesPanel(allHeroes);
 		panelPlayerHero = new HeroPanelLarge(playerHero);
 		panelAttackDice = new AttackDicePanel();
 		panelHideDice = new HideDicePanel();
@@ -89,15 +94,20 @@ public class GameSidePanel extends JPanel {
 		add(panelAttackDice);
 		add(panelHideDice);
 
-		//Unterpanels resizen per Listener (wenn dieses Panel in der Größe geändert wird.
+		// Unterpanels resizen per Listener (wenn dieses Panel in der Größe geändert
+		// wird.
 		addComponentListener(new ComponentAdapter() {
 
 			@Override
 			public void componentResized(ComponentEvent arg0) {
 				// Bounds setzen für das panelOtherHeroes
-				panelOtherHeroes.setBounds((int) (PANELOTHERHEROES_POSITION_RELATIVE_X * getWidth()),
+				int numEmptySpaces = 4 - numOtherHeroes;
+				panelOtherHeroes.setBounds(
+						(int) ((PANELOTHERHEROES_POSITION_RELATIVE_X
+								+ PANELOTHERHEROES_GAPSIZE_RELATIVE_X * numEmptySpaces / 2) * getWidth()),
 						(int) (PANELOTHERHEROES_POSITION_RELATIVE_Y * getHeight()),
-						(int) (PANELOTHERHEROES_SIZE_RELATIVE_X * getWidth()),
+						(int) ((PANELOTHERHEROES_SIZE_RELATIVE_X
+								- PANELOTHERHEROES_GAPSIZE_RELATIVE_X * numEmptySpaces) * getWidth()),
 						(int) (PANELOTHERHEROES_SIZE_RELATIVE_Y * getHeight()));
 
 				// Bounds setzen für das panelPlayerHero

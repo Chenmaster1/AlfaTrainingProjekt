@@ -2,6 +2,7 @@ package InGameGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
@@ -9,6 +10,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowStateListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -29,16 +33,16 @@ public class GamePanel extends JPanel {
 
 	private MapPanel mapPanel;
 	private GameSidePanel gameSidePanel;
-	private JFrame frame;
+	private final JFrame mainFrame;
 
 	private static final int MAPPANEL_STANDARD_SIZE = 1080;
 
 	private static final int GAMESIDEPANEL_STANDARD_SIZE_X = 840;
 	private static final int GAMESIDEPANEL_STANDARD_SIZE_Y = 1080;
 
-	public GamePanel(MapPanel mp, GameSidePanel gsp, JFrame mainFrame) {
+	public GamePanel(MapPanel mp, GameSidePanel gsp, JFrame frame) {
 		super();
-		frame = mainFrame;
+		this.mainFrame = frame;
 		// funktioniert noch nicht
 //		String name = "Escape"; // I think the exact name doesn't matter
 //		
@@ -74,24 +78,42 @@ public class GamePanel extends JPanel {
 
 		// Listener zum resizen
 		addComponentListener(new ComponentAdapter() {
-
+			
+			
 			@Override
 			public void componentResized(ComponentEvent e) {
-				// MapPanel quadratisch links hinein
-				mapPanel.setPreferredSize(new Dimension(getHeight(), getHeight()));
-//		        System.out.println("MapPanel(W/H): " + mapPanel.getWidth() + " " + mapPanel.getHeight()); 
-
-				// GameSidePanel füllt den Rest
-				gameSidePanel.setPreferredSize(new Dimension(getWidth() - getHeight(), getHeight()));
-//		        System.out.println("GameSidePanel(W/H): " + gameSidePanel.getWidth() + " " + gameSidePanel.getHeight());
-
+				resizeGamePanel();
 			}
-
 		});
+		
+		//Funktioniert so noch nicht
+		
+//		mainFrame.addWindowStateListener(new WindowStateListener() {
+//			
+//
+//			@Override
+//			public void windowStateChanged(WindowEvent e) {
+//				if ((e.getNewState() & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH){
+//				      resizeGamePanel();
+//				}
+//			}
+//
+//		});
 	}
 
 	@Override
 	protected void paintComponent(Graphics grphcs) {
+
+	}
+	
+	private void resizeGamePanel() {
+		// MapPanel quadratisch links hinein
+		mapPanel.setPreferredSize(new Dimension(getHeight(), getHeight()));
+//        System.out.println("MapPanel(W/H): " + mapPanel.getWidth() + " " + mapPanel.getHeight()); 
+
+		// GameSidePanel füllt den Rest
+		gameSidePanel.setPreferredSize(new Dimension(getWidth() - getHeight(), getHeight()));
+//        System.out.println("GameSidePanel(W/H): " + gameSidePanel.getWidth() + " " + gameSidePanel.getHeight());
 
 	}
 
