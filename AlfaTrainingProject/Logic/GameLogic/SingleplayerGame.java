@@ -511,6 +511,21 @@ public class SingleplayerGame {
 			}
 		}
 		gamePanel.repaint();
+		
+		if(attackMode == AttackMode.ATTACK_TWICE)
+		{
+			//Kurz pausieren, dann den Angriffswurf wiederholen
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			attackMode = AttackMode.NORMAL_ATTACK;
+			shootAtAttackField(currentAttackField);
+		}
+		
+		
 	}
 
 	/**
