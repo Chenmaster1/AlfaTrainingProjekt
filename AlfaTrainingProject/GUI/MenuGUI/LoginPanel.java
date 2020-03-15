@@ -33,6 +33,8 @@ import Database.Database;
 import Database.Queries;
 import SoundThread.mp3test;
 import alfatrainingprojekt.AlfaTrainingProjekt;
+import resourceLoaders.ImageLoader;
+import resourceLoaders.ImageName;
 
 @SuppressWarnings("serial")
 public class LoginPanel extends JPanel {
@@ -65,9 +67,7 @@ public class LoginPanel extends JPanel {
 		this.frame = frame;
 		setLayout(null);
 		frame.setContentPane(this);
-		backgroundImage = new ImageIcon(
-				getClass().getClassLoader().getResource("Images/BackGround_FullScreenBlurred.png")).getImage();
-		
+		backgroundImage = ImageLoader.getInstance().getImage(ImageName.MENU_BACKGROUND_BLURRY);
     	boolean exists = false;
     	
     	try {
@@ -140,7 +140,10 @@ public class LoginPanel extends JPanel {
 		txtPassword.setLocation(frame.getWidth() / 2 - BTN_WIDTH, frame.getHeight() / 2 + 5);
 		add(txtPassword);
 
-		btnRegister = new MyButton(MyFrame.bundle.getString("btnRegister"), new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		ImageIcon buttonImageIcon = new ImageIcon(ImageLoader.getInstance().getImage(ImageName.BUTTON));
+		
+				
+		btnRegister = new MyButton(MyFrame.bundle.getString("btnRegister"), buttonImageIcon);
 		addButton(btnRegister, frame.getWidth() / 2 - 200 - 5, frame.getHeight() / 2 + 45, new ActionListener() {
 
 			@Override
@@ -150,7 +153,7 @@ public class LoginPanel extends JPanel {
 			}
 		});
 
-		btnLogin = new MyButton(MyFrame.bundle.getString("btnLogin"), new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		btnLogin = new MyButton(MyFrame.bundle.getString("btnLogin"), buttonImageIcon);
 		addButton(btnLogin, frame.getWidth() / 2 + 5, frame.getHeight() / 2 + 45, new ActionListener() {
 
 			@Override
@@ -165,7 +168,7 @@ public class LoginPanel extends JPanel {
 			}
 		});
 		
-		btnExit = new MyButton(MyFrame.bundle.getString("btnClose"), new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png")));
+		btnExit = new MyButton(MyFrame.bundle.getString("btnClose"), buttonImageIcon);
 		addButton(btnExit, frame.getWidth() / 2 - 200 / 2, frame.getHeight() / 2 + 105, new ActionListener() {
 
 			@Override

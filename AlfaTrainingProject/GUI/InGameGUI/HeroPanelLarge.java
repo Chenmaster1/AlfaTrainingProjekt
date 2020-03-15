@@ -10,6 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import Heroes.Hero;
+import resourceLoaders.ImageLoader;
+import resourceLoaders.ImageName;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -106,19 +109,12 @@ public class HeroPanelLarge extends JPanel {
 
 		displayedHero = hero;
 
-		// TODO: Auf gemeinsame Image-Objekte zugreifen, damit nicht jedes Panel seine
-		// eigenen instanziiert. Siehe auch HeroPanelSmall
-		backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Hero_Front_Empty_tall.jpg"))
-				.getImage();
-		hitPointImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Heart_Activated.png"))
-				.getImage();
-		hitPointUsedImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Heart_Deactivated.png"))
-				.getImage();
-		actionPointImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Action_Activated.png"))
-				.getImage();
-		actionPointUsedImage = new ImageIcon(
-				getClass().getClassLoader().getResource("Hero_Card/Action_Deactivated.png")).getImage();
-		delayTokenImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Delay.png")).getImage();
+		backgroundImage = ImageLoader.getInstance().getImage(ImageName.HERO_FRONT_EMPTY_TALL);
+		hitPointImage = ImageLoader.getInstance().getImage(ImageName.HEART_ACTIVATED);
+		hitPointUsedImage = ImageLoader.getInstance().getImage(ImageName.HEART_DEACTIVATED);
+		actionPointImage = ImageLoader.getInstance().getImage(ImageName.ACTION_ACTIVATED);
+		actionPointUsedImage = ImageLoader.getInstance().getImage(ImageName.ACTION_DEACTIVATED);
+		delayTokenImage = ImageLoader.getInstance().getImage(ImageName.DELAY);
 
 		setLayout(null);
 		actionArrayList = new ArrayList<>();
@@ -355,20 +351,24 @@ public class HeroPanelLarge extends JPanel {
 				(int) (HERONAMELABEL_SIZE_RELATIVE_X * getWidth()),
 				(int) (HERONAMELABEL_SIZE_RELATIVE_Y * getHeight()));
 
+		//TODO: Fonts erstellen verbraucht viel CPU, andere Lösung finden
+		
 		// Font des Labels anpassen, abhängig von der Panelhöhe
-		Font heroNameLabelFont = heroNameLabel.getFont();
-		int newFontSize = (int) (HERONAMELABEL_TEXT_SIZE_RELATIVE_Y * getHeight());
-		heroNameLabel.setFont(new Font(heroNameLabelFont.getName(), Font.BOLD, newFontSize));
+//		Font heroNameLabelFont = heroNameLabel.getFont();
+//		int newFontSize = (int) (HERONAMELABEL_TEXT_SIZE_RELATIVE_Y * getHeight());
+//		heroNameLabel.setFont(new Font(heroNameLabelFont.getName(), Font.BOLD, newFontSize));
 
 		abilityDescriptionField.setBounds((int) (ABILITYDESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
 				(int) (ABILITYDESCRIPTIONFIELD_POSITION_RELATIVE_Y * getHeight()),
 				(int) (ABILITYDESCRIPTIONFIELD_SIZE_RELATIVE_X * getWidth()),
 				(int) (ABILITYDESCRIPTIONFIELD_SIZE_RELATIVE_Y * getHeight()));
 
+		//TODO: Fonts erstellen verbraucht viel CPU, andere Lösung finden
+		
 		// Font des Textfeldes anpassen, abhängig von der Panelhöhe
-		Font abilityDescriptionFieldFont = abilityDescriptionField.getFont();
-		newFontSize = (int) (ABILITYDESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y * getHeight());
-		abilityDescriptionField.setFont(new Font(abilityDescriptionFieldFont.getName(), Font.PLAIN, newFontSize));
+//		Font abilityDescriptionFieldFont = abilityDescriptionField.getFont();
+//		newFontSize = (int) (ABILITYDESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y * getHeight());
+//		abilityDescriptionField.setFont(new Font(abilityDescriptionFieldFont.getName(), Font.PLAIN, newFontSize));
 
 	}
 
@@ -395,7 +395,7 @@ public class HeroPanelLarge extends JPanel {
 
 	public void setButtonsEnabled(boolean buttonsEnabled) {
 		this.buttonsEnabled = buttonsEnabled;
-                updateButtonsEnabled();
+		updateButtonsEnabled();
 	}
 
 }

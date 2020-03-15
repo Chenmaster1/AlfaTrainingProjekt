@@ -23,6 +23,9 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import resourceLoaders.ImageLoader;
+import resourceLoaders.ImageName;
+
 
 /**
  * Game Settings volume language if no file is found MyFrame-<ode>public static
@@ -60,7 +63,7 @@ public class SettingsPanel extends JPanel
 
     public SettingsPanel(MainFramePanel parentPanel, JFrame frame)
     {
-        backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Images/BackGround_FullScreenBlurred.png")).getImage();
+        backgroundImage = ImageLoader.getInstance().getImage(ImageName.MENU_BACKGROUND_BLURRY);
         this.parentPanel = parentPanel;
         this.frame = frame;
         frame.setContentPane(this);

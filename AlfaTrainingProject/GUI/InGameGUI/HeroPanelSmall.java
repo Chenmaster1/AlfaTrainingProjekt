@@ -7,6 +7,9 @@ import java.awt.Image;
 import javax.swing.JPanel;
 
 import Heroes.Hero;
+import resourceLoaders.ImageLoader;
+import resourceLoaders.ImageName;
+
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 
@@ -40,17 +43,11 @@ public class HeroPanelSmall extends JPanel {
 
         displayedHero = hero;
 
-        //TODO: Auf gemeinsame Image-Objekte zugreifen, damit nicht jedes Panel seine eigenen instanziiert.
-        hitPointImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Heart_Activated.png"))
-                .getImage();
-        hitPointUsedImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Heart_Deactivated.png"))
-                .getImage();
-        actionPointImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Action_Activated.png"))
-                .getImage();
-        actionPointUsedImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Action_Deactivated.png"))
-                .getImage();
-        delayTokenImage = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Delay.png"))
-                .getImage();
+        hitPointImage = ImageLoader.getInstance().getImage(ImageName.HEART_ACTIVATED);
+        hitPointUsedImage = ImageLoader.getInstance().getImage(ImageName.HEART_DEACTIVATED);
+        actionPointImage = ImageLoader.getInstance().getImage(ImageName.ACTION_ACTIVATED);
+        actionPointUsedImage = ImageLoader.getInstance().getImage(ImageName.ACTION_DEACTIVATED);
+        delayTokenImage = ImageLoader.getInstance().getImage(ImageName.DELAY);
 
         setLayout(null);
 

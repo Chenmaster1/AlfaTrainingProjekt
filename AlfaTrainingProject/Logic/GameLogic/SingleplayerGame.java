@@ -561,7 +561,6 @@ public class SingleplayerGame {
 
 	/**
 	 * 
-	 * @param hero
 	 * @param isWon
 	 */
 	private void backToMainMenu(boolean isWon) {
