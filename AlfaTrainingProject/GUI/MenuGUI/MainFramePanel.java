@@ -36,6 +36,7 @@ public class MainFramePanel extends JPanel {
 	private JButton btnLoad;
 	private JButton btnSettings;
 	private JButton btnClose;
+        private JButton btnTutorial;
 
 	public MainFramePanel(MyFrame frame) {
 		this.frame = frame;
@@ -49,6 +50,7 @@ public class MainFramePanel extends JPanel {
 		btnLoad = new MyButton(MyFrame.bundle.getString("btnLoad"), buttonImageIcon);
 		btnSettings = new MyButton(MyFrame.bundle.getString("btnSettings"), buttonImageIcon);
 		btnClose = new MyButton(MyFrame.bundle.getString("btnClose"), buttonImageIcon);
+                btnTutorial = new MyButton(MyFrame.bundle.getString("btnTutorial"), buttonImageIcon);
 		initializeButtons();
 	}
 
@@ -99,6 +101,18 @@ public class MainFramePanel extends JPanel {
 				onCloseClicked();
 			}
 		});
+                
+                addButton(btnTutorial, getWidth() / 2 - 100, getHeight() / 2 + 150, new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onTutorialClicked();
+			}
+		});
+                
+                
+                
+                
 	}
 
 	/**
@@ -155,6 +169,19 @@ public class MainFramePanel extends JPanel {
 	 * @author Kevin
 	 */
 	private void onCloseClicked() {
+		mp3test.stopPlayer();
+//		frame.dispose();
+		// Alles killen, nicht nur das Frame
+		System.exit(0);
+	}
+        
+        /**
+	 * Wird aufgerufen, sobald der Button "Beenden" gedrückt wurde. Das Programm
+	 * wird beendet.
+	 * 
+	 * @author Kevin
+	 */
+	private void onTutorialClicked() {
 		mp3test.stopPlayer();
 //		frame.dispose();
 		// Alles killen, nicht nur das Frame
