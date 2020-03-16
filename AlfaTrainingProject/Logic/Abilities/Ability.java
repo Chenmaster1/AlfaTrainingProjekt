@@ -11,10 +11,10 @@ import enums.AbilityType;
  */
 public abstract class Ability extends Action {
 
-    private String name;
+    
     private String description;
 
-    private AbilityType abilityTpye;
+    private AbilityType abilityType;
 
     /**
      * Dies ist der Konstruktor fuer jede Faehigkeit
@@ -25,7 +25,7 @@ public abstract class Ability extends Action {
      */
     public Ability(int actionPointRequired, AbilityType abilityType, String name, String description) {
         super(actionPointRequired, name);
-        this.abilityTpye = abilityType;
+        this.abilityType = abilityType;
         this.description = description;
     }
 
@@ -35,7 +35,7 @@ public abstract class Ability extends Action {
     }
 
     public AbilityType getAbilityType() {
-        return abilityTpye;
+        return abilityType;
     }
 
 }
