@@ -90,6 +90,7 @@ public class MapPanel extends JPanel {
 
 		// Overlays für zerstörte Verstecke
 		drawDisabledFields(g2d);
+                
 		// ggf Overlay für den Zielmechanismus
 		if (mapState == MAPSTATE_PLAYER_AIMING || mapState == MAPSTATE_KI_AIMING) {
 			drawAimOverlay(g2d);
@@ -203,7 +204,7 @@ public class MapPanel extends JPanel {
 	 * @return Die ID des hideouts, dass am ehesten der angegebenen Position
 	 *         entspricht
 	 */
-	private int calculateField(Point aimedAtPoint) {
+	public int calculateField(Point aimedAtPoint) {
 		int numFields = hideouts.size();
 		int degreesPerField = 360 / numFields;
 

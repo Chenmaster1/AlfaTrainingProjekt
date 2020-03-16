@@ -6,6 +6,7 @@ import Abilities.Ability;
 import Abilities.AbilityTolpanLongbeardHide;
 import KiLogics.KiLogicDahlia;
 import KiLogics.KiLogicTolpanLongbeard;
+import resourceLoaders.ImageName;
 
 /**
  *
@@ -17,7 +18,10 @@ public class HeroTolpanLongbeard extends Hero {
     public HeroTolpanLongbeard() {
         super("Tolpan Longbeard", "TolpanLongbeardDescription", "TolpanLongbeardArtwork", 
                 3, 3, 0.3, 
-                new KiLogicTolpanLongbeard(), "Hero_Card/Avatar_Talpan.jpg", "Gameboard/Spiel_Avatar_Talpan.png");
+                new KiLogicTolpanLongbeard(), 
+                ImageName.AVATAR_TOLPAN,
+                ImageName.AVATAR_TOLPAN_DEACTIVATED,
+                ImageName.MAPICON_TOLPAN);
 
         abilities.add(new AbilityTolpanLongbeardHide(1));
     }

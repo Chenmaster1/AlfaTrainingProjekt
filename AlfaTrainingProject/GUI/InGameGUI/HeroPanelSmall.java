@@ -29,7 +29,9 @@ public class HeroPanelSmall extends JPanel {
     private Image actionPointUsedImage;
     private Image delayTokenImage;
 
-       private static final double POINTICON_TOPMARGIN_RELATIVE_Y = 0.05;
+    private boolean grayedOut;
+
+    private static final double POINTICON_TOPMARGIN_RELATIVE_Y = 0.05;
     private static final double POINTICON_SIDEMARGIN_RELATIVE_X = 0.05;
     private static final double POINTICON_SIZE_RELATIVE_X = 0.125;
     private static final double POINTICON_SIZE_RELATIVE_Y = 0.125;
@@ -38,10 +40,10 @@ public class HeroPanelSmall extends JPanel {
     private static final double DELAYTOKEN_SIZE_RELATIVE_Y = 0.18;
     private static final double DELAYTOKEN_BOTTOMMARGIN_RELATIVE_Y = 0.05;
 
-
     public HeroPanelSmall(Hero hero) {
 
         displayedHero = hero;
+        grayedOut = false;
 
         hitPointImage = ImageLoader.getInstance().getImage(ImageName.HEART_ACTIVATED);
         hitPointUsedImage = ImageLoader.getInstance().getImage(ImageName.HEART_DEACTIVATED);
@@ -64,8 +66,16 @@ public class HeroPanelSmall extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
 
+        if (displayedHero.isDead()) {
+            grayedOut = true;
+        }
+
         // Avatar als Hintergrund
-        g2d.drawImage(displayedHero.getAvatar(), 0, 0, getWidth(), getHeight(), this);
+        if (grayedOut) {
+            g2d.drawImage(displayedHero.getAvatarDeactivated(), 0, 0, getWidth(), getHeight(), this);
+        } else {
+            g2d.drawImage(displayedHero.getAvatar(), 0, 0, getWidth(), getHeight(), this);
+        }
 
         //reale Abmessungen der Aktions- und Lebenspunkte basierend auf der aktuellen Panelgröße
         int iconSize_X = (int) (POINTICON_SIZE_RELATIVE_X * getWidth());
@@ -177,4 +187,14 @@ public class HeroPanelSmall extends JPanel {
         }
 
     }
+
+    public boolean isGrayedOut() {
+        return grayedOut;
+    }
+
+    public void setGrayedOut(boolean grayedOut) {
+        this.grayedOut = grayedOut;
+        repaint();
+    }
+
 }

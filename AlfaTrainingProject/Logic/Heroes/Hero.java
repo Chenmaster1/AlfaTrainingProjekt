@@ -11,6 +11,8 @@ import Abilities.Ability;
 import Database.Database;
 import Database.Queries;
 import KiLogics.KiLogic;
+import resourceLoaders.ImageLoader;
+import resourceLoaders.ImageName;
 
 /**
  * Dies ist das Grundgeruest fuer jeden Helden
@@ -22,6 +24,7 @@ public abstract class Hero {
     protected ArrayList<Ability> abilities;
 
     private Image avatar;
+    private Image avatarDeactivated;
     private Image mapIcon;
 
     private KiLogic ki;
@@ -51,7 +54,7 @@ public abstract class Hero {
      * aus der Datenbank zu holen
      * @author Kevin
      */
-    public Hero(String name, String description, String artwork, int maxHitPoints, int maxActionPoints, double power, KiLogic ki, String avatarPath, String mapIconPath) {
+    public Hero(String name, String description, String artwork, int maxHitPoints, int maxActionPoints, double power, KiLogic ki, ImageName avatarName, ImageName avatarDeactivatedName, ImageName mapIconName) {
 
         this.name = name;
         this.description = description;
@@ -60,8 +63,9 @@ public abstract class Hero {
         this.maxActionPoints = maxActionPoints;
         this.power = power;
         this.ki = ki;
-        this.avatar = new ImageIcon(getClass().getClassLoader().getResource(avatarPath)).getImage();
-        this.mapIcon = new ImageIcon(getClass().getClassLoader().getResource(mapIconPath)).getImage();
+        this.avatar = ImageLoader.getInstance().getImage(avatarName);
+        this.avatarDeactivated = ImageLoader.getInstance().getImage(avatarDeactivatedName);
+        this.mapIcon = ImageLoader.getInstance().getImage(mapIconName);
         this.abilities = new ArrayList<Ability>();
         this.isAttackable = true;
         // Standardwerte: KI-kontrolliert, nicht sichtbar, kein Delay, volle
@@ -127,6 +131,10 @@ public abstract class Hero {
 
     public Image getAvatar() {
         return avatar;
+    }
+
+    public Image getAvatarDeactivated() {
+        return avatarDeactivated;
     }
 
     public Image getMapIcon() {
