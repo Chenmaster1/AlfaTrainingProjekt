@@ -379,14 +379,14 @@ public class SingleplayerGame {
         switch (gameState) {
             case AIMING:
                 if (!currentHero.isPlayerControlled()) {
-                    // AI-Zielvorgang
+                    // KI-Zielvorgang
 
                     // getting AttackField
-                    int currentAttackField = currentHero.getKiLogic().chooseAttackField(this);
+                    int kiTargetedField = currentHero.getKiLogic().chooseAttackField(this);
 
                     // MAPSTATE_KI_AIMING erzeugt Zielmaske, aber ohne MouseListener
                     gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_KI_AIMING);
-                    gamePanel.getMapPanel().setCurrentAimedAtField(currentAttackField);
+                    gamePanel.getMapPanel().setCurrentAimedAtField(kiTargetedField);
 
                     // Kurz pausieren, damit die Zielauswahl deutlich sichtbar ist.
                     try {
@@ -395,31 +395,7 @@ public class SingleplayerGame {
                         Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                    switch (attackMode) {
-                        case ATTACK_TWICE:
-                            shootAtAttackField(currentAttackField);
-
-                            //Kurz warten, dann zweiter Schuss
-                            try {
-                                Thread.sleep(200);
-                            } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                            
-                            shootAtAttackField(currentAttackField);
-                            break;
-
-                        case NORMAL_ATTACK:
-                            shootAtAttackField(currentAttackField);
-                            break;
-
-                        case NO_ATTACK:
-                            break;
-                        default:
-                            break;
-
-                    }
+                    resolveAttack(kiTargetedField);
 
                 } else {
                     // Spielerkontrollierter Zielvorgang
@@ -445,31 +421,9 @@ public class SingleplayerGame {
                     // Zielfeld wurde angeklickt, mapPanelClickListener wieder entfernen und den
                     // Schuss ausloesen.
                     gamePanel.getMapPanel().removeMouseListener(mapPanelClickListener);
-                    switch (attackMode) {
-                        case ATTACK_TWICE:
-                            shootAtAttackField(chosenAttackField);
 
-                            //Kurz warten, dann zweiter Schuss
-                            try {
-                                Thread.sleep(200);
-                            } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                            
-                            shootAtAttackField(chosenAttackField);
-                            break;
+                    resolveAttack(chosenAttackField);
 
-                        case NORMAL_ATTACK:
-                            shootAtAttackField(chosenAttackField);
-                            break;
-
-                        case NO_ATTACK:
-                            break;
-                        default:
-                            break;
-
-                    }
                 }
 
                 break;
@@ -483,7 +437,48 @@ public class SingleplayerGame {
         this.gameState = gameState;
     }
 
-    private void shootAtAttackField(int currentAttackField) {
+    /**
+     * Der eigentlichen Attacke vorgeschaltete Methode, um auf verschiedene
+     * Angriffsmodi zu testen. Der attackMode wird von der jeweiligen Action
+     * bzw. Ability gesetzt, bevor sie das SingleplayerGame in GameState.AIMING
+     * versetzt.
+     */
+    private void resolveAttack(int targetedField) {
+        switch (attackMode) {
+            case ATTACK_TWICE:
+                shootAtAttackField(targetedField);
+
+                //Kurz warten, dann zweiter Schuss
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                shootAtAttackField(targetedField);
+                break;
+
+            case NORMAL_ATTACK:
+                shootAtAttackField(targetedField);
+                break;
+
+            case NO_ATTACK:
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    /**
+     * Eine einzelne Attacke auf ein anvisiertes Feld. Trifft gem‰ﬂ der durch
+     * den AttackDice modellierten Verteilung entweder das Feld selbst oder
+     * eines in der Umgebung.
+     *
+     * @param targetedField
+     */
+    private void shootAtAttackField(int targetedField) {
         int numberOfHideouts = gameData.getHideouts().size();
         int diceResult = attackDice.rollDice();
 
@@ -519,19 +514,19 @@ public class SingleplayerGame {
         int finalRolledAttackField;
         switch (diceResult) {
             case RESULT_CENTER_HIT:
-                finalRolledAttackField = currentAttackField;
+                finalRolledAttackField = targetedField;
                 break;
             case RESULT_LEFT_CENTER_HIT:
-                finalRolledAttackField = (currentAttackField + numberOfHideouts - 1) % numberOfHideouts;
+                finalRolledAttackField = (targetedField + numberOfHideouts - 1) % numberOfHideouts;
                 break;
             case RESULT_RIGHT_CENTER_HIT:
-                finalRolledAttackField = (currentAttackField + numberOfHideouts + 1) % numberOfHideouts;
+                finalRolledAttackField = (targetedField + numberOfHideouts + 1) % numberOfHideouts;
                 break;
             case RESULT_OUTER_LEFT_HIT:
-                finalRolledAttackField = (currentAttackField + numberOfHideouts - 2) % numberOfHideouts;
+                finalRolledAttackField = (targetedField + numberOfHideouts - 2) % numberOfHideouts;
                 break;
             case RESULT_OUTER_RIGHT_HIT:
-                finalRolledAttackField = (currentAttackField + numberOfHideouts + 2) % numberOfHideouts;
+                finalRolledAttackField = (targetedField + numberOfHideouts + 2) % numberOfHideouts;
                 break;
             default:
                 finalRolledAttackField = -1;
