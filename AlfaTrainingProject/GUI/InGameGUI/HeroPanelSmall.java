@@ -194,7 +194,7 @@ public class HeroPanelSmall extends JPanel {
 
     public void setGrayedOut(boolean grayedOut) {
         this.grayedOut = grayedOut;
-        repaint();
+        getParent().repaint();
     }
 
 }
