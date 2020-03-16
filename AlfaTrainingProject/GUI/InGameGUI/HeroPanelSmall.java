@@ -66,6 +66,10 @@ public class HeroPanelSmall extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
 
+        if (displayedHero.isDead()) {
+            grayedOut = true;
+        }
+
         // Avatar als Hintergrund
         if (grayedOut) {
             g2d.drawImage(displayedHero.getAvatarDeactivated(), 0, 0, getWidth(), getHeight(), this);
@@ -186,12 +190,11 @@ public class HeroPanelSmall extends JPanel {
 
     public boolean isGrayedOut() {
         return grayedOut;
-    }    
-    
+    }
+
     public void setGrayedOut(boolean grayedOut) {
         this.grayedOut = grayedOut;
         repaint();
     }
-    
-    
+
 }
