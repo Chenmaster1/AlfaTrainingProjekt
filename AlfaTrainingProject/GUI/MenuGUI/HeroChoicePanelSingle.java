@@ -49,9 +49,11 @@ public class HeroChoicePanelSingle extends JPanel {
 		if(heroSelected)
 		{
 			checkbox.setEnabled(false);
+                        picturePanel.setGrayedOut(true);
 		}
 		else {
 			checkbox.setEnabled(true);
+                        picturePanel.setGrayedOut(false);
 		}
 	}
 	
