@@ -9,12 +9,15 @@ import Actions.ActionWorkOffDelay;
 import Dice.AttackDice;
 import Dice.HideDice;
 import Heroes.Hero;
+import Heroes.HeroEventListener;
 import Hideouts.Hideout;
 import InGameGUI.GamePanel;
 import GameData.GameData;
 import enums.AbilityType;
 import enums.AttackMode;
 import enums.GameState;
+import enums.HeroEventType;
+
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -34,13 +37,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 
-public class SingleplayerGame {
+public class SingleplayerGame implements HeroEventListener {
 
 	private final JFrame mainFrame;
 	private GamePanel gamePanel;
 	private GameData gameData;
 	private MainFramePanel mainFramePanel;
 
+	private HeroEventListener heroEventListener;
 	private MouseListener mapPanelAttackClickListener;
 	private MouseListener mapPanelAimClickListener;
 	private int chosenAttackField;
@@ -80,7 +84,7 @@ public class SingleplayerGame {
 
 		initializeActionLists();
 
-		initializeButtonListeners();
+		initializeListeners();
 	}
 
 	/**
@@ -128,8 +132,11 @@ public class SingleplayerGame {
 	 * Ein nach dem gleichen Prinzip funktionierender MouseListener wird für die
 	 * Zielauswahl initialisiert. Dieser wird bei einer Angriffsaktion des Spielers
 	 * temporär beim MapPanel angemeldet (siehe setGameState).
+	 * 
+	 * Außerdem wird das SingleplayerGame selbst als HeroEventListener bei allen
+	 * Helden angemeldet, damit Reaktionen behandelt werden können
 	 */
-	private void initializeButtonListeners() {
+	private void initializeListeners() {
 		ArrayList<JButton> playerButtons = gamePanel.getGameSidePanel().getPanelPlayerHero().getButtonArrayList();
 		for (int i = 0; i < playerButtons.size(); i++) {
 			final Action playerAction = playerActions.get(i);
@@ -191,6 +198,13 @@ public class SingleplayerGame {
 			}
 
 		};
+		
+		
+		//SingleplayerGame als HeroEventListener anmelden bei allen Helden
+		for (Hero h : gameData.getHeroes())
+		{
+			h.addHeroListener(this);
+		}
 
 	}
 
@@ -757,6 +771,14 @@ public class SingleplayerGame {
 
 	public void setMysteriousIdol2(boolean active) {
 		this.mysteriousIdol2 = active;
+	}
+
+	@Override
+	public void heroEventRequest(Hero requestingHero, HeroEventType eventType) {
+
+		// Hier mit einem switch über den HeroEventType den gewünschten Effekt
+		// implementieren
+
 	}
 
 }
