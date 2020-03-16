@@ -30,7 +30,7 @@ public class GameSidePanel extends JPanel {
 	private final static double PANELOTHERHEROES_SIZE_RELATIVE_Y = 200 / 1080.0;
 
 	// Verschmälerung des otherHeroesPanel pro fehlendem Helden
-	private final static double PANELOTHERHEROES_GAPSIZE_RELATIVE_X = 186 / 840.0;
+	private final static double PANELOTHERHEROES_GAPSIZE_RELATIVE_X = 198 / 840.0;
 
 	private final static double PANELPLAYERHERO_POSITION_RELATIVE_X = 30 / 840.0;
 	private final static double PANELPLAYERHERO_POSITION_RELATIVE_Y = 340 / 1080.0;
