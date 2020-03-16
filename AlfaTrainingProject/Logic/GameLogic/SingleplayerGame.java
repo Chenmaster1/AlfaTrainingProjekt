@@ -41,7 +41,8 @@ public class SingleplayerGame {
     private GameData gameData;
     private MainFramePanel mainFramePanel;
 
-    private MouseListener mapPanelClickListener;
+    private MouseListener mapPanelAttackClickListener;
+    private MouseListener mapPanelAimClickListener;
     private int chosenAttackField;
 
     private AttackMode attackMode = AttackMode.NO_ATTACK;
@@ -148,18 +149,52 @@ public class SingleplayerGame {
 
         }
 
-        // MapPanel MouseClick Listener
-        mapPanelClickListener = new MouseAdapter() {
+        //MapPanel MouseListener zur Wahl der AttackAction (alternativ zum Button)
+        mapPanelAttackClickListener = new MouseAdapter() {
 
             @Override
             public void mousePressed(MouseEvent me) {
-                chosenAttackField = gamePanel.getMapPanel().getCurrentAimedAtField();
-                synchronized (mainFrame) {
-                    mainFrame.notifyAll();
+                //Linksklick: AttackAction wählen
+                if (me.getButton() == MouseEvent.BUTTON1) {
+                        //Auf den ersten Button der Action Liste klicken
+                        gamePanel.getGameSidePanel().getPanelPlayerHero().getButtonArrayList().get(0).doClick();
+                        //Das anvisierte Feld sofort auf das Feld unterm Cursor setzen
+                        gamePanel.getMapPanel().setCurrentAimedAtField(
+                        gamePanel.getMapPanel().calculateField(me.getPoint()));
+                    synchronized (mainFrame) {
+                        mainFrame.notifyAll();
+                    }
+                } 
+            }
+
+        };
+                
+                
+        // MapPanel MouseListener für die Zielauswahl bei einer Attacke
+        mapPanelAimClickListener = new MouseAdapter() {
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+                //Linksklick: Attacke auslösen
+                if (me.getButton() == MouseEvent.BUTTON1) {
+                    chosenAttackField = gamePanel.getMapPanel().getCurrentAimedAtField();
+                    synchronized (mainFrame) {
+                        mainFrame.notifyAll();
+                    }
+                } //Rechtsklick: Attacke abbrechen
+                else {
+                    if (me.getButton() == MouseEvent.BUTTON3) {
+                        chosenAttackField = -1;
+                        synchronized (mainFrame) {
+                            mainFrame.notifyAll();
+                        }
+                    }
                 }
             }
 
         };
+        
+        
 
     }
 
@@ -245,6 +280,9 @@ public class SingleplayerGame {
 
             // Die Buttons je nach Verfügbarkeits-Status der jeweiligen Aktionen enablen
             gamePanel.getGameSidePanel().getPanelPlayerHero().updateButtonsEnabled();
+            
+            // MapPanel Listener für die Schnellauswahl der AttackAction einschalten
+            gamePanel.getMapPanel().addMouseListener(mapPanelAttackClickListener);
 
             // Auf Entscheidung des Spielers warten, wird von den Action-Buttons wieder
             // notified
@@ -257,6 +295,9 @@ public class SingleplayerGame {
                 }
             }
 
+             // MapPanel Listener für die Schnellauswahl der AttackAction wieder ausschalten
+            gamePanel.getMapPanel().removeMouseListener(mapPanelAttackClickListener);
+            
             // Aktion wurde gewählt. Entsprechend AP reduzieren, Reduktion anzeigen und dann
             // Aktion ausführen
             decreaseCurrentActionPointsBy(chosenPlayerAction.getActionPointsRequired());
@@ -404,9 +445,9 @@ public class SingleplayerGame {
                     // der Maus
                     gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
                     gamePanel.getMapPanel().repaint();
-
+                    
                     // Der Listener für den Mausklick auf MapPanel wird angemeldet
-                    gamePanel.getMapPanel().addMouseListener(mapPanelClickListener);
+                    gamePanel.getMapPanel().addMouseListener(mapPanelAimClickListener);
 
                     // Thread pausieren, bis aufs MapPanel geklickt wurde (siehe Initialisierung des
                     // mapPanelClickListener)
@@ -420,9 +461,16 @@ public class SingleplayerGame {
 
                     // Zielfeld wurde angeklickt, mapPanelClickListener wieder entfernen und den
                     // Schuss ausloesen.
-                    gamePanel.getMapPanel().removeMouseListener(mapPanelClickListener);
+                    gamePanel.getMapPanel().removeMouseListener(mapPanelAimClickListener);
 
-                    resolveAttack(chosenAttackField);
+                    //Wenn der Spieler mit links geklickt hat, Attacke auslösen
+                    if (chosenAttackField > 0) {
+                        resolveAttack(chosenAttackField);
+                    }
+                    //Wenn der Spieler mit rechts geklickt hat, AP zurückerstatten
+                    else if (chosenAttackField == -1) {
+                        currentHero.setCurrentActionPoints(currentHero.getCurrentActionPoints() + chosenPlayerAction.getActionPointsRequired());
+                    }
 
                 }
 
