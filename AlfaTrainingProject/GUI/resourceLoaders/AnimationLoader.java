@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 
 public class AnimationLoader {
 
-	private static final AnimationLoader animationLoaderSingleton = new AnimationLoader();
+	private static final AnimationLoader ANIMATIONLOADER_SINGLETON = new AnimationLoader();
 
 	private ArrayList<Image>[] animations;
 
@@ -29,7 +29,8 @@ public class AnimationLoader {
 			for (int j = 0; j < additionalZeros; j++) {
 				sb.append("0");
 			}
-			sb.append(i + ".png");
+			sb.append(i);
+                        sb.append(".png");
 
 			frame = new ImageIcon(getClass().getClassLoader().getResource(sb.toString())).getImage();
 			attackDiceArrayList.add(frame);
@@ -45,7 +46,8 @@ public class AnimationLoader {
             for (int j = 0; j < additionalZeros; j++) {
                 sb.append("0");
             }
-            sb.append(i + ".png");
+            sb.append(i);
+            sb.append(".png");
 
             frame = new ImageIcon(getClass().getClassLoader().getResource(sb.toString())).getImage();
             hideDiceArrayList.add(frame);
@@ -63,7 +65,7 @@ public class AnimationLoader {
 	}
 
 	public static AnimationLoader getInstance() {
-		return animationLoaderSingleton;
+		return ANIMATIONLOADER_SINGLETON;
 	}
 
 	public ArrayList<Image> getAnimation(AnimationName name) {
