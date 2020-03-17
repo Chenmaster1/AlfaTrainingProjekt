@@ -784,8 +784,21 @@ public class SingleplayerGame implements HeroEventListener {
 	@Override
 	public void heroEventRequest(Hero requestingHero, HeroEventType eventType) {
 
+             
 		// Hier mit einem switch über den HeroEventType den gewünschten Effekt
 		// implementieren
+                
+                // when HeroDahlia looses a hitpint she´ll end up @ Hide_Roll
+                switch(eventType)
+                {
+                    case HIDE_ROLL:
+                        //TODO Dahlia hide roll oder autohide?
+                        
+ 
+                        break;
+                        
+                }
+                
 
 	}
 
