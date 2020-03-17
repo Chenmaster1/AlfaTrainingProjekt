@@ -198,11 +198,9 @@ public class SingleplayerGame implements HeroEventListener {
 			}
 
 		};
-		
-		
-		//SingleplayerGame als HeroEventListener anmelden bei allen Helden
-		for (Hero h : gameData.getHeroes())
-		{
+
+		// SingleplayerGame als HeroEventListener anmelden bei allen Helden
+		for (Hero h : gameData.getHeroes()) {
 			h.addHeroListener(this);
 		}
 
@@ -597,13 +595,13 @@ public class SingleplayerGame implements HeroEventListener {
 			if (occupyingHero != null) {
 				// Hero is detected / unveiled
 				if (!occupyingHero.isVisible()) {
-					occupyingHero.setVisible(true);
 					gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN, finalRolledAttackField);
-					
+
+					occupyingHero.setVisible(true);
 					
 				} // Hero is hit
 				else {
-					
+
 					if (occupyingHero.isAttackable()) {
 						occupyingHero.setCurrentHitPoints(occupyingHero.getCurrentHitPoints() - 1);
 
@@ -613,17 +611,17 @@ public class SingleplayerGame implements HeroEventListener {
 
 						// check if hero died / disable field
 						if (occupyingHero.isDead()) {
+							gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_ELIMINATE,
+									finalRolledAttackField);
 							gameData.getHideouts().get(finalRolledAttackField).setActive(false);
-							gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_ELIMINATE, finalRolledAttackField);
-						}else {
+						} else {
 							gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_FIRE, finalRolledAttackField);
 						}
 					}
 
 				}
 			}
-		}
-		else {
+		} else {
 			gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN, finalRolledAttackField);
 		}
 		gamePanel.repaint();

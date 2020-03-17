@@ -9,6 +9,7 @@ import MenuGUI.MyFrame;
 import Heroes.Hero;
 import Hideouts.Hideout;
 import Hideouts.HideoutType;
+import InGameGUI.MapPanel;
 import GameData.GameData;
 
 public class ActionHide extends Action {
@@ -115,12 +116,18 @@ public class ActionHide extends Action {
 		case HideDice.RESULT_GREEN:
 			// Neu verstecken
 			hero.setVisible(false);
-			oldHideout.setActive(false);
 
 			int newHideoutNumber = (int) (Math.random() * availableHideouts.size());
 			Hideout newHideout = availableHideouts.get(newHideoutNumber);
 			hideoutHeroMap.remove(oldHideout);
 			hideoutHeroMap.put(newHideout, hero);
+
+			int oldHideoutNumber = singleplayerGame.getGameData().getHideouts().indexOf(oldHideout);
+			singleplayerGame.getGamePanel().getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_ELIMINATE,
+					oldHideoutNumber);
+			
+			oldHideout.setActive(false);
+			
 			break;
 		case HideDice.RESULT_NOTHING:
 			break;
