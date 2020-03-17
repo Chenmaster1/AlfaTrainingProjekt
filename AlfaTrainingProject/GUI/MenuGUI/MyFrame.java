@@ -15,6 +15,7 @@ import SoundThread.MainTheme;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -38,7 +39,7 @@ public class MyFrame extends JFrame
      * Yovo
      */
     public static String path;
-    public static String language = "/Bundle_DE", volume ="50";
+    public static String language = "/Bundle_DE", volume = "50";
     public static Boolean volumFromFile = true;
 
 
@@ -89,9 +90,39 @@ public class MyFrame extends JFrame
             catch (Exception e)
             {
                 e.printStackTrace();
-                language = "/Bundle_DE";
-                volume = "50";
+                
             }
+        }
+        //if no files exists
+        else
+        {
+            try
+            {
+                
+              
+                if (!Files.isDirectory(Paths.get(MyFrame.path + "\\")))
+                {
+                    Files.createDirectory(Paths.get(MyFrame.path + "\\"));
+                    Files.createFile(Paths.get(MyFrame.path + "\\hota_setting.txt"));
+                }
+                else if (!Files.isDirectory(Paths.get(MyFrame.path + "\\hota_setting.txt")))
+                {
+                    Files.createFile(Paths.get(MyFrame.path + "\\hota_setting.txt"));
+                }
+
+                FileWriter fw = new FileWriter(MyFrame.path + "\\hota_setting.txt");
+                fw.write("50" + "\n" + "/Bundle_DE");
+                fw.close();
+                language = "/Bundle_DE";
+                SoundThread.mp3test.setVolumInitialize(50);
+
+            }
+            catch (Exception e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
         }
     }
 
