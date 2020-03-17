@@ -784,7 +784,7 @@ public class SingleplayerGame implements HeroEventListener {
 	@Override
 	public void heroEventRequest(Hero requestingHero, HeroEventType eventType) {
 
-             
+           
 		// Hier mit einem switch über den HeroEventType den gewünschten Effekt
 		// implementieren
                 
@@ -793,10 +793,10 @@ public class SingleplayerGame implements HeroEventListener {
                 {
                     case HIDE_AUTOMATIC:
                         //TODO Dahlia hide roll oder autohide?
-                        
- 
+                     //freeHide in ActionHide
+                        ActionHide eventHide = new ActionHide(0);
+                        eventHide.freeHideHero(requestingHero, this);
                         break;
-                        
                     case HIDE_ROLL:
                     	ActionHide tempActionHide = new ActionHide(0);
                     	tempActionHide.useAction(requestingHero,this);

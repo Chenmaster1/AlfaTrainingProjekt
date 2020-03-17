@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Dice.HideDice;
+import static Dice.HideDice.RESULT_GREEN;
 import GameLogic.SingleplayerGame;
 import MenuGUI.MyFrame;
 import Heroes.Hero;
@@ -162,5 +163,67 @@ public class ActionHide extends Action {
 		}
 
 	}
+        
+        
+        
+        
+        
+        
+        
+        /**
+	 * get a free hide
+	 * Dahlia
+	 */
+        public void freeHideHero(Hero hero, SingleplayerGame singleplayerGame) {
+		ArrayList<Hideout> availableHideouts = new ArrayList<Hideout>();
+		ArrayList<Hero> aliveHeroes = new ArrayList<Hero>();
+		HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getGameData().getHideoutHero();
 
-}
+		// availableHideouts wird mit allen noch verfügbaren Hideouts befüllt
+		for (Hideout hideout : singleplayerGame.getGameData().getHideouts()) {
+			boolean isUsed = false;
+			for (Hideout usedHideout : hideoutHeroMap.keySet()) {
+				if (hideout == usedHideout) {
+					isUsed = true;
+					break;
+				}
+
+			}
+
+			if ((!isUsed) && hideout.isActive()) {
+				availableHideouts.add(hideout);
+			}
+		}
+
+		// aliveHeroes mit allen lebenden Helden füllen
+		for (Hero heroFromList : singleplayerGame.getGameData().getHeroes()) {
+			if (!heroFromList.isDead())
+				aliveHeroes.add(heroFromList);
+		}
+
+		// HideDice benutzen
+		int rollResult = RESULT_GREEN;
+
+		Hideout oldHideout = null;
+		for (Hideout hideout : hideoutHeroMap.keySet()) {
+			if (hideoutHeroMap.get(hideout).equals(hero)) {
+				oldHideout = hideout;
+				break;
+			}
+		}
+		
+			hero.setVisible(false);
+			oldHideout.setActive(false);
+
+			int newHideoutNumber = (int) (Math.random() * availableHideouts.size());
+			Hideout newHideout = availableHideouts.get(newHideoutNumber);
+			hideoutHeroMap.remove(oldHideout);
+			hideoutHeroMap.put(newHideout, hero);
+			
+		}
+
+	}
+
+	
+
+
