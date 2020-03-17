@@ -17,6 +17,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import javax.swing.JPanel;
 
 import javax.swing.JSlider;
@@ -56,6 +58,8 @@ public class SettingsPanel extends JPanel
     private Boolean createFile = true;
     private File file;
     //private String path;
+    
+    private JOptionPane saveMessage;
     //language should be loaded somewhere else
     //private String language = "german";
     //
@@ -79,6 +83,7 @@ public class SettingsPanel extends JPanel
 
         cancelBtn = new JButton(MyFrame.bundle.getString("btnCancel"));
         saveBtn = new JButton(MyFrame.bundle.getString("btnSave"));
+        saveMessage = new JOptionPane();
         getSettings();
         fillPanel();
 
@@ -267,6 +272,7 @@ public class SettingsPanel extends JPanel
                 FileWriter fw = new FileWriter(MyFrame.path + "\\hota_setting.txt");
                 fw.write(volumeSlider.getValue() + "\n" + MyFrame.language);
                 fw.close();
+              
 
             }
             catch (Exception e)
@@ -297,6 +303,16 @@ public class SettingsPanel extends JPanel
                 e.printStackTrace();
             }
         }
+        
+        JOptionPane.showMessageDialog(null, 
+                              MyFrame.bundle.getString("settingSavedMessage"), 
+                              MyFrame.bundle.getString("settingSavedTitle"), 
+                              JOptionPane.INFORMATION_MESSAGE);
+        
+//        name.setMessageType(INFORMATION_MESSAGE);
+//        name.setMessage("hello Word");
+        //name.showInputDialog(parent,"What is your name?", null);
+        
 
         // frame.setContentPane(parentPanel);
         //frame.repaint();
