@@ -84,6 +84,14 @@ public class AnimationLoader {
 							.getImage());
 		}
 		animations[AnimationName.TOWER_SCAN.ordinal()] = towerScanArrayList;
+		
+		ArrayList<Image> towerEliminateArrayList = new ArrayList<>();
+		for (int i = 0; i < 40; i++) {
+			towerEliminateArrayList
+					.add(new ImageIcon(getClass().getClassLoader().getResource("Tower-Eliminate/Tower" + (i + 1) + ".png"))
+							.getImage());
+		}
+		animations[AnimationName.TOWER_ELIMINATE.ordinal()] = towerEliminateArrayList;
 
 	}
 
