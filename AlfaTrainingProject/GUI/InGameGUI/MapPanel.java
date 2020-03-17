@@ -37,12 +37,19 @@ public class MapPanel extends JPanel {
 	private final static double HEROICON_SIZE_RELATIVE = 0.07;
 	private final static float HEROICON_HIDDEN_ALPHA = 0.5f;
 
+	private final static double TOWER_SCALE = 1 / 1080.0;
+
 	private final static double AIMOVERLAY_SIZE_RELATIVE_X = 537 / 1080.0;
 	private final static double AIMOVERLAY_SIZE_RELATIVE_Y = 748 / 1080.0;
 
 	private Image backgroundImage;
 	private Image aimOverlay;
+	private Image towerImage;
 	private ArrayList<Image> inactiveFieldOverlays;
+
+	private ArrayList<Image> towerChargeAnimation;
+	private ArrayList<Image> towerFireAnimation;
+	private ArrayList<Image> towerScanAnimation;
 
 	private int mapState;
 	private HashMap<Hideout, Hero> hideoutHeroes;
@@ -59,7 +66,12 @@ public class MapPanel extends JPanel {
 
 		backgroundImage = ImageLoader.getInstance().getImage(ImageName.GAMEBOARD_EMPTY);
 		aimOverlay = ImageLoader.getInstance().getImage(ImageName.TOWER_AIM);
+		towerImage = ImageLoader.getInstance().getImage(ImageName.TOWER);
 		inactiveFieldOverlays = AnimationLoader.getInstance().getAnimation(AnimationName.DEACTIVATED_HIDEOUTS);
+
+		towerChargeAnimation = AnimationLoader.getInstance().getAnimation(AnimationName.TOWER_CHARGE);
+		towerFireAnimation = AnimationLoader.getInstance().getAnimation(AnimationName.TOWER_FIRE);
+		towerScanAnimation = AnimationLoader.getInstance().getAnimation(AnimationName.TOWER_SCAN);
 
 		this.hideoutHeroes = hideoutHeroes;
 		this.mainHero = mainHero;
@@ -90,7 +102,10 @@ public class MapPanel extends JPanel {
 
 		// Overlays für zerstörte Verstecke
 		drawDisabledFields(g2d);
-                
+
+		// Den Turm
+		drawTower(g2d);
+
 		// ggf Overlay für den Zielmechanismus
 		if (mapState == MAPSTATE_PLAYER_AIMING || mapState == MAPSTATE_KI_AIMING) {
 			drawAimOverlay(g2d);
@@ -109,6 +124,26 @@ public class MapPanel extends JPanel {
 				g2d.drawImage(inactiveFieldOverlays.get(i), 0, 0, this);
 			}
 		}
+	}
+
+	/**
+	 * Zeichnet den Turm in die Mitte des Feldes
+	 */
+	private void drawTower(Graphics2D g2d) {
+		int totalImageWidth = (int)(towerImage.getWidth(this) * 
+				TOWER_SCALE * 
+				this.getWidth());
+		
+		int totalImageHeight = (int)(towerImage.getHeight(this) * 
+				TOWER_SCALE * 
+				this.getHeight());
+		
+		g2d.drawImage(towerImage, 
+				getWidth()/2 - (totalImageWidth /2), 
+				getHeight()/2 - (totalImageHeight /2), 
+				totalImageWidth,
+				totalImageHeight, this);
+
 	}
 
 	/**
