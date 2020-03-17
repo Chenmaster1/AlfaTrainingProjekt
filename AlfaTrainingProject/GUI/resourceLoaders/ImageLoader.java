@@ -36,6 +36,8 @@ public class ImageLoader {
                 getClass().getClassLoader().getResource("Gameboard/spot_left.png")).getImage();
         images[ImageName.SPOT_TOWER.ordinal()] = new ImageIcon(
                 getClass().getClassLoader().getResource("Gameboard/spot_tower.png")).getImage();
+        images[ImageName.TOWER_CARD.ordinal()] = new ImageIcon(
+                getClass().getClassLoader().getResource("Gameboard/Tower_Card.jpg")).getImage();
         images[ImageName.GAMEBOARD_RIGHT.ordinal()] = new ImageIcon(
                 getClass().getClassLoader().getResource("Gameboard/Gameboard_Right.png")).getImage();
         images[ImageName.HERO_FRONT_EMPTY_TALL.ordinal()] = new ImageIcon(

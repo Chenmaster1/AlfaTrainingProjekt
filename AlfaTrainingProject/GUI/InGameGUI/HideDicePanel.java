@@ -22,24 +22,24 @@ import javax.swing.JPanel;
 public class HideDicePanel extends JPanel implements Runnable {
 
     // relative Position/Größe der Grafiken im Bezug auf die Panelgröße
-    private static final double SPOTLIGHTCIRCLE_POSITION_RELATIVE_X = 0.0;
+    private static final double SPOTLIGHTCIRCLE_POSITION_RELATIVE_X = - 0.01;
     private static final double SPOTLIGHTCIRCLE_POSITION_RELATIVE_Y = 0.04;
-    private static final double SPOTLIGHTCIRCLE_SIZE_RELATIVE_X = 0.55;
+    private static final double SPOTLIGHTCIRCLE_SIZE_RELATIVE_X = 0.6;
     private static final double SPOTLIGHTCIRCLE_SIZE_RELATIVE_Y = 0.85;
 
-    private static final double SPOTLIGHTCONE_POSITION_RELATIVE_X = 0.22;
+    private static final double SPOTLIGHTCONE_POSITION_RELATIVE_X = 0.25;
     private static final double SPOTLIGHTCONE_POSITION_RELATIVE_Y = 0.09;
-    private static final double SPOTLIGHTCONE_SIZE_RELATIVE_X = 0.59;
+    private static final double SPOTLIGHTCONE_SIZE_RELATIVE_X = 0.55;
     private static final double SPOTLIGHTCONE_SIZE_RELATIVE_Y = 0.74;
 
-    private static final double DIE_POSITION_RELATIVE_X = -0.23;
+    private static final double DIE_POSITION_RELATIVE_X = -0.21;
     private static final double DIE_POSITION_RELATIVE_Y = -0.1;
     private static final double DIE_SIZE_RELATIVE_X = 1;
     private static final double DIE_SIZE_RELATIVE_Y = 1.2;
 
-    private static final double CARD_POSITION_RELATIVE_X = 0.62;
+    private static final double CARD_POSITION_RELATIVE_X = 0.59;
     private static final double CARD_POSITION_RELATIVE_Y = 0.0;
-    private static final double CARD_SIZE_RELATIVE_X = 0.39;
+    private static final double CARD_SIZE_RELATIVE_X = 0.42;
     private static final double CARD_SIZE_RELATIVE_Y = 1.0;
 
     private ArrayList<Image> animationImages;

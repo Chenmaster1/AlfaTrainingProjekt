@@ -50,12 +50,12 @@ public class GamePanelTest extends JFrame {
         }
 
         // testArray Gegnerhelden
-        ArrayList<Hero> otherHeroes = new ArrayList<>();
-        otherHeroes.add(new HeroWorok());
-        otherHeroes.add(new HeroDahlia());
-        otherHeroes.add(new HeroTolpanLongbeard());
-        otherHeroes.add(new HeroWorok());
-        for (Hero h : otherHeroes) {
+        ArrayList<Hero> allHeroes = new ArrayList<>();
+        allHeroes.add(new HeroWorok());
+        allHeroes.add(new HeroDahlia());
+        allHeroes.add(new HeroTolpanLongbeard());
+        allHeroes.add(new HeroWorok());
+        for (Hero h : allHeroes) {
             h.setDelayTokens(new Random().nextInt(4));
             h.setCurrentActionPoints(new Random().nextInt(h.getMaxActionPoints()));
             h.setCurrentHitPoints(new Random().nextInt(h.getMaxHitPoints()));
@@ -64,21 +64,23 @@ public class GamePanelTest extends JFrame {
         }
 
         Hero mainHero = new HeroDahlia();
+        allHeroes.add(mainHero);
+        mainHero.setPlayerControlled(true);
         mainHero.setVisible(false);
         mainHero.setDelayTokens(4);
 
         //test Hideout-Hero Map
         HashMap<Hideout, Hero> testHideoutHero = new HashMap<>();
-        testHideoutHero.put(hideoutArray.get(4), otherHeroes.get(0));
-        testHideoutHero.put(hideoutArray.get(8), otherHeroes.get(1));
-        testHideoutHero.put(hideoutArray.get(12), otherHeroes.get(2));
-        testHideoutHero.put(hideoutArray.get(13), otherHeroes.get(3));
+        testHideoutHero.put(hideoutArray.get(4), allHeroes.get(0));
+        testHideoutHero.put(hideoutArray.get(8), allHeroes.get(1));
+        testHideoutHero.put(hideoutArray.get(12), allHeroes.get(2));
+        testHideoutHero.put(hideoutArray.get(13), allHeroes.get(3));
         testHideoutHero.put(hideoutArray.get(17), mainHero);
 
         final MapPanel mp = new MapPanel(hideoutArray, testHideoutHero, mainHero);
         mp.setMapState(MapPanel.MAPSTATE_PLAYER_AIMING);
 
-        final GameSidePanel gsp = new GameSidePanel(otherHeroes, mainHero);
+        final GameSidePanel gsp = new GameSidePanel(allHeroes, mainHero);
 
         GamePanel gp = new GamePanel(mp, gsp, this);
 

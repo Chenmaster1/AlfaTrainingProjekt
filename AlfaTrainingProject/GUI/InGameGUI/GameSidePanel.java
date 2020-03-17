@@ -37,14 +37,14 @@ public class GameSidePanel extends JPanel {
 	private final static double PANELPLAYERHERO_SIZE_RELATIVE_X = 558 / 840.0;
 	private final static double PANELPLAYERHERO_SIZE_RELATIVE_Y = 393 / 1080.0;
 
-	private final static double PANELATTACKDICE_POSITION_RELATIVE_X = 20 / 840.0;
-	private final static double PANELATTACKDICE_POSITION_RELATIVE_Y = 750 / 1080.0;
-	private final static double PANELATTACKDICE_SIZE_RELATIVE_X = 350 / 840.0;
-	private final static double PANELATTACKDICE_SIZE_RELATIVE_Y = 250 / 1080.0;
+	private final static double PANELATTACKDICE_POSITION_RELATIVE_X = 0 / 840.0;
+	private final static double PANELATTACKDICE_POSITION_RELATIVE_Y = 742 / 1080.0;
+	private final static double PANELATTACKDICE_SIZE_RELATIVE_X = 403 / 840.0;
+	private final static double PANELATTACKDICE_SIZE_RELATIVE_Y = 297 / 1080.0;
 
-	private final static double PANELHIDEDICE_POSITION_RELATIVE_X = 370 / 840.0;
+	private final static double PANELHIDEDICE_POSITION_RELATIVE_X = 403 / 840.0;
 	private final static double PANELHIDEDICE_POSITION_RELATIVE_Y = 742 / 1080.0;
-	private final static double PANELHIDEDICE_SIZE_RELATIVE_X = 437 / 840.0;
+	private final static double PANELHIDEDICE_SIZE_RELATIVE_X = 404 / 840.0;
 	private final static double PANELHIDEDICE_SIZE_RELATIVE_Y = 297 / 1080.0;
 
 	private Image backgroundImage;

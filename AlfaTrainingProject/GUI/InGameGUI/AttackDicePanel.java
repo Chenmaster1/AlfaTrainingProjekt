@@ -22,25 +22,25 @@ import javax.swing.JPanel;
 public class AttackDicePanel extends JPanel implements Runnable {
 
 	// relative Position/Größe der Grafiken im Bezug auf die Panelgröße
-	private static final double SPOTLIGHTCIRCLE_POSITION_RELATIVE_X = 0.35;
-	private static final double SPOTLIGHTCIRCLE_POSITION_RELATIVE_Y = 0.0;
-	private static final double SPOTLIGHTCIRCLE_SIZE_RELATIVE_X = 0.65;
-	private static final double SPOTLIGHTCIRCLE_SIZE_RELATIVE_Y = 1.0;
+	private static final double SPOTLIGHTCIRCLE_POSITION_RELATIVE_X = 0.41;
+	private static final double SPOTLIGHTCIRCLE_POSITION_RELATIVE_Y = 0.04;
+	private static final double SPOTLIGHTCIRCLE_SIZE_RELATIVE_X = 0.6;
+	private static final double SPOTLIGHTCIRCLE_SIZE_RELATIVE_Y = 0.85;
 
 	private static final double SPOTLIGHTCONE_POSITION_RELATIVE_X = 0.22;
 	private static final double SPOTLIGHTCONE_POSITION_RELATIVE_Y = 0.07;
-	private static final double SPOTLIGHTCONE_SIZE_RELATIVE_X = 0.5;
+	private static final double SPOTLIGHTCONE_SIZE_RELATIVE_X = 0.56;
 	private static final double SPOTLIGHTCONE_SIZE_RELATIVE_Y = 0.9;
 
-	private static final double DIE_POSITION_RELATIVE_X = 0.17;
-	private static final double DIE_POSITION_RELATIVE_Y = -0.1;
+	private static final double DIE_POSITION_RELATIVE_X = 0.2;
+	private static final double DIE_POSITION_RELATIVE_Y = -0.12;
 	private static final double DIE_SIZE_RELATIVE_X = 1;
 	private static final double DIE_SIZE_RELATIVE_Y = 1.2;
 
-	private static final double TOWER_POSITION_RELATIVE_X = 0.0;
-	private static final double TOWER_POSITION_RELATIVE_Y = 0.15;
-	private static final double TOWER_SIZE_RELATIVE_X = 0.4;
-	private static final double TOWER_SIZE_RELATIVE_Y = 0.85;
+	private static final double TOWER_CARD_POSITION_RELATIVE_X = 0.0;
+	private static final double TOWER_CARD_POSITION_RELATIVE_Y = 0.0;
+	private static final double TOWER_CARD_SIZE_RELATIVE_X = 0.4;
+	private static final double TOWER_CARD_SIZE_RELATIVE_Y = 1.0;
 
 	private ArrayList<Image> animationImages;
 	private Image towerImage;
@@ -58,7 +58,7 @@ public class AttackDicePanel extends JPanel implements Runnable {
 		
 
 		// Tower und Spotlight laden
-		towerImage =  ImageLoader.getInstance().getImage(ImageName.TOWER);
+		towerImage =  ImageLoader.getInstance().getImage(ImageName.TOWER_CARD);
 		
 		spotlightConeImage =  ImageLoader.getInstance().getImage(ImageName.SPOT_LEFT);
 		
@@ -85,17 +85,19 @@ public class AttackDicePanel extends JPanel implements Runnable {
 				(int) (getWidth() * SPOTLIGHTCIRCLE_SIZE_RELATIVE_X),
 				(int) (getHeight() * SPOTLIGHTCIRCLE_SIZE_RELATIVE_Y), this);
 
+		// Dann die Karte
+				g2d.drawImage(towerImage, (int) (getWidth() * TOWER_CARD_POSITION_RELATIVE_X),
+						(int) (getHeight() * TOWER_CARD_POSITION_RELATIVE_Y), (int) (getWidth() * TOWER_CARD_SIZE_RELATIVE_X),
+						(int) (getHeight() * TOWER_CARD_SIZE_RELATIVE_Y), this);
+
+		
 		// den Cone darauf
 		g2d.drawImage(spotlightConeImage, (int) (getWidth() * SPOTLIGHTCONE_POSITION_RELATIVE_X),
 				(int) (getHeight() * SPOTLIGHTCONE_POSITION_RELATIVE_Y),
 				(int) (getWidth() * SPOTLIGHTCONE_SIZE_RELATIVE_X), (int) (getHeight() * SPOTLIGHTCONE_SIZE_RELATIVE_Y),
 				this);
 
-		// Dann den Turm
-		g2d.drawImage(towerImage, (int) (getWidth() * TOWER_POSITION_RELATIVE_X),
-				(int) (getHeight() * TOWER_POSITION_RELATIVE_Y), (int) (getWidth() * TOWER_SIZE_RELATIVE_X),
-				(int) (getHeight() * TOWER_SIZE_RELATIVE_Y), this);
-
+		
 		// und zuletzt den Würfel
 		g2d.drawImage(animationImages.get(currentAnimationFrame), (int) (getWidth() * DIE_POSITION_RELATIVE_X),
 				(int) (getHeight() * DIE_POSITION_RELATIVE_Y), (int) (getWidth() * DIE_SIZE_RELATIVE_X),
