@@ -791,12 +791,16 @@ public class SingleplayerGame implements HeroEventListener {
                 // when HeroDahlia looses a hitpint she´ll end up @ Hide_Roll
                 switch(eventType)
                 {
-                    case HIDE_ROLL:
+                    case HIDE_AUTOMATIC:
                         //TODO Dahlia hide roll oder autohide?
                         
  
                         break;
                         
+                    case HIDE_ROLL:
+                    	ActionHide tempActionHide = new ActionHide(0);
+                    	tempActionHide.useAction(requestingHero,this);
+                    	break;
                 }
                 
 

@@ -38,7 +38,7 @@ public class HeroDahlia extends Hero
         //TODO what if Dahlia looses hitPoints due to other sources? 
         if (currentHitPoints != 4)
         {
-            notifyAllHeroEventListeners(this, HeroEventType.HIDE_ROLL);
+            notifyAllHeroEventListeners(this, HeroEventType.HIDE_AUTOMATIC);
         }
 
     }
