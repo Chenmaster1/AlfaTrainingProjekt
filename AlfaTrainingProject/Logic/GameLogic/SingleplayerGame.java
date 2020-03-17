@@ -598,8 +598,12 @@ public class SingleplayerGame implements HeroEventListener {
 				// Hero is detected / unveiled
 				if (!occupyingHero.isVisible()) {
 					occupyingHero.setVisible(true);
+					gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN, finalRolledAttackField);
+					
+					
 				} // Hero is hit
 				else {
+					
 					if (occupyingHero.isAttackable()) {
 						occupyingHero.setCurrentHitPoints(occupyingHero.getCurrentHitPoints() - 1);
 
@@ -610,11 +614,17 @@ public class SingleplayerGame implements HeroEventListener {
 						// check if hero died / disable field
 						if (occupyingHero.isDead()) {
 							gameData.getHideouts().get(finalRolledAttackField).setActive(false);
+							gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_ELIMINATE, finalRolledAttackField);
+						}else {
+							gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_FIRE, finalRolledAttackField);
 						}
 					}
 
 				}
 			}
+		}
+		else {
+			gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN, finalRolledAttackField);
 		}
 		gamePanel.repaint();
 

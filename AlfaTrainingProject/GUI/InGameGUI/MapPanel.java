@@ -28,7 +28,7 @@ import javax.swing.JPanel;
  * Das Panel mit dem eigentlichen Spielfeld bzw der Arena.
  * 
  */
-public class MapPanel extends JPanel {
+public class MapPanel extends JPanel implements Runnable {
 
 	public final static int MAPSTATE_REGULAR = 0, MAPSTATE_PLAYER_AIMING = 1, MAPSTATE_KI_AIMING = 2;
 //    private final static int PANELSIZE = 1080;
@@ -37,12 +37,31 @@ public class MapPanel extends JPanel {
 	private final static double HEROICON_SIZE_RELATIVE = 0.07;
 	private final static float HEROICON_HIDDEN_ALPHA = 0.5f;
 
+	private final static double TOWER_SCALE = 1 / 1080.0;
+
+	private final static double ANIMATION_SCALE = 1 / 1080.0;
+	private final static double ANIMATION_SCALE_BEAM = 1.2 / 1080.0;
+
 	private final static double AIMOVERLAY_SIZE_RELATIVE_X = 537 / 1080.0;
 	private final static double AIMOVERLAY_SIZE_RELATIVE_Y = 748 / 1080.0;
 
+	public final static int ANIMATIONTYPE_SCAN = 1, ANIMATIONTYPE_FIRE = 2, ANIMATIONTYPE_ELIMINATE = 3;
+
 	private Image backgroundImage;
 	private Image aimOverlay;
+	private Image towerImage;
 	private ArrayList<Image> inactiveFieldOverlays;
+
+	private ArrayList<Image> towerChargeAnimation;
+	private ArrayList<Image> towerFireAnimation;
+	private ArrayList<Image> towerScanAnimation;
+	private ArrayList<Image> towerEliminateAnimation;
+
+	private int currentAnimationType;
+	private int currentAnimationFrame;
+	private int targetAnimationFrame;
+
+	private Thread threadMapPanelAnimation;
 
 	private int mapState;
 	private HashMap<Hideout, Hero> hideoutHeroes;
@@ -50,6 +69,7 @@ public class MapPanel extends JPanel {
 
 	private Hero mainHero;
 	private int currentAimedAtField;
+	private int currentFiredAtField;
 	private MouseMotionListener mousePositionListener;
 
 	public MapPanel(ArrayList<Hideout> hideouts, HashMap<Hideout, Hero> hideoutHeroes, Hero mainHero) {
@@ -59,7 +79,13 @@ public class MapPanel extends JPanel {
 
 		backgroundImage = ImageLoader.getInstance().getImage(ImageName.GAMEBOARD_EMPTY);
 		aimOverlay = ImageLoader.getInstance().getImage(ImageName.TOWER_AIM);
+		towerImage = ImageLoader.getInstance().getImage(ImageName.TOWER);
 		inactiveFieldOverlays = AnimationLoader.getInstance().getAnimation(AnimationName.DEACTIVATED_HIDEOUTS);
+
+		towerChargeAnimation = AnimationLoader.getInstance().getAnimation(AnimationName.TOWER_CHARGE);
+		towerFireAnimation = AnimationLoader.getInstance().getAnimation(AnimationName.TOWER_FIRE);
+		towerScanAnimation = AnimationLoader.getInstance().getAnimation(AnimationName.TOWER_SCAN);
+		towerEliminateAnimation = AnimationLoader.getInstance().getAnimation(AnimationName.TOWER_ELIMINATE);
 
 		this.hideoutHeroes = hideoutHeroes;
 		this.mainHero = mainHero;
@@ -78,6 +104,9 @@ public class MapPanel extends JPanel {
 			}
 
 		};
+
+		threadMapPanelAnimation = new Thread(this);
+		threadMapPanelAnimation.start();
 	}
 
 	@Override
@@ -90,14 +119,20 @@ public class MapPanel extends JPanel {
 
 		// Overlays für zerstörte Verstecke
 		drawDisabledFields(g2d);
-                
+
+		// Den Turm
+		drawTower(g2d);
+
 		// ggf Overlay für den Zielmechanismus
 		if (mapState == MAPSTATE_PLAYER_AIMING || mapState == MAPSTATE_KI_AIMING) {
 			drawAimOverlay(g2d);
 		}
 
-		// zuletzt Overlays für Helden
+		// dann Overlays für Helden
 		drawVisibleHeros(g2d);
+
+		// zuletzt aktuelles Animationsframe zeichnen
+		drawCurrentAnimationFrame(g2d);
 	}
 
 	/**
@@ -109,6 +144,19 @@ public class MapPanel extends JPanel {
 				g2d.drawImage(inactiveFieldOverlays.get(i), 0, 0, this);
 			}
 		}
+	}
+
+	/**
+	 * Zeichnet den Turm in die Mitte des Feldes
+	 */
+	private void drawTower(Graphics2D g2d) {
+		int totalImageWidth = (int) (towerImage.getWidth(this) * TOWER_SCALE * this.getWidth());
+
+		int totalImageHeight = (int) (towerImage.getHeight(this) * TOWER_SCALE * this.getHeight());
+
+		g2d.drawImage(towerImage, getWidth() / 2 - (totalImageWidth / 2), getHeight() / 2 - (totalImageHeight / 2),
+				totalImageWidth, totalImageHeight, this);
+
 	}
 
 	/**
@@ -197,6 +245,53 @@ public class MapPanel extends JPanel {
 	}
 
 	/**
+	 * Zeichnet das aktuelle Frame der Schuss- bzw Scananimation.
+	 * 
+	 * @param g2d
+	 */
+	private void drawCurrentAnimationFrame(Graphics2D g2d) {
+
+		Image imageToDraw = null;
+
+		if (currentAnimationFrame < towerChargeAnimation.size()) {
+			imageToDraw = towerChargeAnimation.get(currentAnimationFrame);
+			int totalImageWidth = (int) (imageToDraw.getWidth(this) * ANIMATION_SCALE * this.getWidth());
+
+			int totalImageHeight = (int) (imageToDraw.getHeight(this) * ANIMATION_SCALE * this.getHeight());
+
+			g2d.drawImage(imageToDraw, getWidth() / 2 - (totalImageWidth / 2), getHeight() / 2 - (totalImageHeight / 2),
+					totalImageWidth, totalImageHeight, this);
+
+		} else if (currentAnimationFrame < (towerChargeAnimation.size() + towerFireAnimation.size())) {
+
+			switch (currentAnimationType) {
+			case ANIMATIONTYPE_SCAN:
+				imageToDraw = towerScanAnimation.get(currentAnimationFrame - towerChargeAnimation.size());
+				break;
+			case ANIMATIONTYPE_FIRE:
+				imageToDraw = towerFireAnimation.get(currentAnimationFrame - towerChargeAnimation.size());
+				break;
+			case ANIMATIONTYPE_ELIMINATE:
+				imageToDraw = towerEliminateAnimation.get(currentAnimationFrame - towerChargeAnimation.size());
+				break;
+			}
+
+			AffineTransform oldTransform = g2d.getTransform();
+			g2d.rotate(getRadiant(currentFiredAtField), getWidth() / 2, getHeight() / 2);
+
+			int totalImageWidth = (int) (imageToDraw.getWidth(this) * ANIMATION_SCALE_BEAM * this.getWidth());
+			int totalImageHeight = (int) (imageToDraw.getHeight(this) * ANIMATION_SCALE_BEAM * this.getHeight());
+
+			g2d.drawImage(imageToDraw, getWidth() / 2 - totalImageWidth / 2, getHeight() / 2, totalImageWidth,
+					totalImageHeight, this);
+
+			g2d.setTransform(oldTransform);
+
+		}
+
+	}
+
+	/**
 	 * Errechnet für einen beliebigen Punkt des Panels, welchem Hideout er
 	 * entspricht (für den Zielmechanismus).
 	 *
@@ -220,6 +315,64 @@ public class MapPanel extends JPanel {
 		int aimedAtField = ((((int) aimedAtDegree + (360 / hideouts.size() / 2)) % 360) / degreesPerField);
 
 		return aimedAtField;
+	}
+
+	public void startAnimation(int animationType, int firedAtField) {
+		currentAnimationFrame++;
+
+		currentAnimationType = animationType;
+		currentFiredAtField = firedAtField;
+
+		synchronized (this) {
+			// System.out.println("MapPanel Animation aufwecken");
+			this.notify();
+		}
+
+		// Warten, bis Animation vorbei
+		synchronized (this) {
+			try {
+				// System.out.println("Waiting");
+				this.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// Die Animationen in eigenem Thread behandeln
+	@Override
+	public void run() {
+		while (true) {
+			if (currentAnimationFrame != targetAnimationFrame) {
+				currentAnimationFrame = (currentAnimationFrame + 1)
+						% (towerChargeAnimation.size() + towerFireAnimation.size());
+				repaint();
+				try {
+					Thread.sleep(20);
+
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+			} else {
+				// SingleplayerGame aufwecken
+				synchronized (this) {
+					this.notify();
+				}
+
+				// Warten, bis wieder animiert werden soll
+				synchronized (this) {
+					try {
+						// System.out.println("Waiting");
+						this.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}
+
 	}
 
 	// -------- SETTER ------------
@@ -260,4 +413,5 @@ public class MapPanel extends JPanel {
 	public int getCurrentAimedAtField() {
 		return currentAimedAtField;
 	}
+
 }

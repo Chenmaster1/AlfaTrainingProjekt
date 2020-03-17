@@ -114,10 +114,7 @@ public class AttackDicePanel extends JPanel implements Runnable {
 	public void setRollResult(int result) {
 		currentAnimationFrame++;
 
-		synchronized (this) {
-			// System.out.println("WakingUp");
-			this.notify();
-		}
+		
 
 		switch (result) {
 		case AttackDice.RESULT_CENTER_HIT:
@@ -161,6 +158,11 @@ public class AttackDicePanel extends JPanel implements Runnable {
 			break;
 
 		}
+		
+		synchronized (this) {
+			// System.out.println("AttackDice Animation aufwecken");
+			this.notify();
+		}
 	}
 
 	/**
@@ -174,6 +176,13 @@ public class AttackDicePanel extends JPanel implements Runnable {
 			if (currentAnimationFrame != targetAnimationFrame) {
 				currentAnimationFrame = (currentAnimationFrame + 1) % 220;
 				repaint();
+				try {
+					Thread.sleep(20);
+
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
 			} else {
 				// SingleplayerGame aufwecken (Attacke auswerten)
 				synchronized (this) {
@@ -192,13 +201,7 @@ public class AttackDicePanel extends JPanel implements Runnable {
 				}
 			}
 
-			try {
-				Thread.sleep(20);
-
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
+			
 		}
 
 	}
