@@ -598,8 +598,12 @@ public class SingleplayerGame implements HeroEventListener {
 				// Hero is detected / unveiled
 				if (!occupyingHero.isVisible()) {
 					occupyingHero.setVisible(true);
+					gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN, finalRolledAttackField);
+					
+					
 				} // Hero is hit
 				else {
+					gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_FIRE, finalRolledAttackField);
 					if (occupyingHero.isAttackable()) {
 						occupyingHero.setCurrentHitPoints(occupyingHero.getCurrentHitPoints() - 1);
 
