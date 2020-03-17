@@ -4,6 +4,7 @@ import Actions.ActionHide;
 import GameLogic.SingleplayerGame;
 import MenuGUI.MyFrame;
 import enums.AbilityType;
+import enums.HeroEventType;
 
 /**
  * When Dahlia is hit, she seeks a new hideout (if available) since this is a
@@ -24,15 +25,7 @@ public class AbilityDahliaWhenHitGetNewHideout extends Ability {
 	@Override
 	public void useAction(SingleplayerGame singleplayerGame) {
 		
-		//keine aktive Aktion, die w‰hrend des Zuges w‰hlbar ist, daher leer.
-		// Stattdessen das SingleplayerGame als HeroListener anmelden und dort in der
-		// requestedHeroEvent Methode Anfragen je nach HeroEventType behandeln.
-//wirklich currenthero? das ist doch der der schieﬂt
-	//	singleplayerGame.heroEventRequest(singleplayerGame.getCurrentHero(), HeroEventType.HIDE_ROLL);
-	//	          System.out.println("dahlia ability sagt use action");
-		// once Dahlia is hit - freeHide
-//        ActionHide freeHide = new ActionHide(0);
-//        freeHide.useAction(singleplayerGame);
+               //Dahlia autoHides when hit - or rolles a hidedice
 	}
 
 	@Override
