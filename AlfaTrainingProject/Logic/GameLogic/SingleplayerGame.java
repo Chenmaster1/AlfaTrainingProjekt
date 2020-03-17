@@ -778,6 +778,14 @@ public class SingleplayerGame implements HeroEventListener {
 
 		// Hier mit einem switch über den HeroEventType den gewünschten Effekt
 		// implementieren
+//                switch(eventType)
+//                {
+//                    case HIDE_ROLL:
+//                        System.out.println("Dahlia grüßt aus singlePlayergame heroeventRequest");
+//                        break;
+//                        
+//                }
+                
 
 	}
 

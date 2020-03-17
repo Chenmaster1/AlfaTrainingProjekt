@@ -27,9 +27,9 @@ public class AbilityDahliaWhenHitGetNewHideout extends Ability {
 		//keine aktive Aktion, die w‰hrend des Zuges w‰hlbar ist, daher leer.
 		// Stattdessen das SingleplayerGame als HeroListener anmelden und dort in der
 		// requestedHeroEvent Methode Anfragen je nach HeroEventType behandeln.
-
-		
-		
+//wirklich currenthero? das ist doch der der schieﬂt
+	//	singleplayerGame.heroEventRequest(singleplayerGame.getCurrentHero(), HeroEventType.HIDE_ROLL);
+	//	          System.out.println("dahlia ability sagt use action");
 		// once Dahlia is hit - freeHide
 //        ActionHide freeHide = new ActionHide(0);
 //        freeHide.useAction(singleplayerGame);
