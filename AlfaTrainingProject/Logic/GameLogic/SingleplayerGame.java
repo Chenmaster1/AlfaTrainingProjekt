@@ -792,7 +792,7 @@ public class SingleplayerGame implements HeroEventListener {
                 switch(eventType)
                 {
                     case HIDE_AUTOMATIC:
-                        //TODO Dahlia hide roll oder autohide?
+                       
                      //freeHide in ActionHide
                         ActionHide eventHide = new ActionHide(0);
                         eventHide.freeHideHero(requestingHero, this);
