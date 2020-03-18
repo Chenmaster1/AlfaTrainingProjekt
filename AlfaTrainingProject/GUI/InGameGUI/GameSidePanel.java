@@ -59,6 +59,7 @@ public class GameSidePanel extends JPanel {
 	// Die Hero-Panels
 	private OtherHeroesPanel panelOtherHeroes;
 	private HeroPanelLarge panelPlayerHero;
+        private LogHeroActionPanel panelLogHeroAction;
 
 	// Die Dice-Panels
 	private AttackDicePanel panelAttackDice;
@@ -80,6 +81,7 @@ public class GameSidePanel extends JPanel {
 
 		panelOtherHeroes = new OtherHeroesPanel(allHeroes);
 		panelPlayerHero = new HeroPanelLarge(playerHero);
+                panelLogHeroAction = new LogHeroActionPanel();
 		panelAttackDice = new AttackDicePanel();
 		panelHideDice = new HideDicePanel();
 
@@ -91,6 +93,7 @@ public class GameSidePanel extends JPanel {
 
 		add(panelOtherHeroes);
 		add(panelPlayerHero);
+                add(panelLogHeroAction);
 		add(panelAttackDice);
 		add(panelHideDice);
 
@@ -115,6 +118,13 @@ public class GameSidePanel extends JPanel {
 						(int) (PANELPLAYERHERO_POSITION_RELATIVE_Y * getHeight()),
 						(int) (PANELPLAYERHERO_SIZE_RELATIVE_X * getWidth()),
 						(int) (PANELPLAYERHERO_SIZE_RELATIVE_Y * getHeight()));
+                                
+                                panelLogHeroAction.setBounds((int) (PANELPLAYERHERO_POSITION_RELATIVE_X * getWidth()+570),
+						(int) (PANELPLAYERHERO_POSITION_RELATIVE_Y * getHeight()),
+						(int) (PANELPLAYERHERO_SIZE_RELATIVE_X * getWidth()-380),
+						(int) (PANELPLAYERHERO_SIZE_RELATIVE_Y * getHeight()));
+                                
+                                
 
 				// Bounds setzen für das panelAttackDice
 				panelAttackDice.setBounds((int) (PANELATTACKDICE_POSITION_RELATIVE_X * getWidth()),
