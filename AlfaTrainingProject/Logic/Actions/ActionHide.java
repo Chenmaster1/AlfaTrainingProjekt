@@ -67,16 +67,6 @@ public class ActionHide extends Action {
 		// Animation des Würfels starten
 		singleplayerGame.getGamePanel().getGameSidePanel().getPanelHideDice().setRollResult(rollResult);
 
-		// Pausieren, bis Dice-Animation diesen Thread wieder notified, Monitor-Objekt
-		// ist das HideDicePanel
-		synchronized (singleplayerGame.getGamePanel().getGameSidePanel().getPanelHideDice()) {
-			try {
-				singleplayerGame.getGamePanel().getGameSidePanel().getPanelHideDice().wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 
 		try {
 			Thread.sleep(200);

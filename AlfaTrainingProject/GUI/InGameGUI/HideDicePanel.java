@@ -154,6 +154,17 @@ public class HideDicePanel extends JPanel implements Runnable {
     	{
         	//System.out.println("Animation aufwecken");
     		this.notify();
+    		
+    		// Pausieren, bis Dice-Animation diesen Thread wieder notified, Monitor-Objekt
+    		// ist das HideDicePanel
+    		
+    			try {
+    				this.wait();
+    			} catch (InterruptedException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+    		
     	}
     }
 
@@ -178,15 +189,12 @@ public class HideDicePanel extends JPanel implements Runnable {
             }
             else
             {
-            	// SingleplayerGame aufwecken (Verstecken auswerten)
+            	// GameLogicThread aufwecken (Verstecken auswerten)
 				synchronized (this) {
 					this.notify();
-				}
-
-            	synchronized(this)
-            	{
+				
             		try {
-            			//System.out.println("Waiting");
+            			//System.out.println("HideDice Animation Thread Waiting");
 						this.wait();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
