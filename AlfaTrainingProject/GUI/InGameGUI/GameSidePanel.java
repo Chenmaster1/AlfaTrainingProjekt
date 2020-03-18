@@ -182,6 +182,12 @@ public class GameSidePanel extends JPanel {
 		return threadAttackDicePanel;
 	}
 
+
+    public LogHeroActionPanel getPanelLogHeroAction()
+    {
+        return panelLogHeroAction;
+    }
+
 	public Thread getThreadHideDicePanel() {
 		return threadHideDicePanel;
 	}
