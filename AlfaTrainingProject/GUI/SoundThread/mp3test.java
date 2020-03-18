@@ -2,13 +2,6 @@ package SoundThread;
 
 import jaco.mp3.player.MP3Player;
 
-import java.io.File;
-import java.net.URL;
-
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-
-
 /**
  * Eine Testklasse für mp4
  */

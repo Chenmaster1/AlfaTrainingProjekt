@@ -9,7 +9,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Peter/eclipse-workspace/AlfaTrainingProjekt/jacovolumen.jar">
+	<classpathentry kind="lib" path="jacovolumen.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
