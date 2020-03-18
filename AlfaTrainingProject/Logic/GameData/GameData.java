@@ -16,6 +16,8 @@ public class GameData {
 	
 	private ArrayList<Hideout> hideouts;
 	private ArrayList<Hero> heroes;
+        
+        private HashMap<Integer, Integer> mapIntToVisualField;
 
 	/**
 	 * Dies ist der Konstruktor eines Spielfelds
@@ -30,6 +32,8 @@ public class GameData {
 		this.hideoutHero = hideoutHero;
 		this.hideouts = hideouts;
 		this.heroes = heroes;
+                
+                fillmapIntToVisualField();
 	}
 	
 	//-------------------------GETTER-------------------------//
@@ -43,5 +47,39 @@ public class GameData {
 	public ArrayList<Hero> getHeroes() {
 		return heroes;
 	}
+
+
+    public HashMap<Integer, Integer> getMapIntToVisualField()
+    {
+        return mapIntToVisualField;
+    }
+
+
+    private void fillmapIntToVisualField()
+    {
+        mapIntToVisualField = new HashMap<Integer, Integer>(){{
+        put(0 , 20);
+        put(1 , 1);
+        put(2 , 18);
+        put(3 , 4);
+        put(4 , 13);
+        put(5 , 6);
+        put(6 ,10 );
+        put(7 , 15);
+        put(8 , 2);
+        put(9 , 17);
+        put(10 , 3);
+        put(11 , 19);
+        put(12 , 7);
+        put(13 , 16);
+        put(14 , 8);
+        put(15 , 11);
+        put(16 , 14);
+        put(17 ,9 );
+        put(18 , 12);
+        put(19 , 5);
+        }};
+       
+    }
 	
 }

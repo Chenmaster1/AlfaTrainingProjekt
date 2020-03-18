@@ -52,11 +52,15 @@ public class ActionWorkOffDelay extends Action {
 		case HideDice.RESULT_GREEN:
 			// Verzoegerungsmarken um 1 verringern
 			singleplayerGame.reduceDelayTokens();
+                        //happening to PanelLogHeroAction 
+                        singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("reduceTokens1"));
 			break;
 		case HideDice.RESULT_RED:
 			// Verzoegerungsmarken um 1 verringern und Zug beenden
 			singleplayerGame.reduceDelayTokens();
 			singleplayerGame.setCurrentActionPointsToZero();
+                        //happening to PanelLogHeroAction 
+                        singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("reduceTokensTwo"));
 			break;
 		case HideDice.RESULT_NOTHING: // nothing
 			break;

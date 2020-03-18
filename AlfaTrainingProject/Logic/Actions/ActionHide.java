@@ -102,12 +102,18 @@ public class ActionHide extends Action {
 			switch (oldHideoutType) {
 			case DESERT:
 				additionalDelayTokens = 2;
+                                //happening to PanelLogHeroAction 
+                                singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("recieveToken") + " " +Integer.toString(additionalDelayTokens));
 				break;
 			case WETLANDS:
 				additionalDelayTokens = 1;
+                                //happening to PanelLogHeroAction 
+                                singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("recieveToken") + " " +Integer.toString(additionalDelayTokens));
 				break;
 			case FOREST:
 				additionalDelayTokens = 0;
+                                //happening to PanelLogHeroAction 
+                                singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("recieveToken") + " " +Integer.toString(additionalDelayTokens));
 				break;
 			default:
 				additionalDelayTokens = -1;
@@ -117,6 +123,8 @@ public class ActionHide extends Action {
 		case HideDice.RESULT_GREEN:
 			// Neu verstecken
 			hero.setVisible(false);
+                        //happening to PanelLogHeroAction 
+                        singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("getNewHideout"));
 
 			int newHideoutNumber = (int) (Math.random() * availableHideouts.size());
 			Hideout newHideout = availableHideouts.get(newHideoutNumber);
@@ -131,6 +139,8 @@ public class ActionHide extends Action {
 			
 			break;
 		case HideDice.RESULT_NOTHING:
+                    //happening to PanelLogHeroAction 
+                        singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("hideRollFailed"));
 			break;
 		}
 

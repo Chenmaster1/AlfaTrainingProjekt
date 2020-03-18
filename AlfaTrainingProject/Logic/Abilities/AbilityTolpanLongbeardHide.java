@@ -21,6 +21,8 @@ public class AbilityTolpanLongbeardHide extends Ability {
     @Override
     public void useAction(SingleplayerGame singleplayerGame) {
     	//Fähigkeit ist passiv
+        //happening to PanelLogHeroAction 
+        singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("heroAbilityTolpan"));
     }
 
 

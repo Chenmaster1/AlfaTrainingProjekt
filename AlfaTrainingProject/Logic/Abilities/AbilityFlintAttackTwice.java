@@ -24,6 +24,8 @@ public class AbilityFlintAttackTwice  extends Ability{
 		
 		singleplayerGame.setAttackMode(AttackMode.ATTACK_TWICE);
 		singleplayerGame.setGameState(GameState.AIMING);
+                //happening to PanelLogHeroAction 
+                singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("heroAbilityFlint"));
 		
 		
 	}
