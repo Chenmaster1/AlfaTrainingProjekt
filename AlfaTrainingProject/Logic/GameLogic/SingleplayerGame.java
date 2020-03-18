@@ -568,18 +568,10 @@ public class SingleplayerGame implements HeroEventListener {
 		gamePanel.getMapPanel().setMapState(MapPanel.MAPSTATE_KI_AIMING);
 		gamePanel.repaint();
 
-		// Animation starten
+		// Animation starten (GameLogicThread wird währenddessen pausiert)
 		gamePanel.getGameSidePanel().getPanelAttackDice().setRollResult(diceResult);
 
-		// Auf Animation warten
-		synchronized (gamePanel.getGameSidePanel().getPanelAttackDice()) {
-			try {
-				gamePanel.getGameSidePanel().getPanelAttackDice().wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
 
 		// Kurz pausieren, damit das Ergebnis der Animation vorm Angriff erkennbar ist
 		try {

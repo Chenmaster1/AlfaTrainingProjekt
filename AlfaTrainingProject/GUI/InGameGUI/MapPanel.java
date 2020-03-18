@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  * Das Panel mit dem eigentlichen Spielfeld bzw der Arena.
@@ -107,6 +108,8 @@ public class MapPanel extends JPanel implements Runnable {
 
 		};
 
+		
+		
 		threadMapPanelAnimation = new Thread(this);
 		threadMapPanelAnimation.start();
 	}

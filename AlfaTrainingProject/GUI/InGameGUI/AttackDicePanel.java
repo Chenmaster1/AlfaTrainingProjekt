@@ -41,7 +41,7 @@ public class AttackDicePanel extends JPanel implements Runnable {
 	private static final double TOWER_CARD_POSITION_RELATIVE_Y = 0.0;
 	private static final double TOWER_CARD_SIZE_RELATIVE_X = 0.4;
 	private static final double TOWER_CARD_SIZE_RELATIVE_Y = 1.0;
-	
+
 	private final static int ANIMATION_FRAME_PERIOD = GamePanel.ANIMATION_FRAME_PERIOD;
 
 	private ArrayList<Image> animationImages;
@@ -57,16 +57,15 @@ public class AttackDicePanel extends JPanel implements Runnable {
 		// Animationsbilder laden
 		Image frame;
 		animationImages = AnimationLoader.getInstance().getAnimation(AnimationName.ATTACKDICE);
-		
 
 		// Tower und Spotlight laden
-		towerImage =  ImageLoader.getInstance().getImage(ImageName.TOWER_CARD);
-		
-		spotlightConeImage =  ImageLoader.getInstance().getImage(ImageName.SPOT_LEFT);
-		
-		spotlightCircleImage =  ImageLoader.getInstance().getImage(ImageName.SPOT_TOWER);
-		
-		//        setBackground(Color.BLACK);
+		towerImage = ImageLoader.getInstance().getImage(ImageName.TOWER_CARD);
+
+		spotlightConeImage = ImageLoader.getInstance().getImage(ImageName.SPOT_LEFT);
+
+		spotlightCircleImage = ImageLoader.getInstance().getImage(ImageName.SPOT_TOWER);
+
+		// setBackground(Color.BLACK);
 		setOpaque(false);
 	}
 
@@ -88,18 +87,16 @@ public class AttackDicePanel extends JPanel implements Runnable {
 				(int) (getHeight() * SPOTLIGHTCIRCLE_SIZE_RELATIVE_Y), this);
 
 		// Dann die Karte
-				g2d.drawImage(towerImage, (int) (getWidth() * TOWER_CARD_POSITION_RELATIVE_X),
-						(int) (getHeight() * TOWER_CARD_POSITION_RELATIVE_Y), (int) (getWidth() * TOWER_CARD_SIZE_RELATIVE_X),
-						(int) (getHeight() * TOWER_CARD_SIZE_RELATIVE_Y), this);
+		g2d.drawImage(towerImage, (int) (getWidth() * TOWER_CARD_POSITION_RELATIVE_X),
+				(int) (getHeight() * TOWER_CARD_POSITION_RELATIVE_Y), (int) (getWidth() * TOWER_CARD_SIZE_RELATIVE_X),
+				(int) (getHeight() * TOWER_CARD_SIZE_RELATIVE_Y), this);
 
-		
 		// den Cone darauf
 		g2d.drawImage(spotlightConeImage, (int) (getWidth() * SPOTLIGHTCONE_POSITION_RELATIVE_X),
 				(int) (getHeight() * SPOTLIGHTCONE_POSITION_RELATIVE_Y),
 				(int) (getWidth() * SPOTLIGHTCONE_SIZE_RELATIVE_X), (int) (getHeight() * SPOTLIGHTCONE_SIZE_RELATIVE_Y),
 				this);
 
-		
 		// und zuletzt den Würfel
 		g2d.drawImage(animationImages.get(currentAnimationFrame), (int) (getWidth() * DIE_POSITION_RELATIVE_X),
 				(int) (getHeight() * DIE_POSITION_RELATIVE_Y), (int) (getWidth() * DIE_SIZE_RELATIVE_X),
@@ -108,15 +105,13 @@ public class AttackDicePanel extends JPanel implements Runnable {
 
 	/**
 	 * Lässt das Panel eine Animation anzeigen, bei der der Würfel schließlich das
-	 * übergebene Ergebnis anzeigt.
+	 * übergebene Ergebnis anzeigt. Pausiert den aufrufenden Thread, bis die Animation abgeschlossen ist.
 	 *
 	 * @param result Das gewünschte Würfelergebnis. Sollte durch AttackDice erzeugt
 	 *               werden.
 	 */
 	public void setRollResult(int result) {
 		currentAnimationFrame++;
-
-		
 
 		switch (result) {
 		case AttackDice.RESULT_CENTER_HIT:
@@ -160,10 +155,20 @@ public class AttackDicePanel extends JPanel implements Runnable {
 			break;
 
 		}
-		
+
 		synchronized (this) {
 			// System.out.println("AttackDice Animation aufwecken");
 			this.notify();
+
+			// Auf Animation warten
+
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 	}
 
@@ -189,11 +194,9 @@ public class AttackDicePanel extends JPanel implements Runnable {
 				// SingleplayerGame aufwecken (Attacke auswerten)
 				synchronized (this) {
 					this.notify();
-				}
 
-				
-				//Warten, bis wieder animiert werden soll
-				synchronized (this) {
+					// Warten, bis wieder animiert werden soll
+
 					try {
 						// System.out.println("Waiting");
 						this.wait();
@@ -203,7 +206,6 @@ public class AttackDicePanel extends JPanel implements Runnable {
 				}
 			}
 
-			
 		}
 
 	}
