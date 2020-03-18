@@ -295,8 +295,7 @@ public class SingleplayerGame implements HeroEventListener {
 			// MapPanel Listener für die Schnellauswahl der AttackAction einschalten
 			gamePanel.getMapPanel().addMouseListener(mapPanelAttackClickListener);
 
-                        //happening to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(" .. .. ..");
+               
                 
                 
 			// Auf Entscheidung des Spielers warten, wird von den Action-Buttons wieder
@@ -358,7 +357,7 @@ public class SingleplayerGame implements HeroEventListener {
 				}
 			}
 		}
-
+                 gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(" "); 
 		return gameOver;
 
 	}
@@ -385,8 +384,7 @@ public class SingleplayerGame implements HeroEventListener {
 			// Eine Bedenkzeit der KI simulieren
 			try {
 				Thread.sleep(500);
-                //happening to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(" let me think");
+              
 			} catch (InterruptedException ex) {
 				Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
 			}
@@ -441,9 +439,9 @@ public class SingleplayerGame implements HeroEventListener {
 				}
 			}
 		}
-
+                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(" "); 
 		return gameOver;
-
+                
 	}
 
 	/**
