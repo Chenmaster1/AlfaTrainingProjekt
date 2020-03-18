@@ -26,7 +26,7 @@ public class AttackDice extends Dice {
 
 	@Override
 	public int rollDice() {
-                //alfatrainingprojekt.AlfaTrainingProjekt.soundThread.start();
+              
 		Random randomDice = new Random();
 		int rolledAttackDice = randomDice.nextInt(countSides);
 

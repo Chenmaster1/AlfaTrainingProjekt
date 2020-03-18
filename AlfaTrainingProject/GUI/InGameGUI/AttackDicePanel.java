@@ -2,6 +2,7 @@ package InGameGUI;
 
 import Dice.AttackDice;
 import MenuGUI.MainFramePanel;
+import SoundThread.MP3Runnable;
 import resourceLoaders.AnimationLoader;
 import resourceLoaders.AnimationName;
 import resourceLoaders.ImageLoader;
@@ -155,6 +156,8 @@ public class AttackDicePanel extends JPanel implements Runnable {
 			break;
 
 		}
+		
+		new Thread(new MP3Runnable("W10_Dice_Roll.mp3", false,50)).start();
 
 		synchronized (this) {
 			// System.out.println("AttackDice Animation aufwecken");

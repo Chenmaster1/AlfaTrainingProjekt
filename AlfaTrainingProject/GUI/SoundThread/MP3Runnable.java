@@ -26,7 +26,12 @@ public class MP3Runnable implements Runnable
         this.isRepeated = isRepeated;
     }    
 
-    @Override
+    public MP3Runnable(String pathtoMusic, boolean isRepeated, int volume) {
+		this(pathtoMusic,isRepeated);
+		this.volume = volume;
+	}
+
+	@Override
     public void run()
     {
 
