@@ -832,6 +832,8 @@ public class SingleplayerGame implements HeroEventListener {
 			if (!suddenDeathActive && requestingHero.getDelayTokens() == 0) {
 				ActionHide eventHide = new ActionHide(0);
 				eventHide.freeHideHero(requestingHero, this);
+                                //happening to PanelLogHeroAction 
+                                getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("heroAbilityDahlia"));
                             
 			}
 
@@ -843,8 +845,7 @@ public class SingleplayerGame implements HeroEventListener {
                       
 				ActionHide tempActionHide = new ActionHide(0);
 				tempActionHide.useAction(requestingHero, this);
-                                //happening to PanelLogHeroAction 
-                                getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("heroAbilityDahlia"));
+                               
 			}
 			break;
 		}
