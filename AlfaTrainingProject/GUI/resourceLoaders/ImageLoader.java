@@ -83,7 +83,9 @@ public class ImageLoader {
         images[ImageName.AVATAR_WOROK.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Avatar_Worok.png")).getImage();
         images[ImageName.AVATAR_WOROK_DEACTIVATED.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Deactivated_Avatar_Worok.png")).getImage();
         images[ImageName.MAPICON_WOROK.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Spiel_Avatar_WOROK.png")).getImage();
+        images[ImageName.GAMEBOARD_INSTRUCTION.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Description/g4.png")).getImage();
 
+        
     }
 
     public static ImageLoader getInstance() {

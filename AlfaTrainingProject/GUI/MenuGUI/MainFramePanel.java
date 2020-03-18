@@ -36,7 +36,7 @@ public class MainFramePanel extends JPanel {
 	private JButton btnLoad;
 	private JButton btnSettings;
 	private JButton btnClose;
-        private JButton btnTutorial;
+        private JButton btnInstruction;
 
 	public MainFramePanel(MyFrame frame) {
 		this.frame = frame;
@@ -50,7 +50,7 @@ public class MainFramePanel extends JPanel {
 		btnLoad = new MyButton(MyFrame.bundle.getString("btnLoad"), buttonImageIcon);
 		btnSettings = new MyButton(MyFrame.bundle.getString("btnSettings"), buttonImageIcon);
 		btnClose = new MyButton(MyFrame.bundle.getString("btnClose"), buttonImageIcon);
-                btnTutorial = new MyButton(MyFrame.bundle.getString("btnTutorial"), buttonImageIcon);
+                btnInstruction = new MyButton(MyFrame.bundle.getString("btnInstruction"), buttonImageIcon);
 		initializeButtons();
 	}
 
@@ -102,11 +102,11 @@ public class MainFramePanel extends JPanel {
 			}
 		});
                 
-                addButton(btnTutorial, getWidth() / 2 - 100, getHeight() / 2 + 150, new ActionListener() {
+                addButton(btnInstruction, getWidth() / 2 - 100, getHeight() / 2 + 150, new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				onTutorialClicked();
+				onInstructionClicked();
 			}
 		});
                 
@@ -181,10 +181,7 @@ public class MainFramePanel extends JPanel {
 	 * 
 	 * @author Kevin
 	 */
-	private void onTutorialClicked() {
-		mp3test.stopPlayer();
-//		frame.dispose();
-		// Alles killen, nicht nur das Frame
-		System.exit(0);
+	private void onInstructionClicked() {
+		new InstructionPanel(frame);
 	}
 }
