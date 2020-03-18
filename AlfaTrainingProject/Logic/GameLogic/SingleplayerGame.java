@@ -598,7 +598,6 @@ public class SingleplayerGame implements HeroEventListener {
 					gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN, finalRolledAttackField);
 
 					occupyingHero.setVisible(true);
-					
 				} // Hero is hit
 				else {
 
@@ -784,25 +783,30 @@ public class SingleplayerGame implements HeroEventListener {
 	@Override
 	public void heroEventRequest(Hero requestingHero, HeroEventType eventType) {
 
-           
 		// Hier mit einem switch über den HeroEventType den gewünschten Effekt
 		// implementieren
-                
-                // when HeroDahlia looses a hitpint she´ll end up @ Hide_Roll
-                switch(eventType)
-                {
-                    case HIDE_AUTOMATIC:
-                       
-                     //freeHide in ActionHide
-                        ActionHide eventHide = new ActionHide(0);
-                        eventHide.freeHideHero(requestingHero, this);
-                        break;
-                    case HIDE_ROLL:
-                    	ActionHide tempActionHide = new ActionHide(0);
-                    	tempActionHide.useAction(requestingHero,this);
-                    	break;
-                }
-                
+
+		// when HeroDahlia looses a hitpint she´ll end up @ Hide_Roll
+		switch (eventType) {
+		case HIDE_AUTOMATIC:
+
+			// freeHide in ActionHide
+			if (!suddenDeathActive && requestingHero.getDelayTokens() == 0) {
+				ActionHide eventHide = new ActionHide(0);
+				eventHide.freeHideHero(requestingHero, this);
+			}
+
+			break;
+		case HIDE_ROLL:
+			if (!suddenDeathActive && requestingHero.getDelayTokens() == 0) {
+				// Aufdeckung anzeigen
+				gamePanel.getMapPanel().repaint();
+
+				ActionHide tempActionHide = new ActionHide(0);
+				tempActionHide.useAction(requestingHero, this);
+			}
+			break;
+		}
 
 	}
 

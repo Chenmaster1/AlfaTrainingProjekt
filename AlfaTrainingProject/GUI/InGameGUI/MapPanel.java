@@ -326,10 +326,7 @@ public class MapPanel extends JPanel implements Runnable {
 		synchronized (this) {
 			// System.out.println("MapPanel Animation aufwecken");
 			this.notify();
-		}
-
-		// Warten, bis Animation vorbei
-		synchronized (this) {
+		
 			try {
 				// System.out.println("Waiting");
 				this.wait();
@@ -358,10 +355,10 @@ public class MapPanel extends JPanel implements Runnable {
 				// SingleplayerGame aufwecken
 				synchronized (this) {
 					this.notify();
-				}
+				
 
 				// Warten, bis wieder animiert werden soll
-				synchronized (this) {
+				
 					try {
 						// System.out.println("Waiting");
 						this.wait();
