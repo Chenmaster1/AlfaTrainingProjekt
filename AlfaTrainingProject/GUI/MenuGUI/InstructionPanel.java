@@ -44,12 +44,14 @@ private MainFramePanel parentPanel;
     private JList themenAuswahl;
     private JList unterkategorienAuswahl;
     private JPanel listPanel;
+    private MyBildPanel  detailsPanel;
     private String[] aktionenKategorien; 
     
     private String[] heldenKategorien;
     private String[] arenaKategorien; 
     private String[] heldenTafel; 
     private String[] heldenTafelKategorien;
+   
      
     
     
@@ -66,11 +68,11 @@ private MainFramePanel parentPanel;
         this.setPreferredSize(new Dimension(1920,1080));
                 
         
-        
+         detailsPanel = new MyBildPanel();  
+                detailsPanel.setBounds(340,180,550,500);    
+                detailsPanel.setBackground(Color.gray);
                  
-        MyBildPanel  detailsPanel = new MyBildPanel();  
-        detailsPanel.setBounds(340,180,550,500);    
-        detailsPanel.setBackground(Color.gray);
+        
         
         listPanel = new JPanel();  
         listPanel.setBounds(40,180,300,500);    
@@ -119,8 +121,13 @@ private MainFramePanel parentPanel;
                 
             }
             
-            if(selected == "Helden")
+            if(selected.equals("Helden"))
+            {    
+                
+                detailsPanel.displayHeroLargePanel();
+                detailsPanel.repaint();
                 unterkategorienAuswahl.setListData(heldenKategorien);
+            }
             
             if(selected == "Die Heldentafel")
                 unterkategorienAuswahl.setListData(heldenTafelKategorien);
