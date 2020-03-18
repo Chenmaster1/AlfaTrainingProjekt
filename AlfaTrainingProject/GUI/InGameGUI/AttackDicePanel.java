@@ -41,6 +41,8 @@ public class AttackDicePanel extends JPanel implements Runnable {
 	private static final double TOWER_CARD_POSITION_RELATIVE_Y = 0.0;
 	private static final double TOWER_CARD_SIZE_RELATIVE_X = 0.4;
 	private static final double TOWER_CARD_SIZE_RELATIVE_Y = 1.0;
+	
+	private final static int ANIMATION_FRAME_PERIOD = GamePanel.ANIMATION_FRAME_PERIOD;
 
 	private ArrayList<Image> animationImages;
 	private Image towerImage;
@@ -177,7 +179,7 @@ public class AttackDicePanel extends JPanel implements Runnable {
 				currentAnimationFrame = (currentAnimationFrame + 1) % 220;
 				repaint();
 				try {
-					Thread.sleep(20);
+					Thread.sleep(ANIMATION_FRAME_PERIOD);
 
 				} catch (InterruptedException e) {
 					e.printStackTrace();
