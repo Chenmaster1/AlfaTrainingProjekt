@@ -74,7 +74,7 @@ public class MyFrame extends JFrame
                 if (volumFromFile)
                 {
                     volume = br.readLine();
-                    SoundThread.mp3test.setVolumInitialize(Integer.parseInt(volume));
+                    alfatrainingprojekt.AlfaTrainingProjekt.musicTitle.setVolumInitialize(Integer.parseInt(volume));
                 }
 
                 language = br.readLine();
@@ -114,7 +114,7 @@ public class MyFrame extends JFrame
                 fw.write("50" + "\n" + "/Bundle_DE");
                 fw.close();
                 language = "/Bundle_DE";
-                SoundThread.mp3test.setVolumInitialize(50);
+                alfatrainingprojekt.AlfaTrainingProjekt.musicTitle.setVolumInitialize(50);
 
             }
             catch (Exception e)

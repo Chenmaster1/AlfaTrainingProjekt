@@ -161,7 +161,7 @@ public class SettingsPanel extends JPanel
             {
                 if (ce.getSource() == volumeSlider)
                 {
-                    SoundThread.mp3test.setVolume(volumeSlider.getValue());
+                    alfatrainingprojekt.AlfaTrainingProjekt.musicTitle.setVolume(volumeSlider.getValue());
                     MyFrame.volume= Integer.toString(volumeSlider.getValue());
                      MyFrame.volumFromFile = false;
 

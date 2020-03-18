@@ -20,6 +20,8 @@ public class AbilityWorokAdditionalAction extends Ability{
     @Override
     public void useAction(SingleplayerGame singleplayerGame) {
         // als Action kein Effekt, stattdessen implementiert in getMaxActionPoints()
+        //happening to PanelLogHeroAction 
+        singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("heroAbilityWorok"));
     }
 
 

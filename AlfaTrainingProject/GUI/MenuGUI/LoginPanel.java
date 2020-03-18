@@ -31,7 +31,7 @@ import javax.swing.plaf.basic.BasicBorders;
 
 import Database.Database;
 import Database.Queries;
-import SoundThread.mp3test;
+import SoundThread.MP3Runnable;
 import alfatrainingprojekt.AlfaTrainingProjekt;
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
@@ -173,7 +173,7 @@ public class LoginPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mp3test.stopPlayer();
+				alfatrainingprojekt.AlfaTrainingProjekt.musicTitle.stopPlayer();
 				frame.dispose();
 			}
 		});

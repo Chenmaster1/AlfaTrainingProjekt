@@ -2,6 +2,7 @@ package Heroes;
 
 import Abilities.AbilityDahliaWhenHitGetNewHideout;
 import KiLogics.KiLogicDahlia;
+import MenuGUI.MyFrame;
 import enums.HeroEventType;
 import resourceLoaders.ImageName;
 
@@ -39,6 +40,7 @@ public class HeroDahlia extends Hero
         if (currentHitPoints != 4)
         {
             notifyAllHeroEventListeners(this, HeroEventType.HIDE_AUTOMATIC);
+                       
         }
 
     }
