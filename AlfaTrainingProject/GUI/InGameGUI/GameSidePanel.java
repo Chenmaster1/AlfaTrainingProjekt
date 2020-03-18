@@ -30,21 +30,21 @@ public class GameSidePanel extends JPanel {
 	private final static double PANELOTHERHEROES_SIZE_RELATIVE_Y = 200 / 1080.0;
 
 	// Verschmälerung des otherHeroesPanel pro fehlendem Helden
-	private final static double PANELOTHERHEROES_GAPSIZE_RELATIVE_X = 186 / 840.0;
+	private final static double PANELOTHERHEROES_GAPSIZE_RELATIVE_X = 198 / 840.0;
 
 	private final static double PANELPLAYERHERO_POSITION_RELATIVE_X = 30 / 840.0;
 	private final static double PANELPLAYERHERO_POSITION_RELATIVE_Y = 340 / 1080.0;
 	private final static double PANELPLAYERHERO_SIZE_RELATIVE_X = 558 / 840.0;
 	private final static double PANELPLAYERHERO_SIZE_RELATIVE_Y = 393 / 1080.0;
 
-	private final static double PANELATTACKDICE_POSITION_RELATIVE_X = 20 / 840.0;
-	private final static double PANELATTACKDICE_POSITION_RELATIVE_Y = 750 / 1080.0;
-	private final static double PANELATTACKDICE_SIZE_RELATIVE_X = 350 / 840.0;
-	private final static double PANELATTACKDICE_SIZE_RELATIVE_Y = 250 / 1080.0;
+	private final static double PANELATTACKDICE_POSITION_RELATIVE_X = 0 / 840.0;
+	private final static double PANELATTACKDICE_POSITION_RELATIVE_Y = 742 / 1080.0;
+	private final static double PANELATTACKDICE_SIZE_RELATIVE_X = 403 / 840.0;
+	private final static double PANELATTACKDICE_SIZE_RELATIVE_Y = 297 / 1080.0;
 
-	private final static double PANELHIDEDICE_POSITION_RELATIVE_X = 370 / 840.0;
+	private final static double PANELHIDEDICE_POSITION_RELATIVE_X = 403 / 840.0;
 	private final static double PANELHIDEDICE_POSITION_RELATIVE_Y = 742 / 1080.0;
-	private final static double PANELHIDEDICE_SIZE_RELATIVE_X = 437 / 840.0;
+	private final static double PANELHIDEDICE_SIZE_RELATIVE_X = 404 / 840.0;
 	private final static double PANELHIDEDICE_SIZE_RELATIVE_Y = 297 / 1080.0;
 
 	private Image backgroundImage;
@@ -59,6 +59,7 @@ public class GameSidePanel extends JPanel {
 	// Die Hero-Panels
 	private OtherHeroesPanel panelOtherHeroes;
 	private HeroPanelLarge panelPlayerHero;
+        private LogHeroActionPanel panelLogHeroAction;
 
 	// Die Dice-Panels
 	private AttackDicePanel panelAttackDice;
@@ -80,6 +81,7 @@ public class GameSidePanel extends JPanel {
 
 		panelOtherHeroes = new OtherHeroesPanel(allHeroes);
 		panelPlayerHero = new HeroPanelLarge(playerHero);
+                panelLogHeroAction = new LogHeroActionPanel();
 		panelAttackDice = new AttackDicePanel();
 		panelHideDice = new HideDicePanel();
 
@@ -91,6 +93,7 @@ public class GameSidePanel extends JPanel {
 
 		add(panelOtherHeroes);
 		add(panelPlayerHero);
+                add(panelLogHeroAction);
 		add(panelAttackDice);
 		add(panelHideDice);
 
@@ -115,6 +118,13 @@ public class GameSidePanel extends JPanel {
 						(int) (PANELPLAYERHERO_POSITION_RELATIVE_Y * getHeight()),
 						(int) (PANELPLAYERHERO_SIZE_RELATIVE_X * getWidth()),
 						(int) (PANELPLAYERHERO_SIZE_RELATIVE_Y * getHeight()));
+                                
+                                panelLogHeroAction.setBounds((int) (PANELPLAYERHERO_POSITION_RELATIVE_X * getWidth()+570),
+						(int) (PANELPLAYERHERO_POSITION_RELATIVE_Y * getHeight()),
+						(int) (PANELPLAYERHERO_SIZE_RELATIVE_X * getWidth()-380),
+						(int) (PANELPLAYERHERO_SIZE_RELATIVE_Y * getHeight()));
+                                
+                                
 
 				// Bounds setzen für das panelAttackDice
 				panelAttackDice.setBounds((int) (PANELATTACKDICE_POSITION_RELATIVE_X * getWidth()),
@@ -171,6 +181,12 @@ public class GameSidePanel extends JPanel {
 	public Thread getThreadAttackDicePanel() {
 		return threadAttackDicePanel;
 	}
+
+
+    public LogHeroActionPanel getPanelLogHeroAction()
+    {
+        return panelLogHeroAction;
+    }
 
 	public Thread getThreadHideDicePanel() {
 		return threadHideDicePanel;

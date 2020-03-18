@@ -39,6 +39,8 @@ public class GamePanel extends JPanel {
 
 	private static final int GAMESIDEPANEL_STANDARD_SIZE_X = 840;
 	private static final int GAMESIDEPANEL_STANDARD_SIZE_Y = 1080;
+	
+	public final static int ANIMATION_FRAME_PERIOD = 10;
 
 	public GamePanel(MapPanel mp, GameSidePanel gsp, JFrame frame) {
 		super();
