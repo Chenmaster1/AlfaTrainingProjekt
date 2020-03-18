@@ -599,7 +599,7 @@ public class SingleplayerGame implements HeroEventListener {
 			finalRolledAttackField = targetedField;
                         
                         //happening to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(finalRolledAttackField)+"attacked");
+                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(finalRolledAttackField)+" attacked");
 			break;
 		case RESULT_LEFT_CENTER_HIT:
 			finalRolledAttackField = (targetedField + numberOfHideouts - 1) % numberOfHideouts;
