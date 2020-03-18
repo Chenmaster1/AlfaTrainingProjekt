@@ -645,7 +645,7 @@ public class SingleplayerGame implements HeroEventListener {
 					if (occupyingHero.isAttackable()) {
 						occupyingHero.setCurrentHitPoints(occupyingHero.getCurrentHitPoints() - 1);
                                                 //happening to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(occupyingHero.getName()+" is hit and HP is reduced to " +occupyingHero.getCurrentHitPoints() );
+                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(occupyingHero.getName()+" is hit, new HP : " +occupyingHero.getCurrentHitPoints() );
 
 						if (!suddenDeathActive) {
 							occupyingHero.setAttackable(false);
