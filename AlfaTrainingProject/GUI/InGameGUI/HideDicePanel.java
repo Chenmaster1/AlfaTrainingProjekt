@@ -41,6 +41,8 @@ public class HideDicePanel extends JPanel implements Runnable {
     private static final double CARD_POSITION_RELATIVE_Y = 0.0;
     private static final double CARD_SIZE_RELATIVE_X = 0.42;
     private static final double CARD_SIZE_RELATIVE_Y = 1.0;
+    
+    private final static int ANIMATION_FRAME_PERIOD = GamePanel.ANIMATION_FRAME_PERIOD;
 
     private ArrayList<Image> animationImages;
     private Image cardImage;
@@ -168,7 +170,7 @@ public class HideDicePanel extends JPanel implements Runnable {
                 currentAnimationFrame = (currentAnimationFrame + 1) % 120;
                 repaint();
                 try {
-                    Thread.sleep(20);
+                    Thread.sleep(ANIMATION_FRAME_PERIOD);
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();

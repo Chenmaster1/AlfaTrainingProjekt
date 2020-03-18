@@ -41,6 +41,7 @@ public class MapPanel extends JPanel implements Runnable {
 
 	private final static double ANIMATION_SCALE = 1 / 1080.0;
 	private final static double ANIMATION_SCALE_BEAM = 1.2 / 1080.0;
+	private final static int ANIMATION_FRAME_PERIOD = GamePanel.ANIMATION_FRAME_PERIOD;
 
 	private final static double AIMOVERLAY_SIZE_RELATIVE_X = 537 / 1080.0;
 	private final static double AIMOVERLAY_SIZE_RELATIVE_Y = 748 / 1080.0;
@@ -62,6 +63,7 @@ public class MapPanel extends JPanel implements Runnable {
 	private int targetAnimationFrame;
 
 	private Thread threadMapPanelAnimation;
+	private boolean isAnimating;
 
 	private int mapState;
 	private HashMap<Hideout, Hero> hideoutHeroes;
@@ -323,18 +325,18 @@ public class MapPanel extends JPanel implements Runnable {
 		currentAnimationType = animationType;
 		currentFiredAtField = firedAtField;
 
+		isAnimating = true;
 		synchronized (this) {
 			// System.out.println("MapPanel Animation aufwecken");
 			this.notify();
-		}
 
-		// Warten, bis Animation vorbei
-		synchronized (this) {
-			try {
-				// System.out.println("Waiting");
-				this.wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			while (isAnimating) {
+				try {
+					// System.out.println("Waiting");
+					this.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -348,7 +350,7 @@ public class MapPanel extends JPanel implements Runnable {
 						% (towerChargeAnimation.size() + towerFireAnimation.size());
 				repaint();
 				try {
-					Thread.sleep(20);
+					Thread.sleep(ANIMATION_FRAME_PERIOD);
 
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -356,17 +358,19 @@ public class MapPanel extends JPanel implements Runnable {
 
 			} else {
 				// SingleplayerGame aufwecken
+				isAnimating = false;
+
 				synchronized (this) {
 					this.notify();
-				}
 
-				// Warten, bis wieder animiert werden soll
-				synchronized (this) {
-					try {
-						// System.out.println("Waiting");
-						this.wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+					// Warten, bis wieder animiert werden soll
+					while (!isAnimating) {
+						try {
+							// System.out.println("Waiting");
+							this.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
