@@ -10,14 +10,21 @@ import javax.swing.JFrame;
 
 
 /**
- * Eine Testklasse für mp4
+ * Eine Testklasse für mp3 & mp4
  */
-public class mp3test implements Runnable
+public class MP3Runnable implements Runnable
 {
 
-    private static MP3Player player;
-    private static int volume;
+    private MP3Player player;
+    private int volume;
+    private String pathtoMusic;
+    private boolean isRepeated;
 
+    public MP3Runnable(String pathtoMusic, boolean isRepeated) {
+        player = new MP3Player();
+        this.pathtoMusic = pathtoMusic;
+        this.isRepeated = isRepeated;
+    }    
 
     @Override
     public void run()
@@ -25,10 +32,10 @@ public class mp3test implements Runnable
 
         try
         {
-            player = new MP3Player();
-            player.setRepeat(true);
-            player.addToPlayList(getClass().getClassLoader().getResource("MainSound.mp4"));
-            player.play();
+            player.setRepeat(isRepeated);
+            player.addToPlayList(getClass().getClassLoader().getResource(pathtoMusic));
+            
+             player.play();
             player.setVolume(volume);
 
         }
@@ -38,12 +45,11 @@ public class mp3test implements Runnable
         }
     }
 
-
     /**
      * changes the volume of the mp3 player from SettingsPanel
      *  @author Yovo
      */
-    public static void setVolume(int volume)
+    public void setVolume(int volume)
     {
 
         player.setVolume(volume);
@@ -57,14 +63,14 @@ public class mp3test implements Runnable
      * 
      *  @author Yovo
      */
-    public static void setVolumInitialize(int volumeInitialice)
+    public void setVolumInitialize(int volumeInitialice)
     {
         volume = volumeInitialice;
 
     }
 
 
-    public static void stopPlayer()
+    public void stopPlayer()
     {
         player.stop();
     }
