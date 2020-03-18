@@ -56,7 +56,7 @@ public class MP3Runnable implements Runnable
      */
     public void setVolume(int volume)
     {
-
+    	this.volume = volume;
         player.setVolume(volume);
 
     }
@@ -79,6 +79,10 @@ public class MP3Runnable implements Runnable
     {
         player.stop();
     }
+
+	public int getVolume() {
+		return volume;
+	}
 
 
 }
