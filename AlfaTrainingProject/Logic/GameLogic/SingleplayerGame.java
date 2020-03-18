@@ -319,7 +319,7 @@ public class SingleplayerGame implements HeroEventListener {
 //			System.out.println("chosenAction: " + chosenPlayerAction);
 			chosenPlayerAction.useAction(this);
                         //happening to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(chosenPlayerAction.getName());
+                //gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(chosenPlayerAction.getName());
 
 			// Auswirkungen der Aktion anzeigen
 			gamePanel.repaint();
@@ -399,7 +399,7 @@ public class SingleplayerGame implements HeroEventListener {
 			currentAction.useAction(this);
                         
                 //happening to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(currentAction.getName());
+                //gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(currentAction.getName());
 
 			// Auswirkungen der Aktion anzeigen
 			gamePanel.repaint();
@@ -599,29 +599,29 @@ public class SingleplayerGame implements HeroEventListener {
 			finalRolledAttackField = targetedField;
                         
                         //happening to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(finalRolledAttackField));
+                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(finalRolledAttackField)+"attacked");
 			break;
 		case RESULT_LEFT_CENTER_HIT:
 			finalRolledAttackField = (targetedField + numberOfHideouts - 1) % numberOfHideouts;
                         
                         //happening to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(finalRolledAttackField));
+                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(finalRolledAttackField)+" attacked");
                 
 			break;
 		case RESULT_RIGHT_CENTER_HIT:
 			finalRolledAttackField = (targetedField + numberOfHideouts + 1) % numberOfHideouts;
                         //happening to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(finalRolledAttackField));
+                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(finalRolledAttackField)+" attacked");
 			break;
 		case RESULT_OUTER_LEFT_HIT:
 			finalRolledAttackField = (targetedField + numberOfHideouts - 2) % numberOfHideouts;
                         //happening to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(finalRolledAttackField));
+                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(finalRolledAttackField)+" attacked");
 			break;
 		case RESULT_OUTER_RIGHT_HIT:
 			finalRolledAttackField = (targetedField + numberOfHideouts + 2) % numberOfHideouts;
                         //happening to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(finalRolledAttackField));
+                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(finalRolledAttackField)+" attacked");
 			break;
 		default:
 			finalRolledAttackField = -1;
