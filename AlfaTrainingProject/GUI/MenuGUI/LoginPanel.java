@@ -32,6 +32,7 @@ import javax.swing.plaf.basic.BasicBorders;
 import Database.Database;
 import Database.Queries;
 import SoundThread.MP3Runnable;
+import SoundThread.SoundController;
 import alfatrainingprojekt.AlfaTrainingProjekt;
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
@@ -173,7 +174,7 @@ public class LoginPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				alfatrainingprojekt.AlfaTrainingProjekt.musicTitle.stopPlayer();
+                                SoundController.setBackgroundMusic(null);
 				frame.dispose();
 			}
 		});

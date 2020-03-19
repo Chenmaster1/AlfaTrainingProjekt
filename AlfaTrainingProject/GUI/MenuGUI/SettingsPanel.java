@@ -1,5 +1,6 @@
 package MenuGUI;
 
+import SoundThread.SoundController;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -161,7 +162,7 @@ public class SettingsPanel extends JPanel
             {
                 if (ce.getSource() == volumeSlider)
                 {
-                    alfatrainingprojekt.AlfaTrainingProjekt.musicTitle.setVolume(volumeSlider.getValue());
+                    SoundController.setVolumeBackgroundMusic(volumeSlider.getValue());
                     MyFrame.volume= Integer.toString(volumeSlider.getValue());
                      MyFrame.volumFromFile = false;
 

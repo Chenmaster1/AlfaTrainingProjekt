@@ -16,8 +16,8 @@ import javax.swing.SwingConstants;
 import Database.Database;
 import Hideouts.Hideout;
 import Hideouts.HideoutType;
-import SoundThread.MainTheme;
 import SoundThread.MP3Runnable;
+import SoundThread.SoundController;
 import alfatrainingprojekt.AlfaTrainingProjekt;
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
@@ -169,7 +169,7 @@ public class MainFramePanel extends JPanel {
 	 * @author Kevin
 	 */
 	private void onCloseClicked() {
-		alfatrainingprojekt.AlfaTrainingProjekt.musicTitle.stopPlayer();
+		SoundController.setBackgroundMusic(null);
 //		frame.dispose();
 		// Alles killen, nicht nur das Frame
 		System.exit(0);
