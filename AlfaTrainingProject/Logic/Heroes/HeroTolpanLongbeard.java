@@ -18,8 +18,11 @@ public class HeroTolpanLongbeard extends Hero {
 
 	public HeroTolpanLongbeard() {
 		super("Tolpan Longbeard", "TolpanLongbeardDescription", "TolpanLongbeardArtwork", 3, 3, 0.3,
-				new KiLogicTolpanLongbeard(), ImageName.AVATAR_TOLPAN, ImageName.AVATAR_TOLPAN_DEACTIVATED,
-				ImageName.MAPICON_TOLPAN);
+				new KiLogicTolpanLongbeard(), 
+				ImageName.AVATAR_TOLPAN, 
+				ImageName.AVATAR_TOLPAN_DEACTIVATED,
+				ImageName.MAPICON_TOLPAN,
+                ImageName.GRAVESTONE_TOLPAN);
 
 		abilities.add(new AbilityTolpanLongbeardHide(0));
 	}

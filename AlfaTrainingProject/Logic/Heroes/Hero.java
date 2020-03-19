@@ -30,6 +30,7 @@ public abstract class Hero {
 	private Image avatar;
 	private Image avatarDeactivated;
 	private Image mapIcon;
+	private Image gravestone;
 
 	private KiLogic ki;
 
@@ -59,7 +60,7 @@ public abstract class Hero {
 	 * @author Kevin
 	 */
 	public Hero(String name, String description, String artwork, int maxHitPoints, int maxActionPoints, double power,
-			KiLogic ki, ImageName avatarName, ImageName avatarDeactivatedName, ImageName mapIconName) {
+			KiLogic ki, ImageName avatarName, ImageName avatarDeactivatedName, ImageName mapIconName,ImageName gravestoneName) {
 
 		this.name = name;
 		this.description = description;
@@ -71,6 +72,7 @@ public abstract class Hero {
 		this.avatar = ImageLoader.getInstance().getImage(avatarName);
 		this.avatarDeactivated = ImageLoader.getInstance().getImage(avatarDeactivatedName);
 		this.mapIcon = ImageLoader.getInstance().getImage(mapIconName);
+		this.gravestone = ImageLoader.getInstance().getImage(gravestoneName);
 		this.abilities = new ArrayList<Ability>();
 		this.listeners = new HashSet<>();
 		this.isAttackable = true;
@@ -230,6 +232,11 @@ public abstract class Hero {
 
 	public void setAttackable(boolean isAttackable) {
 		this.isAttackable = isAttackable;
+	}
+
+	public Image getGravestone() {
+		
+		return gravestone;
 	}
 
 }

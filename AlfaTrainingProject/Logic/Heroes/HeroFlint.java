@@ -14,7 +14,8 @@ public class HeroFlint extends Hero {
                 new KiLogicFlint(),
                 ImageName.AVATAR_FLINT,
                 ImageName.AVATAR_FLINT_DEACTIVATED,
-                ImageName.MAPICON_FLINT);
+                ImageName.MAPICON_FLINT,
+                ImageName.GRAVESTONE_FLINT);
 
         abilities.add(new AbilityFlintAttackTwice(1));
     }

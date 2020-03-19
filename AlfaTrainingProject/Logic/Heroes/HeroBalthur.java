@@ -12,7 +12,8 @@ public class HeroBalthur extends Hero{
                         new KiLogicBalthur(), 
                         ImageName.AVATAR_BALTHUR,
                         ImageName.AVATAR_BALTHUR_DEACTIVATED,
-                        ImageName.MAPICON_BALTHUR);
+                        ImageName.MAPICON_BALTHUR,
+                        ImageName.GRAVESTONE_BALTHUR);
 		
 	}
 

@@ -644,10 +644,7 @@ public class SingleplayerGame implements HeroEventListener {
 					if (occupyingHero.isAttackable()) {
 						int newHitPoints = occupyingHero.getCurrentHitPoints() - 1;
 
-						if (!suddenDeathActive) {
-							occupyingHero.setAttackable(false);
-						}
-
+						
 						// check if hero died / disable field
 						if (newHitPoints <=0) {
 							gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_ELIMINATE,
@@ -664,7 +661,15 @@ public class SingleplayerGame implements HeroEventListener {
 											+ occupyingHero.getCurrentHitPoints());
 						}
 
+						if (!suddenDeathActive) {
+							occupyingHero.setAttackable(false);
+						}
+						
 						occupyingHero.setCurrentHitPoints(newHitPoints);
+					}
+					else
+					{
+						//Held im Feld, aber nicht verwundbar
 					}
 
 				}

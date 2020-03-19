@@ -48,11 +48,13 @@ public class MapPanel extends JPanel implements Runnable {
 	private final static double AIMOVERLAY_SIZE_RELATIVE_X = 537.0 / STANDARDPANELSIZE;
 	private final static double AIMOVERLAY_SIZE_RELATIVE_Y = 748.0 / STANDARDPANELSIZE;
 
-	public final static int ANIMATIONTYPE_SCAN_OCCUPIED = 1, ANIMATIONTYPE_FIRE = 2, ANIMATIONTYPE_ELIMINATE = 3, ANIMATIONTYPE_SCAN_EMPTY = 4;
+	public final static int ANIMATIONTYPE_SCAN_OCCUPIED = 1, ANIMATIONTYPE_FIRE = 2, ANIMATIONTYPE_ELIMINATE = 3,
+			ANIMATIONTYPE_SCAN_EMPTY = 4;
 
 	private Image backgroundImage;
 	private Image aimOverlay;
 	private Image towerImage;
+	private Image protectionImage;
 	private ArrayList<Image> inactiveFieldOverlays;
 
 	private ArrayList<Image> towerChargeAnimation;
@@ -84,6 +86,7 @@ public class MapPanel extends JPanel implements Runnable {
 		backgroundImage = ImageLoader.getInstance().getImage(ImageName.GAMEBOARD_EMPTY);
 		aimOverlay = ImageLoader.getInstance().getImage(ImageName.TOWER_AIM);
 		towerImage = ImageLoader.getInstance().getImage(ImageName.TOWER);
+		protectionImage = ImageLoader.getInstance().getImage(ImageName.HEROPROTECTION_SYMBOL);
 		inactiveFieldOverlays = AnimationLoader.getInstance().getAnimation(AnimationName.DEACTIVATED_HIDEOUTS);
 
 		towerChargeAnimation = AnimationLoader.getInstance().getAnimation(AnimationName.TOWER_CHARGE);
@@ -145,7 +148,7 @@ public class MapPanel extends JPanel implements Runnable {
 	private void drawDisabledFields(Graphics2D g2d) {
 		for (int i = 0; i < hideouts.size(); i++) {
 			if (!hideouts.get(i).isActive()) {
-				g2d.drawImage(inactiveFieldOverlays.get(i), 0, 0,getWidth(),getHeight(), this);
+				g2d.drawImage(inactiveFieldOverlays.get(i), 0, 0, getWidth(), getHeight(), this);
 			}
 		}
 	}
@@ -207,6 +210,7 @@ public class MapPanel extends JPanel implements Runnable {
 		for (Hideout h : hideoutHeroes.keySet()) {
 			Hero occupyingHero = hideoutHeroes.get(h);
 			Image heroIcon = occupyingHero.getMapIcon();
+			Image gravestone = occupyingHero.getGravestone();
 
 			AffineTransform oldTransform = g2d.getTransform();
 
@@ -218,12 +222,25 @@ public class MapPanel extends JPanel implements Runnable {
 			// Rückwärtsdrehen auf der Stelle, damit das Icon gerade ist
 			g2d.rotate(-getRadiant(h.getFieldNumber()), getWidth() / 2,
 					(getHeight() / 2) + (int) (HEROICON_DISTANCE_RELATIVE * getHeight()) + heroIconTotalHeight / 2);
+
 			// Wenn der Held sichtbar ist, immer opak anzeigen
 			if (occupyingHero.isVisible()) {
-
-				g2d.drawImage(heroIcon, getWidth() / 2 - heroIconTotalWidth / 2,
-						getHeight() / 2 + (int) (HEROICON_DISTANCE_RELATIVE * getHeight()), heroIconTotalWidth,
-						heroIconTotalHeight, this);
+				if (!occupyingHero.isDead()) {
+					g2d.drawImage(heroIcon, getWidth() / 2 - heroIconTotalWidth / 2,
+							getHeight() / 2 + (int) (HEROICON_DISTANCE_RELATIVE * getHeight()), heroIconTotalWidth,
+							heroIconTotalHeight, this);
+					
+					if(!occupyingHero.isAttackable())
+					{
+						g2d.drawImage(protectionImage, getWidth() / 2,
+								getHeight() / 2 + (int) (HEROICON_DISTANCE_RELATIVE * getHeight() + heroIconTotalHeight/2), heroIconTotalWidth/2,
+								heroIconTotalHeight/2, this);
+					}
+				} else {
+					g2d.drawImage(gravestone, getWidth() / 2 - heroIconTotalWidth / 2,
+							getHeight() / 2 + (int) (HEROICON_DISTANCE_RELATIVE * getHeight()), heroIconTotalWidth,
+							heroIconTotalHeight, this);
+				}
 			} // Wenn der Held versteckt ist, nur halbtransparent anzeigen und nur, wenn es
 				// sich um den Spielerheld handelt
 			else {
@@ -269,7 +286,7 @@ public class MapPanel extends JPanel implements Runnable {
 		} else if (currentAnimationFrame < (towerChargeAnimation.size() + towerFireAnimation.size())) {
 
 			switch (currentAnimationType) {
-                        case ANIMATIONTYPE_SCAN_EMPTY:
+			case ANIMATIONTYPE_SCAN_EMPTY:
 			case ANIMATIONTYPE_SCAN_OCCUPIED:
 				imageToDraw = towerScanAnimation.get(currentAnimationFrame - towerChargeAnimation.size());
 				break;
@@ -329,24 +346,24 @@ public class MapPanel extends JPanel implements Runnable {
 		currentFiredAtField = firedAtField;
 
 		isAnimating = true;
-                
-                //testholger
-                    switch (currentAnimationType) {
-			case ANIMATIONTYPE_SCAN_OCCUPIED:
-				SoundController.playSound("Tower_scans_Player_gets_decloaked.mp3");
-				break;
-                        case ANIMATIONTYPE_SCAN_EMPTY:
-				SoundController.playSound("Tower_scans.mp3");
-				break;
-			case ANIMATIONTYPE_FIRE:
-				SoundController.playSound("Tower_fires.mp3");
-				break;
-			case ANIMATIONTYPE_ELIMINATE:
-				SoundController.playSound("Tower_elimnates_Field.mp3");
-				break;
-			}
-                //testende
-                
+
+		// testholger
+		switch (currentAnimationType) {
+		case ANIMATIONTYPE_SCAN_OCCUPIED:
+			SoundController.playSound("Tower_scans_Player_gets_decloaked.mp3");
+			break;
+		case ANIMATIONTYPE_SCAN_EMPTY:
+			SoundController.playSound("Tower_scans.mp3");
+			break;
+		case ANIMATIONTYPE_FIRE:
+			SoundController.playSound("Tower_fires.mp3");
+			break;
+		case ANIMATIONTYPE_ELIMINATE:
+			SoundController.playSound("Tower_elimnates_Field.mp3");
+			break;
+		}
+		// testende
+
 		synchronized (this) {
 			// System.out.println("MapPanel Animation aufwecken");
 			this.notify();

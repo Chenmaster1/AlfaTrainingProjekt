@@ -61,7 +61,9 @@ public class GamePanelTest extends JFrame {
             h.setCurrentHitPoints(new Random().nextInt(h.getMaxHitPoints()));
 //			h.setVisible(new Random().nextBoolean());
             h.setVisible(true);
+            h.setAttackable(false);
         }
+        allHeroes.get(2).setCurrentHitPoints(0);
 
         Hero mainHero = new HeroDahlia();
         allHeroes.add(mainHero);

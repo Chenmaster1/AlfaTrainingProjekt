@@ -69,22 +69,31 @@ public class ImageLoader {
         images[ImageName.AVATAR_BALTHUR.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Avatar_Balthur.png")).getImage();
         images[ImageName.AVATAR_BALTHUR_DEACTIVATED.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Deactivated_Avatar_Balthur.png")).getImage();
         images[ImageName.MAPICON_BALTHUR.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Spiel_Avatar_Balthur.png")).getImage();
+        images[ImageName.GRAVESTONE_BALTHUR.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/dead_balthur.png")).getImage();
         
         images[ImageName.AVATAR_DAHLIA.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Avatar_Dahlia.png")).getImage();
         images[ImageName.AVATAR_DAHLIA_DEACTIVATED.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Deactivated_Avatar_Dahlia.png")).getImage();
         images[ImageName.MAPICON_DAHLIA.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Spiel_Avatar_Dahlia.png")).getImage();
+        images[ImageName.GRAVESTONE_DAHLIA.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/dead_dahlia.png")).getImage();
 
         images[ImageName.AVATAR_FLINT.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Avatar_Flint.png")).getImage();
         images[ImageName.AVATAR_FLINT_DEACTIVATED.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Deactivated_Avatar_Flint.png")).getImage();
         images[ImageName.MAPICON_FLINT.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Spiel_Avatar_Flint.png")).getImage();
+        images[ImageName.GRAVESTONE_FLINT.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/dead_flint.png")).getImage();
 
         images[ImageName.AVATAR_TOLPAN.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Avatar_Tolpan.png")).getImage();
         images[ImageName.AVATAR_TOLPAN_DEACTIVATED.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Deactivated_Avatar_Tolpan.png")).getImage();
         images[ImageName.MAPICON_TOLPAN.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Spiel_Avatar_Tolpan.png")).getImage();
+        images[ImageName.GRAVESTONE_TOLPAN.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/dead_tolpan.png")).getImage();
 
         images[ImageName.AVATAR_WOROK.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Avatar_Worok.png")).getImage();
         images[ImageName.AVATAR_WOROK_DEACTIVATED.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Hero_Card/Deactivated_Avatar_Worok.png")).getImage();
         images[ImageName.MAPICON_WOROK.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/Spiel_Avatar_WOROK.png")).getImage();
+        images[ImageName.GRAVESTONE_WOROK.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/dead_worok.png")).getImage();
+        
+        images[ImageName.HEROPROTECTION_SYMBOL.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Gameboard/protected.png")).getImage();
+        
+        
         images[ImageName.GAMEBOARD_INSTRUCTION.ordinal()] = new ImageIcon(getClass().getClassLoader().getResource("Description/g4.png")).getImage();
 
         

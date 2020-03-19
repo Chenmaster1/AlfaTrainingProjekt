@@ -20,7 +20,8 @@ public class HeroWorok extends Hero {
                 new KiLogicWorok(),
                 ImageName.AVATAR_WOROK,
                 ImageName.AVATAR_WOROK_DEACTIVATED,
-                ImageName.MAPICON_WOROK);
+                ImageName.MAPICON_WOROK,
+                ImageName.GRAVESTONE_WOROK);
 
         //passive Fähigkeit, macht selbst nichts, Effekt implementiert in getMaxActionPoints()
         abilities.add(new AbilityWorokAdditionalAction(0));

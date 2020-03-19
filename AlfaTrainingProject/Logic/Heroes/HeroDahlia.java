@@ -24,7 +24,8 @@ public class HeroDahlia extends Hero
                 new KiLogicDahlia(),
                 ImageName.AVATAR_DAHLIA,
                 ImageName.AVATAR_DAHLIA_DEACTIVATED,
-                ImageName.MAPICON_DAHLIA);
+                ImageName.MAPICON_DAHLIA,
+                ImageName.GRAVESTONE_DAHLIA);
 
         abilities.add(new AbilityDahliaWhenHitGetNewHideout(0));
     }
