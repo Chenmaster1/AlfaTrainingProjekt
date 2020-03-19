@@ -3,13 +3,14 @@ package Heroes;
 import Abilities.AbilityFlintAttackTwice;
 import Abilities.AbilityTolpanLongbeardHide;
 import KiLogics.KiLogic;
+import KiLogics.KiLogicBalthur;
 import KiLogics.KiLogicFlint;
 import resourceLoaders.ImageName;
 
 public class HeroFlint extends Hero {
 
     public HeroFlint() {
-        super("Flint", "FlintDescription", "DahliaArtwork",
+        super("Flint", "FlintDescription", "FlintArtwork",
                 3, 3, 1.5,
                 new KiLogicFlint(),
                 ImageName.AVATAR_FLINT,

@@ -10,27 +10,35 @@ import Heroes.Hero;
 import java.util.ArrayList;
 
 import Abilities.AbilityFlintAttackTwice;
-    
+
 public class KiLogicFlint extends KiLogic {
-	
-	//KI angepasst. Falls nur ein Actionpoint uebrig ist, wird auf jedenfall mit der ability angegriffen, 
-	//selbst wenn verzoegerungsmarken aktiv sind
+
+	// KI angepasst. Falls nur ein Actionpoint uebrig ist, wird auf jedenfall mit
+	// der ability angegriffen,
+	// selbst wenn verzoegerungsmarken aktiv sind
 	@Override
 	public Action chooseAction(ArrayList<Action> actions, SingleplayerGame singleplayerGame) {
 		Action resultAction = null;
 		ArrayList<Action> enabledActions = new ArrayList<Action>();
+		for(Action action : actions) {
+			if(action.isEnabled())
+				enabledActions.add(action);
+		}
+		
 		Hero currentHero = singleplayerGame.getCurrentHero();
-		
-		if(currentHero.getCurrentActionPoints() == 1) {
-			for(Action action : enabledActions)
-				if(action instanceof AbilityFlintAttackTwice)
+
+		if (currentHero.getCurrentActionPoints() == 1) {
+			for (Action action : enabledActions) {
+				if (action instanceof AbilityFlintAttackTwice) {
 					resultAction = action;
-		}else
-			super.chooseAction(actions, singleplayerGame);
-			
+					System.out.println("JA");
+				}
+			}
+		} else
+			resultAction = super.chooseAction(actions, singleplayerGame);
+
 		return resultAction;
-		
-		
+
 //		//New AI
 //		
 //		
@@ -75,11 +83,11 @@ public class KiLogicFlint extends KiLogic {
 //		else {
 //			
 //		}
-		//ansonsten angreifen
+		// ansonsten angreifen
 
 //		return resultAction;
-			
-		//Old AI
+
+		// Old AI
 //		Action resultAction = null;
 //			
 //		//es wird solange eine Action ausgefuehrt, wie Aktionspunkte uebrig sind
@@ -121,5 +129,5 @@ public class KiLogicFlint extends KiLogic {
 //			}
 //		
 //		return resultAction;
-	} 
+	}
 }

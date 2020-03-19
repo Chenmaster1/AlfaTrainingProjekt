@@ -390,7 +390,7 @@ public class SingleplayerGame implements HeroEventListener {
 
 			// KiLogic des Heros nach Entscheidung fragen
 			Action currentAction = currentHero.getKiLogic().chooseAction(heroActionsLists.get(currentHeroIndex), this);
-
+			
 			// Entsprechend AP reduzieren, Reduktion anzeigen und dann
 			// Aktion ausführen
 			decreaseCurrentActionPointsBy(currentAction.getActionPointsRequired());
