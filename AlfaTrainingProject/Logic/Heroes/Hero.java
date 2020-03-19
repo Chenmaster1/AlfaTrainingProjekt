@@ -211,7 +211,7 @@ public abstract class Hero {
 	}
 
 	public void setCurrentHitPoints(int currentHitPoints) {
-            if (currentHitPoints < this.currentHitPoints) {
+            if (currentHitPoints < this.currentHitPoints  && currentHitPoints > 0) {
                
             SoundController.playSound(hitSound);
             }
