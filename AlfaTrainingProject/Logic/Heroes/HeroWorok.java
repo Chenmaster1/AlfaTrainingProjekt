@@ -13,9 +13,12 @@ import resourceLoaders.ImageName;
  */
 public class HeroWorok extends Hero {
 
-    public HeroWorok() {
 
-        super("Worok", "WorokDescription", "WorokArtwork",
+    
+    public HeroWorok() {
+       
+
+        super("Worok", "WorokDescription", "WorokArtwork", "Worok_gets_hitted.mp3", "Worok_dies.mp3", 
                 3, 3, 0.3,
                 new KiLogicWorok(),
                 ImageName.AVATAR_WOROK,

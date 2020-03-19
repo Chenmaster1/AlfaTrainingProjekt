@@ -16,8 +16,10 @@ import resourceLoaders.ImageName;
  */
 public class HeroTolpanLongbeard extends Hero {
 
+    
 	public HeroTolpanLongbeard() {
-		super("Tolpan Longbeard", "TolpanLongbeardDescription", "TolpanLongbeardArtwork", 3, 3, 0.3,
+		super("Tolpan Longbeard", "TolpanLongbeardDescription", "TolpanLongbeardArtwork",  "Tolpan_gets_hitted.mp3", "Tolpan_dies.mp3", 
+                        3, 3, 0.3,
 				new KiLogicTolpanLongbeard(), 
 				ImageName.AVATAR_TOLPAN, 
 				ImageName.AVATAR_TOLPAN_DEACTIVATED,

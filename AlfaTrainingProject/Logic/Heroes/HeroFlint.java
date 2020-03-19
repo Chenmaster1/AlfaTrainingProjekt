@@ -9,7 +9,7 @@ import resourceLoaders.ImageName;
 public class HeroFlint extends Hero {
 
     public HeroFlint() {
-        super("Flint", "FlintDescription", "DahliaArtwork",
+        super("Flint", "FlintDescription", "FlintArtwork",  "Flint_gets_hitted.mp3", "Flint_dies.mp3", 
                 3, 3, 1.5,
                 new KiLogicFlint(),
                 ImageName.AVATAR_FLINT,

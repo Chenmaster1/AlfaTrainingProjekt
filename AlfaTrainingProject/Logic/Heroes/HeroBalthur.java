@@ -6,8 +6,9 @@ import resourceLoaders.ImageName;
 
 public class HeroBalthur extends Hero{
 
+    
 	public HeroBalthur() {
-		super("Balthur", "BalthurDescription", "BalthurArtwork", 
+		super("Balthur", "BalthurDescription", "BalthurArtwork", "Balthur_gets_hitted.mp3", "Balthur_dies.mp3", 
                         5, 3, (double) 2.5, 
                         new KiLogicBalthur(), 
                         ImageName.AVATAR_BALTHUR,

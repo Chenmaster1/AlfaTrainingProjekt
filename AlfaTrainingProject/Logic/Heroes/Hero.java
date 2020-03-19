@@ -13,6 +13,7 @@ import Abilities.Ability;
 import Database.Database;
 import Database.Queries;
 import KiLogics.KiLogic;
+import SoundThread.SoundController;
 import enums.HeroEventType;
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
@@ -37,6 +38,9 @@ public abstract class Hero {
 	private String name;
 	private String description;
 	private String artwork;
+        
+        private String hitSound;
+        private String dieSound;
 
 	private int currentHitPoints;
 	private int maxHitPoints;
@@ -59,12 +63,14 @@ public abstract class Hero {
 	 *             der Datenbank zu holen
 	 * @author Kevin
 	 */
-	public Hero(String name, String description, String artwork, int maxHitPoints, int maxActionPoints, double power,
+	public Hero(String name, String description, String artwork, String hitSound, String dieSound, int maxHitPoints, int maxActionPoints, double power,
 			KiLogic ki, ImageName avatarName, ImageName avatarDeactivatedName, ImageName mapIconName,ImageName gravestoneName) {
 
 		this.name = name;
 		this.description = description;
 		this.artwork = artwork;
+                this.hitSound = hitSound;
+                this.dieSound = dieSound;
 		this.maxHitPoints = maxHitPoints;
 		this.maxActionPoints = maxActionPoints;
 		this.power = power;
@@ -205,8 +211,14 @@ public abstract class Hero {
 	}
 
 	public void setCurrentHitPoints(int currentHitPoints) {
-		if (currentHitPoints <= 0)
+            if (currentHitPoints < this.currentHitPoints) {
+               
+            SoundController.playSound(hitSound);
+            }
+		if (currentHitPoints <= 0) {
 			isDead = true;
+                        SoundController.playSound(dieSound);
+                }
 		this.currentHitPoints = currentHitPoints;
 	}
 

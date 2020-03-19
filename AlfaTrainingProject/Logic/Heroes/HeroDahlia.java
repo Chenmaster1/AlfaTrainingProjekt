@@ -17,9 +17,10 @@ import resourceLoaders.ImageName;
 public class HeroDahlia extends Hero
 {
 
+    
     public HeroDahlia()
     {
-        super("Dahlia", "DahliaDescription", "DahliaArtwork",
+        super("Dahlia", "DahliaDescription", "DahliaArtwork",  "Dahlia_gets_hitted.mp3", "Dahlia_dies.mp3", 
                 4, 3, 0.3,
                 new KiLogicDahlia(),
                 ImageName.AVATAR_DAHLIA,
