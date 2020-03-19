@@ -27,6 +27,7 @@ import static Dice.AttackDice.*;
 import InGameGUI.MapPanel;
 import MenuGUI.MainFramePanel;
 import MenuGUI.MyFrame;
+import SoundThread.SoundController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -632,7 +633,7 @@ public class SingleplayerGame implements HeroEventListener {
 			if (occupyingHero != null) {
 				// Hero is detected / unveiled
 				if (!occupyingHero.isVisible()) {
-					gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN, finalRolledAttackField);
+					gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN_OCCUPIED, finalRolledAttackField);
 					// happening to PanelLogHeroAction
 					gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(
 							occupyingHero.getName() + " " + MyFrame.bundle.getString("heroUnveiled"));
@@ -669,7 +670,7 @@ public class SingleplayerGame implements HeroEventListener {
 				}
 			}
 		} else {
-			gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN, finalRolledAttackField);
+			gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN_EMPTY, finalRolledAttackField);
 		}
 		gamePanel.repaint();
 
@@ -735,6 +736,7 @@ public class SingleplayerGame implements HeroEventListener {
 		}
 		JOptionPane.showMessageDialog(mainFrame, message);
 		mainFrame.setContentPane(mainFramePanel);
+                SoundController.setBackgroundMusic("Intro_Main.mp3");
 //		mainFrame.repaint();
 	}
 
