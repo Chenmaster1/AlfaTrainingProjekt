@@ -225,7 +225,7 @@ public class NewGamePanel extends JPanel {
 	}
 
 	private void newGameClicked() {
-		
+
 		// TODO Werte auslesen und daraus Singleplayergame erstellen
 		ArrayList<Hero> gameHeroes = new ArrayList<>();
 		Hero playerHero = null;
@@ -244,11 +244,11 @@ public class NewGamePanel extends JPanel {
 		playerHero.setCurrentActionPoints(0);
 		gameHeroes.add(playerHero);
 
-		SingleplayerGame singlePlayerGame = SingleplayerGameCreator.createSingleplayerGame(mainFrame, gameHeroes,
-				playerHero, mainFramePanel);
+		SingleplayerGame singlePlayerGame = SingleplayerGameCreator.createSingleplayerGame(gameHeroes, playerHero, 5-gameHeroes.size(),
+				mainFrame, mainFramePanel);
 
-                SoundController.setBackgroundMusic("MainSound.mp3");
+		SoundController.setBackgroundMusic("MainSound.mp3");
 		singlePlayerGame.startGame();
-                
+
 	}
 }

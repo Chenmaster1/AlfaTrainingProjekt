@@ -23,89 +23,108 @@ import javax.swing.JFrame;
  */
 public class SingleplayerGameCreator {
 
-    /**
-     * Erzeugt ein SingleplayerGame basierend auf der Standardkarte und gibt es
-     * zurück. 
-     * 
-     * @param mainFrame Das JFrame, in dem das SingleplayerGame dargestellt werden soll
-     * @param heroes    Die Liste der teilnehmenden Helden inklusive dem Spielerheld
-     * @param mainHero  Der Held des Spielers
-     * @return 
-     */
-    public static SingleplayerGame createSingleplayerGame(JFrame mainFrame, ArrayList<Hero> heroes, Hero mainHero, MainFramePanel mainFramePanel) {
-        //MODEL-OBJEKTE
-        
-        //Helden sind übergeben
-        //Hideouts initialisieren
-        ArrayList<Hideout> hideouts = new ArrayList<>();
-        Hideout hideout = null;
-        for (int i = 0; i < 20; i++) {
-            if ((i >= 12 && i <= 15) || i >= 18 || i <= 2) {
-                hideout = new Hideout(i, HideoutType.FOREST);
-            } else {
-                if (i >= 3 && i <= 9) {
-                    hideout = new Hideout(i, HideoutType.DESERT);
-                } else {
-                    hideout = new Hideout(i, HideoutType.WETLANDS);
-                }
-            }
-            hideout.setActive(true);
-            hideouts.add(hideout);
-        }
+	/**
+	 * Erzeugt ein SingleplayerGame basierend auf der Standardkarte und gibt es
+	 * zurück.
+	 * 
+	 * @param heroes              Die Liste der teilnehmenden Helden inklusive dem
+	 *                            Spielerheld
+	 * @param mainHero            Der Held des Spielers
+	 * @param closedHideoutNumber Anzahl der Hideouts, die vom Anfang an geschlossen
+	 *                            sein sollen
+	 * @param mainFrame           Das JFrame, in dem das SingleplayerGame
+	 *                            dargestellt werden soll
+	 * 
+	 * @return
+	 */
+	public static SingleplayerGame createSingleplayerGame(ArrayList<Hero> heroes, Hero mainHero,
+			int closedHideoutNumber, JFrame mainFrame, MainFramePanel mainFramePanel) {
+		// MODEL-OBJEKTE
 
-        //erste Verstecke zufällig initialisieren
-        HashMap<Hideout, Hero> hideoutHero = new HashMap<>();
-        int fieldNumber;
-        Random generator = new Random();
-        for (Hero h : heroes) {
-            do {
-                fieldNumber = generator.nextInt(hideouts.size());
-            } while (hideoutHero.containsKey(hideouts.get(fieldNumber)));
+		//Zufallsgenerator
+		Random randomGenerator = new Random();
+		int fieldNumber;
 
-            hideoutHero.put(hideouts.get(fieldNumber), h);
-        }
+		// Helden sind übergeben
+		// Hideouts initialisieren
+		ArrayList<Hideout> hideouts = new ArrayList<>();
+		Hideout hideout = null;
+		for (int i = 0; i < 20; i++) {
+			if ((i >= 12 && i <= 15) || i >= 18 || i <= 2) {
+				hideout = new Hideout(i, HideoutType.FOREST);
+			} else {
+				if (i >= 3 && i <= 9) {
+					hideout = new Hideout(i, HideoutType.DESERT);
+				} else {
+					hideout = new Hideout(i, HideoutType.WETLANDS);
+				}
+			}
+			hideout.setActive(true);
+			hideouts.add(hideout);
+		}
 
-        //das Mapobjekt zusammensetzen
-        GameData standardMap = new GameData(hideoutHero, hideouts, heroes);
+		// Angegebene Anzahl an Hideouts zufällig schließen
+		for (int i = 0; i < closedHideoutNumber; i++) {
+			do {
+				fieldNumber = randomGenerator.nextInt(hideouts.size());
+			} while (!hideouts.get(fieldNumber).isActive());
+			
+			hideouts.get(fieldNumber).setActive(false);
+			
+		}
 
-        //--------------------
-        //VIEW-Objekte
-        MapPanel mp = new MapPanel(hideouts, hideoutHero, mainHero);
+		// erste Verstecke zufällig initialisieren
+		HashMap<Hideout, Hero> hideoutHero = new HashMap<>();
+		for (Hero h : heroes) {
+			do {
+				fieldNumber = randomGenerator.nextInt(hideouts.size());
+			} while ( (!hideouts.get(fieldNumber).isActive()) 
+					||	(hideoutHero.containsKey(hideouts.get(fieldNumber))));
 
-        GameSidePanel gsp = new GameSidePanel(heroes, mainHero);
+			hideoutHero.put(hideouts.get(fieldNumber), h);
+		}
 
-        GamePanel gamePanel = new GamePanel(mp, gsp, mainFrame);
+		// das Mapobjekt zusammensetzen
+		GameData standardMap = new GameData(hideoutHero, hideouts, heroes);
 
-        //------------
-        //SingleplayerGame als CONTROL-Objekt zusammensetzen
-        SingleplayerGame resultGame = new SingleplayerGame(mainFrame, gamePanel, standardMap, mainFramePanel);
-        return resultGame;
+		// --------------------
+		// VIEW-Objekte
+		MapPanel mp = new MapPanel(hideouts, hideoutHero, mainHero);
 
-    }
+		GameSidePanel gsp = new GameSidePanel(heroes, mainHero);
 
-    /**
-     * Erzeugt ein Test - SingleplayerGame basierend auf der Standardkarte und gibt es
-     * zurück. Es enthält 5 Helden (inklusive Hauptspieler).
-     *
-     * @param mainFrame Das JFrame, in dem dieses SingleplayerGame sich
-     * darstellen soll.
-     * @return
-     */
-    public static SingleplayerGame createTestSingleplayerGame(JFrame mainFrame, MainFramePanel mainFramePanel) {
+		GamePanel gamePanel = new GamePanel(mp, gsp, mainFrame);
 
-        //Helden initialisieren
-        ArrayList<Hero> heroes = new ArrayList<>();
-        heroes.add(new HeroBalthur());
-        heroes.add(new HeroDahlia());
-        heroes.add(new HeroTolpanLongbeard());
-        heroes.add(new HeroWorok());
-        heroes.add(new HeroFlint());
+		// ------------
+		// SingleplayerGame als CONTROL-Objekt zusammensetzen
+		SingleplayerGame resultGame = new SingleplayerGame(mainFrame, gamePanel, standardMap, mainFramePanel);
+		return resultGame;
 
-        heroes.get(4).setPlayerControlled(true);
-        Hero mainHero = heroes.get(4);
+	}
 
-        SingleplayerGame resultGame = createSingleplayerGame(mainFrame, heroes, mainHero, mainFramePanel);
-        return resultGame;
-    }
+	/**
+	 * Erzeugt ein Test - SingleplayerGame basierend auf der Standardkarte und gibt
+	 * es zurück. Es enthält 5 Helden (inklusive Hauptspieler).
+	 *
+	 * @param mainFrame Das JFrame, in dem dieses SingleplayerGame sich darstellen
+	 *                  soll.
+	 * @return
+	 */
+	public static SingleplayerGame createTestSingleplayerGame(JFrame mainFrame, MainFramePanel mainFramePanel) {
+
+		// Helden initialisieren
+		ArrayList<Hero> heroes = new ArrayList<>();
+		heroes.add(new HeroBalthur());
+		heroes.add(new HeroDahlia());
+		heroes.add(new HeroTolpanLongbeard());
+		heroes.add(new HeroWorok());
+		heroes.add(new HeroFlint());
+
+		heroes.get(4).setPlayerControlled(true);
+		Hero mainHero = heroes.get(4);
+
+		SingleplayerGame resultGame = createSingleplayerGame(heroes, mainHero, 2, mainFrame, mainFramePanel);
+		return resultGame;
+	}
 
 }
