@@ -2,6 +2,7 @@ package InGameGUI;
 
 import Dice.AttackDice;
 import Dice.HideDice;
+import SoundThread.SoundController;
 import resourceLoaders.AnimationLoader;
 import resourceLoaders.AnimationName;
 import resourceLoaders.ImageLoader;
@@ -149,7 +150,7 @@ public class HideDicePanel extends JPanel implements Runnable {
                 break;
 
         }
-        
+        SoundController.playSound("W6_Dice_Roll.mp3");
         synchronized(this)
     	{
         	//System.out.println("Animation aufwecken");
@@ -166,6 +167,7 @@ public class HideDicePanel extends JPanel implements Runnable {
     			}
     		
     	}
+        
     }
 
     /**

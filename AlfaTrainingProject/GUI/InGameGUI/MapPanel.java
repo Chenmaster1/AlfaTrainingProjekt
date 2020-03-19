@@ -32,20 +32,20 @@ import javax.swing.SwingUtilities;
 public class MapPanel extends JPanel implements Runnable {
 
 	public final static int MAPSTATE_REGULAR = 0, MAPSTATE_PLAYER_AIMING = 1, MAPSTATE_KI_AIMING = 2;
-//    private final static int PANELSIZE = 1080;
+	private final static int STANDARDPANELSIZE = 1080;
 
 	private final static double HEROICON_DISTANCE_RELATIVE = 0.25;
 	private final static double HEROICON_SIZE_RELATIVE = 0.07;
 	private final static float HEROICON_HIDDEN_ALPHA = 0.5f;
 
-	private final static double TOWER_SCALE = 1 / 1080.0;
+	private final static double TOWER_SCALE = 1.0 / STANDARDPANELSIZE;
 
-	private final static double ANIMATION_SCALE = 1 / 1080.0;
-	private final static double ANIMATION_SCALE_BEAM = 1.2 / 1080.0;
+	private final static double ANIMATION_SCALE = 1.0 / STANDARDPANELSIZE;
+	private final static double ANIMATION_SCALE_BEAM = 1.2 / STANDARDPANELSIZE;
 	private final static int ANIMATION_FRAME_PERIOD = GamePanel.ANIMATION_FRAME_PERIOD;
 
-	private final static double AIMOVERLAY_SIZE_RELATIVE_X = 537 / 1080.0;
-	private final static double AIMOVERLAY_SIZE_RELATIVE_Y = 748 / 1080.0;
+	private final static double AIMOVERLAY_SIZE_RELATIVE_X = 537.0 / STANDARDPANELSIZE;
+	private final static double AIMOVERLAY_SIZE_RELATIVE_Y = 748.0 / STANDARDPANELSIZE;
 
 	public final static int ANIMATIONTYPE_SCAN = 1, ANIMATIONTYPE_FIRE = 2, ANIMATIONTYPE_ELIMINATE = 3;
 
@@ -108,8 +108,6 @@ public class MapPanel extends JPanel implements Runnable {
 
 		};
 
-		
-		
 		threadMapPanelAnimation = new Thread(this);
 		threadMapPanelAnimation.start();
 	}
@@ -146,7 +144,7 @@ public class MapPanel extends JPanel implements Runnable {
 	private void drawDisabledFields(Graphics2D g2d) {
 		for (int i = 0; i < hideouts.size(); i++) {
 			if (!hideouts.get(i).isActive()) {
-				g2d.drawImage(inactiveFieldOverlays.get(i), 0, 0, this);
+				g2d.drawImage(inactiveFieldOverlays.get(i), 0, 0,getWidth(),getHeight(), this);
 			}
 		}
 	}

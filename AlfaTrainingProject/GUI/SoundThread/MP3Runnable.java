@@ -68,9 +68,9 @@ public class MP3Runnable implements Runnable
      * 
      *  @author Yovo
      */
-    public void setVolumInitialize(int volumeInitialice)
+    public void setVolumeInitialize(int volumeInitialize)
     {
-        volume = volumeInitialice;
+        volume = volumeInitialize;
 
     }
 

@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import Database.Database;
-import SoundThread.MainTheme;
+import SoundThread.SoundController;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -74,7 +74,7 @@ public class MyFrame extends JFrame
                 if (volumFromFile)
                 {
                     volume = br.readLine();
-                    alfatrainingprojekt.AlfaTrainingProjekt.musicTitle.setVolumInitialize(Integer.parseInt(volume));
+                    SoundController.setVolumeBackgroundMusic(Integer.parseInt(volume));
                 }
 
                 language = br.readLine();
@@ -114,7 +114,7 @@ public class MyFrame extends JFrame
                 fw.write("50" + "\n" + "/Bundle_DE");
                 fw.close();
                 language = "/Bundle_DE";
-                alfatrainingprojekt.AlfaTrainingProjekt.musicTitle.setVolumInitialize(50);
+                SoundController.setVolumeBackgroundMusic(50);
 
             }
             catch (Exception e)
