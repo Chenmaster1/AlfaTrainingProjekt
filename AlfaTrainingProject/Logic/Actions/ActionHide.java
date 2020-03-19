@@ -90,17 +90,17 @@ public class ActionHide extends Action {
 		case HideDice.RESULT_RED:
 			int additionalDelayTokens;
 			switch (oldHideoutType) {
-			case DESERT:
+			case WETLANDS:
 				additionalDelayTokens = 2;
                                 //happening to PanelLogHeroAction 
                                 singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("recieveToken") + " " +Integer.toString(additionalDelayTokens));
 				break;
-			case WETLANDS:
+			case FOREST:
 				additionalDelayTokens = 1;
                                 //happening to PanelLogHeroAction 
                                 singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("recieveToken") + " " +Integer.toString(additionalDelayTokens));
 				break;
-			case FOREST:
+			case DESERT:
 				additionalDelayTokens = 0;
                                 //happening to PanelLogHeroAction 
                                 singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("recieveToken") + " " +Integer.toString(additionalDelayTokens));
