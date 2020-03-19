@@ -19,6 +19,11 @@ public class KiLogicFlint extends KiLogic {
 	public Action chooseAction(ArrayList<Action> actions, SingleplayerGame singleplayerGame) {
 		Action resultAction = null;
 		ArrayList<Action> enabledActions = new ArrayList<Action>();
+		for(Action action : actions) {
+			if(action.isEnabled())
+				enabledActions.add(action);
+		}
+		
 		Hero currentHero = singleplayerGame.getCurrentHero();
 		
 		if(currentHero.getCurrentActionPoints() == 1) {
