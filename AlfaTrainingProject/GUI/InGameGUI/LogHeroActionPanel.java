@@ -1,5 +1,6 @@
 package InGameGUI;
 
+import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -10,6 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class LogHeroActionPanel extends JPanel {
+	
+	private static final double HEROACTIONLOG_TEXT_SIZE_RELATIVE_X = 0.07;
 	private JLabel labelLogHeroAction;
 	private JTextArea textAreaLogHeroAction;
 	private JScrollPane scrollTextAreaLogHeroAction;
@@ -37,7 +40,12 @@ public class LogHeroActionPanel extends JPanel {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				scrollTextAreaLogHeroAction.setBounds(5, 5, getWidth() - 10, getHeight() - 10);
-
+				
+				
+				//Font des Labels anpassen, abhängig von der Panelbreite
+				Font heroLogFont = textAreaLogHeroAction.getFont();
+				int newFontSize = (int) (HEROACTIONLOG_TEXT_SIZE_RELATIVE_X * getWidth());
+				textAreaLogHeroAction.setFont(new Font(heroLogFont.getName(), Font.PLAIN, newFontSize));
 			}
 
 		});
