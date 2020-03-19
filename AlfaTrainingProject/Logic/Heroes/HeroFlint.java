@@ -3,6 +3,7 @@ package Heroes;
 import Abilities.AbilityFlintAttackTwice;
 import Abilities.AbilityTolpanLongbeardHide;
 import KiLogics.KiLogic;
+import KiLogics.KiLogicBalthur;
 import KiLogics.KiLogicFlint;
 import resourceLoaders.ImageName;
 
