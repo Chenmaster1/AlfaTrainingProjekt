@@ -196,7 +196,7 @@ public class NewGamePanel extends JPanel {
 		SingleplayerGame singlePlayerGame = SingleplayerGameCreator.createSingleplayerGame(gameHeroes, playerHero,
 				disabledHideoutsNumber, mainFrame, mainFramePanel);
 
-		SoundController.setBackgroundMusic("MainSound.mp3");
+		SoundController.setBackgroundMusic("Fight_Theme.mp3");
 		singlePlayerGame.startGame();
 
 	}
