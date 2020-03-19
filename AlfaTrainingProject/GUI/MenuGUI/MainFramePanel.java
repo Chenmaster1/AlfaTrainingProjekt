@@ -94,19 +94,19 @@ public class MainFramePanel extends JPanel {
 			}
 		});
 
-		addButton(btnClose, getWidth() / 2 - 100, getHeight() / 2 + 90, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				onCloseClicked();
-			}
-		});
-                
-                addButton(btnInstruction, getWidth() / 2 - 100, getHeight() / 2 + 150, new ActionListener() {
+		addButton(btnInstruction, getWidth() / 2 - 100, getHeight() / 2 + 90, new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				onInstructionClicked();
+			}
+		});
+
+       addButton(btnClose, getWidth() / 2 - 100, getHeight() / 2 + 150, new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onCloseClicked();
 			}
 		});
                 
@@ -182,6 +182,6 @@ public class MainFramePanel extends JPanel {
 	 * @author Kevin
 	 */
 	private void onInstructionClicked() {
-		new InstructionPanel(frame);
+		new InstructionPanel(frame, this);
 	}
 }

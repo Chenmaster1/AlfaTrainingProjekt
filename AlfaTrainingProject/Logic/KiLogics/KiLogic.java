@@ -51,38 +51,51 @@ public abstract class KiLogic {
 		}
 		
 		//falls keine verzoegerungsmarken, aber sichtbar, erst verstecken
-		if(currentHero.isVisible() && currentHero.getDelayTokens() ==0) {
+		if(currentHero.isVisible() && currentHero.getDelayTokens() == 0) {
 			for(Action action : enabledActions)
 				if(action instanceof ActionHide)
 					return action;
 		}
-		//falls actionpoints > verzoegerungsmarken, dann angreifen
-		if(currentHero.getCurrentActionPoints() > currentHero.getDelayTokens()) {
-			for(Action action : enabledActions)
-				if(action instanceof ActionAttack)
-					return action;
+		//falls verzoegerungsmarken vorhanden, erst abbauen falls aufgedeckt, sonst bei letztem aktionspunkt
+		if(currentHero.getDelayTokens() > 0) {
+			if(currentHero.isVisible()) {
+				for(Action action : enabledActions)
+					if(action instanceof ActionWorkOffDelay)
+						return action;
+			}else {
+				if(currentHero.getCurrentActionPoints() > 1) {
+					for(Action action : enabledActions)
+						if(action instanceof ActionAttack)
+							return action;
+				}else {
+					for(Action action : enabledActions)
+						if(action instanceof ActionWorkOffDelay)
+							return action;
+				}
+			}
+			
 		}
 		//falls actionpoints <= verzoegerungsmarken, aber actionpoints >1, 
 		//dann zufaellig angreifen oder verzoegerung abbauen
-		if(currentHero.getCurrentActionPoints() > 1 
-				&& currentHero.getCurrentActionPoints() <= currentHero.getDelayTokens()) {
-			int random = (int) (Math.random() * 2);
-			for(Action action : enabledActions) {
-				
-				if(random == 0) {
-					if(action instanceof ActionAttack)
-						return action;
-				}else {
-					if(action instanceof ActionWorkOffDelay) 
-						return action;
-				}
-			}				
-		}
+//		if(currentHero.getCurrentActionPoints() > 1 
+//				&& currentHero.getCurrentActionPoints() <= currentHero.getDelayTokens()) {
+//			int random = (int) (Math.random() * 2);
+//			for(Action action : enabledActions) {
+//				
+//				if(random == 0) {
+//					if(action instanceof ActionAttack)
+//						return action;
+//				}else {
+//					if(action instanceof ActionWorkOffDelay) 
+//						return action;
+//				}
+//			}				
+//		}
 		//falls verzoegerungsmarken und actionspoints = 1, dann verzoegerung abbauen
-		if(currentHero.getDelayTokens() > 0 && currentHero.getCurrentActionPoints() == 1)
-			for(Action action : enabledActions)
-				if(action instanceof ActionWorkOffDelay)
-					return action;
+//		if(currentHero.getDelayTokens() > 0 && currentHero.getCurrentActionPoints() == 1)
+//			for(Action action : enabledActions)
+//				if(action instanceof ActionWorkOffDelay)
+//					return action;
 		
 		for(Action action : enabledActions)
 			if(action instanceof ActionAttack)
@@ -174,20 +187,16 @@ public abstract class KiLogic {
 		// und ein entsprechendes Feld wird gewaehlt
 		// sind weniger aktiv wird nur geschaut ob das Feld aktiv ist
 
-//		while (true) {
+		while (true) {
+			
 			Random random = new Random();
 			int attackField = random.nextInt(availableHideouts.size());
-			//TODO neu ueberdenken. erstmal generell angreifen
-//			if (availableHideouts.size() >= 7) {
-//				if (attackField < (ownPosition + 2) % availableHideouts.size()
-//						|| attackField > (ownPosition - 2 + availableHideouts.size()) % availableHideouts.size()) {
-//					return availableHideouts.get(attackField).getFieldNumber();
-//				}
-//			} else {
+			if(!(attackField == singleplayerGame.getCurrentHeroIndex()))
 				return availableHideouts.get(attackField).getFieldNumber();
-			//}
+
+			//TODO neu ueberdenken. erstmal generell angreifen
 			
-//		}
+		}
 		// reduce sollte bereits in der action, bzw ability aufgerufen werde, sofern die
 		// ability einen Zug ersetzt
 		// singleplayerGame.reduceCurrentActionPoints();
