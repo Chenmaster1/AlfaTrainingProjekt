@@ -272,10 +272,11 @@ public class SingleplayerGame implements HeroEventListener {
 
 //        gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(true);
 		currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
-                
-                //name of Hero to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(currentHero.getName()+" "  +MyFrame.bundle.getString("nextTurnIsPlayer") );
-                
+
+		// name of Hero to PanelLogHeroAction
+		gamePanel.getGameSidePanel().getPanelLogHeroAction()
+				.setTextAreaLogHeroAction(currentHero.getName() + " " + MyFrame.bundle.getString("nextTurnIsPlayer"));
+
 		boolean gameOver = false;
 
 		while (currentHero.getCurrentActionPoints() != 0) {
@@ -295,9 +296,6 @@ public class SingleplayerGame implements HeroEventListener {
 			// MapPanel Listener für die Schnellauswahl der AttackAction einschalten
 			gamePanel.getMapPanel().addMouseListener(mapPanelAttackClickListener);
 
-               
-                
-                
 			// Auf Entscheidung des Spielers warten, wird von den Action-Buttons wieder
 			// notified
 			synchronized (mainFrame) {
@@ -318,7 +316,6 @@ public class SingleplayerGame implements HeroEventListener {
 			gamePanel.getGameSidePanel().repaint();
 //			System.out.println("chosenAction: " + chosenPlayerAction);
 			chosenPlayerAction.useAction(this);
-                        
 
 			// Auswirkungen der Aktion anzeigen
 			gamePanel.repaint();
@@ -327,8 +324,9 @@ public class SingleplayerGame implements HeroEventListener {
 			// Aktionsschleife springen und true zurückgeben
 			if (isGameOver()) {
 				gameOver = true;
-                                //happening to PanelLogHeroAction
-                                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("gameOverWon")); 
+				// happening to PanelLogHeroAction
+				gamePanel.getGameSidePanel().getPanelLogHeroAction()
+						.setTextAreaLogHeroAction(MyFrame.bundle.getString("gameOverWon"));
 				break;
 			}
 
@@ -351,27 +349,28 @@ public class SingleplayerGame implements HeroEventListener {
 
 				if (heroesAliveCount == activeHideoutsCount) {
 					activateSuddenDeath();
-                                        //happening to PanelLogHeroAction
-                                        gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("suddenDeathActivation")); 
+					// happening to PanelLogHeroAction
+					gamePanel.getGameSidePanel().getPanelLogHeroAction()
+							.setTextAreaLogHeroAction(MyFrame.bundle.getString("suddenDeathActivation"));
 				}
 			}
 		}
-                 gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(" "); 
+		gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(" ");
 		return gameOver;
 
 	}
 
 	private boolean kiTurn() {
 
-            
 		gamePanel.getGameSidePanel().getPanelPlayerHero().setButtonsEnabled(false);
 		currentHero.setCurrentActionPoints(currentHero.getMaxActionPoints());
 		boolean gameOver = false;
 
-                //name of Hero to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(currentHero.getName()+" " +MyFrame.bundle.getString("nextTurnIs"));
-		
-                while (currentHero.getCurrentActionPoints() != 0) {
+		// name of Hero to PanelLogHeroAction
+		gamePanel.getGameSidePanel().getPanelLogHeroAction()
+				.setTextAreaLogHeroAction(currentHero.getName() + " " + MyFrame.bundle.getString("nextTurnIs"));
+
+		while (currentHero.getCurrentActionPoints() != 0) {
 
 			setGameState(GameState.CHOOSING);
 
@@ -383,7 +382,7 @@ public class SingleplayerGame implements HeroEventListener {
 			// Eine Bedenkzeit der KI simulieren
 			try {
 				Thread.sleep(500);
-              
+
 			} catch (InterruptedException ex) {
 				Logger.getLogger(SingleplayerGame.class.getName()).log(Level.SEVERE, null, ex);
 			}
@@ -396,9 +395,9 @@ public class SingleplayerGame implements HeroEventListener {
 			decreaseCurrentActionPointsBy(currentAction.getActionPointsRequired());
 			gamePanel.getGameSidePanel().repaint();
 			currentAction.useAction(this);
-                        
-                //happening to PanelLogHeroAction
-                //gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(currentAction.getName());
+
+			// happening to PanelLogHeroAction
+			// gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(currentAction.getName());
 
 			// Auswirkungen der Aktion anzeigen
 			gamePanel.repaint();
@@ -407,8 +406,9 @@ public class SingleplayerGame implements HeroEventListener {
 			// Schleife springen und true zurückgeben
 			if (isGameOver()) {
 				gameOver = true;
-                                //happening to PanelLogHeroAction
-                                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("gameOverTwo"));                                
+				// happening to PanelLogHeroAction
+				gamePanel.getGameSidePanel().getPanelLogHeroAction()
+						.setTextAreaLogHeroAction(MyFrame.bundle.getString("gameOverTwo"));
 				break;
 			}
 
@@ -431,15 +431,16 @@ public class SingleplayerGame implements HeroEventListener {
 
 				if (heroesAliveCount == activeHideoutsCount) {
 					activateSuddenDeath();
-                                        //happening to PanelLogHeroAction
-                                        gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("suddenDeathActivation"));  
+					// happening to PanelLogHeroAction
+					gamePanel.getGameSidePanel().getPanelLogHeroAction()
+							.setTextAreaLogHeroAction(MyFrame.bundle.getString("suddenDeathActivation"));
 				}
 			}
 		}
-                //space between players - happening to PanelLogHeroAction
-                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(" "); 
+		// space between players - happening to PanelLogHeroAction
+		gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(" ");
 		return gameOver;
-                
+
 	}
 
 	/**
@@ -496,7 +497,7 @@ public class SingleplayerGame implements HeroEventListener {
 				gamePanel.getMapPanel().removeMouseListener(mapPanelAimClickListener);
 
 				// Wenn der Spieler mit links geklickt hat, Attacke auslösen
-				if (chosenAttackField > 0) {
+				if (chosenAttackField >= 0) {
 					resolveAttack(chosenAttackField);
 				}
 				// Wenn der Spieler mit rechts geklickt hat, AP zurückerstatten
@@ -569,8 +570,6 @@ public class SingleplayerGame implements HeroEventListener {
 		// Animation starten (GameLogicThread wird währenddessen pausiert)
 		gamePanel.getGameSidePanel().getPanelAttackDice().setRollResult(diceResult);
 
-		
-
 		// Kurz pausieren, damit das Ergebnis der Animation vorm Angriff erkennbar ist
 		try {
 			Thread.sleep(200);
@@ -584,37 +583,42 @@ public class SingleplayerGame implements HeroEventListener {
 
 		// Tatsächlich getroffenes Feld berechnen
 		int finalRolledAttackField;
-                int mapVisual;
+		int mapVisual;
 		switch (diceResult) {
 		case RESULT_CENTER_HIT:
 			finalRolledAttackField = targetedField;
-                        //happening to PanelLogHeroAction 
-                       mapVisual = gameData.getMapIntToVisualField().get(finalRolledAttackField);
-                       gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(mapVisual)+" " + MyFrame.bundle.getString("fieldAttacked"));
+			// happening to PanelLogHeroAction
+			mapVisual = gameData.getMapIntToVisualField().get(finalRolledAttackField);
+			gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(
+					Integer.toString(mapVisual) + " " + MyFrame.bundle.getString("fieldAttacked"));
 			break;
 		case RESULT_LEFT_CENTER_HIT:
 			finalRolledAttackField = (targetedField + numberOfHideouts - 1) % numberOfHideouts;
-                        //happening to PanelLogHeroAction 
-                        mapVisual = gameData.getMapIntToVisualField().get(finalRolledAttackField);
-                        gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(mapVisual)+" " + MyFrame.bundle.getString("fieldAttacked"));
-                	break;
+			// happening to PanelLogHeroAction
+			mapVisual = gameData.getMapIntToVisualField().get(finalRolledAttackField);
+			gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(
+					Integer.toString(mapVisual) + " " + MyFrame.bundle.getString("fieldAttacked"));
+			break;
 		case RESULT_RIGHT_CENTER_HIT:
 			finalRolledAttackField = (targetedField + numberOfHideouts + 1) % numberOfHideouts;
-                         //happening to PanelLogHeroAction 
-                        mapVisual = gameData.getMapIntToVisualField().get(finalRolledAttackField);
-                        gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(mapVisual)+" " + MyFrame.bundle.getString("fieldAttacked"));
+			// happening to PanelLogHeroAction
+			mapVisual = gameData.getMapIntToVisualField().get(finalRolledAttackField);
+			gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(
+					Integer.toString(mapVisual) + " " + MyFrame.bundle.getString("fieldAttacked"));
 			break;
 		case RESULT_OUTER_LEFT_HIT:
 			finalRolledAttackField = (targetedField + numberOfHideouts - 2) % numberOfHideouts;
-                         //happening to PanelLogHeroAction 
-                        mapVisual = gameData.getMapIntToVisualField().get(finalRolledAttackField);
-                        gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(mapVisual)+" " + MyFrame.bundle.getString("fieldAttacked"));
+			// happening to PanelLogHeroAction
+			mapVisual = gameData.getMapIntToVisualField().get(finalRolledAttackField);
+			gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(
+					Integer.toString(mapVisual) + " " + MyFrame.bundle.getString("fieldAttacked"));
 			break;
 		case RESULT_OUTER_RIGHT_HIT:
 			finalRolledAttackField = (targetedField + numberOfHideouts + 2) % numberOfHideouts;
-                         //happening to PanelLogHeroAction 
-                        mapVisual = gameData.getMapIntToVisualField().get(finalRolledAttackField);
-                        gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(Integer.toString(mapVisual)+" " + MyFrame.bundle.getString("fieldAttacked"));
+			// happening to PanelLogHeroAction
+			mapVisual = gameData.getMapIntToVisualField().get(finalRolledAttackField);
+			gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(
+					Integer.toString(mapVisual) + " " + MyFrame.bundle.getString("fieldAttacked"));
 			break;
 		default:
 			finalRolledAttackField = -1;
@@ -629,31 +633,37 @@ public class SingleplayerGame implements HeroEventListener {
 				// Hero is detected / unveiled
 				if (!occupyingHero.isVisible()) {
 					gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN, finalRolledAttackField);
-                                        //happening to PanelLogHeroAction
-                                        gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(occupyingHero.getName()+" " +MyFrame.bundle.getString("heroUnveiled"));
+					// happening to PanelLogHeroAction
+					gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(
+							occupyingHero.getName() + " " + MyFrame.bundle.getString("heroUnveiled"));
 					occupyingHero.setVisible(true);
 				} // Hero is hit
 				else {
 
 					if (occupyingHero.isAttackable()) {
-						occupyingHero.setCurrentHitPoints(occupyingHero.getCurrentHitPoints() - 1);
-                                                //happening to PanelLogHeroAction
-                                                gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(occupyingHero.getName()+" " +MyFrame.bundle.getString("heroIsHit") +" " +occupyingHero.getCurrentHitPoints() );
+						int newHitPoints = occupyingHero.getCurrentHitPoints() - 1;
 
 						if (!suddenDeathActive) {
 							occupyingHero.setAttackable(false);
 						}
 
 						// check if hero died / disable field
-						if (occupyingHero.isDead()) {
+						if (newHitPoints <=0) {
 							gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_ELIMINATE,
 									finalRolledAttackField);
 							gameData.getHideouts().get(finalRolledAttackField).setActive(false);
-                                                        //happening to PanelLogHeroAction
-                                                        gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(occupyingHero.getName()+" " +MyFrame.bundle.getString("heroEliminated"));
+							// happening to PanelLogHeroAction
+							gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(
+									occupyingHero.getName() + " " + MyFrame.bundle.getString("heroEliminated"));
 						} else {
 							gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_FIRE, finalRolledAttackField);
+							// happening to PanelLogHeroAction
+							gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(
+									occupyingHero.getName() + " " + MyFrame.bundle.getString("heroIsHit") + " "
+											+ occupyingHero.getCurrentHitPoints());
 						}
+
+						occupyingHero.setCurrentHitPoints(newHitPoints);
 					}
 
 				}
@@ -824,7 +834,7 @@ public class SingleplayerGame implements HeroEventListener {
 		// Hier mit einem switch über den HeroEventType den gewünschten Effekt
 		// implementieren
 
-		// when HeroDahlia looses a hitpoint she´ll end up @ Hide_Roll 
+		// when HeroDahlia looses a hitpoint she´ll end up @ Hide_Roll
 		switch (eventType) {
 		case HIDE_AUTOMATIC:
 
@@ -832,9 +842,10 @@ public class SingleplayerGame implements HeroEventListener {
 			if (!suddenDeathActive && requestingHero.getDelayTokens() == 0) {
 				ActionHide eventHide = new ActionHide(0);
 				eventHide.freeHideHero(requestingHero, this);
-                                //happening to PanelLogHeroAction 
-                                getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("heroAbilityDahlia"));
-                            
+				// happening to PanelLogHeroAction
+				getGamePanel().getGameSidePanel().getPanelLogHeroAction()
+						.setTextAreaLogHeroAction(MyFrame.bundle.getString("heroAbilityDahlia"));
+
 			}
 
 			break;
@@ -842,10 +853,10 @@ public class SingleplayerGame implements HeroEventListener {
 			if (!suddenDeathActive && requestingHero.getDelayTokens() == 0) {
 				// Aufdeckung anzeigen
 				gamePanel.getMapPanel().repaint();
-                      
+
 				ActionHide tempActionHide = new ActionHide(0);
 				tempActionHide.useAction(requestingHero, this);
-                               
+
 			}
 			break;
 		}
