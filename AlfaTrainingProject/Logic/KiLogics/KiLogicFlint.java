@@ -28,56 +28,56 @@ public class KiLogicFlint extends KiLogic {
 		}else
 			super.chooseAction(actions, singleplayerGame);
 			
+		return resultAction;
 		
 		
-		
-		//New AI
-		
-		
-		//nutzbare Actions bekommen
-		for(Action action : actions) {
-			if(action.isEnabled())
-				enabledActions.add(action);
-		}
-		
-		//falls keine verzoegerungsmarken, aber sichtbar, erst verstecken
-		if(currentHero.isVisible() && currentHero.getDelayTokens() ==0) {
-			for(Action action : enabledActions)
-				if(action instanceof ActionHide)
-					resultAction = action;
-		}
-		//falls actionpoints > verzoegerungsmarken, dann angreifen
-		else if(currentHero.getCurrentActionPoints() > currentHero.getDelayTokens()) {
-			for(Action action : enabledActions)
-				if(currentHero.getCurrentActionPoints() == 1) {
-					if(action instanceof AbilityFlintAttackTwice)
-						return action;
-				}else if(action instanceof ActionAttack)
-					resultAction = action;
-		}
-		//falls actionpoints <= verzoegerungsmarken, aber actionpoints >1, 
-		//dann zufaellig angreifen oder verzoegerung abbauen
-		else if(currentHero.getCurrentActionPoints() > 1 
-				&& currentHero.getCurrentActionPoints() <= currentHero.getDelayTokens()) {
-			int random = (int) (Math.random() * 2);
-			for(Action action : enabledActions) {
-				
-				if(random == 0) {
-					if(action instanceof ActionAttack)
-						resultAction = action;
-				}else {
-					if(action instanceof ActionWorkOffDelay) 
-						resultAction = action;
-				}
-			}				
-		}
-		//
-		else {
-			
-		}
+//		//New AI
+//		
+//		
+//		//nutzbare Actions bekommen
+//		for(Action action : actions) {
+//			if(action.isEnabled())
+//				enabledActions.add(action);
+//		}
+//		
+//		//falls keine verzoegerungsmarken, aber sichtbar, erst verstecken
+//		if(currentHero.isVisible() && currentHero.getDelayTokens() ==0) {
+//			for(Action action : enabledActions)
+//				if(action instanceof ActionHide)
+//					resultAction = action;
+//		}
+//		//falls actionpoints > verzoegerungsmarken, dann angreifen
+//		else if(currentHero.getCurrentActionPoints() > currentHero.getDelayTokens()) {
+//			for(Action action : enabledActions)
+//				if(currentHero.getCurrentActionPoints() == 1) {
+//					if(action instanceof AbilityFlintAttackTwice)
+//						return action;
+//				}else if(action instanceof ActionAttack)
+//					resultAction = action;
+//		}
+//		//falls actionpoints <= verzoegerungsmarken, aber actionpoints >1, 
+//		//dann zufaellig angreifen oder verzoegerung abbauen
+//		else if(currentHero.getCurrentActionPoints() > 1 
+//				&& currentHero.getCurrentActionPoints() <= currentHero.getDelayTokens()) {
+//			int random = (int) (Math.random() * 2);
+//			for(Action action : enabledActions) {
+//				
+//				if(random == 0) {
+//					if(action instanceof ActionAttack)
+//						resultAction = action;
+//				}else {
+//					if(action instanceof ActionWorkOffDelay) 
+//						resultAction = action;
+//				}
+//			}				
+//		}
+//		//
+//		else {
+//			
+//		}
 		//ansonsten angreifen
 
-		return resultAction;
+//		return resultAction;
 			
 		//Old AI
 //		Action resultAction = null;
