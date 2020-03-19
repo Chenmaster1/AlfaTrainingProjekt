@@ -295,6 +295,6 @@ public class LoginPanel extends JPanel {
 	 */
 	private void switchToMainFramePanel() {
 		new MainFramePanel(frame);
-		//frame.repaint();
+		frame.repaint();
 	}
 }

@@ -5,28 +5,21 @@
  */
 package MenuGUI;
 
-import java.awt.Color;
-import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -46,14 +39,27 @@ public class InstructionPanel extends JPanel {
 	private JScrollPane scrollPaneMainCategory;
 	private JScrollPane scrollPaneSubCategory;
 	
-	DefaultListModel<String> resultList = new DefaultListModel<String>();
+	DefaultListModel<String> model = new DefaultListModel<>();
 	
 	private JList<String> listMainCatagory;
-	private JList<String> subCategory = new JList<String>(resultList);
+	private JList<String> subCategory = new JList<String>(model);
 	
 	
-	//fuer size 20 pro eintrag
-	private String[] mainCatagories = new String[] {"test1","test2","test3","test4","test5","test6"};
+	//fuer size: 20 pro eintrag
+	private String[] mainCatagories = new String[] {MyFrame.bundle.getString("instructionsAllHeroes"), 
+			MyFrame.bundle.getString("instructionsArenacards"), 
+			MyFrame.bundle.getString("instructionsGameBoard")};
+	
+	private String[] subCatagoryGameBoard = new String[] {MyFrame.bundle.getString("instructionsGameField"),
+			MyFrame.bundle.getString("instructionsTower"),
+			MyFrame.bundle.getString("instructionsHideField"),
+			MyFrame.bundle.getString("instructionsArenacard"),
+			MyFrame.bundle.getString("instructionsOverviewField"),
+			MyFrame.bundle.getString("instructionsOwnHero"),
+			MyFrame.bundle.getString("instructionsEnemies"),
+			MyFrame.bundle.getString("instructionsHeroBoard"),
+			MyFrame.bundle.getString("instructionsAttackDice"),
+			MyFrame.bundle.getString("instructionsHideDice")};
 	
 	public InstructionPanel(MyFrame frame, MainFramePanel mainFramePanel) {
 		backgroundImage = ImageLoader.getInstance().getImage(ImageName.MENU_BACKGROUND_BLURRY);
@@ -61,7 +67,7 @@ public class InstructionPanel extends JPanel {
 		this.mainFramePanel = mainFramePanel;
 		frame.setContentPane(this);
 		setLayout(null);
-		setPreferredSize(frame.getSize());
+		
 		
 		//btnBack = new MyButton(MyFrame.bundle.getString("btnCancel"), new ImageIcon(ImageLoader.getInstance().getImage(ImageName.BUTTON)));
 		btnBack = new JButton(MyFrame.bundle.getString("btnCancel"));
@@ -69,6 +75,7 @@ public class InstructionPanel extends JPanel {
 		initializeButtons();
 		initializeMainList();
 		initializeScrollPanes();
+		setPreferredSize(frame.getSize());
 		frame.pack();
 	}
 	
@@ -104,64 +111,35 @@ public class InstructionPanel extends JPanel {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				DefaultListModel<String> resultList = new DefaultListModel<String>();
+
+				
 				switch(((JList<String>) e.getSource()).getSelectedIndex()) {
-				case 0:
-					resultList.addElement("test1");
-					resultList.addElement("test1");
-					resultList.addElement("test1");
-					resultList.addElement("test1");
-					resultList.addElement("test1");
-					scrollPaneSubCategory.setSize(100, 100);
-					scrollPaneSubCategory.setVisible(true);
-					break;
-				case 1:
-					resultList.addElement("test2");
-					resultList.addElement("test2");
-					resultList.addElement("test2");
-					resultList.addElement("test2");
-					resultList.addElement("test2");
-					scrollPaneSubCategory.setSize(100, 100);
-					scrollPaneSubCategory.setVisible(true);
-					break;
-				case 2:
-					resultList.addElement("test3");
-					resultList.addElement("test3");
-					resultList.addElement("test3");
-					resultList.addElement("test3");
-					resultList.addElement("test3");
-					scrollPaneSubCategory.setSize(100, 100);
-					scrollPaneSubCategory.setVisible(true);
-					break;
-				case 3:
-					resultList.addElement("test4");
-					resultList.addElement("test4");
-					resultList.addElement("test4");
-					resultList.addElement("test4");
-					resultList.addElement("test4");
-					scrollPaneSubCategory.setSize(100, 100);
-					scrollPaneSubCategory.setVisible(true);
-					break;
-				case 4:
-					resultList.addElement("test5");
-					resultList.addElement("test5");
-					resultList.addElement("test5");
-					resultList.addElement("test5");
-					resultList.addElement("test5");
-					scrollPaneSubCategory.setSize(100, 100);
-					scrollPaneSubCategory.setVisible(true);
-					break;
-				case 5:
-					resultList.addElement("test6");
-					resultList.addElement("test6");
-					resultList.addElement("test6");
-					resultList.addElement("test6");
-					resultList.addElement("test6");
-					scrollPaneSubCategory.setSize(100, 100);
-					scrollPaneSubCategory.setVisible(true);
-					break;
-					
-				}
+
+					case 0:
+						
+						//TODO Hier namen aller Helden anzeigen und in der 2. liste anzeigen
+						model.removeAllElements();
+						scrollPaneSubCategory.setVisible(false);
+						//scrollPaneSubCategory.setSize(100, subCatagoryGameBoard.length * 20);
+						//scrollPaneSubCategory.setVisible(true);
+						break;
+					case 1:
+						//TODO Hier namen aller Arenakarten anzeigen und in der 2. liste anzeigen
+						model.removeAllElements();
+						scrollPaneSubCategory.setVisible(false);
+						//scrollPaneSubCategory.setSize(100, subCatagoryGameBoard.length * 20);
+						//scrollPaneSubCategory.setVisible(true);
+						break;
+					case 2:
+						//TODO Spielbrett anzeigen und entsprechende Felder zu auswahl stellen
+						model.removeAllElements();
+						for(int i = 0; i < subCatagoryGameBoard.length; i++)
+							model.addElement(subCatagoryGameBoard[i]);
+						scrollPaneSubCategory.setSize(100, subCatagoryGameBoard.length * 20);
+						scrollPaneSubCategory.setVisible(true);
+						break;
+					}
+				revalidate();
 			}
 		});
 		//listMainCatagory.setLocation(0,40);		
@@ -170,7 +148,7 @@ public class InstructionPanel extends JPanel {
 	
 	private void initializeScrollPanes() {
 		scrollPaneMainCategory = new JScrollPane(listMainCatagory);
-		scrollPaneMainCategory.setSize(100,120);
+		scrollPaneMainCategory.setSize(100,60);
 		scrollPaneMainCategory.setLocation(0, 40);
 		add(scrollPaneMainCategory);
 		
