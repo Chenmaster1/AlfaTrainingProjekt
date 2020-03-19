@@ -36,6 +36,7 @@ import InGameGUI.GamePanel;
 import InGameGUI.GameSidePanel;
 import InGameGUI.HeroPanelLarge;
 import InGameGUI.MapPanel;
+import SoundThread.MP3Runnable;
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
 
@@ -223,6 +224,13 @@ public class NewGamePanel extends JPanel {
 	}
 
 	private void newGameClicked() {
+		// MUKKE
+
+		new Thread(new MP3Runnable("Fight_Theme.mp3", true,
+				alfatrainingprojekt.AlfaTrainingProjekt.musicTitle.getVolume())).start();
+		
+		alfatrainingprojekt.AlfaTrainingProjekt.musicTitle.stopPlayer();
+
 		// TODO Werte auslesen und daraus Singleplayergame erstellen
 		ArrayList<Hero> gameHeroes = new ArrayList<>();
 		Hero playerHero = null;

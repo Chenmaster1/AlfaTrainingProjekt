@@ -17,7 +17,7 @@ import Database.Database;
 import Hideouts.Hideout;
 import Hideouts.HideoutType;
 import SoundThread.MainTheme;
-import SoundThread.mp3test;
+import SoundThread.MP3Runnable;
 import alfatrainingprojekt.AlfaTrainingProjekt;
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
@@ -169,7 +169,7 @@ public class MainFramePanel extends JPanel {
 	 * @author Kevin
 	 */
 	private void onCloseClicked() {
-		mp3test.stopPlayer();
+		alfatrainingprojekt.AlfaTrainingProjekt.musicTitle.stopPlayer();
 //		frame.dispose();
 		// Alles killen, nicht nur das Frame
 		System.exit(0);

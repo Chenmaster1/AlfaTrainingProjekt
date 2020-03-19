@@ -20,12 +20,15 @@ public class AbilityDahliaWhenHitGetNewHideout extends Ability {
 		super(actionPointRequired, AbilityType.REACTION,
 				MyFrame.bundle.getString("abilityDahliaWhenHitGetNewHideout_name"),
 				MyFrame.bundle.getString("abilityDahliaWhenHitGetNewHideout_description"));
+               
 	}
 
 	@Override
 	public void useAction(SingleplayerGame singleplayerGame) {
 		
                //Dahlia autoHides when hit - or rolles a hidedice
+               // !! ability is in HeroDahlia
+                
 	}
 
 	@Override
