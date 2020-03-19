@@ -17,11 +17,22 @@ public class KiLogicFlint extends KiLogic {
 	//selbst wenn verzoegerungsmarken aktiv sind
 	@Override
 	public Action chooseAction(ArrayList<Action> actions, SingleplayerGame singleplayerGame) {
-
-		//New AI
 		Action resultAction = null;
 		ArrayList<Action> enabledActions = new ArrayList<Action>();
 		Hero currentHero = singleplayerGame.getCurrentHero();
+		
+		if(currentHero.getCurrentActionPoints() == 1) {
+			for(Action action : enabledActions)
+				if(action instanceof AbilityFlintAttackTwice)
+					resultAction = action;
+		}else
+			super.chooseAction(actions, singleplayerGame);
+			
+		
+		
+		
+		//New AI
+		
 		
 		//nutzbare Actions bekommen
 		for(Action action : actions) {
@@ -62,9 +73,7 @@ public class KiLogicFlint extends KiLogic {
 		}
 		//
 		else {
-			for(Action action : enabledActions)
-				if(action instanceof AbilityFlintAttackTwice)
-					resultAction = action;
+			
 		}
 		//ansonsten angreifen
 
