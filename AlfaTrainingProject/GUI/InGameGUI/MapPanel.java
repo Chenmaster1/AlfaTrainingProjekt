@@ -2,6 +2,7 @@ package InGameGUI;
 
 import Heroes.Hero;
 import Hideouts.Hideout;
+import SoundThread.SoundController;
 import resourceLoaders.AnimationLoader;
 import resourceLoaders.AnimationName;
 import resourceLoaders.ImageLoader;
@@ -47,7 +48,7 @@ public class MapPanel extends JPanel implements Runnable {
 	private final static double AIMOVERLAY_SIZE_RELATIVE_X = 537.0 / STANDARDPANELSIZE;
 	private final static double AIMOVERLAY_SIZE_RELATIVE_Y = 748.0 / STANDARDPANELSIZE;
 
-	public final static int ANIMATIONTYPE_SCAN = 1, ANIMATIONTYPE_FIRE = 2, ANIMATIONTYPE_ELIMINATE = 3;
+	public final static int ANIMATIONTYPE_SCAN_OCCUPIED = 1, ANIMATIONTYPE_FIRE = 2, ANIMATIONTYPE_ELIMINATE = 3, ANIMATIONTYPE_SCAN_EMPTY = 4;
 
 	private Image backgroundImage;
 	private Image aimOverlay;
@@ -268,7 +269,8 @@ public class MapPanel extends JPanel implements Runnable {
 		} else if (currentAnimationFrame < (towerChargeAnimation.size() + towerFireAnimation.size())) {
 
 			switch (currentAnimationType) {
-			case ANIMATIONTYPE_SCAN:
+                        case ANIMATIONTYPE_SCAN_EMPTY:
+			case ANIMATIONTYPE_SCAN_OCCUPIED:
 				imageToDraw = towerScanAnimation.get(currentAnimationFrame - towerChargeAnimation.size());
 				break;
 			case ANIMATIONTYPE_FIRE:
@@ -327,6 +329,24 @@ public class MapPanel extends JPanel implements Runnable {
 		currentFiredAtField = firedAtField;
 
 		isAnimating = true;
+                
+                //testholger
+                    switch (currentAnimationType) {
+			case ANIMATIONTYPE_SCAN_OCCUPIED:
+				SoundController.playSound("Tower_scans_Player_gets_decloaked.mp3");
+				break;
+                        case ANIMATIONTYPE_SCAN_EMPTY:
+				SoundController.playSound("Tower_scans.mp3");
+				break;
+			case ANIMATIONTYPE_FIRE:
+				SoundController.playSound("Tower_fires.mp3");
+				break;
+			case ANIMATIONTYPE_ELIMINATE:
+				SoundController.playSound("Tower_elimnates_Field.mp3");
+				break;
+			}
+                //testende
+                
 		synchronized (this) {
 			// System.out.println("MapPanel Animation aufwecken");
 			this.notify();
