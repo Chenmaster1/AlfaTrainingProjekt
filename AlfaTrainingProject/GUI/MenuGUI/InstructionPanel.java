@@ -301,8 +301,9 @@ public class InstructionPanel extends JPanel {
 			
 			heroFrame = new JFrame();
 			heroFrame.setSize(558, 393);
-			heroFrame.setLocation(frame.getWidth()/2 - heroFrame.getWidth()/2, 
-					frame.getHeight()/2 - heroFrame.getHeight()/2);
+			heroFrame.setLocationRelativeTo(frame);
+//			heroFrame.setLocation(frame.getWidth()/2 - heroFrame.getWidth()/2, 
+//					frame.getHeight()/2 - heroFrame.getHeight()/2);
 			heroFrame.setContentPane(heroPanel);
 			heroFrame.setUndecorated(true);
 			heroFrame.setVisible(true);
