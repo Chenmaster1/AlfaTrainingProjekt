@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
 
+import java.awt.Component;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -159,8 +160,24 @@ public class InstructionPanel extends JPanel {
 						break;
 					case 1:
 						//TODO Hier namen aller Arenakarten anzeigen und in der 2. liste anzeigen
+						if(lstHeroesOrArenacards.size() >0) {
+//							for(JLabel label : lstHeroesOrArenacards)
+//								label.setVisible(false);;
+							Component[] components = getComponents();
+							int componentsCount = components.length;
+							for(int i = 0; i < componentsCount; i++) {
+								if(components[i] instanceof JLabel) {
+									remove(i);
+									remove(components[i]);
+									i--;
+									componentsCount--;
+								}
+							}
+							frame.repaint();
+							lstHeroesOrArenacards.removeAll(lstHeroesOrArenacards);
+						}
 						model.removeAllElements();
-						lstHeroesOrArenacards.removeAll(lstHeroesOrArenacards);
+						
 						scrollPaneSubCategory.setVisible(false);
 						//scrollPaneSubCategory.setSize(100, subCatagoryGameBoard.length * 20);
 						//scrollPaneSubCategory.setVisible(true);
@@ -174,6 +191,7 @@ public class InstructionPanel extends JPanel {
 						scrollPaneSubCategory.setVisible(true);
 						break;
 					}
+				
 				revalidate();
 			}
 		});
@@ -248,6 +266,7 @@ public class InstructionPanel extends JPanel {
 		}
 		int multiplierY = 0;
 		int multiplierX = 0;
+		
 		for(JLabel label : lstHeroesOrArenacards) {
 			if(!(VIEW_STARTPOINT_X + (label.getWidth() * (multiplierX+1)) > frame.getWidth())) {
 
