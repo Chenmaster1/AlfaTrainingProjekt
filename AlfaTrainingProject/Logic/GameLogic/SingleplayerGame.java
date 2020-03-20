@@ -230,8 +230,18 @@ public class SingleplayerGame implements HeroEventListener {
 	private void startGameLogic() {
 		// get Hero who does the first turn
 		int heroCount = gameData.getHeroes().size();
-		Random randomPlayer = new Random();
-		setCurrentHeroIndex(randomPlayer.nextInt(heroCount));
+		Random randomPlayerGenerator = new Random();
+		int firstPlayerIndex = randomPlayerGenerator.nextInt(heroCount);
+		setCurrentHeroIndex(firstPlayerIndex);
+
+		// Volle AP für alle NPCs, die in der ersten Runde noch vor dem Spieler dran
+		// sind (der Sichtbarkeithalber)
+
+		for (int i = firstPlayerIndex; i < heroCount - 1; i++) {
+			// Sicherheitshalber 10, damit Worok auch richtig angezeigt wird wenn von einem
+			// NPC aufgedeckt. Wird zu Beginn des Zugs mit dem richtigen Wert ersetzt.
+			gameData.getHeroes().get(i).setCurrentActionPoints(10);
+		}
 
 		while (true) {
 			if (!currentHero.isDead()) {
@@ -244,6 +254,14 @@ public class SingleplayerGame implements HeroEventListener {
 					if (gameOver) {
 						break;
 					}
+
+					// Alle NPCs auf volle AP setzen zur Sichtbarkeit
+					for (int i = 0; i < heroCount - 1; i++) {
+						// Sicherheitshalber 10, damit Worok auch richtig angezeigt wird wenn von einem
+						// NPC aufgedeckt. Wird zu Beginn des Zugs mit dem richtigen Wert ersetzt.
+						gameData.getHeroes().get(i).setCurrentActionPoints(10);
+					}
+
 				} // ki´s turn
 				else {
 
@@ -642,7 +660,6 @@ public class SingleplayerGame implements HeroEventListener {
 				} // Hero is visible
 				else {
 
-					
 					if (occupyingHero.isAttackable()) {
 						int newHitPoints = occupyingHero.getCurrentHitPoints() - 1;
 
@@ -695,7 +712,7 @@ public class SingleplayerGame implements HeroEventListener {
 				h.setAttackable(true);
 			}
 		}
-                SoundController.playSound("Sudden_Death.mp3");
+		SoundController.playSound("Sudden_Death.mp3");
 		JOptionPane.showMessageDialog(mainFrame, MyFrame.bundle.getString("suddenDeathAnnounced"));
 	}
 
