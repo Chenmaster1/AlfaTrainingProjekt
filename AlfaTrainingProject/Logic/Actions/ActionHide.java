@@ -32,41 +32,25 @@ public class ActionHide extends Action {
 	 */
 	public void useAction(Hero hero, SingleplayerGame singleplayerGame) {
 		hideHero(hero, singleplayerGame);
+		
 	}
 
+	/**
+	 * Simuliert den Versteckwurf. Ergebnis ist abhängig vom Wurf und der Art des
+	 * Geländes, auf dem der Spieler steht.
+	 * 
+	 * @param hero
+	 * @param singleplayerGame
+	 */
 	private void hideHero(Hero hero, SingleplayerGame singleplayerGame) {
-		ArrayList<Hideout> availableHideouts = new ArrayList<Hideout>();
-		ArrayList<Hero> aliveHeroes = new ArrayList<Hero>();
+
 		HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getGameData().getHideoutHero();
-
-		// availableHideouts wird mit allen noch verfügbaren Hideouts befüllt
-		for (Hideout hideout : singleplayerGame.getGameData().getHideouts()) {
-			boolean isUsed = false;
-			for (Hideout usedHideout : hideoutHeroMap.keySet()) {
-				if (hideout == usedHideout) {
-					isUsed = true;
-					break;
-				}
-
-			}
-
-			if ((!isUsed) && hideout.isActive()) {
-				availableHideouts.add(hideout);
-			}
-		}
-
-		// aliveHeroes mit allen lebenden Helden füllen
-		for (Hero heroFromList : singleplayerGame.getGameData().getHeroes()) {
-			if (!heroFromList.isDead())
-				aliveHeroes.add(heroFromList);
-		}
 
 		// HideDice benutzen
 		int rollResult = singleplayerGame.getHideDice().rollDice();
 
 		// Animation des Würfels starten
 		singleplayerGame.getGamePanel().getGameSidePanel().getPanelHideDice().setRollResult(rollResult);
-
 
 		try {
 			Thread.sleep(200);
@@ -85,52 +69,52 @@ public class ActionHide extends Action {
 		}
 		HideoutType oldHideoutType = oldHideout.getHideoutType();
 
-		// KEIN break im RESULT_RED case, weil Verstecken auch ausgeführt werden soll
 		switch (rollResult) {
 		case HideDice.RESULT_RED:
 			int additionalDelayTokens;
+			boolean hidingSuccessful;
 			switch (oldHideoutType) {
 			case WETLANDS:
 				additionalDelayTokens = 2;
-                                //happening to PanelLogHeroAction 
-                                singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("recieveToken") + " " +Integer.toString(additionalDelayTokens));
+				hidingSuccessful = true;
+				// happening to PanelLogHeroAction
+				singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(
+						MyFrame.bundle.getString("recieveToken") + " " + Integer.toString(additionalDelayTokens));
 				break;
 			case FOREST:
 				additionalDelayTokens = 1;
-                                //happening to PanelLogHeroAction 
-                                singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("recieveToken") + " " +Integer.toString(additionalDelayTokens));
+				hidingSuccessful = true;
+				// happening to PanelLogHeroAction
+				singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(
+						MyFrame.bundle.getString("recieveToken") + " " + Integer.toString(additionalDelayTokens));
 				break;
 			case DESERT:
 				additionalDelayTokens = 0;
-                                //happening to PanelLogHeroAction 
-                                singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("recieveToken") + " " +Integer.toString(additionalDelayTokens));
+				hidingSuccessful = false;
+				// Nur den Fehlschlag im Log verzeichnen
+				singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction()
+						.setTextAreaLogHeroAction(MyFrame.bundle.getString("hideRollFailed"));
 				break;
 			default:
 				additionalDelayTokens = -1;
+				hidingSuccessful = false;
 				break;
 			}
 			hero.addDelayTokens(additionalDelayTokens);
+			if (hidingSuccessful) {
+				freeHideHero(hero, singleplayerGame);
+			}
+
+			break;
 		case HideDice.RESULT_GREEN:
-			// Neu verstecken
-			hero.setVisible(false);
-                        //happening to PanelLogHeroAction 
-                        singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("getNewHideout"));
 
-			int newHideoutNumber = (int) (Math.random() * availableHideouts.size());
-			Hideout newHideout = availableHideouts.get(newHideoutNumber);
-			hideoutHeroMap.remove(oldHideout);
-			hideoutHeroMap.put(newHideout, hero);
+			freeHideHero(hero, singleplayerGame);
 
-			int oldHideoutNumber = singleplayerGame.getGameData().getHideouts().indexOf(oldHideout);
-			singleplayerGame.getGamePanel().getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_ELIMINATE,
-					oldHideoutNumber);
-			
-			oldHideout.setActive(false);
-			
 			break;
 		case HideDice.RESULT_NOTHING:
-                    //happening to PanelLogHeroAction 
-                        singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(MyFrame.bundle.getString("hideRollFailed"));
+			// Nur den Fehlschlag im Log verzeichnen
+			singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction()
+					.setTextAreaLogHeroAction(MyFrame.bundle.getString("hideRollFailed"));
 			break;
 		}
 
@@ -163,20 +147,13 @@ public class ActionHide extends Action {
 		}
 
 	}
-        
-        
-        
-        
-        
-        
-        
-        /**
-	 * get a free hide
-	 * Dahlia
+
+	/**
+	 * Sucht dem gegebenen Hero ein neues Versteck und bewegt ihn dort hin, setzt
+	 * ihn unsichtbar, startet die Animation zur Zerstörung seines bisherigen Feldes
 	 */
-        public void freeHideHero(Hero hero, SingleplayerGame singleplayerGame) {
+	public void freeHideHero(Hero hero, SingleplayerGame singleplayerGame) {
 		ArrayList<Hideout> availableHideouts = new ArrayList<Hideout>();
-		ArrayList<Hero> aliveHeroes = new ArrayList<Hero>();
 		HashMap<Hideout, Hero> hideoutHeroMap = singleplayerGame.getGameData().getHideoutHero();
 
 		// availableHideouts wird mit allen noch verfügbaren Hideouts befüllt
@@ -195,15 +172,6 @@ public class ActionHide extends Action {
 			}
 		}
 
-		// aliveHeroes mit allen lebenden Helden füllen
-		for (Hero heroFromList : singleplayerGame.getGameData().getHeroes()) {
-			if (!heroFromList.isDead())
-				aliveHeroes.add(heroFromList);
-		}
-
-		// HideDice benutzen
-		int rollResult = RESULT_GREEN;
-
 		Hideout oldHideout = null;
 		for (Hideout hideout : hideoutHeroMap.keySet()) {
 			if (hideoutHeroMap.get(hideout).equals(hero)) {
@@ -211,19 +179,22 @@ public class ActionHide extends Action {
 				break;
 			}
 		}
-		
-			hero.setVisible(false);
-			oldHideout.setActive(false);
 
-			int newHideoutNumber = (int) (Math.random() * availableHideouts.size());
-			Hideout newHideout = availableHideouts.get(newHideoutNumber);
-			hideoutHeroMap.remove(oldHideout);
-			hideoutHeroMap.put(newHideout, hero);
-			
-		}
+//		 happening to PanelLogHeroAction
+		singleplayerGame.getGamePanel().getGameSidePanel().getPanelLogHeroAction()
+				.setTextAreaLogHeroAction(MyFrame.bundle.getString("getNewHideout"));
+
+		hero.setVisible(false);
+		int oldHideoutNumber = singleplayerGame.getGameData().getHideouts().indexOf(oldHideout);
+		singleplayerGame.getGamePanel().getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_ELIMINATE,
+				oldHideoutNumber);
+		oldHideout.setActive(false);
+
+		int newHideoutNumber = (int) (Math.random() * availableHideouts.size());
+		Hideout newHideout = availableHideouts.get(newHideoutNumber);
+		hideoutHeroMap.remove(oldHideout);
+		hideoutHeroMap.put(newHideout, hero);
 
 	}
 
-	
-
-
+}
