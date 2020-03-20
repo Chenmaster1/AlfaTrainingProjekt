@@ -29,6 +29,7 @@ public class MP3Runnable implements Runnable
     public MP3Runnable(String pathtoMusic, boolean isRepeated, int volume) {
 		this(pathtoMusic,isRepeated);
 		this.volume = volume;
+                
 	}
 
 	@Override
@@ -42,6 +43,7 @@ public class MP3Runnable implements Runnable
             
              player.play();
             player.setVolume(volume);
+            
 
         }
         catch (Exception ex)
@@ -58,6 +60,7 @@ public class MP3Runnable implements Runnable
     {
     	this.volume = volume;
         player.setVolume(volume);
+      
 
     }
 
@@ -71,6 +74,7 @@ public class MP3Runnable implements Runnable
     public void setVolumeInitialize(int volumeInitialize)
     {
         volume = volumeInitialize;
+        
 
     }
 
@@ -81,7 +85,9 @@ public class MP3Runnable implements Runnable
     }
 
 	public int getVolume() {
+            
 		return volume;
+                
 	}
 
 

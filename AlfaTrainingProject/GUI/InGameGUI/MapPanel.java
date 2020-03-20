@@ -43,7 +43,7 @@ public class MapPanel extends JPanel implements Runnable {
 
 	private final static double ANIMATION_SCALE = 1.0 / STANDARDPANELSIZE;
 	private final static double ANIMATION_SCALE_BEAM = 1.2 / STANDARDPANELSIZE;
-	private final static int ANIMATION_FRAME_PERIOD = GamePanel.ANIMATION_FRAME_PERIOD;
+	private final static int ANIMATION_FRAME_PERIOD = GamePanel.ANIMATION_FRAME_PERIOD_MAPPANEL;
 
 	private final static double AIMOVERLAY_SIZE_RELATIVE_X = 537.0 / STANDARDPANELSIZE;
 	private final static double AIMOVERLAY_SIZE_RELATIVE_Y = 748.0 / STANDARDPANELSIZE;

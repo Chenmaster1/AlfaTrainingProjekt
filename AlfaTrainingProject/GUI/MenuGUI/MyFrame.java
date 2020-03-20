@@ -39,8 +39,8 @@ public class MyFrame extends JFrame
      * Yovo
      */
     public static String path;
-    public static String language = "/Bundle_DE", volume = "50";
-    public static Boolean volumFromFile = true;
+    public static String language = "/Bundle_DE", volume = "50", effectVolume = "60";
+    public static Boolean volumFromFile = true, effectVolumeFromFile = true;
 
 
     // get filepath
@@ -85,6 +85,12 @@ public class MyFrame extends JFrame
                 if (language.equalsIgnoreCase("english"))
                 {
                     language = "/Bundle_EN";
+                }
+                
+                if (effectVolumeFromFile)
+                {
+                    effectVolume = br.readLine();
+                    SoundController.setVolumeSounds(Integer.parseInt(effectVolume));
                 }
             }
             catch (Exception e)
