@@ -8,21 +8,38 @@ package MenuGUI;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
+
+import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.GridLayout;
+
 import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import Heroes.Hero;
+import Heroes.HeroBalthur;
+import Heroes.HeroDahlia;
+import Heroes.HeroFlint;
+import Heroes.HeroTolpanLongbeard;
+import Heroes.HeroWorok;
+import InGameGUI.HeroPanelLarge;
 
 /**
  *
@@ -31,6 +48,11 @@ import javax.swing.event.ListSelectionListener;
 @SuppressWarnings("serial")
 public class InstructionPanel extends JPanel {
 
+	private final int VIEW_STARTPOINT_X = 220;
+	private final int VIEW_STARTPOINT_Y = 0;
+	
+	private boolean frameOpened = false;
+	
 	private MyFrame frame;
 	MainFramePanel mainFramePanel;
 	private Image backgroundImage;
@@ -44,6 +66,14 @@ public class InstructionPanel extends JPanel {
 	private JList<String> listMainCatagory;
 	private JList<String> subCategory = new JList<String>(model);
 	
+	//private JPanel heroPanel;
+	//private JPanel arenacardsPanel;
+	
+	private HeroPanelLarge heroPanel;
+	
+	private JFrame heroFrame;
+	
+	ArrayList<JLabel> lstHeroesOrArenacards = new ArrayList<JLabel>();
 	
 	//fuer size: 20 pro eintrag
 	private String[] mainCatagories = new String[] {MyFrame.bundle.getString("instructionsAllHeroes"), 
@@ -119,6 +149,10 @@ public class InstructionPanel extends JPanel {
 						
 						//TODO Hier namen aller Helden anzeigen und in der 2. liste anzeigen
 						model.removeAllElements();
+						lstHeroesOrArenacards.removeAll(lstHeroesOrArenacards);
+						//Hier alle Helden einfügen
+						showAllHeroes();
+						
 						scrollPaneSubCategory.setVisible(false);
 						//scrollPaneSubCategory.setSize(100, subCatagoryGameBoard.length * 20);
 						//scrollPaneSubCategory.setVisible(true);
@@ -126,6 +160,7 @@ public class InstructionPanel extends JPanel {
 					case 1:
 						//TODO Hier namen aller Arenakarten anzeigen und in der 2. liste anzeigen
 						model.removeAllElements();
+						lstHeroesOrArenacards.removeAll(lstHeroesOrArenacards);
 						scrollPaneSubCategory.setVisible(false);
 						//scrollPaneSubCategory.setSize(100, subCatagoryGameBoard.length * 20);
 						//scrollPaneSubCategory.setVisible(true);
@@ -162,92 +197,134 @@ public class InstructionPanel extends JPanel {
 		frame.setContentPane(mainFramePanel);
 		frame.repaint();
 	}
-//	private MainFramePanel parentPanel;
-//	private JFrame frame;
-//	private Image backgroundImage;
-//
-//	private JLabel settingLbl, volumeLbl;
-//	private JSlider volumeSlider;
-//	private JLabel languageLbl;
-//	private JButton langGerBtn, langEngBtn;
-//	private JButton cancelBtn;
-//	private JButton saveBtn;
-//
-//	private Boolean createFile = true;
-//	private JList themenAuswahl;
-//	private JList unterkategorienAuswahl;
-//	private JPanel listPanel;
-//	private MyBildPanel detailsPanel;
-//	private String[] aktionenKategorien;
-//
-//	private String[] heldenKategorien;
-//	private String[] arenaKategorien;
-//	private String[] heldenTafel;
-//	private String[] heldenTafelKategorien;
-//
-//	public InstructionPanel(MyFrame frame, MainFramePanel mainFramePanel) {
-//
-//		this.frame = frame;
-//		setLayout(new BorderLayout());
-//		frame.setContentPane(this);
-//
-//		this.setPreferredSize(new Dimension(1920, 1080));
-//
-//		detailsPanel = new MyBildPanel();
-//		detailsPanel.setBounds(340, 180, 550, 500);
-//		detailsPanel.setBackground(Color.gray);
-//
-//		listPanel = new JPanel();
-//		listPanel.setBounds(40, 180, 300, 500);
-//		listPanel.setBackground(Color.yellow);
-//
-//		String kategorien[] = { "Die Heldentafel", "Die Arena", "Helden", "Aktionen", "Verstecke", "Spielegeln" };
-//		aktionenKategorien = new String[] { "angreifen", "verstecken", "erforschen", "verzögerug abbauen" };
-//		heldenKategorien = new String[] { "Fähigkeiten" };
-//		heldenTafelKategorien = new String[] { "Aktionpunkte", "Ausdauer", "Geschichte des helden", "Spielstärke" };
-//		arenaKategorien = new String[] { "Verstecke", "Uralte Machine" };
-//
-//		// JList mit Einträgen wird erstellt
-//		themenAuswahl = new JList(kategorien);
-//		unterkategorienAuswahl = new JList(aktionenKategorien);
-//
-//		// JList wird Panel hinzugefügt
-//		listPanel.add(themenAuswahl);
-//		listPanel.add(unterkategorienAuswahl, BorderLayout.WEST);
-//		themenAuswahl.addListSelectionListener(new MyLiSeLi());
-//
-//		this.add(detailsPanel, BorderLayout.CENTER);
-//		this.add(listPanel, BorderLayout.WEST);
-//
-//		frame.pack();
-//	}
-//
-//	private class MyLiSeLi implements ListSelectionListener {
-//
-//		@Override
-//		public void valueChanged(ListSelectionEvent lse) {
-//			JList source = (JList) lse.getSource();
-//			String selected = source.getSelectedValue().toString();
-//
-//			if (selected == "Aktionen") {
-//				unterkategorienAuswahl.setListData(aktionenKategorien);
-//
-//			}
-//
-//			if (selected.equals("Helden")) {
-//
-//				detailsPanel.displayHeroLargePanel();
-//				detailsPanel.repaint();
-//				unterkategorienAuswahl.setListData(heldenKategorien);
-//			}
-//
-//			if (selected == "Die Heldentafel")
-//				unterkategorienAuswahl.setListData(heldenTafelKategorien);
-//
-//			if (selected == "Die Arena")
-//				unterkategorienAuswahl.setListData(arenaKategorien);
-//		}
-//
-//	}
+	
+	private void showAllHeroes() {
+		ArrayList<Hero> allHeroes = new ArrayList<Hero>();
+		allHeroes.add(new HeroBalthur());
+		allHeroes.add(new HeroDahlia());
+		allHeroes.add(new HeroFlint());
+		allHeroes.add(new HeroTolpanLongbeard());
+		allHeroes.add(new HeroWorok());
+		
+		for(Hero hero : allHeroes) {
+			JLabel label = new JLabel(hero.getName());
+			lstHeroesOrArenacards.add(label);
+			ImageIcon ii = new ImageIcon(hero.getAvatar());
+			label.setIcon(ii);
+			label.setSize(ii.getIconWidth(), ii.getIconHeight());
+			label.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					onLabelHeroClicked(((JLabel) e.getSource()).getText(), allHeroes);
+				}
+			});
+			//label.setFocusable(true);
+			
+		}
+		int multiplierY = 0;
+		int multiplierX = 0;
+		for(JLabel label : lstHeroesOrArenacards) {
+			if(!(VIEW_STARTPOINT_X + (label.getWidth() * (multiplierX+1)) > frame.getWidth())) {
 
+				label.setLocation(VIEW_STARTPOINT_X + label.getWidth() * multiplierX, VIEW_STARTPOINT_Y + label.getHeight() *  multiplierY);
+				add(label);
+				multiplierX++;
+			}else {
+				multiplierY++;
+				multiplierX = 0;
+				label.setLocation(VIEW_STARTPOINT_X + label.getWidth() * multiplierX, VIEW_STARTPOINT_Y + label.getHeight() *  multiplierY);
+				add(label);
+				
+			}
+
+		}
+		repaint();
+	}
+	
+	private void onLabelHeroClicked(String heroName, ArrayList<Hero> heroes) {
+		
+		if(!frameOpened) {
+			Hero selectedHero = null;
+			for(Hero hero : heroes) {
+				if(hero.getName().equals(heroName)) {
+					selectedHero = hero;
+				}
+			}
+			
+			heroPanel = new HeroPanelLarge(selectedHero);
+			
+			heroPanel.setSize(558, 393);
+			
+			heroFrame = new JFrame();
+			heroFrame.setSize(558, 393);
+			heroFrame.setLocation(frame.getWidth()/2 - heroFrame.getWidth()/2, 
+					frame.getHeight()/2 - heroFrame.getHeight()/2);
+			heroFrame.setContentPane(heroPanel);
+			heroFrame.setUndecorated(true);
+			heroFrame.setVisible(true);
+			
+			frame.revalidate();
+			frame.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					heroFrame.dispose();
+					frameOpened = false;
+					frame.removeMouseListener(frame.getMouseListeners()[0]);
+				}
+			});
+			frameOpened = true;
+		}
+		
+	}
+	
 }
