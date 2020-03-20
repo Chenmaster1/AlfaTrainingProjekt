@@ -694,7 +694,7 @@ public class SingleplayerGame implements HeroEventListener {
 			h.setAttackable(true);
 
 		}
-
+                SoundController.playSound("Sudden_Death.mp3");
 		JOptionPane.showMessageDialog(mainFrame, MyFrame.bundle.getString("suddenDeathAnnounced"));
 	}
 
