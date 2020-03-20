@@ -44,7 +44,7 @@ public class AttackDicePanel extends JPanel implements Runnable {
 	private static final double TOWER_CARD_SIZE_RELATIVE_X = 0.4;
 	private static final double TOWER_CARD_SIZE_RELATIVE_Y = 1.0;
 
-	private final static int ANIMATION_FRAME_PERIOD = GamePanel.ANIMATION_FRAME_PERIOD;
+	private final static int ANIMATION_FRAME_PERIOD = GamePanel.ANIMATION_FRAME_PERIOD_DICEPANELS;
 
 	private ArrayList<Image> animationImages;
 	private Image towerImage;

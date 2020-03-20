@@ -390,7 +390,7 @@ public class SingleplayerGame implements HeroEventListener {
 
 			// KiLogic des Heros nach Entscheidung fragen
 			Action currentAction = currentHero.getKiLogic().chooseAction(heroActionsLists.get(currentHeroIndex), this);
-			
+
 			// Entsprechend AP reduzieren, Reduktion anzeigen und dann
 			// Aktion ausführen
 			decreaseCurrentActionPointsBy(currentAction.getActionPointsRequired());
@@ -633,20 +633,21 @@ public class SingleplayerGame implements HeroEventListener {
 			if (occupyingHero != null) {
 				// Hero is detected / unveiled
 				if (!occupyingHero.isVisible()) {
-					gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN_OCCUPIED, finalRolledAttackField);
+					gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_SCAN_OCCUPIED,
+							finalRolledAttackField);
 					// happening to PanelLogHeroAction
 					gamePanel.getGameSidePanel().getPanelLogHeroAction().setTextAreaLogHeroAction(
 							occupyingHero.getName() + " " + MyFrame.bundle.getString("heroUnveiled"));
 					occupyingHero.setVisible(true);
-				} // Hero is hit
+				} // Hero is visible
 				else {
 
+					
 					if (occupyingHero.isAttackable()) {
 						int newHitPoints = occupyingHero.getCurrentHitPoints() - 1;
 
-						
-						// check if hero died / disable field
-						if (newHitPoints <=0) {
+						// check if hero will die / disable field
+						if (newHitPoints <= 0) {
 							gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_ELIMINATE,
 									finalRolledAttackField);
 							gameData.getHideouts().get(finalRolledAttackField).setActive(false);
@@ -664,12 +665,11 @@ public class SingleplayerGame implements HeroEventListener {
 						if (!suddenDeathActive) {
 							occupyingHero.setAttackable(false);
 						}
-						
+
 						occupyingHero.setCurrentHitPoints(newHitPoints);
-					}
-					else
-					{
-						//Held im Feld, aber nicht verwundbar
+					} else {
+						// Held im Feld, aber nicht verwundbar
+						gamePanel.getMapPanel().startAnimation(MapPanel.ANIMATIONTYPE_FIRE, finalRolledAttackField);
 					}
 
 				}
@@ -691,10 +691,11 @@ public class SingleplayerGame implements HeroEventListener {
 
 		// Helden sofort verwundbar machen
 		for (Hero h : gameData.getHeroes()) {
-			h.setAttackable(true);
-
+			if (!h.isDead()) {
+				h.setAttackable(true);
+			}
 		}
-
+                SoundController.playSound("Sudden_Death.mp3");
 		JOptionPane.showMessageDialog(mainFrame, MyFrame.bundle.getString("suddenDeathAnnounced"));
 	}
 
@@ -741,7 +742,7 @@ public class SingleplayerGame implements HeroEventListener {
 		}
 		JOptionPane.showMessageDialog(mainFrame, message);
 		mainFrame.setContentPane(mainFramePanel);
-                SoundController.setBackgroundMusic("Intro_Main.mp3");
+		SoundController.setBackgroundMusic("Intro_Main.mp3");
 //		mainFrame.repaint();
 	}
 

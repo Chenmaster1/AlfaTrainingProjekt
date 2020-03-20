@@ -31,7 +31,6 @@ public class KiLogicFlint extends KiLogic {
 			for (Action action : enabledActions) {
 				if (action instanceof AbilityFlintAttackTwice) {
 					resultAction = action;
-					System.out.println("JA");
 				}
 			}
 		} else
