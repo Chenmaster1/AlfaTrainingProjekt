@@ -1,9 +1,11 @@
 package SoundThread;
 
+import MenuGUI.MyFrame;
+
 public class SoundController {
 
     private static int volumeBackgroundMusic;
-    private static int volumeSounds = 50;
+    private static int volumeSounds = 33;
 
     public static MP3Runnable musicTitle;
     // "Intro_Main.mp3"
@@ -13,7 +15,7 @@ public class SoundController {
             musicTitle.stopPlayer();
         }
         if (pathtoMusic != null) {
-            musicTitle = new MP3Runnable(pathtoMusic, true, volumeBackgroundMusic);
+            musicTitle = new MP3Runnable(pathtoMusic, true, Integer.parseInt(MyFrame.volume));
             new Thread(musicTitle).start();
         } else {
             musicTitle.stopPlayer();
@@ -22,8 +24,8 @@ public class SoundController {
     }
 
     public static void playSound(String pathtoSound) {
-        new Thread(new MP3Runnable(pathtoSound, false, volumeSounds)).start();
-
+        new Thread(new MP3Runnable(pathtoSound, false, Integer.parseInt(MyFrame.effectVolume))).start();
+        
     }
 
     public static void setVolumeBackgroundMusic(int newVolume) {
@@ -35,7 +37,7 @@ public class SoundController {
     }
 
     public static void setVolumeSounds(int newVolume) {
-        volumeSounds = newVolume;
+        MyFrame.effectVolume = Integer.toString(newVolume);
     }
 
     public static int getVolumeBackgroundMusic() {
@@ -43,6 +45,6 @@ public class SoundController {
     }
 
     public static int getVolumeSounds() {
-        return volumeSounds;
+        return Integer.parseInt(MyFrame.effectVolume);
     }
 }

@@ -49,8 +49,8 @@ public class SettingsPanel extends JPanel
     private JFrame frame;
     private Image backgroundImage;
 
-    private JLabel settingLbl, volumeLbl;
-    private JSlider volumeSlider;
+    private JLabel settingLbl, volumeLbl, effectVolumeLbl;
+    private JSlider volumeSlider, effectVolumeSlider;
     private JLabel languageLbl;
     private JButton langGerBtn, langEngBtn;
     private JButton cancelBtn;
@@ -77,6 +77,9 @@ public class SettingsPanel extends JPanel
 
         volumeLbl = new JLabel(MyFrame.bundle.getString("volumeLbl"));
         volumeSlider = new JSlider();
+        
+        effectVolumeLbl = new JLabel(MyFrame.bundle.getString("effectVolumeLbl"));
+        effectVolumeSlider = new JSlider();
 
         languageLbl = new JLabel(MyFrame.bundle.getString("languageLbl"));
         langGerBtn = new JButton(MyFrame.bundle.getString("langGerBtn"));
@@ -133,13 +136,13 @@ public class SettingsPanel extends JPanel
     private void fillPanel()
     {
         setSize(frame.getSize());
-        settingLbl.setBounds(getWidth() / 2 - 300, 400, 600, 50);
+        settingLbl.setBounds(getWidth() / 2 - 300, 200, 600, 50);
         settingLbl.setBackground(Color.lightGray);
         settingLbl.setOpaque(true);
         settingLbl.setHorizontalAlignment((int) CENTER_ALIGNMENT);
         add(settingLbl);
 
-        volumeLbl.setBounds(getWidth() / 2 - 300, 500, 600, 50);
+        volumeLbl.setBounds(getWidth() / 2 - 300, 300, 600, 50);
         volumeLbl.setBackground(Color.lightGray);
         volumeLbl.setOpaque(true);
         volumeLbl.setHorizontalAlignment((int) CENTER_ALIGNMENT);
@@ -153,7 +156,7 @@ public class SettingsPanel extends JPanel
         volumeSlider.setMajorTickSpacing(25);
         volumeSlider.setPaintTicks(true);
         volumeSlider.setPaintLabels(true);
-        volumeSlider.setBounds(getWidth() / 2 - 300, 600, 600, 100);
+        volumeSlider.setBounds(getWidth() / 2 - 300, 350, 600, 100);
         add(volumeSlider);
         volumeSlider.addChangeListener(new ChangeListener()
         {
@@ -172,15 +175,53 @@ public class SettingsPanel extends JPanel
 
 
         });
+        
+        
+        effectVolumeLbl.setBounds(getWidth() / 2 - 300, 500, 600, 50);
+        effectVolumeLbl.setBackground(Color.lightGray);
+        effectVolumeLbl.setOpaque(true);
+        effectVolumeLbl.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+        add(effectVolumeLbl);
+
+        // Volume controll over changelistener ->SoundThread.mp3test.setVolume(volumeSlider.getValue());
+        effectVolumeSlider.setMinimum(0);
+        effectVolumeSlider.setMaximum(100);
+        effectVolumeSlider.setValue(Integer.parseInt(MyFrame.effectVolume));
+        effectVolumeSlider.setMinorTickSpacing(10);
+        effectVolumeSlider.setMajorTickSpacing(25);
+        effectVolumeSlider.setPaintTicks(true);
+        effectVolumeSlider.setPaintLabels(true);
+        effectVolumeSlider.setBounds(getWidth() / 2 - 300, 550, 600, 100);
+        add(effectVolumeSlider);
+        effectVolumeSlider.addChangeListener(new ChangeListener()
+        {
+            @Override
+            public void stateChanged(ChangeEvent ce)
+            {
+                if (ce.getSource() == effectVolumeSlider)
+                {
+                    SoundController.setVolumeSounds(effectVolumeSlider.getValue());
+                    MyFrame.effectVolume= Integer.toString(effectVolumeSlider.getValue());
+                    MyFrame.effectVolumeFromFile = false;
+                   SoundController.setVolumeSounds(effectVolumeSlider.getValue());
+                }
+            }
+
+
+        });
+        
+        
+        
+        
 
         // Language controll over actionPerformed -> save to file 
-        languageLbl.setBounds(getWidth() / 2 - 300, 750, 600, 50);
+        languageLbl.setBounds(getWidth() / 2 - 300, 700, 600, 50);
         languageLbl.setBackground(Color.lightGray);
         languageLbl.setOpaque(true);
         languageLbl.setHorizontalAlignment((int) CENTER_ALIGNMENT);
         add(languageLbl);
 
-        langGerBtn.setBounds(getWidth() / 2 - 105, 820, 100, 30);
+        langGerBtn.setBounds(getWidth() / 2 - 105, 750, 100, 30);
         langGerBtn.addActionListener(new ActionListener()
         {
             @Override
@@ -193,7 +234,7 @@ public class SettingsPanel extends JPanel
         });
         add(langGerBtn);
 
-        langEngBtn.setBounds(getWidth() / 2 + 5, 820, 100, 30);
+        langEngBtn.setBounds(getWidth() / 2 + 5, 750, 100, 30);
         langEngBtn.addActionListener(new ActionListener()
         {
             @Override
@@ -207,7 +248,7 @@ public class SettingsPanel extends JPanel
         add(langEngBtn);
 
         // cancel and save button 
-        cancelBtn.setBounds(getWidth() / 2 - 105, 900, 100, 30);
+        cancelBtn.setBounds(getWidth() / 2 - 105, 850, 100, 30);
         cancelBtn.addActionListener(new ActionListener()
         {
 
@@ -221,7 +262,7 @@ public class SettingsPanel extends JPanel
         });
         add(cancelBtn);
 
-        saveBtn.setBounds(getWidth() / 2 + 5, 900, 100, 30);
+        saveBtn.setBounds(getWidth() / 2 + 5, 850, 100, 30);
         saveBtn.addActionListener(new ActionListener()
         {
             @Override
@@ -271,9 +312,9 @@ public class SettingsPanel extends JPanel
                 }
 
                 FileWriter fw = new FileWriter(MyFrame.path + "\\hota_setting.txt");
-                fw.write(volumeSlider.getValue() + "\n" + MyFrame.language);
+                fw.write(volumeSlider.getValue() + "\n" + MyFrame.language + "\n" + effectVolumeSlider.getValue());
                 fw.close();
-              
+               
 
             }
             catch (Exception e)
@@ -296,7 +337,7 @@ public class SettingsPanel extends JPanel
              try
             {
                 FileWriter fw = new FileWriter(MyFrame.path + "\\hota_setting.txt");
-                fw.write(volumeSlider.getValue() + "\n" + MyFrame.language);
+                fw.write(volumeSlider.getValue() + "\n" + MyFrame.language + "\n" + effectVolumeSlider.getValue());
                 fw.close();
             }
             catch (Exception e)

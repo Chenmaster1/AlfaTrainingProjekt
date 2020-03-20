@@ -753,11 +753,15 @@ public class SingleplayerGame implements HeroEventListener {
 	private void backToMainMenu(boolean isWon) {
 		String message;
 		if (isWon) {
-			message = "Du hast gewonnen";
+                        SoundController.setBackgroundMusic("Player_Wins.mp3");
+                        JOptionPane.showMessageDialog(mainFrame, MyFrame.bundle.getString("PlayerWins"));
+			//message = "Du hast gewonnen";
 		} else {
-			message = "Du hast verloren";
+                        SoundController.setBackgroundMusic("Player_Lost.mp3");
+                        JOptionPane.showMessageDialog(mainFrame, MyFrame.bundle.getString("PlayerLost"));
+			//message = "Du hast verloren";
 		}
-		JOptionPane.showMessageDialog(mainFrame, message);
+		//JOptionPane.showMessageDialog(mainFrame, message);
 		mainFrame.setContentPane(mainFramePanel);
 		SoundController.setBackgroundMusic("Intro_Main.mp3");
 //		mainFrame.repaint();
