@@ -117,7 +117,7 @@ public class MyFrame extends JFrame
                 }
 
                 FileWriter fw = new FileWriter(MyFrame.path + "\\hota_setting.txt");
-                fw.write("50" + "\n" + "/Bundle_DE");
+                fw.write("50" + "\n" + "/Bundle_DE"+ "\n" + "60");
                 fw.close();
                 language = "/Bundle_DE";
                 SoundController.setVolumeBackgroundMusic(50);
