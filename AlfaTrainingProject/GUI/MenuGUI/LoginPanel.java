@@ -68,6 +68,7 @@ public class LoginPanel extends JPanel {
 		this.frame = frame;
 		setLayout(null);
 		frame.setContentPane(this);
+//		backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Images/BackGround_FullScreenBlurred.png")).getImage();
 		backgroundImage = ImageLoader.getInstance().getImage(ImageName.MENU_BACKGROUND_BLURRY);
     	boolean exists = false;
     	
@@ -86,6 +87,7 @@ public class LoginPanel extends JPanel {
     	} catch(Throwable t) {
     	    t.printStackTrace();
     	}
+    	ImageLoader.getInstance();
 	}
 
 	@Override
@@ -142,7 +144,7 @@ public class LoginPanel extends JPanel {
 		add(txtPassword);
 
 		ImageIcon buttonImageIcon = new ImageIcon(ImageLoader.getInstance().getImage(ImageName.BUTTON));
-		
+//		ImageIcon buttonImageIcon = new ImageIcon(getClass().getClassLoader().getResource("Images/Button.png"));
 				
 		btnRegister = new MyButton(MyFrame.bundle.getString("btnRegister"), buttonImageIcon);
 		addButton(btnRegister, frame.getWidth() / 2 - 200 - 5, frame.getHeight() / 2 + 45, new ActionListener() {

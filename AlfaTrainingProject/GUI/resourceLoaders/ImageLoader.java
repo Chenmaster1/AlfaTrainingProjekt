@@ -107,7 +107,7 @@ public class ImageLoader {
         images[ImageName.AVATAR_WOROK_DEACTIVATED.ordinal()] = new ImageIcon(
         		getClass().getClassLoader().getResource("Hero_Card/Deactivated_Avatar_Worok.png")).getImage();
         images[ImageName.MAPICON_WOROK.ordinal()] = new ImageIcon(
-        		getClass().getClassLoader().getResource("Gameboard/Spiel_Avatar_WOROK.png")).getImage();
+        		getClass().getClassLoader().getResource("Gameboard/Spiel_Avatar_Worok.png")).getImage();
         images[ImageName.GRAVESTONE_WOROK.ordinal()] = new ImageIcon(
         		getClass().getClassLoader().getResource("Gameboard/dead_worok.png")).getImage();
         
