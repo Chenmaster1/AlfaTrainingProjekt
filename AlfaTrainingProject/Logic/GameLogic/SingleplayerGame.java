@@ -245,7 +245,11 @@ public class SingleplayerGame implements HeroEventListener {
 
 		while (true) {
 			if (!currentHero.isDead()) {
-				currentHero.setAttackable(true);
+				for (Hero h : gameData.getHeroes()) {
+					if (!h.isDead()) {
+						h.setAttackable(true);
+					}
+				}
 				// player´s turn
 				if (currentHero.isPlayerControlled()) {
 
@@ -259,7 +263,9 @@ public class SingleplayerGame implements HeroEventListener {
 					for (int i = 0; i < heroCount - 1; i++) {
 						// Sicherheitshalber 10, damit Worok auch richtig angezeigt wird wenn von einem
 						// NPC aufgedeckt. Wird zu Beginn des Zugs mit dem richtigen Wert ersetzt.
-						gameData.getHeroes().get(i).setCurrentActionPoints(10);
+						if (!gameData.getHeroes().get(i).isDead()) {
+							gameData.getHeroes().get(i).setCurrentActionPoints(10);
+						}
 					}
 
 				} // ki´s turn
@@ -753,15 +759,15 @@ public class SingleplayerGame implements HeroEventListener {
 	private void backToMainMenu(boolean isWon) {
 		String message;
 		if (isWon) {
-                        SoundController.setBackgroundMusic("Player_Wins.mp3");
-                        JOptionPane.showMessageDialog(mainFrame, MyFrame.bundle.getString("PlayerWins"));
-			//message = "Du hast gewonnen";
+			SoundController.setBackgroundMusic("Player_Wins.mp3");
+			JOptionPane.showMessageDialog(mainFrame, MyFrame.bundle.getString("PlayerWins"));
+			// message = "Du hast gewonnen";
 		} else {
-                        SoundController.setBackgroundMusic("Player_Lost.mp3");
-                        JOptionPane.showMessageDialog(mainFrame, MyFrame.bundle.getString("PlayerLost"));
-			//message = "Du hast verloren";
+			SoundController.setBackgroundMusic("Player_Lost.mp3");
+			JOptionPane.showMessageDialog(mainFrame, MyFrame.bundle.getString("PlayerLost"));
+			// message = "Du hast verloren";
 		}
-		//JOptionPane.showMessageDialog(mainFrame, message);
+		// JOptionPane.showMessageDialog(mainFrame, message);
 		mainFrame.setContentPane(mainFramePanel);
 		SoundController.setBackgroundMusic("Intro_Main.mp3");
 //		mainFrame.repaint();
