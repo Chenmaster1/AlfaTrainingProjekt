@@ -2,15 +2,8 @@ package SoundThread;
 
 import jaco.mp3.player.MP3Player;
 
-import java.io.File;
-import java.net.URL;
-
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-
-
 /**
- * Eine Testklasse für mp3 & mp4
+ * Eine Testklasse fï¿½r mp3 & mp4
  */
 public class MP3Runnable implements Runnable
 {
@@ -40,11 +33,8 @@ public class MP3Runnable implements Runnable
         {
             player.setRepeat(isRepeated);
             player.addToPlayList(getClass().getClassLoader().getResource(pathtoMusic));
-            
-             player.play();
             player.setVolume(volume);
-            
-
+            player.play();
         }
         catch (Exception ex)
         {
@@ -61,20 +51,6 @@ public class MP3Runnable implements Runnable
     	this.volume = volume;
         player.setVolume(volume);
       
-
-    }
-
-
-    /**
-     * used upon starting the Programm <br>
-     * in MyFrame reads volume from settings.txt and sets mp3 volume
-     * 
-     *  @author Yovo
-     */
-    public void setVolumeInitialize(int volumeInitialize)
-    {
-        volume = volumeInitialize;
-        
 
     }
 
