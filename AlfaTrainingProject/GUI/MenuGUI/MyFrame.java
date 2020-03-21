@@ -1,24 +1,8 @@
 package MenuGUI;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
-import Database.Database;
-import SoundThread.SoundController;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 
 /**
@@ -28,113 +12,17 @@ import java.nio.file.Paths;
  *
  */
 @SuppressWarnings("serial")
-public class MyFrame extends JFrame
+public class MyFrame extends JFrame implements SettingsListener
 {
 
-    /**
-     * global settings for volume, language get infos from
-     * <code>HeroesOfTheArena\hota_setting.txt</code> if no file is found, use
-     * <code>public static String language = "/Bundle_DE", volume = "50"</code>
-     * filepath <code>public static String path;</xode> is prepared * @author
-     * Yovo
-     */
-    public static String path;
-    public static String language = "/Bundle_DE", volume = "50", effectVolume = "60";
-    public static Boolean volumFromFile = true, effectVolumeFromFile = true;
-
-
-    // get filepath
-    static
     {
-        try
-        {
-            Process p = Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
-            p.waitFor();
-
-            InputStream in = p.getInputStream();
-            byte[] b = new byte[in.available()];
-            in.read(b);
-            in.close();
-
-            path = new String(b);
-            path = path.split("\\s\\s+")[4];
-            path += "\\HeroesOfTheArena";
-        }
-        catch (Throwable t)
-        {
-            t.printStackTrace();
-        }
-
-        // read file and save to volume and language
-        if (Files.exists(Paths.get(path + "\\hota_setting.txt")))
-        {
-            try
-            {
-                BufferedReader br = new BufferedReader(new FileReader(path + "\\hota_setting.txt"));
-                if (volumFromFile)
-                {
-                    volume = br.readLine();
-                    SoundController.setVolumeBackgroundMusic(Integer.parseInt(volume));
-                }
-
-                language = br.readLine();
-                if (language.equalsIgnoreCase("german"))
-                {
-                    language = "/Bundle_DE";
-                }
-                if (language.equalsIgnoreCase("english"))
-                {
-                    language = "/Bundle_EN";
-                }
-                
-                if (effectVolumeFromFile)
-                {
-                    effectVolume = br.readLine();
-                    SoundController.setVolumeSounds(Integer.parseInt(effectVolume));
-                }
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-                
-            }
-        }
-        //if no files exists
-        else
-        {
-            try
-            {
-                
-              
-                if (!Files.isDirectory(Paths.get(MyFrame.path + "\\")))
-                {
-                    Files.createDirectory(Paths.get(MyFrame.path + "\\"));
-                    Files.createFile(Paths.get(MyFrame.path + "\\hota_setting.txt"));
-                }
-                else if (!Files.isDirectory(Paths.get(MyFrame.path + "\\hota_setting.txt")))
-                {
-                    Files.createFile(Paths.get(MyFrame.path + "\\hota_setting.txt"));
-                }
-
-                FileWriter fw = new FileWriter(MyFrame.path + "\\hota_setting.txt");
-                fw.write("50" + "\n" + "/Bundle_DE"+ "\n" + "60");
-                fw.close();
-                language = "/Bundle_DE";
-                SoundController.setVolumeBackgroundMusic(50);
-
-            }
-            catch (Exception e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-        }
+    	Settings.INSTANCE.subscribe(this);
+    	Settings.INSTANCE.load();
     }
 
 
     // load language package 
-    public static ResourceBundle bundle = ResourceBundle.getBundle("LanguagePackages" + language); //Bundle, bzw path aus der Datenbank holen
+    public static ResourceBundle bundle;
 
     //-------------------------Panels-------------------------//
     private JPanel panel;
@@ -142,14 +30,14 @@ public class MyFrame extends JFrame
 
     /**
      * Hier werden alle Componenten initialisiert. Zudem werden
-     * <code>initializeFrame()</code> und <code>pack()</code> ausgeführt
+     * <code>initializeFrame()</code> und <code>pack()</code> ausgefï¿½hrt
      *
      * @author Kevin
      */
     public MyFrame()
     {
 //        setUndecorated(true);
-        //System.out.println(bundle.getString("btnNew")); //Beispiel für Mehrsprachigkeit
+        //System.out.println(bundle.getString("btnNew")); //Beispiel fï¿½r Mehrsprachigkeit
 
         pack();
     }
@@ -166,11 +54,38 @@ public class MyFrame extends JFrame
     {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         //panel = new MainFramePanel(this);
+        
+        setLanguage(Settings.INSTANCE.getLanguage());
+        
         panel = new LoginPanel(this);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
     }
+
+	@Override
+	public void propertyChanged(String prop, Object value) {
+		switch(prop) {
+		case "language":
+			{
+				setLanguage((String)value);
+			}
+			break;
+		}
+	}
+	
+	private void setLanguage(String language) {
+		switch(language) {
+			case "english": {
+	        	bundle = ResourceBundle.getBundle("LanguagePackages/Bundle_EN");
+	        	break;
+			}
+			case "german": default: {
+	        	bundle = ResourceBundle.getBundle("LanguagePackages/Bundle_DE");
+	        	break;
+			}
+		}
+	}
 
 
 }

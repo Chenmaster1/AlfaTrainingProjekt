@@ -13,7 +13,9 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ResourceBundle;
 
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -42,7 +44,7 @@ import resourceLoaders.ImageName;
  *
  */
 @SuppressWarnings("serial")
-public class SettingsPanel extends JPanel
+public class SettingsPanel extends JPanel implements SettingsListener
 {
 
     private MainFramePanel parentPanel;
@@ -56,9 +58,6 @@ public class SettingsPanel extends JPanel
     private JButton cancelBtn;
     private JButton saveBtn;
 
-    private Boolean createFile = true;
-    private File file;
-    //private String path;
     
     private JOptionPane saveMessage;
     //language should be loaded somewhere else
@@ -88,40 +87,7 @@ public class SettingsPanel extends JPanel
         cancelBtn = new JButton(MyFrame.bundle.getString("btnCancel"));
         saveBtn = new JButton(MyFrame.bundle.getString("btnSave"));
         saveMessage = new JOptionPane();
-        getSettings();
         fillPanel();
-
-    }
-
-
-    /**
-     * set volumeSlider to
-     * MyFrame-<code>public static String volume = "50";</code>
-     *
-     * check if <code>MyFrame.path\hota_setting.txt</code> exists, if file
-     * exists, set <code>createFile = false</code>
-     *
-     * @author Yovo
-     *
-     */
-    private void getSettings()
-    {
-        if(MyFrame.volumFromFile)
-        {volumeSlider.setValue(Integer.parseInt(MyFrame.volume));}
-
-        //check if file exists, if not set flag createFile = false
-        if (Files.exists(Paths.get(MyFrame.path + "\\hota_setting.txt")))
-        {
-            try
-            {
-                BufferedReader br = new BufferedReader(new FileReader(MyFrame.path + "\\hota_setting.txt"));
-                createFile = false;
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
 
     }
 
@@ -151,7 +117,7 @@ public class SettingsPanel extends JPanel
         // Volume controll over changelistener ->SoundThread.mp3test.setVolume(volumeSlider.getValue());
         volumeSlider.setMinimum(0);
         volumeSlider.setMaximum(100);
-        volumeSlider.setValue(Integer.parseInt(MyFrame.volume));
+        volumeSlider.setValue(Settings.INSTANCE.getVolume());
         volumeSlider.setMinorTickSpacing(10);
         volumeSlider.setMajorTickSpacing(25);
         volumeSlider.setPaintTicks(true);
@@ -165,15 +131,9 @@ public class SettingsPanel extends JPanel
             {
                 if (ce.getSource() == volumeSlider)
                 {
-                    SoundController.setVolumeBackgroundMusic(volumeSlider.getValue());
-                    MyFrame.volume= Integer.toString(volumeSlider.getValue());
-                     MyFrame.volumFromFile = false;
-
-        
+                	Settings.INSTANCE.setVolume(volumeSlider.getValue());
                 }
             }
-
-
         });
         
         
@@ -186,7 +146,7 @@ public class SettingsPanel extends JPanel
         // Volume controll over changelistener ->SoundThread.mp3test.setVolume(volumeSlider.getValue());
         effectVolumeSlider.setMinimum(0);
         effectVolumeSlider.setMaximum(100);
-        effectVolumeSlider.setValue(Integer.parseInt(MyFrame.effectVolume));
+        effectVolumeSlider.setValue(Settings.INSTANCE.getEffectVolume());
         effectVolumeSlider.setMinorTickSpacing(10);
         effectVolumeSlider.setMajorTickSpacing(25);
         effectVolumeSlider.setPaintTicks(true);
@@ -200,14 +160,10 @@ public class SettingsPanel extends JPanel
             {
                 if (ce.getSource() == effectVolumeSlider)
                 {
-                    SoundController.setVolumeSounds(effectVolumeSlider.getValue());
-                    MyFrame.effectVolume= Integer.toString(effectVolumeSlider.getValue());
-                    MyFrame.effectVolumeFromFile = false;
-                   SoundController.setVolumeSounds(effectVolumeSlider.getValue());
+                    Settings.INSTANCE.setEffectVolume(effectVolumeSlider.getValue());
+                    //SoundController.playSound("W10_Dice_Roll.mp3"); //akustisches Feedback wäre nice to have, funktioniert aber leider irgendwie nicht
                 }
             }
-
-
         });
         
         
@@ -222,12 +178,17 @@ public class SettingsPanel extends JPanel
         add(languageLbl);
 
         langGerBtn.setBounds(getWidth() / 2 - 105, 750, 100, 30);
+        if (Settings.INSTANCE.getLanguage() == "german") {
+        	langGerBtn.setEnabled(false);
+        }
         langGerBtn.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                MyFrame.language = "german";
+            	Settings.INSTANCE.setLanguage("german");
+            	((AbstractButton) e.getSource()).setEnabled(false);
+            	langEngBtn.setEnabled(true);
             }
 
 
@@ -235,12 +196,17 @@ public class SettingsPanel extends JPanel
         add(langGerBtn);
 
         langEngBtn.setBounds(getWidth() / 2 + 5, 750, 100, 30);
+        if (Settings.INSTANCE.getLanguage() == "english") {
+        	langEngBtn.setEnabled(false);
+        }
         langEngBtn.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                MyFrame.language = "english";
+                Settings.INSTANCE.setLanguage("english");
+                ((AbstractButton) e.getSource()).setEnabled(false);
+                langGerBtn.setEnabled(true);
             }
 
 
@@ -296,55 +262,7 @@ public class SettingsPanel extends JPanel
      */
     private void saveClicked()
     {
-        if (createFile)
-        {
-            try
-            {
-
-                if (!Files.isDirectory(Paths.get(MyFrame.path + "\\")))
-                {
-                    Files.createDirectory(Paths.get(MyFrame.path + "\\"));
-                    Files.createFile(Paths.get(MyFrame.path + "\\hota_setting.txt"));
-                }
-                else if (!Files.isDirectory(Paths.get(MyFrame.path + "\\hota_setting.txt")))
-                {
-                    Files.createFile(Paths.get(MyFrame.path + "\\hota_setting.txt"));
-                }
-
-                FileWriter fw = new FileWriter(MyFrame.path + "\\hota_setting.txt");
-                fw.write(volumeSlider.getValue() + "\n" + MyFrame.language + "\n" + effectVolumeSlider.getValue());
-                fw.close();
-               
-
-            }
-            catch (Exception e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-
-        /**
-         * setting file exists <br>
-         * override volume and language at
-         * <code>MyFrame.path\hota_setting.txt</code>
-         *
-         * @author Yovo
-         *
-         */
-        if (!createFile)
-        {
-             try
-            {
-                FileWriter fw = new FileWriter(MyFrame.path + "\\hota_setting.txt");
-                fw.write(volumeSlider.getValue() + "\n" + MyFrame.language + "\n" + effectVolumeSlider.getValue());
-                fw.close();
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
+    	Settings.INSTANCE.save(); //TODO: Fehlerhandling, wenn kein Schreibzugriff auf Verzeichnis oder Platte voll
         
         JOptionPane.showMessageDialog(null, 
                               MyFrame.bundle.getString("settingSavedMessage"), 
@@ -360,6 +278,36 @@ public class SettingsPanel extends JPanel
         //frame.repaint();
 //depricated		frame.remove(this);        
     }
+
+
+	@Override
+	public void propertyChanged(String prop, Object value) {
+		switch(prop) {
+		case "language":
+			switch((String) value) {
+				case "german":
+	            {
+	            	langGerBtn.setEnabled(false);
+	            	langEngBtn.setEnabled(true);
+	            	break;
+	            }
+				case "english":
+	            {
+	            	langGerBtn.setEnabled(true);
+	            	langEngBtn.setEnabled(false);
+	            	break;
+	            }
+			}
+			break;
+		case "volume":
+			volumeSlider.setValue((Integer)value);
+			break;
+		case "effectVolume":
+			effectVolumeSlider.setValue((Integer)value);
+			break;
+		}
+		
+	}
 
 
 }

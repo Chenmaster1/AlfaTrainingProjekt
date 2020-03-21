@@ -61,7 +61,6 @@ public class LoginPanel extends JPanel {
 	JButton btnLogin;
 	JButton btnExit;
 	
-	private File file;
 	private String path;
 	
 	public LoginPanel(MyFrame frame) {
@@ -70,23 +69,6 @@ public class LoginPanel extends JPanel {
 		frame.setContentPane(this);
 //		backgroundImage = new ImageIcon(getClass().getClassLoader().getResource("Images/BackGround_FullScreenBlurred.png")).getImage();
 		backgroundImage = ImageLoader.getInstance().getImage(ImageName.MENU_BACKGROUND_BLURRY);
-    	boolean exists = false;
-    	
-    	try {
-    	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
-    	    p.waitFor();
-
-    	    InputStream in = p.getInputStream();
-    	    byte[] b = new byte[in.available()];
-    	    in.read(b);
-    	    in.close();
-
-    	    path = new String(b);
-    	    path = path.split("\\s\\s+")[4];
-    	    path += "\\HeroesOfTheArena";
-    	} catch(Throwable t) {
-    	    t.printStackTrace();
-    	}
     	ImageLoader.getInstance();
 	}
 
@@ -101,6 +83,7 @@ public class LoginPanel extends JPanel {
 			isInitiated = true;
 		}else {
 			if(!TESTVERSION){
+				/* TODO: Passwort aus Datei lesen, plattformunabhängig, siehe Settings.java
 				if(Files.exists(Paths.get(path + "\\hota.txt"))) {
 					try {
 						
@@ -109,13 +92,14 @@ public class LoginPanel extends JPanel {
 						String password = br.readLine();
 						ResultSet rs = Database.getInstance().executeQuery(Queries.loginUser(name));
 						rs.next();
-						if (rs.getString(1).equals(password)) {
+						if (rs.getString(1).equals(password)) { //Das sollte datenbankseitig erfolgen!!!
 							switchToMainFramePanel();
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
+			   */
 			}		
 		}
 	}
@@ -233,7 +217,8 @@ public class LoginPanel extends JPanel {
 						try {
 							if (rs.getString(1).equals(userPassword)) {
 								switchToMainFramePanel();
-								
+
+								/* TODO: Passwort in Datei sichern, plattformunabhängig, siehe Settings.java
 								if(!Files.isDirectory(Paths.get(path + "\\"))) {
 					    	    	Files.createDirectory(Paths.get(path + "\\"));
 					    	    	Files.createFile(Paths.get(path + "\\hota.txt"));
@@ -245,6 +230,7 @@ public class LoginPanel extends JPanel {
 								
 								fw.write(txtUser.getText() + "\n" + userPassword);
 								fw.close();
+								*/
 								
 							}
 						} catch (Exception e) {

@@ -1,29 +1,25 @@
 package InGameGUI;
 
 import Dice.AttackDice;
-import MenuGUI.MainFramePanel;
-import MenuGUI.MyFrame;
-import SoundThread.MP3Runnable;
+import SoundThread.SoundController;
 import resourceLoaders.AnimationLoader;
 import resourceLoaders.AnimationName;
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- * Panel zur Darstellung des AttackDice. Größe ist dynamisch änderbar (Inhalte
+ * Panel zur Darstellung des AttackDice. Grï¿½ï¿½e ist dynamisch ï¿½nderbar (Inhalte
  * werden entsprechend gestreckt).
  */
 public class AttackDicePanel extends JPanel implements Runnable {
 
-	// relative Position/Größe der Grafiken im Bezug auf die Panelgröße
+	// relative Position/Grï¿½ï¿½e der Grafiken im Bezug auf die Panelgrï¿½ï¿½e
 	private static final double SPOTLIGHTCIRCLE_POSITION_RELATIVE_X = 0.41;
 	private static final double SPOTLIGHTCIRCLE_POSITION_RELATIVE_Y = 0.04;
 	private static final double SPOTLIGHTCIRCLE_SIZE_RELATIVE_X = 0.6;
@@ -73,7 +69,7 @@ public class AttackDicePanel extends JPanel implements Runnable {
 
 	/**
 	 * Zeichnet das Panel. Zuerst werden die statischen Elemente gezeichnet, zuletzt
-	 * das zum aktuellen currentAnimationFrame passende Bild des Würfels.
+	 * das zum aktuellen currentAnimationFrame passende Bild des Wï¿½rfels.
 	 *
 	 * @param g
 	 */
@@ -99,17 +95,17 @@ public class AttackDicePanel extends JPanel implements Runnable {
 				(int) (getWidth() * SPOTLIGHTCONE_SIZE_RELATIVE_X), (int) (getHeight() * SPOTLIGHTCONE_SIZE_RELATIVE_Y),
 				this);
 
-		// und zuletzt den Würfel
+		// und zuletzt den Wï¿½rfel
 		g2d.drawImage(animationImages.get(currentAnimationFrame), (int) (getWidth() * DIE_POSITION_RELATIVE_X),
 				(int) (getHeight() * DIE_POSITION_RELATIVE_Y), (int) (getWidth() * DIE_SIZE_RELATIVE_X),
 				(int) (getHeight() * DIE_SIZE_RELATIVE_Y), this);
 	}
 
 	/**
-	 * Lässt das Panel eine Animation anzeigen, bei der der Würfel schließlich das
-	 * übergebene Ergebnis anzeigt. Pausiert den aufrufenden Thread, bis die Animation abgeschlossen ist.
+	 * Lï¿½sst das Panel eine Animation anzeigen, bei der der Wï¿½rfel schlieï¿½lich das
+	 * ï¿½bergebene Ergebnis anzeigt. Pausiert den aufrufenden Thread, bis die Animation abgeschlossen ist.
 	 *
-	 * @param result Das gewünschte Würfelergebnis. Sollte durch AttackDice erzeugt
+	 * @param result Das gewï¿½nschte Wï¿½rfelergebnis. Sollte durch AttackDice erzeugt
 	 *               werden.
 	 */
 	public void setRollResult(int result) {
@@ -158,7 +154,7 @@ public class AttackDicePanel extends JPanel implements Runnable {
 
 		}
 		
-		new Thread(new MP3Runnable("W10_Dice_Roll.mp3", false, Integer.parseInt(MyFrame.effectVolume))).start();
+		SoundController.playSound("W10_Dice_Roll.mp3");
 
 		synchronized (this) {
 			// System.out.println("AttackDice Animation aufwecken");
@@ -178,7 +174,7 @@ public class AttackDicePanel extends JPanel implements Runnable {
 
 	/**
 	 * Die Animation wird von einem eigenen Thread behandelt, in dem in kurzen
-	 * Abständen getestet wird, ob das gezeigte Frame geändert werden muss.
+	 * Abstï¿½nden getestet wird, ob das gezeigte Frame geï¿½ndert werden muss.
 	 *
 	 */
 	@Override
