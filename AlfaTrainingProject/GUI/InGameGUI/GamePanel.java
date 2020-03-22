@@ -10,6 +10,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
@@ -30,16 +31,24 @@ import MenuGUI.MyFrame;
  *
  */
 public class GamePanel extends JPanel {
+    
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
 	private MapPanel mapPanel;
 	private GameSidePanel gameSidePanel;
 	private final JFrame mainFrame;
+        //neu Holger Screenaufbau
+        private int MAPPANEL_STANDARD_SIZE = ((int) (dim.getWidth() * 0.5625));
 
+	private int GAMESIDEPANEL_STANDARD_SIZE_X = ((int) (dim.getWidth() * 0.4375));
+	private int GAMESIDEPANEL_STANDARD_SIZE_Y = ((int) (dim.getHeight()));
+
+        /**alt Peter Screenaufbau
 	private static final int MAPPANEL_STANDARD_SIZE = 1080;
 
 	private static final int GAMESIDEPANEL_STANDARD_SIZE_X = 840;
 	private static final int GAMESIDEPANEL_STANDARD_SIZE_Y = 1080;
-	
+	*/
 	
 	//Standard 20, je höher, desto langsamer sind die Animationen
 	public final static int ANIMATION_FRAME_PERIOD_MAPPANEL = 20;
