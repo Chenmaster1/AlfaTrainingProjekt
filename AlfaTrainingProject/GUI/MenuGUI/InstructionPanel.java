@@ -148,7 +148,6 @@ public class InstructionPanel extends JPanel {
 
 					case 0:
 						
-						//TODO Hier namen aller Helden anzeigen und in der 2. liste anzeigen
 						model.removeAllElements();
 						lstHeroesOrArenacards.removeAll(lstHeroesOrArenacards);
 						//Hier alle Helden einfügen
@@ -159,7 +158,6 @@ public class InstructionPanel extends JPanel {
 						//scrollPaneSubCategory.setVisible(true);
 						break;
 					case 1:
-						//TODO Hier namen aller Arenakarten anzeigen und in der 2. liste anzeigen
 						if(lstHeroesOrArenacards.size() >0) {
 //							for(JLabel label : lstHeroesOrArenacards)
 //								label.setVisible(false);;
@@ -183,7 +181,6 @@ public class InstructionPanel extends JPanel {
 						//scrollPaneSubCategory.setVisible(true);
 						break;
 					case 2:
-						//TODO Spielbrett anzeigen und entsprechende Felder zu auswahl stellen
 						model.removeAllElements();
 						for(int i = 0; i < subCatagoryGameBoard.length; i++)
 							model.addElement(subCatagoryGameBoard[i]);
@@ -234,25 +231,21 @@ public class InstructionPanel extends JPanel {
 				
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
 				@Override
 				public void mousePressed(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
 				@Override
 				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
@@ -313,25 +306,20 @@ public class InstructionPanel extends JPanel {
 				
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
 				@Override
 				public void mousePressed(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
 				@Override
 				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
 				}
 				
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				

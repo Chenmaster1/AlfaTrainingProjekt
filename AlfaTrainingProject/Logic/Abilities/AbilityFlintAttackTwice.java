@@ -17,7 +17,6 @@ public class AbilityFlintAttackTwice  extends Ability{
 
 	@Override
 	public void useAction(SingleplayerGame singleplayerGame) {
-		// TODO Magie hier. wird anstatt eines zuges ausgefuehrt, also zweimal angreifen
 		//Wirklich nötig das hier zu machen? dann müsste auch actionattack umgeschrieben werden
 		//Falls anders geklöst wie?
 		//enum setzten und in singleplayergame abarbeiten. zb so:	

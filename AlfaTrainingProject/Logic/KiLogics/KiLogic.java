@@ -194,7 +194,6 @@ public abstract class KiLogic {
 			if(!(attackField == singleplayerGame.getCurrentHeroIndex()))
 				return availableHideouts.get(attackField).getFieldNumber();
 
-			//TODO neu ueberdenken. erstmal generell angreifen
 			
 		}
 		// reduce sollte bereits in der action, bzw ability aufgerufen werde, sofern die

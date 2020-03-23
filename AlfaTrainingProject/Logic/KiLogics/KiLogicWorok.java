@@ -17,7 +17,7 @@ public class KiLogicWorok extends KiLogic {
 //	public Action chooseAction(ArrayList<Action> actions, SingleplayerGame singleplayerGame) {
 //		Action attackAction = null, delayAction = null, hideAction = null, chosenAction = null;
 //
-//		// Aktionsobjekte bereithalten. TODO: evtl. optimieren, fühlt sich umständlich
+//		// Aktionsobjekte bereithalten.
 //		// an
 //		for (Action a : actions) {
 //			if (a instanceof ActionAttack) {

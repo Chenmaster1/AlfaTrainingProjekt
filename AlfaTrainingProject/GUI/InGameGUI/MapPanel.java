@@ -14,7 +14,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
@@ -23,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -114,6 +118,31 @@ public class MapPanel extends JPanel implements Runnable {
 
 		threadMapPanelAnimation = new Thread(this);
 		threadMapPanelAnimation.start();
+		
+		ImageIcon icon = new ImageIcon(ImageLoader.getInstance().getImage(ImageName.GAME_EXIT));
+		JButton btnExit = new JButton(icon);		
+		btnExit.setBorderPainted(false);
+		btnExit.setBorder(null);
+		btnExit.setMargin(new Insets(0, 0, 0, 0));
+		btnExit.setContentAreaFilled(false);
+//		btnExit.setIcon(icon);
+//		btnExit.setRolloverIcon(icon);
+//		btnExit.setPressedIcon(icon);
+//		btnExit.setDisabledIcon(icon);
+		
+//		btnExit.setBounds(getWidth()-icon.getIconWidth(), 0, icon.getIconWidth(), icon.getIconHeight());
+		btnExit.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
+		btnExit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				onExitClicked();
+				//TODO alle Threads beenden
+				//TODO Spiel beenden
+				((GamePanel) getParent()).onExitClicked();
+			}
+		});
+		add(btnExit);
 	}
 
 	@Override

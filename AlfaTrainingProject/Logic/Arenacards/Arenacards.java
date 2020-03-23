@@ -11,7 +11,7 @@ import Actions.ActionHide;
 import GameLogic.SingleplayerGame;
 import MenuGUI.MyFrame;
 import enums.ArenacardType;
-
+//TODO ARENAKARTEN IMPLEMENTIEREN
 public class Arenacards {
 
     private static ArrayList<Arenacards> arenacards;
@@ -130,30 +130,30 @@ public class Arenacards {
     }
 
     private void useFallingRocks(SingleplayerGame singleplayerGame) {
-        // TODO ueberlegen ob und wie gemacht werden soll
+
 
     }
 
     private void useNorthernSpiders(SingleplayerGame singleplayerGame) {
-        // TODO ueberlegen ob und wie gemacht werden soll
+
 
     }
 
     private void useSeismicActivities(SingleplayerGame singleplayerGame) {
         //3 Verzoegerungsmarken. verzoegerungsmarken werden abgebaut bei speziellem wuerfelwurf (in singleplayergame abfangen und aufrufen)
-        // TODO anders implementieren, was soll passieren
+      
         if (delayTokens > 0) {
             delayTokens--;
             if (delayTokens == 0) {
-                //TODO alle spieler im ödland aufdecken und ausdauer um 1 verringern
+                
             }
         }
-        //TODO boolean setzen. wenn man sich selber aufdeckt, kann man sich wieder instant verstecken, solange diese karte aktiv ist
+  
 
     }
 
     private void useWrongWay(SingleplayerGame singleplayerGame) {
-        // TODO ueberlegen, wie zu iomplementieren. ansonsten jeder held eine verzögerungsmarke?
+  
 
     }
 
@@ -175,8 +175,6 @@ public class Arenacards {
     }
 
     private void useMysteriousIdol2(SingleplayerGame singleplayerGame) {
-        //TODO wuerfelwurf und aufruf ueber singleplayergame? // anders implementieren, was soll passieren
-        //Verzögerungsmarken auf dieser Karte. können abgebaut werden
         if (delayTokens > 0) {
             delayTokens--;
             if (delayTokens == 0) //boolean in singleplayerGame setzen
@@ -187,8 +185,7 @@ public class Arenacards {
     }
 
     private void useMysteriousIdol1(SingleplayerGame singleplayerGame) {
-        //TODO wuerfelwurf und aufruf ueber singleplayergame? // anders implementieren, was soll passieren
-        //erst Verzögerungsmarken entfernen. also held würfelt, falls klappt, dann verringern	
+       
         if (delayTokens > 0) {
             delayTokens--;
             if (delayTokens == 0) //boolean in singleplayerGame setzen
@@ -200,19 +197,18 @@ public class Arenacards {
     }
 
     private void useForestHut(SingleplayerGame singleplayerGame) {
-        // TODO Helden und Karten verbinden (über hashmap????) // anders implementieren, was soll passieren
+       
 
         //falls held sichtbar, karte entfernen
         //ansonsten currentactionpoints um 1 erhoehen
     }
 
     private void useAncientPendant(SingleplayerGame singleplayerGame) {
-        // TODO Nachfragen wie Uralter Anhänger funktioniert
 
     }
 
     private void useStrangeRedShrooms(SingleplayerGame singleplayerGame) {
-        //TODO beibehalten?
+     
         //beim ablegen, direkt verstecken und 3 verzögerungsmarken aufnehmen
 //        for (Action action : singleplayerGame.getActions()) {
 //            if (action instanceof ActionHide) {

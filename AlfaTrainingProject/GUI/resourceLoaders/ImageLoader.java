@@ -118,6 +118,8 @@ public class ImageLoader {
         images[ImageName.GAMEBOARD_INSTRUCTION.ordinal()] = new ImageIcon(
         		getClass().getClassLoader().getResource("Description/g4.png")).getImage();
 
+        images[ImageName.GAME_EXIT.ordinal()] = new ImageIcon(
+        		getClass().getClassLoader().getResource("Gameboard/GameExit.png")).getImage();
         
     }
 

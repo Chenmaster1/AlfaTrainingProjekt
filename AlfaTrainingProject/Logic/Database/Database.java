@@ -153,7 +153,6 @@ public class Database {
      * Erstellt die Tabellen, falls diese noch nicht existieren
      */
     private void createTables() {
-    	//TODO Tabellen erstellen
     	/*
     	String sql = "CREATE TABLE IF NOT EXISTS Tiere ("
                 + "Tiere_ID INTEGER AUTO_INCREMENT, "
