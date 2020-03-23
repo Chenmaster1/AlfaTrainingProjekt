@@ -45,9 +45,9 @@ public class GamePanel extends JPanel {
 	private final JFrame mainFrame;
 	private MainFramePanel mainFramePanel;
         //neu Holger Screenaufbau
-        private int MAPPANEL_STANDARD_SIZE = ((int) (dim.getWidth() * 0.5625));
+    private int MAPPANEL_STANDARD_SIZE = ((int) (dim.getWidth() * 0.5625));
 
-        /**alt Peter Screenaufbau
+        //alt Peter Screenaufbau
 	private int GAMESIDEPANEL_STANDARD_SIZE_X = ((int) (dim.getWidth() * 0.4375));
 	private int GAMESIDEPANEL_STANDARD_SIZE_Y = ((int) (dim.getHeight()));
 

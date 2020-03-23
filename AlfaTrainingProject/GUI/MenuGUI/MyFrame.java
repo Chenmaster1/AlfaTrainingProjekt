@@ -147,7 +147,7 @@ public class MyFrame extends JFrame
      */
     public MyFrame()
     {
-//        setUndecorated(true);
+        setUndecorated(true);
         //System.out.println(bundle.getString("btnNew")); //Beispiel für Mehrsprachigkeit
 
         pack();
