@@ -93,7 +93,7 @@ public class SingleplayerGameCreator {
 
 		GameSidePanel gsp = new GameSidePanel(heroes, mainHero);
 
-		GamePanel gamePanel = new GamePanel(mp, gsp, mainFrame);
+		GamePanel gamePanel = new GamePanel(mp, gsp, mainFrame, mainFramePanel);
 
 		// ------------
 		// SingleplayerGame als CONTROL-Objekt zusammensetzen

@@ -164,7 +164,6 @@ public class LoginPanel extends JPanel {
 				try {
 					onLoginClicked();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
@@ -248,7 +247,6 @@ public class LoginPanel extends JPanel {
 								
 							}
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}

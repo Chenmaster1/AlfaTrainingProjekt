@@ -84,7 +84,7 @@ public class GamePanelTest extends JFrame {
 
         final GameSidePanel gsp = new GameSidePanel(allHeroes, mainHero);
 
-        GamePanel gp = new GamePanel(mp, gsp, this);
+        GamePanel gp = new GamePanel(mp, gsp, this, null);
 
         ArrayList<Action> testActionArrayList = new ArrayList<>();
         Action action1 = new ActionAttack(1);

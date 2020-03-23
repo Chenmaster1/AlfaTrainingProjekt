@@ -469,7 +469,6 @@ public class SingleplayerGame implements HeroEventListener {
 	}
 
 	/**
-	 * TODO vermutlich sollten die Actions als Control-Objekte ins gleiche Package
 	 * wie SingleplayerGame und diese Methode auf package protected stehen
 	 *
 	 * @param gameState
@@ -558,7 +557,6 @@ public class SingleplayerGame implements HeroEventListener {
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -599,7 +597,6 @@ public class SingleplayerGame implements HeroEventListener {
 		try {
 			Thread.sleep(200);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

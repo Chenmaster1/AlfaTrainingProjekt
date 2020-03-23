@@ -38,7 +38,6 @@ public class HeroDahlia extends Hero
         super.setCurrentHitPoints(currentHitPoints);
 
         //if currentHitPoints are unequal to initializied 4 Hitpoints
-        //TODO what if Dahlia looses hitPoints due to other sources? 
         if (currentHitPoints < getMaxHitPoints() && currentHitPoints > 0)
         {
             notifyAllHeroEventListeners(this, HeroEventType.HIDE_AUTOMATIC);

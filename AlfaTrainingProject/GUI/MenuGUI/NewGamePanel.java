@@ -39,6 +39,7 @@ import InGameGUI.HeroPanelLarge;
 import InGameGUI.MapPanel;
 import SoundThread.MP3Runnable;
 import SoundThread.SoundController;
+import java.awt.Toolkit;
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
 
@@ -57,6 +58,8 @@ public class NewGamePanel extends JPanel {
 	private ArrayList<Hero> heroList;
 	private HeroChoicePanel heroChoicePanel;
 	private HeroPanelLarge heroPanelLarge;
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
 	public NewGamePanel(MainFramePanel parentPanel, JFrame frame) {
 		backgroundImage = ImageLoader.getInstance().getImage(ImageName.MENU_BACKGROUND_BLURRY);
@@ -75,12 +78,13 @@ public class NewGamePanel extends JPanel {
 
 		// Kleine Avatarbilder am unteren Rand
 		heroChoicePanel = new HeroChoicePanel(heroList);
-		heroChoicePanel.setBounds(350, 665, 1220, 200);
+		heroChoicePanel.setBounds((int) (dim.getWidth() * 0.1822916), (int) (dim.getHeight() * 0.61574074), (int) (dim.getWidth() * 0.63541666666), (int) (dim.getHeight() * 0.18518518));
 		this.add(heroChoicePanel);
 
 		// Zentrale Heldenvorschau
 		heroPanelLarge = new HeroPanelLarge(heroList.get(0));
-		heroPanelLarge.setBounds(644, 219, 593, 420);
+                System.out.println(getWidth());
+		heroPanelLarge.setBounds((int) (dim.getWidth() * 0.33541666), (int) (dim.getHeight() * 0.202777), (int) (dim.getWidth() * 0.30885), (int) (dim.getHeight() * 0.38888888));
 		this.add(heroPanelLarge);
 
 		// Listener für die kleinen Bilder erstellen
@@ -120,7 +124,7 @@ public class NewGamePanel extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		g.drawImage(backgroundImage, 0, 0, this);
-		g.drawImage(BackgroundNewGame, 200, 125, 1520, 830, this);
+		g.drawImage(BackgroundNewGame, (int) (dim.getWidth() * 0.10416666666), (int) (dim.getHeight() * 0.11574074), (int) (dim.getWidth() * 0.7916666), (int) (dim.getHeight() * 0.768518), this);
 //		g.drawImage(ArenaCardSwitch, 346, 247, this);
 	}
 
@@ -135,11 +139,11 @@ public class NewGamePanel extends JPanel {
 //				false);
 //		Playcardmode_AdvancedcheckBox.setBounds(848, 566, 150, 30);
 
-		disabledHideoutsLabel.setBounds(1335, 375, 214, 36);
+		disabledHideoutsLabel.setBounds((int) (dim.getWidth() * 0.6953125), (int) (dim.getHeight() * 0.3472222222),(int) (dim.getWidth() * 0.111458333), (int) (dim.getHeight() * 0.0333333333));
 
-		disabledHideoutsComboBox.setBounds(1335, 420, 214, 36);
+		disabledHideoutsComboBox.setBounds((int) (dim.getWidth() * 0.6953125), (int) (dim.getHeight() * 0.388888888), (int) (dim.getWidth() * 0.111458333), (int) (dim.getHeight() * 0.0333333333));
 
-		newGameBtn.setBounds(1335, 485, 214, 36);
+		newGameBtn.setBounds((int) (dim.getWidth() * 0.6953125), (int) (dim.getHeight() * 0.449074074), (int) (dim.getWidth() * 0.111458333), (int) (dim.getHeight() * 0.0333333333));
 		newGameBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -148,7 +152,7 @@ public class NewGamePanel extends JPanel {
 			}
 		});
 
-		cancelBtn.setBounds(1335, 530, 214, 36);
+		cancelBtn.setBounds((int) (dim.getWidth() * 0.6953125), (int) (dim.getHeight() * 0.49074074), (int) (dim.getWidth() * 0.111458333), (int) (dim.getHeight() * 0.0333333333));
 		cancelBtn.addActionListener(new ActionListener() {
 
 			@Override

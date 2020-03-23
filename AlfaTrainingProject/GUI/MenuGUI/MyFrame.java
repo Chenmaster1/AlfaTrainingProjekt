@@ -125,7 +125,6 @@ public class MyFrame extends JFrame
             }
             catch (Exception e)
             {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -148,7 +147,7 @@ public class MyFrame extends JFrame
      */
     public MyFrame()
     {
-//        setUndecorated(true);
+        setUndecorated(true);
         //System.out.println(bundle.getString("btnNew")); //Beispiel für Mehrsprachigkeit
 
         pack();

@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
 
+import java.awt.Component;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -147,7 +148,6 @@ public class InstructionPanel extends JPanel {
 
 					case 0:
 						
-						//TODO Hier namen aller Helden anzeigen und in der 2. liste anzeigen
 						model.removeAllElements();
 						lstHeroesOrArenacards.removeAll(lstHeroesOrArenacards);
 						//Hier alle Helden einfügen
@@ -158,15 +158,29 @@ public class InstructionPanel extends JPanel {
 						//scrollPaneSubCategory.setVisible(true);
 						break;
 					case 1:
-						//TODO Hier namen aller Arenakarten anzeigen und in der 2. liste anzeigen
+						if(lstHeroesOrArenacards.size() >0) {
+//							for(JLabel label : lstHeroesOrArenacards)
+//								label.setVisible(false);;
+							Component[] components = getComponents();
+							int componentsCount = components.length;
+							for(int i = 0; i < componentsCount; i++) {
+								if(components[i] instanceof JLabel) {
+									remove(i);
+									remove(components[i]);
+									i--;
+									componentsCount--;
+								}
+							}
+							frame.repaint();
+							lstHeroesOrArenacards.removeAll(lstHeroesOrArenacards);
+						}
 						model.removeAllElements();
-						lstHeroesOrArenacards.removeAll(lstHeroesOrArenacards);
+						
 						scrollPaneSubCategory.setVisible(false);
 						//scrollPaneSubCategory.setSize(100, subCatagoryGameBoard.length * 20);
 						//scrollPaneSubCategory.setVisible(true);
 						break;
 					case 2:
-						//TODO Spielbrett anzeigen und entsprechende Felder zu auswahl stellen
 						model.removeAllElements();
 						for(int i = 0; i < subCatagoryGameBoard.length; i++)
 							model.addElement(subCatagoryGameBoard[i]);
@@ -174,6 +188,7 @@ public class InstructionPanel extends JPanel {
 						scrollPaneSubCategory.setVisible(true);
 						break;
 					}
+				
 				revalidate();
 			}
 		});
@@ -216,25 +231,21 @@ public class InstructionPanel extends JPanel {
 				
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
 				@Override
 				public void mousePressed(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
 				@Override
 				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
@@ -248,6 +259,7 @@ public class InstructionPanel extends JPanel {
 		}
 		int multiplierY = 0;
 		int multiplierX = 0;
+		
 		for(JLabel label : lstHeroesOrArenacards) {
 			if(!(VIEW_STARTPOINT_X + (label.getWidth() * (multiplierX+1)) > frame.getWidth())) {
 
@@ -282,8 +294,9 @@ public class InstructionPanel extends JPanel {
 			
 			heroFrame = new JFrame();
 			heroFrame.setSize(558, 393);
-			heroFrame.setLocation(frame.getWidth()/2 - heroFrame.getWidth()/2, 
-					frame.getHeight()/2 - heroFrame.getHeight()/2);
+			heroFrame.setLocationRelativeTo(frame);
+//			heroFrame.setLocation(frame.getWidth()/2 - heroFrame.getWidth()/2, 
+//					frame.getHeight()/2 - heroFrame.getHeight()/2);
 			heroFrame.setContentPane(heroPanel);
 			heroFrame.setUndecorated(true);
 			heroFrame.setVisible(true);
@@ -293,25 +306,20 @@ public class InstructionPanel extends JPanel {
 				
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
 				@Override
 				public void mousePressed(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
 				@Override
 				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
 				}
 				
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				

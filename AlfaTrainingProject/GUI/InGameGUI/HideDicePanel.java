@@ -162,7 +162,6 @@ public class HideDicePanel extends JPanel implements Runnable {
     			try {
     				this.wait();
     			} catch (InterruptedException e) {
-    				// TODO Auto-generated catch block
     				e.printStackTrace();
     			}
     		
