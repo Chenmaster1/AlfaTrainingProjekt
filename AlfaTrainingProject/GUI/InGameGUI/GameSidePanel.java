@@ -23,6 +23,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import GameLogic.SingleplayerGame;
+
 /**
  * Das Panel, auf dem die Sidebar mit Helden, Aktionen usw angezeigt wird.
  */
@@ -78,6 +80,9 @@ public class GameSidePanel extends JPanel {
 	private Thread threadAttackDicePanel;
 	private Thread threadHideDicePanel;
 
+	JButton btnExit;
+	ImageIcon icon;
+	
 	public GameSidePanel(ArrayList<Hero> allHeroes, Hero playerHero) {
 		super();
 
@@ -106,6 +111,33 @@ public class GameSidePanel extends JPanel {
 		add(panelAttackDice);
 		add(panelHideDice);
 
+		
+		icon = new ImageIcon(ImageLoader.getInstance().getImage(ImageName.GAME_EXIT));
+		btnExit = new JButton(icon);		
+		btnExit.setBorderPainted(false);
+		btnExit.setBorder(null);
+		btnExit.setMargin(new Insets(0, 0, 0, 0));
+		btnExit.setContentAreaFilled(false);
+//		btnExit.setIcon(icon);
+//		btnExit.setRolloverIcon(icon);
+//		btnExit.setPressedIcon(icon);
+//		btnExit.setDisabledIcon(icon);
+
+//		btnExit.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
+		btnExit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				onExitClicked();
+				//TODO alle Threads beenden
+				//TODO Spiel beenden
+				((GamePanel) getParent()).onExitClicked();
+				SingleplayerGame.endGame();
+				
+			}
+		});
+		add(btnExit);
+		
 		
 		// Unterpanels resizen per Listener (wenn dieses Panel in der Größe geändert
 		// wird.
@@ -145,9 +177,13 @@ public class GameSidePanel extends JPanel {
 						(int) (PANELHIDEDICE_POSITION_RELATIVE_Y * getHeight()),
 						(int) (PANELHIDEDICE_SIZE_RELATIVE_X * getWidth()),
 						(int) (PANELHIDEDICE_SIZE_RELATIVE_Y * getHeight()));
+			
+				btnExit.setBounds(getWidth()-icon.getIconWidth(), 0, icon.getIconWidth(), icon.getIconHeight());
 			}
 		});
 
+		
+		
 	}
 
 	/**

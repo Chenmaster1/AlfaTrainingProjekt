@@ -28,6 +28,7 @@ import javax.swing.SwingUtilities;
 
 import MenuGUI.MainFramePanel;
 import MenuGUI.MyFrame;
+import SoundThread.SoundController;
 import resourceLoaders.ImageLoader;
 import resourceLoaders.ImageName;
 
@@ -133,6 +134,8 @@ public class GamePanel extends JPanel {
 	
 	public void onExitClicked() {
 		mainFrame.setContentPane(mainFramePanel);
+		SoundController.setBackgroundMusic("Intro_Main.mp3");
+		
 	}
 	
 	private void resizeGamePanel() {
