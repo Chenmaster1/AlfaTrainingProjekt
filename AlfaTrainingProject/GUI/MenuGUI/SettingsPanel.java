@@ -107,7 +107,7 @@ public class SettingsPanel extends JPanel
     private void getSettings()
     {
         if(MyFrame.volumFromFile)
-        {volumeSlider.setValue(Integer.parseInt(MyFrame.volume));}
+        {volumeSlider.setValue(SoundController.getVolumeBackgroundMusic());}
 
         //check if file exists, if not set flag createFile = false
         if (Files.exists(Paths.get(MyFrame.path + "\\hota_setting.txt")))
@@ -151,7 +151,7 @@ public class SettingsPanel extends JPanel
         // Volume controll over changelistener ->SoundThread.mp3test.setVolume(volumeSlider.getValue());
         volumeSlider.setMinimum(0);
         volumeSlider.setMaximum(100);
-        volumeSlider.setValue(Integer.parseInt(MyFrame.volume));
+        volumeSlider.setValue(SoundController.getVolumeBackgroundMusic());
         volumeSlider.setMinorTickSpacing(10);
         volumeSlider.setMajorTickSpacing(25);
         volumeSlider.setPaintTicks(true);
@@ -166,7 +166,6 @@ public class SettingsPanel extends JPanel
                 if (ce.getSource() == volumeSlider)
                 {
                     SoundController.setVolumeBackgroundMusic(volumeSlider.getValue());
-                    MyFrame.volume= Integer.toString(volumeSlider.getValue());
                      MyFrame.volumFromFile = false;
 
         
@@ -186,7 +185,7 @@ public class SettingsPanel extends JPanel
         // Volume controll over changelistener ->SoundThread.mp3test.setVolume(volumeSlider.getValue());
         effectVolumeSlider.setMinimum(0);
         effectVolumeSlider.setMaximum(100);
-        effectVolumeSlider.setValue(Integer.parseInt(MyFrame.effectVolume));
+        effectVolumeSlider.setValue(SoundController.getVolumeSounds());
         effectVolumeSlider.setMinorTickSpacing(10);
         effectVolumeSlider.setMajorTickSpacing(25);
         effectVolumeSlider.setPaintTicks(true);
@@ -201,9 +200,7 @@ public class SettingsPanel extends JPanel
                 if (ce.getSource() == effectVolumeSlider)
                 {
                     SoundController.setVolumeSounds(effectVolumeSlider.getValue());
-                    MyFrame.effectVolume= Integer.toString(effectVolumeSlider.getValue());
                     MyFrame.effectVolumeFromFile = false;
-                   SoundController.setVolumeSounds(effectVolumeSlider.getValue());
                 }
             }
 

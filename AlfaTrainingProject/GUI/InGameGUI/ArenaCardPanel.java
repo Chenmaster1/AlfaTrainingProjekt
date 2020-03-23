@@ -8,7 +8,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import javax.swing.ImageIcon;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -34,16 +36,15 @@ public class ArenaCardPanel extends JPanel {
     private static final double NAMELABEL_POSITION_RELATIVE_Y = 0.03;
     private static final double NAMELABEL_SIZE_RELATIVE_X = 0.84;
     private static final double NAMELABEL_SIZE_RELATIVE_Y = 0.06;
-    
+
     private static final double NAMELABEL_TEXT_SIZE_RELATIVE_Y = 0.05;
 
     private static final double DESCRIPTIONFIELD_POSITION_RELATIVE_X = 0.09;
     private static final double DESCRIPTIONFIELD_POSITION_RELATIVE_Y = 0.55;
     private static final double DESCRIPTIONFIELD_SIZE_RELATIVE_X = 0.84;
     private static final double DESCRIPTIONFIELD_SIZE_RELATIVE_Y = 0.3;
-    
+
     private static final double DESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y = 0.03;
-    
 
     /**
      * Panel zur Darstellung einer ArenaCard.
@@ -51,16 +52,67 @@ public class ArenaCardPanel extends JPanel {
      * @param displayedCard Die darzustellende ArenaCard
      */
     public ArenaCardPanel(Arenacards displayedCard) {
-        this.displayedCard = displayedCard;
+	this.displayedCard = displayedCard;
 
-        artworkImage = displayedCard.getImage();
+	artworkImage = displayedCard.getImage();
 
-        backgroundImage = ImageLoader.getInstance().getImage(ImageName.ARENACARD_EMPTY);
+	backgroundImage = ImageLoader.getInstance().getImage(ImageName.ARENACARD_EMPTY);
 
-        setLayout(null);
-        setOpaque(false);
+	setLayout(null);
+	setOpaque(false);
 
-        initializeTextFields();
+	initializeTextFields();
+
+	addComponentListener(new ComponentAdapter() {
+	    @Override
+	    public void componentResized(ComponentEvent e) {
+
+		// Textfelder Größe anpassen
+		updateInternalFieldsBounds();
+
+	    }
+	});
+    }
+    
+    /**
+     * Initialisiert die Textfelder, also sowohl den Kartennamen als auch die
+     * Beschreibung, welche aus der ArenaCard ausgelesen werden.
+     */
+    private void initializeTextFields() {
+	nameLabel = new JLabel(displayedCard.getName());
+//        nameLabel.setOpaque(true);
+	this.add(nameLabel);
+
+	descriptionField = new JTextArea(displayedCard.getDescription());
+	descriptionField.setOpaque(false);
+	descriptionField.setEditable(false);
+	descriptionField.setLineWrap(true);
+	descriptionField.setWrapStyleWord(true);
+//        descriptionField.setOpaque(true);
+	this.add(descriptionField);
+    }
+
+    private void updateInternalFieldsBounds() {
+	// Namensfeld Bounds setzen
+	nameLabel.setBounds((int) (NAMELABEL_POSITION_RELATIVE_X * getWidth()),
+		(int) (NAMELABEL_POSITION_RELATIVE_Y * getHeight()), (int) (NAMELABEL_SIZE_RELATIVE_X * getWidth()),
+		(int) (NAMELABEL_SIZE_RELATIVE_Y * getHeight()));
+
+	// Namensfeld Fontgröße anpassen
+	Font nameLabelFont = nameLabel.getFont();
+	int newFontSize = (int) (NAMELABEL_TEXT_SIZE_RELATIVE_Y * getHeight());
+	nameLabel.setFont(new Font(nameLabelFont.getName(), Font.PLAIN, newFontSize));
+
+	// Descriptionfeld Bounds setzen
+	descriptionField.setBounds((int) (DESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
+		(int) (DESCRIPTIONFIELD_POSITION_RELATIVE_Y * getHeight()),
+		(int) (DESCRIPTIONFIELD_SIZE_RELATIVE_X * getWidth()),
+		(int) (DESCRIPTIONFIELD_SIZE_RELATIVE_Y * getHeight()));
+
+	// Descriptionfield Fontgröße anpassen
+	Font descriptionFieldFont = descriptionField.getFont();
+	newFontSize = (int) (DESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y * getHeight());
+	descriptionField.setFont(new Font(descriptionFieldFont.getName(), Font.PLAIN, newFontSize));
     }
 
     /**
@@ -72,56 +124,14 @@ public class ArenaCardPanel extends JPanel {
      */
     @Override
     public void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
+	Graphics2D g2d = (Graphics2D) g;
 
-        //Hintergrund
-        g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+	// Hintergrund
+	g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
-        //Artwork
-        g2d.drawImage(artworkImage, (int) (ARTWORK_POSITION_RELATIVE_X * getWidth()),
-                (int) (ARTWORK_POSITION_RELATIVE_Y * getHeight()),
-                (int) (ARTWORK_SIZE_RELATIVE_X * getWidth()),
-                (int) (ARTWORK_SIZE_RELATIVE_Y * getHeight()), this);
-
-        //Namensfeld Bounds setzen
-        nameLabel.setBounds((int) (NAMELABEL_POSITION_RELATIVE_X * getWidth()),
-                (int) (NAMELABEL_POSITION_RELATIVE_Y * getHeight()),
-                (int) (NAMELABEL_SIZE_RELATIVE_X * getWidth()),
-                (int) (NAMELABEL_SIZE_RELATIVE_Y * getHeight()));
-        
-        //Namensfeld Fontgröße anpassen
-        Font nameLabelFont = nameLabel.getFont();
-        int newFontSize = (int)(NAMELABEL_TEXT_SIZE_RELATIVE_Y * getHeight());
-        nameLabel.setFont(new Font(nameLabelFont.getName(), Font.PLAIN, newFontSize));
-
-        //Descriptionfeld Bounds setzen
-        descriptionField.setBounds((int) (DESCRIPTIONFIELD_POSITION_RELATIVE_X * getWidth()),
-                (int) (DESCRIPTIONFIELD_POSITION_RELATIVE_Y * getHeight()),
-                (int) (DESCRIPTIONFIELD_SIZE_RELATIVE_X * getWidth()),
-                (int) (DESCRIPTIONFIELD_SIZE_RELATIVE_Y * getHeight()));
-        
-        //Descriptionfield Fontgröße anpassen
-        Font descriptionFieldFont = descriptionField.getFont();
-        newFontSize = (int)(DESCRIPTIONFIELD_TEXT_SIZE_RELATIVE_Y * getHeight());
-        descriptionField.setFont(new Font(descriptionFieldFont.getName(), Font.PLAIN, newFontSize));
+	// Artwork
+	g2d.drawImage(artworkImage, (int) (ARTWORK_POSITION_RELATIVE_X * getWidth()),
+		(int) (ARTWORK_POSITION_RELATIVE_Y * getHeight()), (int) (ARTWORK_SIZE_RELATIVE_X * getWidth()),
+		(int) (ARTWORK_SIZE_RELATIVE_Y * getHeight()), this);
     }
-
-    /**
-     * Initialisiert die Textfelder, also sowohl den Kartennamen als auch die
-     * Beschreibung, welche aus der ArenaCard ausgelesen werden.
-     */
-    private void initializeTextFields() {
-        nameLabel = new JLabel(displayedCard.getName());
-//        nameLabel.setOpaque(true);
-        this.add(nameLabel);
-
-        descriptionField = new JTextArea(displayedCard.getDescription());
-        descriptionField.setOpaque(false);
-        descriptionField.setEditable(false);
-        descriptionField.setLineWrap(true);
-        descriptionField.setWrapStyleWord(true);
-//        descriptionField.setOpaque(true);
-        this.add(descriptionField);
-    }
-
 }

@@ -15,7 +15,7 @@ public class SoundController {
             musicTitle.stopPlayer();
         }
         if (pathtoMusic != null) {
-            musicTitle = new MP3Runnable(pathtoMusic, true, Integer.parseInt(MyFrame.volume));
+            musicTitle = new MP3Runnable(pathtoMusic, true, volumeBackgroundMusic);
             new Thread(musicTitle).start();
         } else {
             musicTitle.stopPlayer();
@@ -24,12 +24,10 @@ public class SoundController {
     }
 
     public static void playSound(String pathtoSound) {
-        new Thread(new MP3Runnable(pathtoSound, false, Integer.parseInt(MyFrame.effectVolume))).start();
-        
+        new Thread(new MP3Runnable(pathtoSound, false, volumeSounds)).start();
     }
 
     public static void setVolumeBackgroundMusic(int newVolume) {
-        
         volumeBackgroundMusic = newVolume;
         if (musicTitle != null){
         musicTitle.setVolume(newVolume);
@@ -37,7 +35,7 @@ public class SoundController {
     }
 
     public static void setVolumeSounds(int newVolume) {
-        MyFrame.effectVolume = Integer.toString(newVolume);
+        volumeSounds = newVolume;
     }
 
     public static int getVolumeBackgroundMusic() {
@@ -45,6 +43,6 @@ public class SoundController {
     }
 
     public static int getVolumeSounds() {
-        return Integer.parseInt(MyFrame.effectVolume);
+        return volumeSounds;
     }
 }

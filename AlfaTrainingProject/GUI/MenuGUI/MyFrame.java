@@ -30,7 +30,6 @@ import java.nio.file.Paths;
 @SuppressWarnings("serial")
 public class MyFrame extends JFrame
 {
-
     /**
      * global settings for volume, language get infos from
      * <code>HeroesOfTheArena\hota_setting.txt</code> if no file is found, use
@@ -39,7 +38,7 @@ public class MyFrame extends JFrame
      * Yovo
      */
     public static String path;
-    public static String language = "/Bundle_DE", volume = "50", effectVolume = "60";
+    public static String language = "/Bundle_DE";
     public static Boolean volumFromFile = true, effectVolumeFromFile = true;
 
 
@@ -73,7 +72,7 @@ public class MyFrame extends JFrame
                 BufferedReader br = new BufferedReader(new FileReader(path + "\\hota_setting.txt"));
                 if (volumFromFile)
                 {
-                    volume = br.readLine();
+                    String volume = br.readLine();
                     SoundController.setVolumeBackgroundMusic(Integer.parseInt(volume));
                 }
 
@@ -89,7 +88,7 @@ public class MyFrame extends JFrame
                 
                 if (effectVolumeFromFile)
                 {
-                    effectVolume = br.readLine();
+                    String effectVolume = br.readLine();
                     SoundController.setVolumeSounds(Integer.parseInt(effectVolume));
                 }
             }
