@@ -40,6 +40,8 @@ import javax.swing.JButton;
 
 public class SingleplayerGame implements HeroEventListener {
 
+	private static Thread gameLogicThread;
+	
 	private final JFrame mainFrame;
 	private GamePanel gamePanel;
 	private GameData gameData;
@@ -65,7 +67,7 @@ public class SingleplayerGame implements HeroEventListener {
 	private AttackDice attackDice;
 	private HideDice hideDice;
 
-	boolean suddenDeathActive;
+	private boolean suddenDeathActive;
 
 	// ------------------booleans fuer Spielkontrolle ueber
 	// Karten------------------------
@@ -211,7 +213,7 @@ public class SingleplayerGame implements HeroEventListener {
 
 		showGame();
 
-		Thread gameLogicThread = new Thread() {
+		gameLogicThread = new Thread() {
 			public void run() {
 
 				startGameLogic();
@@ -770,6 +772,19 @@ public class SingleplayerGame implements HeroEventListener {
 //		mainFrame.repaint();
 	}
 
+	/**
+	 * 
+	 */
+	@SuppressWarnings("deprecation")
+	public static void endGame() {
+		try {
+			gameLogicThread.stop();
+		}catch(Exception ex){
+			
+		}
+		
+	}
+	
 	// -------------------------GETTER-------------------------//
 	public HideDice getHideDice() {
 		return hideDice;

@@ -118,31 +118,6 @@ public class MapPanel extends JPanel implements Runnable {
 
 		threadMapPanelAnimation = new Thread(this);
 		threadMapPanelAnimation.start();
-		
-		ImageIcon icon = new ImageIcon(ImageLoader.getInstance().getImage(ImageName.GAME_EXIT));
-		JButton btnExit = new JButton(icon);		
-		btnExit.setBorderPainted(false);
-		btnExit.setBorder(null);
-		btnExit.setMargin(new Insets(0, 0, 0, 0));
-		btnExit.setContentAreaFilled(false);
-//		btnExit.setIcon(icon);
-//		btnExit.setRolloverIcon(icon);
-//		btnExit.setPressedIcon(icon);
-//		btnExit.setDisabledIcon(icon);
-		
-//		btnExit.setBounds(getWidth()-icon.getIconWidth(), 0, icon.getIconWidth(), icon.getIconHeight());
-		btnExit.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
-		btnExit.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-//				onExitClicked();
-				//TODO alle Threads beenden
-				//TODO Spiel beenden
-				((GamePanel) getParent()).onExitClicked();
-			}
-		});
-		add(btnExit);
 	}
 
 	@Override

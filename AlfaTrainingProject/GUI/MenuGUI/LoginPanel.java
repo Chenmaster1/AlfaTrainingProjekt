@@ -175,7 +175,7 @@ public class LoginPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-                                SoundController.setBackgroundMusic(null);
+                SoundController.setBackgroundMusic(null);
 				frame.dispose();
 			}
 		});
