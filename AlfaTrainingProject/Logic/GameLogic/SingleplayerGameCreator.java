@@ -53,7 +53,7 @@ public class SingleplayerGameCreator {
 			if ((i >= 12 && i <= 15) || i >= 18 || i <= 2) {
 				hideout = new Hideout(i, HideoutType.FOREST);
 			} else {
-				if (i >= 3 && i <= 9) {
+				if (i >= 4 && i <= 9) {
 					hideout = new Hideout(i, HideoutType.DESERT);
 				} else {
 					hideout = new Hideout(i, HideoutType.WETLANDS);

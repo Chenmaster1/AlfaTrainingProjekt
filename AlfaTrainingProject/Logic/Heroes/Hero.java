@@ -38,9 +38,9 @@ public abstract class Hero {
 	private String name;
 	private String description;
 	private String artwork;
-        
-        private String hitSound;
-        private String dieSound;
+
+	private String hitSound;
+	private String dieSound;
 
 	private int currentHitPoints;
 	private int maxHitPoints;
@@ -63,14 +63,15 @@ public abstract class Hero {
 	 *             der Datenbank zu holen
 	 * @author Kevin
 	 */
-	public Hero(String name, String description, String artwork, String hitSound, String dieSound, int maxHitPoints, int maxActionPoints, double power,
-			KiLogic ki, ImageName avatarName, ImageName avatarDeactivatedName, ImageName mapIconName,ImageName gravestoneName) {
+	public Hero(String name, String description, String artwork, String hitSound, String dieSound, int maxHitPoints,
+			int maxActionPoints, double power, KiLogic ki, ImageName avatarName, ImageName avatarDeactivatedName,
+			ImageName mapIconName, ImageName gravestoneName) {
 
 		this.name = name;
 		this.description = description;
 		this.artwork = artwork;
-                this.hitSound = hitSound;
-                this.dieSound = dieSound;
+		this.hitSound = hitSound;
+		this.dieSound = dieSound;
 		this.maxHitPoints = maxHitPoints;
 		this.maxActionPoints = maxActionPoints;
 		this.power = power;
@@ -119,7 +120,7 @@ public abstract class Hero {
 	 * 
 	 * 
 	 * @param requestingHero Der beantragende Held
-	 * @param eventType Der Typ des Events
+	 * @param eventType      Der Typ des Events
 	 */
 	protected void notifyAllHeroEventListeners(Hero requestingHero, HeroEventType eventType) {
 		for (HeroEventListener hel : listeners) {
@@ -211,14 +212,15 @@ public abstract class Hero {
 	}
 
 	public void setCurrentHitPoints(int currentHitPoints) {
-            if (currentHitPoints < this.currentHitPoints  && currentHitPoints > 0) {
-               
-            SoundController.playSound(hitSound);
-            }
+		if (currentHitPoints < this.currentHitPoints && currentHitPoints > 0) {
+
+			SoundController.playSound(hitSound);
+		}
 		if (currentHitPoints <= 0) {
 			isDead = true;
-                        SoundController.playSound(dieSound);
-                }
+			setCurrentActionPoints(0);
+			SoundController.playSound(dieSound);
+		}
 		this.currentHitPoints = currentHitPoints;
 	}
 
@@ -247,7 +249,7 @@ public abstract class Hero {
 	}
 
 	public Image getGravestone() {
-		
+
 		return gravestone;
 	}
 
